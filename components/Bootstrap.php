@@ -27,7 +27,8 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_TYPEAHEAD = 'typeahead';
 	const PLUGIN_DATEPICKER = 'datepicker';
 	const PLUGIN_REDACTOR = 'redactor';
-	// todo: add the affix plugin in version 2.1.0
+	const PLUGIN_AFFIX = 'affix';
+	const PLUGIN_DATERANGEPICKER = 'daterangepicker';
 
 	/**
 	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
@@ -323,10 +324,42 @@ class Bootstrap extends CApplicationComponent
 	 * @param null $selector
 	 * @param $options
 	 */
-	public function registerRedactor($selector = null, $options)
+	public function registerRedactor($selector = null, $options = array())
 	{
 		$this->registerPlugin(self::PLUGIN_REDACTOR, $selector, $options);
 	}
+
+	/**
+	 * Registers the affix plugin
+	 * @param null $selector
+	 * @param array $options
+	 * @see  http://twitter.github.com/bootstrap/javascript.html#affix
+	 */
+	public function registerAffix($selector = null, $options = array())
+	{
+		$this->registerPlugin(self::PLUGIN_AFFIX, $selector, $options);
+	}
+
+
+	/**
+	 * Registers the Bootstrap daterange plugin
+	 * @param string $selector the CSS selector
+	 * @param array $options the plugin options
+	 * @param $callback the javascript callback function
+	 * @see  http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/
+	 * @since 1.1.0
+	 */
+	public function registerDateRangePlugin($selector, $options = array(), $callback = null)
+	{
+
+		$key = __CLASS__ . '.' . md5(self::PLUGIN_DATERANGEPICKER . $selector . serialize($options) . $callback);
+
+		Yii::app()->clientScript->registerScript($key, '$("' . $selector . '").daterangepicker(' . CJavaScript::encode($options) . ($callback ? ', ' . CJavaScript::encode($callback) : '') . ');');
+
+
+	}
+
+
 	/**
 	 * Registers a Bootstrap JavaScript plugin.
 	 * @param string $name the name of the plugin

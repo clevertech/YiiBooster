@@ -214,6 +214,7 @@ class TbInputHorizontal extends TbInput
 	/**
 	 * Renders a datepicker field.
 	 * @return string the rendered content
+	 * @author antonio ramirez <antonio@clevertech.biz>
 	 */
 	protected function datepickerField()
 	{
@@ -231,6 +232,7 @@ class TbInputHorizontal extends TbInput
 
 		echo $this->getLabel();
 		echo '<div class="controls">';
+		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbDatePicker', array(
 			'model' => $this->model,
 			'attribute' => $this->attribute,
@@ -267,6 +269,39 @@ class TbInputHorizontal extends TbInput
 			'width' => isset($width) ? $width : '100%',
 			'height' => isset($height) ? $height : '400px',
 			'htmlOptions' => $this->htmlOptions
+		));
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
+	 * Renders a daterange field.
+	 * @return string the rendered content
+	 * @author antonio ramirez <antonio@clevertech.biz>
+	 */
+	protected function dateRangeField()
+	{
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+
+		if (isset($options['callback']))
+		{
+			$callback = $options['callback'];
+			unset($options['callback']);
+		}
+
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		$this->widget('bootstrap.widgets.TbDateRangePicker', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'options' => isset($options) ? $options : array(),
+			'callback' => isset($callback) ? $callback : array(),
+			'htmlOptions' => $this->htmlOptions,
 		));
 		echo $this->getError() . $this->getHint();
 		echo '</div>';

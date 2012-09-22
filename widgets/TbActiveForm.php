@@ -198,6 +198,13 @@ class TbActiveForm extends CActiveForm
 		return $this->inputRow(TbInput::TYPE_TEXTAREA, $model, $attribute, null, $htmlOptions);
 	}
 
+	/**
+	 * Renders a WYSIWYG redactor editor
+	 * @param $model
+	 * @param $attribute
+	 * @param array $htmlOptions
+	 * @return string
+	 */
 	public function redactorRow($model, $attribute, $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_REDACTOR, $model, $attribute, null, $htmlOptions);
@@ -233,13 +240,25 @@ class TbActiveForm extends CActiveForm
 	 * Renders a datepicker field row.
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
+	 * @param array $htmlOptions additional HTML attributes. 'events' and 'options' key specify the events
+	 * and configuration options of datepicker respectively.
 	 * @return string the generated row
 	 * @since 0.10.0
 	 */
 	public function datepickerRow($model, $attribute, $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_DATEPICKER, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
+	 * @param $model
+	 * @param $attribute
+	 * @param array $htmlOptions addition HTML attributes. In order to pass initialization parameters to dateRange, you
+	 * need to set the HTML 'options' key with an array of configuration options. 'options' also has a
+	 */
+	public function dateRangeRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_DATERANGEPICKER, $model, $attribute, null, $htmlOptions);
 	}
 
 	/**
