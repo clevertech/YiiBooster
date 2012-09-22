@@ -32,15 +32,28 @@ class TbImageColumn extends CGridColumn
 
 	/**
 	 * @var bool $userPlaceHoldIt whether to use a bogus image from placehold.it or not. If true, will render an image
-	 * from placehold.it according to the size set at $placeHoldItSize
+	 * from placehold.it according to the size set at $placeHoldItSize. Defaults to false, now placehold.it only grants
+	 * access for certain amount of time. You need to ask for permission :(
 	 */
-	public $usePlaceHoldIt = true;
+	public $usePlaceHoldIt = false;
+
+	/**
+	 * @var bool $userPlaceKitten whether to use bogus image from placekitten.com or not. If true, will render an image
+	 * from placekitten.com according to the size set at $placeKittenSize. Defaults to true (what can I say? I love kitten)
+	 */
+	public $usePlaceKitten = true;
 
 	/**
 	 * @var string $placeHoldItSize the size of the image to render if $imagePathExpression is null and $userPlaceHoldIt
 	 * is set to true
 	 */
 	public $placeHoldItSize = '48x48';
+
+	/**
+	 * @var string $placeKittenSize the size of the image to render if $imagePathExpression is null and $usePlaceKitten
+	 * is set to true
+	 */
+	public $placeKittenSize = '48/48';
 
 	/**
 	 * Renders the data cell content
@@ -54,9 +67,12 @@ class TbImageColumn extends CGridColumn
 		{
 			$this->imageOptions['src'] = $imagePath;
 			$content = CHtml::tag('img', $this->imageOptions);
-		} elseif ($this->usePlaceHoldIt)
+		} elseif ($this->usePlaceHoldIt && !empty($this->placeHoldItSize))
 		{
 			$content = CHtml::tag('img', array('src'=>'http://placehold.it/' . $this->placeHoldItSize));
+		}  elseif ($this->usePlaceKitten && !empty($this->placeKittenSize))
+		{
+			$content = CHtml::tag('img', array('src'=>'http://placekitten.com/' . $this->placeKittenSize));
 		}
 		echo $content;
 	}
