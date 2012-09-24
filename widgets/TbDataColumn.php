@@ -46,11 +46,15 @@ class TbDataColumn extends CDataColumn
 
 	/**
 	 * Renders the filter cell.
+	 * @author antonio ramirez <antonio@clevertech.biz>
+	 * @since 24/09/2012 added filterHtmlOptions
 	 */
 	public function renderFilterCell()
 	{
-		echo '<td><div class="filter-container">';
+		echo CHtml::openTag('td',$this->filterHtmlOptions);
+		echo '<div class="filter-container">';
 		$this->renderFilterCellContent();
-		echo '</div></td>';
+		echo '</div>';
+		echo CHtml::closeTag('td');
 	}
 }
