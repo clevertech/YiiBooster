@@ -40,13 +40,15 @@ The YiiBooster library includes:
 	* JSON Button Column
 	* JSON Data Column
 	* JSON Pager 
-* Exenteded Grid
+* Extended Grid
 	* Extended Summary
 	* Inline Column Edition
 	* Grid/Chart Switcher
 	* Image Column
 	* Picker Column
 	* Total Sum Column
+* Grouping Grid
+    * Merge cells or columns
 	
 ###Bug tracker
 If you find any bugs, please create an issue at [https://github.com/clevertech/YiiBooster/issues](https://github.com/clevertech/YiiBooster/issues)
