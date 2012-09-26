@@ -188,6 +188,7 @@ class TbInputVertical extends TbInput
 		}
 
 		echo $this->getLabel();
+		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbDatePicker', array(
 			'model'=>$this->model,
 			'attribute'=>$this->attribute,
@@ -195,6 +196,7 @@ class TbInputVertical extends TbInput
 			'events'=>isset($events) ? $events : array(),
 			'htmlOptions'=>$this->htmlOptions,
 		));
+		echo $this->getAppend();
 		echo $this->getError().$this->getHint();
 	}
 
@@ -236,6 +238,7 @@ class TbInputVertical extends TbInput
 		}
 
 		echo $this->getLabel();
+		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbDateRangePicker', array(
 			'model'=>$this->model,
 			'attribute'=>$this->attribute,
@@ -243,6 +246,7 @@ class TbInputVertical extends TbInput
 			'callback'=>isset($callback) ? $callback : array(),
 			'htmlOptions'=>$this->htmlOptions,
 		));
+		echo $this->getAppend();
 		echo $this->getError().$this->getHint();
 	}
 

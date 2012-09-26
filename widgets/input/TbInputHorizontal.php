@@ -240,6 +240,7 @@ class TbInputHorizontal extends TbInput
 			'events' => isset($events) ? $events : array(),
 			'htmlOptions' => $this->htmlOptions,
 		));
+		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}

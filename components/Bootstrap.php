@@ -397,7 +397,7 @@ class Bootstrap extends CApplicationComponent
 	 * Returns the URL to the published assets folder.
 	 * @return string the URL
 	 */
-	protected function getAssetsUrl()
+	public function getAssetsUrl()
 	{
 		if (isset($this->_assetsUrl))
 			return $this->_assetsUrl;
