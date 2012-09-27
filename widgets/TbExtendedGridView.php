@@ -98,6 +98,18 @@ class TbExtendedGridView extends TbGridView
 	public $chartOptions = array();
 
 	/**
+	 * @var bool $sortableRows. If true the rows at the table will be sortable.
+	 */
+	public $sortableRows = false;
+
+	/**
+	 * @var string a javascript function that will be invoked after a successful sorting is done.
+	 * The function signature is <code>function(id, position)</code> where 'id' refers to the ID of the model id key,
+	 * 'position' the new position in the list.
+	 */
+	public $afterSortableUpdate;
+
+	/**
 	 * @var boolean $displayExtendedSummary a helper property that is set to true if we have to render the
 	 * extended summary
 	 */
@@ -355,6 +367,29 @@ class TbExtendedGridView extends TbGridView
 			Yii::app()->bootstrap->registerAssetJs('jquery.stickytableheaders.js');
 			$fixedHeaderJs = "$('#{$this->id} table.items').stickyTableHeaders({fixedOffset:{$this->headerOffset}});";
 			$this->componentsAfterAjaxUpdate[] = $fixedHeaderJs;
+		}
+
+		if($this->sortableRows)
+		{
+			if($this->afterSortableUpdate!==null)
+			{
+				if((!$this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos($this->afterSortableUpdate,'js:')!==0)
+				{
+					$afterSortableUpdate=new CJavaScriptExpression($this->afterSortableUpdate);
+				}
+				else
+				{
+					$afterSortableUpdate=$this->afterSortableUpdate;
+				}
+			}
+
+			$this->selectableRows = 1;
+			$cs->registerCoreScript('jquery.ui');
+			Yii::app()->bootstrap->registerAssetJs('jquery.sortable.gridview.js');
+
+			$afterSortableUpdate = CJavaScript::encode($afterSortableUpdate);
+			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
+			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
 		}
 
 		$cs->registerScript(__CLASS__ . '#' . $this->id . 'Ex', '
