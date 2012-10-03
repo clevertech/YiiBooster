@@ -1013,6 +1013,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
     border-radius: 4px;
 }
 
+.ui-datepicker td .ui-state-highlight {
+    background: #EEDC94;
+}
+
 
 /*
  * jQuery UI Progressbar 1.8.23
