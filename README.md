@@ -36,6 +36,8 @@ The YiiBooster library includes:
 * Boxes 
 * Google Charts
 * HighCharts
+* Edit in Place
+* JQuery UI Bootstrap Style
 * JSON Grid
 	* JSON Button Column
 	* JSON Data Column
@@ -49,7 +51,11 @@ The YiiBooster library includes:
 	* Total Sum Column
 * Grouping Grid
     * Merge cells or columns
-	
+
+
+###Contributing
+Please submit all pull requests against *-wip branches. Thanks!
+
 ###Bug tracker
 If you find any bugs, please create an issue at [https://github.com/clevertech/YiiBooster/issues](https://github.com/clevertech/YiiBooster/issues)
 
