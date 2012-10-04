@@ -55,7 +55,7 @@ class TbCollapse extends CWidget
 		if (isset($this->toggle) && !isset($this->options['toggle']))
 			$this->options['toggle'] = $this->toggle;
 
-		echo CHtml::tag($this->tagName, $this->htmlOptions);
+		echo CHtml::openTag($this->tagName, $this->htmlOptions);
 	}
 
 	/**
