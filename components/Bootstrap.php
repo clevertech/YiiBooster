@@ -45,6 +45,12 @@ class Bootstrap extends CApplicationComponent
 	 * @since 0.9.12
 	 */
 	public $yiiCss = true;
+
+	/**
+	 * @var boolean whether to register the JQuery-specific CSS missing from Bootstrap.
+	 */
+	public $jqueryCss = true;
+
 	/**
 	 * @var boolean whether to register jQuery and the Bootstrap JavaScript.
 	 * @since 0.9.10
@@ -92,6 +98,9 @@ class Bootstrap extends CApplicationComponent
 		if ($this->yiiCss !== false)
 			$this->registerYiiCss();
 
+		if($this->jqueryCss !== false)
+			$this->registerJQueryCss();
+
 		if ($this->enableJS !== false)
 			$this->registerCoreScripts();
 
@@ -103,7 +112,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerCoreCss()
 	{
-		Yii::app()->clientScript->registerCssFile($this->getAssetsUrl() . '/css/bootstrap.css');
+		$this->registerAssetCss('bootstrap.css');
 	}
 
 	/**
@@ -124,9 +133,17 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerYiiCss()
 	{
-		Yii::app()->clientScript->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-yii.css');
+		$this->registerAssetCss('bootstrap-yii.css');
 	}
 
+	/**
+	 * Registers the JQuery-specific CSS missing from Bootstrap.
+	 */
+	public function registerJQueryCss()
+	{
+		Yii::app()->getClientScript()->scriptMap['jquery-ui.css'] = $this->getAssetsUrl() . '/css/jquery-ui-bootstrap.css';
+		$this->registerAssetCss('jquery-ui-bootstrap.css');
+	}
 	/**
 	 * Registers a specific css in the asset's css folder
 	 * @param string $cssFile the css file name to register

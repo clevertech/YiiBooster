@@ -108,6 +108,9 @@ class TbButton extends CWidget
 	 */
 	public function init()
 	{
+		if(!isset($this->htmlOptions['id']))
+			$this->htmlOptions['id'] = $this->getId();
+
 		$classes = array('btn');
 
 		$validTypes = array(self::TYPE_LINK, self::TYPE_PRIMARY, self::TYPE_INFO, self::TYPE_SUCCESS,

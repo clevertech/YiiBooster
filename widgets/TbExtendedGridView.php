@@ -98,6 +98,34 @@ class TbExtendedGridView extends TbGridView
 	public $chartOptions = array();
 
 	/**
+	 * @var bool $sortableRows. If true the rows at the table will be sortable.
+	 */
+	public $sortableRows = false;
+
+	/**
+	 * @var string a javascript function that will be invoked after a successful sorting is done.
+	 * The function signature is <code>function(id, position)</code> where 'id' refers to the ID of the model id key,
+	 * 'position' the new position in the list.
+	 */
+	public $afterSortableUpdate;
+
+	/**
+	 * @var array the configuration options to display a TbBulkActions widget
+	 * @see TbBulkActions widget for its configuration
+	 */
+	public $bulkActions = array();
+
+	/**
+	 * @var string the aligment of the bulk actions. It can be 'left' or 'right'.
+	 */
+	public $bulkActionAlign = 'right';
+
+	/**
+	 * @var TbBulkActions component that will display the bulk actions to the grid
+	 */
+	protected $bulk;
+
+	/**
 	 * @var boolean $displayExtendedSummary a helper property that is set to true if we have to render the
 	 * extended summary
 	 */
@@ -138,6 +166,14 @@ class TbExtendedGridView extends TbGridView
 		{
 			$this->displayChart = true;
 		}
+		if ($this->bulkActions !== array() && isset($this->bulkActions['actionButtons']))
+		{
+			if(!isset($this->bulkActions['class']))
+				$this->bulkActions['class'] = 'bootstrap.widgets.TbBulkActions';
+
+			$this->bulk = Yii::createComponent($this->bulkActions, $this);
+			$this->bulk->init();
+		}
 		parent::init();
 	}
 
@@ -160,6 +196,41 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 * Renders the table footer.
+	 */
+	public function renderTableFooter()
+	{
+		$hasFilter = $this->filter !== null && $this->filterPosition === self::FILTER_POS_FOOTER;
+
+		$hasFooter = $this->getHasFooter();
+		if ($this->bulk !== null || $hasFilter || $hasFooter)
+		{
+			echo "<tfoot>\n";
+			if ($hasFooter)
+			{
+				echo "<tr>\n";
+				foreach ($this->columns as $column)
+					$column->renderFooterCell();
+				echo "</tr>\n";
+			}
+			if ($hasFilter)
+				$this->renderFilter();
+
+			if ($this->bulk !== null)
+				$this->renderBulkActions();
+			echo "</tfoot>\n";
+		}
+	}
+
+	public function renderBulkActions()
+	{
+		echo '<tr><td colspan="' . count($this->columns) . '">';
+		$this->bulk->renderButtons();
+		echo '</td></tr>';
+	}
+
+
+	/**
 	 * Renders chart
 	 * @throws CException
 	 */
@@ -169,11 +240,11 @@ class TbExtendedGridView extends TbGridView
 			return;
 
 		if (!isset($this->chartOptions['data']['series']))
-			throw new CException(Yii::t('zii', 'You need to set the "series" attribute in order to render a chart'));
+			throw new CException(Yii::t('booster', 'You need to set the "series" attribute in order to render a chart'));
 
 		$configSeries = $this->chartOptions['data']['series'];
 		if (!is_array($configSeries))
-			throw new CException(Yii::t('zii', '"chartOptions.series" is expected to be an array.'));
+			throw new CException(Yii::t('booster', '"chartOptions.series" is expected to be an array.'));
 
 		$chartId = 'exgvwChart' . $this->getId();
 
@@ -185,8 +256,8 @@ class TbExtendedGridView extends TbGridView
 		$buttons = Yii::createComponent(array('class' => 'bootstrap.widgets.TbButtonGroup',
 			'toggle' => 'radio',
 			'buttons' => array(
-				array('label' => Yii::t('zii', 'Grid'), 'url' => '#', 'htmlOptions' => array('class' => 'active ' . $this->getId() . '-grid-control grid')),
-				array('label' => Yii::t('zii', 'Chart'), 'url' => '#', 'htmlOptions' => array('class' => $this->getId() . '-grid-control chart')),
+				array('label' => Yii::t('booster', 'Grid'), 'url' => '#', 'htmlOptions' => array('class' => 'active ' . $this->getId() . '-grid-control grid')),
+				array('label' => Yii::t('booster', 'Chart'), 'url' => '#', 'htmlOptions' => array('class' => $this->getId() . '-grid-control chart')),
 			),
 			'htmlOptions' => array('style' => 'margin-bottom:5px')
 		));
@@ -259,10 +330,10 @@ class TbExtendedGridView extends TbGridView
 			}
 			$jsOptions = CJSON::encode($options);
 
-			if(isset($this->chartOptions['htmlOptions']['data-config']))
+			if (isset($this->chartOptions['htmlOptions']['data-config']))
 				unset($this->chartOptions['htmlOptions']['data-config']);
 
-			echo "<div id='{$chartId}' ".CHtml::renderAttributes($this->chartOptions['htmlOptions'])." data-config='{$jsOptions}'></div>";
+			echo "<div id='{$chartId}' " . CHtml::renderAttributes($this->chartOptions['htmlOptions']) . " data-config='{$jsOptions}'></div>";
 
 			$this->componentsAfterAjaxUpdate[] = "highchart{$chartId} = new Highcharts.Chart($('#{$chartId}').data('config'));";
 		}
@@ -270,7 +341,7 @@ class TbExtendedGridView extends TbGridView
 			'class' => 'bootstrap.widgets.TbHighCharts',
 			'id' => $chartId,
 			'options' => $options,
-			'htmlOptions' =>  $this->chartOptions['htmlOptions']
+			'htmlOptions' => $this->chartOptions['htmlOptions']
 		);
 		$chart = Yii::createComponent($configChart);
 		$chart->init();
@@ -357,6 +428,28 @@ class TbExtendedGridView extends TbGridView
 			$this->componentsAfterAjaxUpdate[] = $fixedHeaderJs;
 		}
 
+		if ($this->sortableRows)
+		{
+			if ($this->afterSortableUpdate !== null)
+			{
+				if ((!$this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos($this->afterSortableUpdate, 'js:') !== 0)
+				{
+					$afterSortableUpdate = new CJavaScriptExpression($this->afterSortableUpdate);
+				} else
+				{
+					$afterSortableUpdate = $this->afterSortableUpdate;
+				}
+			}
+
+			$this->selectableRows = 1;
+			$cs->registerCoreScript('jquery.ui');
+			Yii::app()->bootstrap->registerAssetJs('jquery.sortable.gridview.js');
+
+			$afterSortableUpdate = CJavaScript::encode($afterSortableUpdate);
+			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
+			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
+		}
+
 		$cs->registerScript(__CLASS__ . '#' . $this->id . 'Ex', '
 			$grid = $("#' . $this->id . '");
 			' . $fixedHeaderJs . '
@@ -420,10 +513,10 @@ class TbExtendedGridView extends TbGridView
 	protected function getSummaryOperationInstance($config)
 	{
 		if (!isset($config['class']))
-			throw new CException(Yii::t('zii', 'Column summary configuration must be an array containing a "type" element.'));
+			throw new CException(Yii::t('booster', 'Column summary configuration must be an array containing a "type" element.'));
 
 		if (!in_array($config['class'], $this->extendedSummaryOperations))
-			throw new CException(Yii::t('zii', '"{operation}" is an unsupported class operation.', array('{operation}' => $config['class'])));
+			throw new CException(Yii::t('booster', '"{operation}" is an unsupported class operation.', array('{operation}' => $config['class'])));
 
 		if (!isset($this->extendedSummaryTypes[$config['class']]))
 		{
@@ -484,7 +577,7 @@ abstract class TbOperation extends CWidget
 	public function init()
 	{
 		if (null == $this->column)
-			throw new CException(Yii::t('zii', '"{attribute}" attribute must be defined', array('{attribute}' => 'column')));
+			throw new CException(Yii::t('booster', '"{attribute}" attribute must be defined', array('{attribute}' => 'column')));
 	}
 
 	/**
@@ -538,7 +631,7 @@ class TbSumOperation extends TbOperation
 
 		if (!in_array($this->column->type, $this->supportedTypes))
 		{
-			throw new CException(Yii::t('zii', 'Unsupported column type. Supported column types are: "{types}"', array(
+			throw new CException(Yii::t('booster', 'Unsupported column type. Supported column types are: "{types}"', array(
 				'{types}' => implode(', ', $this->supportedTypes))));
 		}
 	}
@@ -616,11 +709,11 @@ class TbCountOfTypeOperation extends TbOperation
 	public function init()
 	{
 		if (empty($this->types))
-			throw new CException(Yii::t('zii', '"{attribute}" attribute must be defined', array('{attribute}' => 'types')));
+			throw new CException(Yii::t('booster', '"{attribute}" attribute must be defined', array('{attribute}' => 'types')));
 		foreach ($this->types as $type)
 		{
 			if (!isset($type['label']))
-				throw new CException(Yii::t('zii', 'The "label" of a type must be defined.'));
+				throw new CException(Yii::t('booster', 'The "label" of a type must be defined.'));
 		}
 		parent::init();
 	}
