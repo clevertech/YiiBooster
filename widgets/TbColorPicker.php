@@ -6,8 +6,11 @@
  * @author: yiqing95 <yiqing_95@qq.com>
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @package YiiBooster bootstrap.widgets
- *
  * ------------------------------------------------------------------------
+ *   in yii  use this to register the necessary js and css files :
+ *   <?php  $this->widget('bootstrap.widgets.TbColorPicker', array( )); ?>
+ *   and the rest usage you'd better refer the original plugin
+ *
  * @see http://www.eyecon.ro/bootstrap-colorpicker/
  * ------------------------------------------------------------------------
  */
@@ -83,7 +86,7 @@ class TbColorPicker extends CWidget
         $this->registerCssFile('css/colorpicker.css');
 
         if (empty($this->selector)) {
-            //just register the nessisary css and js files ; you want use it manually
+            //just register the necessary css and js files ; you want use it manually
             return;
         }
 
