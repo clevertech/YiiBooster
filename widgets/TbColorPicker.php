@@ -8,6 +8,7 @@
  * @package YiiBooster bootstrap.widgets
  *
  * ------------------------------------------------------------------------
+ * @see http://www.eyecon.ro/bootstrap-colorpicker/
  * ------------------------------------------------------------------------
  */
 class TbColorPicker extends CWidget
