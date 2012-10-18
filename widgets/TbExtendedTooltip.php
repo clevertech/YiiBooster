@@ -104,7 +104,7 @@ class TbExtendedTooltip extends CWidget
 		if (!$this->editable)
 		{
 			// not editable, just make the tooltip
-			$js = "$('span[rel=editable-tooltip]').tooltip();";
+			$js = "$('span[name=\"{$this->key}\"]').tooltip();";
 		} else
 		{
 			// editable, make use of bootstrap-editable-tooltip plugin
@@ -116,7 +116,7 @@ class TbExtendedTooltip extends CWidget
 				'placement' => $this->editablePopupPlacement
 			));
 
-			$js = "$('span[rel=editable-tooltip]').editableTooltip($options);";
+			$js = "$('span[name=\"{$this->key}\"]').editableTooltip($options);";
 		}
 		Yii::app()->clientScript->registerScript(__CLASS__.'#'.$this->getId(), $js);
 	}
