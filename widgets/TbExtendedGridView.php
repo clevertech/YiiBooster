@@ -110,6 +110,23 @@ class TbExtendedGridView extends TbGridView
 	public $afterSortableUpdate;
 
 	/**
+	 * @var bool whether to allow selecting of cells
+	 */
+	public $selectableCells = false;
+
+	/**
+	 * @var string the filter to use to allow selection. For example, if you set the "htmlOptions" property of a column to have a
+	 * "class" of "tobeselected", you could set this property as: "td.tobeselected" in order to allow  selection to
+	 * those columns with that class only.
+	 */
+	public $selectableCellsFilter = 'td';
+
+	/**
+	 * @var string a javascript function that will be invoked after a selection is done.
+	 * The function signature is <code>function(selected)</code> where 'selected' refers to the selected columns.
+	 */
+	public $afterSelectableCells;
+	/**
 	 * @var array the configuration options to display a TbBulkActions widget
 	 * @see TbBulkActions widget for its configuration
 	 */
@@ -432,7 +449,7 @@ class TbExtendedGridView extends TbGridView
 		{
 			if ($this->afterSortableUpdate !== null)
 			{
-				if ((!$this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos($this->afterSortableUpdate, 'js:') !== 0)
+				if (!($this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos($this->afterSortableUpdate, 'js:') !== 0)
 				{
 					$afterSortableUpdate = new CJavaScriptExpression($this->afterSortableUpdate);
 				} else
@@ -448,6 +465,26 @@ class TbExtendedGridView extends TbGridView
 			$afterSortableUpdate = CJavaScript::encode($afterSortableUpdate);
 			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
 			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
+		}
+
+		if($this->selectableCells)
+		{
+			if($this->afterSelectableCells !== null)
+			{
+				echo strpos($this->afterSelectableCells, 'js:');
+				if (!($this->afterSelectableCells instanceof CJavaScriptExpression) && strpos($this->afterSelectableCells, 'js:') !== 0)
+				{
+					$afterSelectableCells = new CJavaScriptExpression($this->afterSelectableCells);
+				} else
+				{
+					$afterSelectableCells = $this->afterSelectableCells;
+				}
+			}
+			$cs->registerCoreScript('jquery.ui');
+			Yii::app()->bootstrap->registerAssetJs('jquery.selectable.gridview.js');
+			$afterSelectableCells = CJavaScript::encode($afterSelectableCells);
+			$this->componentsReadyScripts[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}',{$afterSelectableCells});";
+			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}', {$afterSelectableCells});";
 		}
 
 		$cs->registerScript(__CLASS__ . '#' . $this->id . 'Ex', '

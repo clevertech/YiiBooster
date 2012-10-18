@@ -261,9 +261,49 @@ class TbInputHorizontal extends TbInput
 			$width = $this->htmlOptions['width'];
 			unset($this->htmlOptions['width']);
 		}
+		if (isset($this->htmlOptions['height']))
+		{
+			$height = $this->htmlOptions['height'];
+			unset($this->htmlOptions['height']);
+		}
 		echo $this->getLabel();
 		echo '<div class="controls">';
 		$this->widget('bootstrap.widgets.TbRedactorJs', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'editorOptions' => isset($options) ? $options : array(),
+			'width' => isset($width) ? $width : '100%',
+			'height' => isset($height) ? $height : '400px',
+			'htmlOptions' => $this->htmlOptions
+		));
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
+	 * Renders Bootstrap wysihtml5 editor.
+	 * @return mixed|void
+	 */
+	protected function html5Editor()
+	{
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+		if (isset($this->htmlOptions['width']))
+		{
+			$width = $this->htmlOptions['width'];
+			unset($this->htmlOptions['width']);
+		}
+		if (isset($this->htmlOptions['height']))
+		{
+			$height = $this->htmlOptions['height'];
+			unset($this->htmlOptions['height']);
+		}
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		$this->widget('bootstrap.widgets.TbHtml5Editor', array(
 			'model' => $this->model,
 			'attribute' => $this->attribute,
 			'editorOptions' => isset($options) ? $options : array(),

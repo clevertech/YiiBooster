@@ -29,6 +29,7 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_REDACTOR = 'redactor';
 	const PLUGIN_AFFIX = 'affix';
 	const PLUGIN_DATERANGEPICKER = 'daterangepicker';
+	const PLUGIN_HTML5EDITOR = 'wysihtml5';
 
 	/**
 	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
@@ -344,6 +345,16 @@ class Bootstrap extends CApplicationComponent
 	public function registerRedactor($selector = null, $options = array())
 	{
 		$this->registerPlugin(self::PLUGIN_REDACTOR, $selector, $options);
+	}
+
+	/**
+	 * Registers the Bootstrap-whysihtml5 plugin.
+	 * @param null $selector
+	 * @param $options
+	 */
+	public function registerHtml5Editor($selector = null, $options = array())
+	{
+		$this->registerPlugin(self::PLUGIN_HTML5EDITOR, $selector, $options);
 	}
 
 	/**

@@ -29,6 +29,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_UNEDITABLE = 'uneditable';
 	const TYPE_DATEPICKER = 'datepicker';
 	const TYPE_REDACTOR = 'redactor';
+	const TYPE_HTML5EDITOR = 'wysihtml5';
 	const TYPE_DATERANGEPICKER = 'daterangepicker';
 
 	/**
@@ -237,6 +238,9 @@ abstract class TbInput extends CInputWidget
 				break;
 			case self::TYPE_REDACTOR:
 				$this->redactorJs();
+				break;
+			case self::TYPE_HTML5EDITOR:
+				$this->html5Editor();
 				break;
 			case self::TYPE_DATERANGEPICKER:
 				$this->dateRangeField();
@@ -492,6 +496,13 @@ abstract class TbInput extends CInputWidget
 	 * @return mixed
 	 */
 	abstract protected function redactorJs();
+
+	/**
+	 * Renders a bootstrap wysihtml5 editor.
+	 * @abstract
+	 * @return mixed
+	 */
+	abstract protected function html5Editor();
 
 	/**
 	 * Renders a daterange picker field
