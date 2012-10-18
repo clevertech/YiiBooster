@@ -6,6 +6,9 @@
  * @author: yiqing95 <yiqing_95@qq.com>
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @package YiiBooster bootstrap.widgets
+ *
+ * ------------------------------------------------------------------------
+ * ------------------------------------------------------------------------
  */
 class TbColorPicker extends CWidget
 {
