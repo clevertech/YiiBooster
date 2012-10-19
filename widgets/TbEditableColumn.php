@@ -26,10 +26,10 @@ class TbEditableColumn extends CDataColumn
     public function init()
     {
         if (!$this->grid->dataProvider instanceOf CActiveDataProvider) {
-            throw new CException(Yii::t('booster', 'TbEditableColumn can be applied only to grid based on CActiveDataProvider'));
+            throw new CException(Yii::t('zii', 'TbEditableColumn can be applied only to grid based on CActiveDataProvider'));
         }
         if (!$this->name) {
-            throw new CException(Yii::t('booster', 'You should provide name for TbEditableColumn'));
+            throw new CException(Yii::t('zii', 'You should provide name for TbEditableColumn'));
         }
 
         parent::init();

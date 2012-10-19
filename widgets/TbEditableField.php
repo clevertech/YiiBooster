@@ -68,13 +68,13 @@ class TbEditableField extends CWidget
     public function init()
     {   
         if (!$this->model) {
-            throw new CException(Yii::t('booster', 'Parameter "model" should be provided for Editable'));
+            throw new CException(Yii::t('zii', 'Parameter "model" should be provided for Editable'));
         }
         if (!$this->attribute) {
-            throw new CException(Yii::t('booster', 'Parameter "attribute" should be provided for Editable'));
+            throw new CException(Yii::t('zii', 'Parameter "attribute" should be provided for Editable'));
         }
         if (!$this->model->hasAttribute($this->attribute)) {
-            throw new CException(Yii::t('booster', 'Model "{model}" does not have attribute "{attribute}"',
+            throw new CException(Yii::t('zii', 'Model "{model}" does not have attribute "{attribute}"',
 	                array('{model}'=>get_class($this->model), '{attribute}'=>$this->attribute)));
         }
  
@@ -129,7 +129,7 @@ class TbEditableField extends CWidget
         //generate title from attribute label
         if ($this->title === null) {
             //todo: i18n here. Add messages folder to extension
-            $this->title = (($this->type == 'select' || $this->type == 'date') ? Yii::t('booster', 'Select') : Yii::t('booster', 'Enter')) . ' ' . $this->model->getAttributeLabel($this->attribute);
+            $this->title = (($this->type == 'select' || $this->type == 'date') ? Yii::t('zii', 'Select') : Yii::t('zii', 'Enter')) . ' ' . $this->model->getAttributeLabel($this->attribute);
         }
 
         $this->buildHtmlOptions();
