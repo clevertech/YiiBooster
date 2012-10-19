@@ -113,7 +113,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerCoreCss()
 	{
-		$this->registerAssetCss('bootstrap.css');
+		$this->registerAssetCss('bootstrap' . (!YII_DEBUG ? '.min' : '') . '.css');
 	}
 
 	/**
@@ -125,7 +125,7 @@ class Bootstrap extends CApplicationComponent
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
 		$cs->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
-		$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-responsive.css');
+		$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-responsive' . (!YII_DEBUG ? '.min' : '') . '.css');
 	}
 
 	/**
