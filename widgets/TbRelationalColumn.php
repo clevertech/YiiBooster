@@ -90,7 +90,7 @@ class TbRelationalColumn extends TbDataColumn
 				$options['class'] = $class;
 		}
 		echo CHtml::openTag('td', $options);
-		echo CHtml::openTag('span', array('class' => $this->cssClass, 'data-rowid' => $data->id));
+		echo CHtml::openTag('span', array('class' => $this->cssClass, 'data-rowid' => $data->primaryKey));
 		$this->renderDataCellContent($row, $data);
 		echo '</span>';
 		echo '</td>';
