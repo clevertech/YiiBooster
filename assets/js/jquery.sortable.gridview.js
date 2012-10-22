@@ -35,7 +35,7 @@
                     var key = keys.eq(originalPos);
                     var sort = [];//sort number values from to
                     keys.each(function(i) {
-                        sort[i] = $(this).attr('data-sort');
+                        sort[i] = $(this).attr('data-order');
                     });
 
                     if(originalPos < pos)
@@ -53,7 +53,7 @@
                     var sortData = {};
                     keys = grid.children(".keys").children("span");
                     keys.each(function(i) {
-                        $(this).attr('data-sort', sort[i]);
+                        $(this).attr('data-order', sort[i]);
                         sortData[$(this).text()] = sort[i];
                     });
                     callback(sortData);

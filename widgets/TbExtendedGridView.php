@@ -222,7 +222,7 @@ class TbExtendedGridView extends TbGridView
 			'title'=>Yii::app()->getRequest()->getUrl(),
 		));
 		foreach($this->dataProvider->getData() as $data)
-			echo CHtml::tag('span',array('data-sort' => (int)$data->{$this->sortableAttribute}), CHtml::encode($data->id));
+			echo CHtml::tag('span',array('data-order' => (int)$data->{$this->sortableAttribute}), CHtml::encode($data->id));
 		echo "</div>\n";
 	}
 
