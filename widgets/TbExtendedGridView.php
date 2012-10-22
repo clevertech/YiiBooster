@@ -103,6 +103,11 @@ class TbExtendedGridView extends TbGridView
 	public $sortableRows = false;
 
 	/**
+	 * @var string Database field name for sorting
+	 */
+	public $sortableAttribute = 'sort_order';
+
+	/**
 	 * @var string a javascript function that will be invoked after a successful sorting is done.
 	 * The function signature is <code>function(id, position)</code> where 'id' refers to the ID of the model id key,
 	 * 'position' the new position in the list.
@@ -208,16 +213,16 @@ class TbExtendedGridView extends TbGridView
 	 */
 	public function renderKeys()
 	{
+		if(!$this->sortableRows)
+			return parent::renderKeys();
+
 		echo CHtml::openTag('div',array(
 			'class'=>'keys',
 			'style'=>'display:none',
 			'title'=>Yii::app()->getRequest()->getUrl(),
 		));
-		$pagination=$this->dataProvider->getPagination();
-		$start=$pagination->currentPage*$pagination->pageSize+1;
-		$i=0;
-		foreach($this->dataProvider->getKeys() as $key)
-			echo CHtml::tag('span',array('data-sort' => $start+($i++)), CHtml::encode($key));
+		foreach($this->dataProvider->getData() as $data)
+			echo CHtml::tag('span',array('data-sort' => (int)$data->{$this->sortableAttribute}), CHtml::encode($data->id));
 		echo "</div>\n";
 	}
 
