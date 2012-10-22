@@ -33,6 +33,10 @@
                 {
                     var keys = grid.children(".keys").children("span");
                     var key = keys.eq(originalPos);
+                    var sort = [];//sort number values from to
+                    keys.each(function(i) {
+                        sort[i] = $(this).attr('data-sort');
+                    });
 
                     if(originalPos < pos)
                     {
@@ -46,11 +50,14 @@
                 }
                 if($.isFunction(callback))
                 {
-                    callback(key.text(),pos);
+                    var sortData = {};
+                    keys = grid.children(".keys").children("span");
+                    keys.each(function(i) {
+                        sortData[$(this).text()] = sort[i];
+                    });
+                    callback(sortData);
                 }
             }
         }).disableSelection();
     };
-
-
 })(jQuery);

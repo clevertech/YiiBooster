@@ -204,6 +204,24 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 * Renders the key values of the data in a hidden tag.
+	 */
+	public function renderKeys()
+	{
+		echo CHtml::openTag('div',array(
+			'class'=>'keys',
+			'style'=>'display:none',
+			'title'=>Yii::app()->getRequest()->getUrl(),
+		));
+		$pagination=$this->dataProvider->getPagination();
+		$start=$pagination->currentPage*$pagination->pageSize+1;
+		$i=0;
+		foreach($this->dataProvider->getKeys() as $key)
+			echo CHtml::tag('span',array('data-sort' => $start+($i++)), CHtml::encode($key));
+		echo "</div>\n";
+	}
+
+	/**
 	 * Renders grid header
 	 */
 	public function renderTableHeader()
