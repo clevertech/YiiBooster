@@ -42,7 +42,7 @@ class TbFormButtonElement extends CFormElement
     /**
      * Prepare the options before running the TbButton widget
      *
-     * Map Yii formbuilder compatibel:
+     * Map Yii formbuilder compatible:
      * $this->type => TbButton->buttonType
      * $this->layoutType => TbButton->type
      *
