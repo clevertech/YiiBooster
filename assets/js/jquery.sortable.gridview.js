@@ -53,6 +53,7 @@
                     var sortData = {};
                     keys = grid.children(".keys").children("span");
                     keys.each(function(i) {
+                        $(this).attr('data-sort', sort[i]);
                         sortData[$(this).text()] = sort[i];
                     });
                     callback(sortData);
