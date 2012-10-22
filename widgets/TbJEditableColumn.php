@@ -96,7 +96,7 @@ class TbJEditableColumn extends TbDataColumn
 			$this->jEditableOptions['id'] = @$this->htmlOptions['id'] ? $this->htmlOptions['id'] : $this->id;
 		}
 
-		$this->event = (!isset($this->jEditableOptions['event'])) ? $this->jEditableOptions['event'] : 'click';
+		$this->event = (isset($this->jEditableOptions['event'])) ? $this->jEditableOptions['event'] : 'click';
 
 		$this->jEditableOptions['event'] = null;
 
