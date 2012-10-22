@@ -14,46 +14,54 @@
 
 class TbFormInputElement extends CFormInputElement
 {
+
+    /**
+     * Wrap control-group/controls tags around custom types (CInputWidget or CJuiInputWidget)
+     *
+     * @var bool
+     */
+    public $wrapBootstrapTags = true;
+
     /**
      * Map element->type to TbActiveForm method
      * @var array this->type => TbActiveForm::method
      */
-    public static $tbActiveFormMethods=array(
-        'text'=>'textFieldRow',
-        'password'=>'passwordFieldRow',
-        'textarea'=>'textAreaRow',
-        'file'=>'fileFieldRow',
-        'radio'=>'radioButtonRow',
-        'checkbox'=>'checkBoxRow',
-        'listbox'=>'dropDownListRow',
-        'dropdownlist'=>'dropDownListRow',
-        'checkboxlist'=>'checkBoxListRow',
-        'radiolist'=>'radioButtonListRow',
+    public static $tbActiveFormMethods = array(
+        'text' => 'textFieldRow',
+        'password' => 'passwordFieldRow',
+        'textarea' => 'textAreaRow',
+        'file' => 'fileFieldRow',
+        'radio' => 'radioButtonRow',
+        'checkbox' => 'checkBoxRow',
+        'listbox' => 'dropDownListRow',
+        'dropdownlist' => 'dropDownListRow',
+        'checkboxlist' => 'checkBoxListRow',
+        'radiolist' => 'radioButtonListRow',
 
         //HTML5 types not supported in YiiBooster yet: render as textField
-        'url'=>'textFieldRow',
-        'email'=>'textFieldRow',
-        'number'=>'textFieldRow',
+        'url' => 'textFieldRow',
+        'email' => 'textFieldRow',
+        'number' => 'textFieldRow',
 
         //'range'=>'activeRangeField', not supported yet
-        'date'=>'datepickerRow',
+        'date' => 'datepickerRow',
 
         //new YiiBooster types
-        'captcha'=>'captchaRow',
-        'daterange'=>'dateRangeRow',
-        'redactor'=>'redactorRow',
-        'uneditable'=>'uneditableRow',
-        'radiolistinline'=>'radioButtonListInlineRow',
-        'checkboxlistinline'=>'checkBoxListInlineRow',
+        'captcha' => 'captchaRow',
+        'daterange' => 'dateRangeRow',
+        'redactor' => 'redactorRow',
+        'uneditable' => 'uneditableRow',
+        'radiolistinline' => 'radioButtonListInlineRow',
+        'checkboxlistinline' => 'checkBoxListInlineRow',
     );
 
     /**
      * @var array map the htmlOptions input type: not supported by YiiBooster yet
      */
-    public static $htmlOptionTypes=array(
-        'url'=>'url',
-        'email'=>'email',
-        'number'=>'number',
+    public static $htmlOptionTypes = array(
+        'url' => 'url',
+        'email' => 'email',
+        'number' => 'number',
     );
 
     /**
@@ -73,12 +81,12 @@ class TbFormInputElement extends CFormInputElement
      */
     protected function prepareHtmlOptions($options)
     {
-        if(!empty($this->hint)) //restore hint from config as attribute
-           $options['hint'] = $this->hint;
+        if (!empty($this->hint)) //restore hint from config as attribute
+            $options['hint'] = $this->hint;
 
         //HTML5 types not supported in YiiBooster yet
         //should be possible to set type="email", ... in the htmlOptions
-        if(array_key_exists($this->type,self::$htmlOptionTypes))
+        if (array_key_exists($this->type, self::$htmlOptionTypes))
             $options['type'] = self::$htmlOptionTypes[$this->type];
 
         return $options;
@@ -89,29 +97,60 @@ class TbFormInputElement extends CFormInputElement
      */
     public function render()
     {
-        if(!empty(self::$tbActiveFormMethods[$this->type]))
-       {
-           $method = self::$tbActiveFormMethods[$this->type];
-           $model=$this->getParent()->getModel();
-           $attribute=$this->name;
-           $htmlOptions = $this->prepareHtmlOptions($this->attributes);
+        if (!empty(self::$tbActiveFormMethods[$this->type]))
+        {
+            $method = self::$tbActiveFormMethods[$this->type];
+            $model = $this->getParent()->getModel();
+            $attribute = $this->name;
+            $htmlOptions = $this->prepareHtmlOptions($this->attributes);
 
-           switch($method)
-           {
-               case 'checkBoxListRow':
-               case 'radioButtonListRow':
-               case 'dropDownListRow':
-               case 'radioButtonListInlineRow':
-               case 'checkBoxListInlineRow':
-                   return $this->getActiveFormWidget()->$method($model,$attribute,$this->items,$htmlOptions);
+            switch ($method)
+            {
+                case 'checkBoxListRow':
+                case 'radioButtonListRow':
+                case 'dropDownListRow':
+                case 'radioButtonListInlineRow':
+                case 'checkBoxListInlineRow':
+                    return $this->getActiveFormWidget()->$method($model, $attribute, $this->items, $htmlOptions);
 
-               default:
-                   return $this->getActiveFormWidget()->$method($model,$attribute,$htmlOptions);
-           }
-       }
+                default:
+                    return $this->getActiveFormWidget()->$method($model, $attribute, $htmlOptions);
+            }
+        }
+        else
+            if ($this->wrapBootstrapTags) //wrap tags controls/control-group
+            {
+                $error = $this->getParent()->showErrorSummary ? '' : $this->renderError();
+                $output = array(
+                    '{label}' => $this->renderControlLabel(),
+                    '{input}' => "<div class=\"controls\">\n" . $this->renderInput() . $error . $this->renderHint() . '</div>',
+                    '{hint}' => '',
+                    '{error}' => '',
+                );
 
+                return "<div class=\"control-group\">\n" . strtr($this->layout, $output) . '</div>';
+            }
 
-       return parent::render();
+        return parent::render();
+    }
+
+    /**
+     * Render the label with class="control-label" for custom types
+     */
+    public function renderControlLabel()
+    {
+        $options = array(
+            'label' => $this->getLabel(),
+            'required' => $this->getRequired(),
+            'class' => 'control-label'
+        );
+
+        if (!empty($this->attributes['id']))
+        {
+            $options['for'] = $this->attributes['id'];
+        }
+
+        return CHtml::activeLabel($this->getParent()->getModel(), $this->name, $options);
     }
 
 }
