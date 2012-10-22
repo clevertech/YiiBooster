@@ -67,8 +67,20 @@ class TbRedactorJS extends CInputWidget
 	{
 		Yii::app()->bootstrap->registerAssetCss('redactor.css');
 		Yii::app()->bootstrap->registerAssetJs('redactor.min.js');
+		
+		if ($this->lang != 'en')
+			Yii::app()->bootstrap->registerAssetJs('locales/redactor.'.$this->lang.'.js');
 
-		$options = CJSON::encode(CMap::mergeArray($this->editorOptions, array('lang' => $this->lang)));
+		if (isset($this->editorOptions['plugins']))
+		{
+			foreach($this->editorOptions['plugins'] as $name)
+			{
+				Yii::app()->bootstrap->registerAssetCss('redactor/plugins/'.$name.'.css');
+				Yii::app()->bootstrap->registerAssetJs('redactor/plugins/'.$name.'.js');
+			}
+		}
+
+		$options = CMap::mergeArray($this->editorOptions, array('lang' => $this->lang));
 
 		Yii::app()->bootstrap->registerRedactor('#'.$id, $options);
 	}
