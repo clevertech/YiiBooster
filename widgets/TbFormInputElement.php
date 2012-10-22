@@ -101,6 +101,8 @@ class TbFormInputElement extends CFormInputElement
                case 'checkBoxListRow':
                case 'radioButtonListRow':
                case 'dropDownListRow':
+               case 'radioButtonListInlineRow':
+               case 'checkBoxListInlineRow':
                    return $this->getActiveFormWidget()->$method($model,$attribute,$this->items,$htmlOptions);
 
                default:
