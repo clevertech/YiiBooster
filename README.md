@@ -32,6 +32,9 @@ The YiiBooster library includes:
 * Popovers
 * Accordion
 * Carousel
+* Bootstrap Wizard
+* Toggle Buttons
+* Form Builder Support
 * Typeahead
 * WYSIWYG HTML Editors
     * RedactorJS
