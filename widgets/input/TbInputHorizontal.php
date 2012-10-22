@@ -55,6 +55,31 @@ class TbInputHorizontal extends TbInput
 	}
 
 	/**
+	 * Renders a toogle button
+	 * @return string the rendered content
+	 */
+	protected function toggleButton()
+	{
+		// widget configuration is set on htmlOptions['options']
+		$options = array(
+			'model' => $this->model,
+			'attribute' => $this->attribute
+		);
+		if(isset($this->htmlOptions['options']))
+		{
+			$options = CMap::mergeArray($options, $this->htmlOptions['options']);
+			unset($this->htmlOptions['options']);
+		}
+		$options['htmlOptions'] = $this->htmlOptions;
+
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		$this->widget('bootstrap.widgets.TbToggleButton', $options);
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
 	 * Renders a list of checkboxes.
 	 * @return string the rendered content
 	 */

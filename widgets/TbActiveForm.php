@@ -74,6 +74,18 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a toggle input row.
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes (options key sets the options for the toggle component)
+	 * @return string the generated row
+	 */
+	public function toggleButtonRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_TOGGLEBUTTON, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
 	 * Renders a checkbox list input row.
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
