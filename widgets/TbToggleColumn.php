@@ -86,7 +86,7 @@ class TbToggleColumn extends CGridColumn
 	 * @var string Name of the action to call and toggle values
 	 * @see bootstrap.action.TbToggleAction for an easy way to use with your controller
 	 */
-	public $toggleAction;
+	public $toggleAction = 'toggle';
 
 	/**
 	 * @var string a javascript function that will be invoked after the toggle ajax call.
@@ -102,7 +102,7 @@ class TbToggleColumn extends CGridColumn
 	 * <pre>
 	 *  array(
 	 *     class'=>'TbToggleColumn',
-	 *     'afterDelete'=>'function(success,data){ if(success) alert("Toggled successfuly"); }',
+	 *     'afterToggle'=>'function(success,data){ if(success) alert("Toggled successfuly"); }',
 	 *  ),
 	 * </pre>
 	 */
@@ -121,9 +121,6 @@ class TbToggleColumn extends CGridColumn
 	{
 		if ($this->name === null)
 			throw new CException(Yii::t('zii', '"{attribute}" attribute cannot be empty.', array('{attribute}'=>"name")));
-
-		if($this->toggleAction === null)
-			throw new CException(Yii::t('zii', '"{attribute}" attribute cannot be empty.', array('{attribute}'=>"toggleAction")));
 
 		$this->initButton();
 
