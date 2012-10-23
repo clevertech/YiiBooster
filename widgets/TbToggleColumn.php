@@ -63,6 +63,11 @@ class TbToggleColumn extends CGridColumn
 	public $uncheckedIcon = 'icon-remove-sign';
 
 	/**
+	 * @var boolean display button with text or only icon with label tooltip
+	 */
+	public $displayText = false;
+
+	/**
 	 * @var boolean whether the column is sortable. If so, the header cell will contain a link that may trigger the sorting.
 	 * Defaults to true. Note that if {@link name} is not set, or if {@link name} is not allowed by {@link CSort},
 	 * this property will be treated as false.
@@ -200,10 +205,21 @@ function() {
 		$button = $this->button;
 		$button['icon'] = $checked ? $this->checkedIcon : $this->uncheckedIcon;
 		$button['url'] = isset($button['url']) ? $this->evaluateExpression($button['url'], array('data' => $data, 'row' => $row)) : '#';
-		$button['htmlOptions']['title'] = $checked ? $this->checkedButtonLabel : $this->uncheckedButtonLabel;
-		$button['htmlOptions']['rel'] = 'tooltip';
 
-		echo CHtml::link('<i class="'.$button['icon'].'"></i>', $button['url'], $button['htmlOptions']);
+		if(!$this->displayText)
+		{
+			$button['htmlOptions']['title'] = $checked ? $this->checkedButtonLabel : $this->uncheckedButtonLabel;
+			$button['htmlOptions']['rel'] = 'tooltip';
+			echo CHtml::link('<i class="'.$button['icon'].'"></i>', $button['url'], $button['htmlOptions']);
+		}
+		else
+		{
+			$button['label'] = $checked ? $this->checkedButtonLabel : $this->uncheckedButtonLabel;
+			$button['class'] = 'bootstrap.widgets.TbButton';
+			$widget = Yii::createComponent($button);
+			$widget->init();
+			$widget->run();
+		}
 	}
 
 	/**
