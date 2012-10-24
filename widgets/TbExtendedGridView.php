@@ -108,6 +108,18 @@ class TbExtendedGridView extends TbGridView
 	public $sortableAttribute = 'sort_order';
 
 	/**
+	 * @var boolean Save sort order by ajax
+	 * @see bootstrap.action.TbSortableAction for an easy way to use with your controller
+	 */
+	public $sortableAjaxSave = true;
+
+	/**
+	 * @var string Name of the action to call and sort values
+	 * @see bootstrap.action.TbSortableAction for an easy way to use with your controller
+	 */
+	public $sortableAction = 'sortable';
+
+	/**
 	 * @var string a javascript function that will be invoked after a successful sorting is done.
 	 * The function signature is <code>function(id, position)</code> where 'id' refers to the ID of the model id key,
 	 * 'position' the new position in the list.
@@ -485,9 +497,25 @@ class TbExtendedGridView extends TbGridView
 			$cs->registerCoreScript('jquery.ui');
 			Yii::app()->bootstrap->registerAssetJs('jquery.sortable.gridview.js');
 
+			if($this->sortableAjaxSave)
+			{
+				if($this->sortableAction=='sortable')//route is default
+				{
+					if($module=$this->controller->module->id)
+						$sortableAction = $module . '/' . $this->controller->id . '/' . $this->sortableAction;
+					else
+						$sortableAction = $this->controller->id . '/' . $this->sortableAction;
+				}
+				else
+					$sortableAction = $this->sortableAction;
+				$sortableAction = Yii::app()->createUrl($sortableAction, array('sortableAttribute' => $this->sortableAttribute));
+			}
+			else
+				$sortableAction = '';
+
 			$afterSortableUpdate = CJavaScript::encode($afterSortableUpdate);
-			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
-			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
+			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', '{$sortableAction}', {$afterSortableUpdate});";
+			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', '{$sortableAction}', {$afterSortableUpdate});";
 		}
 
 		if($this->selectableCells)
