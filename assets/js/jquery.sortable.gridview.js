@@ -18,10 +18,11 @@
     /**
      * Returns the key values of the currently checked rows.
      * @param id string the ID of the grid view container
+     * @param action string the action URL for save sortable rows
      * @param column_id string the ID of the column
      * @return array the key values of the currently checked rows.
      */
-    $.fn.yiiGridView.sortable = function (id, callback)
+    $.fn.yiiGridView.sortable = function (id, action, callback)
     {
         var grid = $('#'+id) ;
         $("tbody", grid).sortable({
@@ -48,15 +49,27 @@
                     }
                     originalPos = null;
                 }
+                var sortOrder = {};
+                keys = grid.children(".keys").children("span");
+                keys.each(function(i) {
+                    $(this).attr('data-order', sort[i]);
+                    sortOrder[$(this).text()] = sort[i];
+                });
+                if(action)
+                {
+                    $.fn.yiiGridView.update(id,
+                    {
+                        type:'POST',
+                        url:action,
+                        data:{sortOrder: sortOrder},
+                        success:function(){
+                        grid.removeClass('grid-view-loading');
+                        }
+                    });
+                }
                 if($.isFunction(callback))
                 {
-                    var sortData = {};
-                    keys = grid.children(".keys").children("span");
-                    keys.each(function(i) {
-                        $(this).attr('data-order', sort[i]);
-                        sortData[$(this).text()] = sort[i];
-                    });
-                    callback(sortData);
+                    callback(sortOrder);
                 }
             }
         }).disableSelection();
