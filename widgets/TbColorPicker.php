@@ -16,21 +16,6 @@
  */
 class TbColorPicker extends CWidget
 {
-    /**
-     * @static
-     * @return string
-     * return this widget assetsUrl
-     */
-    public static function getAssetsUrl()
-    {
-        return Yii::app()->bootstrap->getAssetsUrl();
-    }
-
-
-    /**
-     * @var string
-     */
-    public $baseUrl;
 
 
     /**
@@ -56,34 +41,25 @@ class TbColorPicker extends CWidget
 
 
     /**
-     * @return BootColorPicker
+     * @var Bootstrap
      */
-    public function publishAssets()
-    {
-        $this->baseUrl = self::getAssetsUrl() . '/bootcolorpicker';
-        return $this;
-    }
-
+    protected $bootstrap ;
 
     /**
      * @return mixed
      */
     public function init()
     {
-
         parent::init();
 
         $this->cs = Yii::app()->getClientScript();
-        // publish assets and register css/js files
-        $this->publishAssets();
         // register necessary js file and css files
         $this->cs->registerCoreScript('jquery');
+        $this->bootstrap = Yii::app()->bootstrap ;
         // register  bootstrap css
-        Yii::app()->bootstrap->registerCoreCss();
-
-        $this->registerScriptFile('js/bootstrap-colorpicker.js', CClientScript::POS_HEAD);
-
-        $this->registerCssFile('css/colorpicker.css');
+        $this->bootstrap->registerCoreCss();
+        $this->bootstrap->registerAssetJs('bootstrap.colorpicker.js', CClientScript::POS_HEAD);
+        $this->bootstrap->registerAssetCss('bootstrap-colorpicker.css');
 
         if (empty($this->selector)) {
             //just register the necessary css and js files ; you want use it manually
@@ -113,51 +89,5 @@ JS_INIT;
             $this->options[$name] = $value;
         }
     }
-
-    /**
-     * @param $fileName
-     * @param int $position
-     * @return \TbColorPicker
-     * @throws InvalidArgumentException
-     */
-    protected function registerScriptFile($fileName, $position = CClientScript::POS_END)
-    {
-        if (is_string($fileName)) {
-            $jsFiles = explode(',', $fileName);
-        } elseif (is_array($fileName)) {
-            $jsFiles = $fileName;
-        } else {
-            throw new InvalidArgumentException('you must give a string or array as first argument , but now you give' . var_export($fileName, true));
-        }
-        foreach ($jsFiles as $jsFile) {
-            $jsFile = trim($jsFile);
-            $this->cs->registerScriptFile($this->baseUrl . '/' . ltrim($jsFile, '/'), $position);
-        }
-        return $this;
-    }
-
-    /**
-     * @param $fileName
-     * @return \TbColorPicker
-     * @throws InvalidArgumentException
-     */
-    protected function registerCssFile($fileName)
-    {
-        $cssFiles = func_get_args();
-        foreach ($cssFiles as $cssFile) {
-            if (is_string($cssFile)) {
-                $cssFiles2 = explode(',', $cssFile);
-            } elseif (is_array($cssFile)) {
-                $cssFiles2 = $cssFile;
-            } else {
-                throw new InvalidArgumentException('you must give a string or array as first argument , but now you give' . var_export($cssFiles, true));
-            }
-            foreach ($cssFiles2 as $css) {
-                $this->cs->registerCssFile($this->baseUrl . '/' . ltrim($css, '/'));
-            }
-        }
-        return $this;
-    }
-
 
 }
