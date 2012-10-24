@@ -49,11 +49,11 @@
                     }
                     originalPos = null;
                 }
-                var sortData = {};
+                var sortOrder = {};
                 keys = grid.children(".keys").children("span");
                 keys.each(function(i) {
                     $(this).attr('data-order', sort[i]);
-                    sortData[$(this).text()] = sort[i];
+                    sortOrder[$(this).text()] = sort[i];
                 });
                 if(action)
                 {
@@ -61,7 +61,7 @@
                     {
                         type:'POST',
                         url:action,
-                        data:sortData,
+                        data:{sortOrder: sortOrder},
                         success:function(){
                         grid.removeClass('grid-view-loading');
                         }
@@ -69,7 +69,7 @@
                 }
                 if($.isFunction(callback))
                 {
-                    callback(sortData);
+                    callback(sortOrder);
                 }
             }
         }).disableSelection();

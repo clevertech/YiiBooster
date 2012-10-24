@@ -22,10 +22,10 @@ class TbSortableAction extends CAction
 	 */
     public function run()
     {
-        if (Yii::app()->request->isPostRequest && Yii::app()->request->isAjaxRequest) {
+        if (Yii::app()->request->isPostRequest && Yii::app()->request->isAjaxRequest && isset($_POST['sortOrder'])) {
             $sortableAttribute = Yii::app()->request->getQuery('sortableAttribute');
 
-            /** @var $model Item CActiveRecord */
+            /** @var $model CActiveRecord */
             $model = new $this->modelName;
             if (!$model->hasAttribute($sortableAttribute)) {
                 throw new CHttpException(500, Yii::t('yii', '{attribute} "{value}" is invalid.', array('{attribute}' => 'sortableAttribute', '{value}' => $sortableAttribute)));
@@ -33,7 +33,7 @@ class TbSortableAction extends CAction
 
             $query = "UPDATE {$model->tableName()} SET {$sortableAttribute} = CASE ";
             $ids = array();
-            foreach ($_POST as $id => $sort_order) {
+            foreach ($_POST['sortOrder'] as $id => $sort_order) {
                 $id = intval($id);
                 $sort_order = intval($sort_order);
                 $query .= "WHEN id={$id} THEN {$sort_order} ";
