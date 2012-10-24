@@ -31,7 +31,7 @@ class TbSortableAction extends CAction
                 throw new CHttpException(500, Yii::t('yii', '{attribute} "{value}" is invalid.', array('{attribute}' => 'sortableAttribute', '{value}' => $sortableAttribute)));
             }
 
-            $query = "UPDATE {$model->tableName()} SET sort_order = CASE ";
+            $query = "UPDATE {$model->tableName()} SET {$sortableAttribute} = CASE ";
             $ids = array();
             foreach ($_POST as $id => $sort_order) {
                 $id = intval($id);
