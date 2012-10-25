@@ -41,7 +41,6 @@ class TbSortableAction extends CAction
             }
             $query .= 'END WHERE sort_order IN (' . implode(',', $ids) . ');';
             Yii::app()->db->createCommand($query)->execute();
-            Yii::app()->end();
         } else {
             throw new CHttpException(500, Yii::t('yii', 'Your request is invalid.'));
         }
