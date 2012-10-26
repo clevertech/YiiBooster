@@ -74,6 +74,18 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a toggle input row.
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes (options key sets the options for the toggle component)
+	 * @return string the generated row
+	 */
+	public function toggleButtonRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_TOGGLEBUTTON, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
 	 * Renders a checkbox list input row.
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
@@ -208,6 +220,18 @@ class TbActiveForm extends CActiveForm
 	public function redactorRow($model, $attribute, $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_REDACTOR, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
+	 * Renders a WYSIWYG bootstrap editor
+	 * @param $model
+	 * @param $attribute
+	 * @param array $htmlOptions
+	 * @return string
+	 */
+	public function html5EditorRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_HTML5EDITOR, $model, $attribute, null, $htmlOptions);
 	}
 
 	/**

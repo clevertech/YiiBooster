@@ -22,10 +22,6 @@ class TbDatePicker extends CInputWidget
 	 * @var string[] the JavaScript event handlers.
 	 */
 	public $events = array();
-	/**
-	 * @var array the HTML attributes for the widget container.
-	 */
-	public $htmlOptions = array();
 
 	/**
 	 * Initializes the widget.

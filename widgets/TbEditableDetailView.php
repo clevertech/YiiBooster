@@ -26,7 +26,7 @@ class TbEditableDetailView extends CDetailView
     public function init()
     {
         if (!$this->data instanceof CModel) {
-            throw new CException(Yii::t('booster','Property "data" should be of CModel class.'));
+            throw new CException(Yii::t('zii','Property "data" should be of CModel class.'));
         }
 
         parent::init();

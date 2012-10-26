@@ -55,6 +55,31 @@ class TbInputHorizontal extends TbInput
 	}
 
 	/**
+	 * Renders a toogle button
+	 * @return string the rendered content
+	 */
+	protected function toggleButton()
+	{
+		// widget configuration is set on htmlOptions['options']
+		$options = array(
+			'model' => $this->model,
+			'attribute' => $this->attribute
+		);
+		if(isset($this->htmlOptions['options']))
+		{
+			$options = CMap::mergeArray($options, $this->htmlOptions['options']);
+			unset($this->htmlOptions['options']);
+		}
+		$options['htmlOptions'] = $this->htmlOptions;
+
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		$this->widget('bootstrap.widgets.TbToggleButton', $options);
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
 	 * Renders a list of checkboxes.
 	 * @return string the rendered content
 	 */
@@ -261,9 +286,49 @@ class TbInputHorizontal extends TbInput
 			$width = $this->htmlOptions['width'];
 			unset($this->htmlOptions['width']);
 		}
+		if (isset($this->htmlOptions['height']))
+		{
+			$height = $this->htmlOptions['height'];
+			unset($this->htmlOptions['height']);
+		}
 		echo $this->getLabel();
 		echo '<div class="controls">';
 		$this->widget('bootstrap.widgets.TbRedactorJs', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'editorOptions' => isset($options) ? $options : array(),
+			'width' => isset($width) ? $width : '100%',
+			'height' => isset($height) ? $height : '400px',
+			'htmlOptions' => $this->htmlOptions
+		));
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
+	 * Renders Bootstrap wysihtml5 editor.
+	 * @return mixed|void
+	 */
+	protected function html5Editor()
+	{
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+		if (isset($this->htmlOptions['width']))
+		{
+			$width = $this->htmlOptions['width'];
+			unset($this->htmlOptions['width']);
+		}
+		if (isset($this->htmlOptions['height']))
+		{
+			$height = $this->htmlOptions['height'];
+			unset($this->htmlOptions['height']);
+		}
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		$this->widget('bootstrap.widgets.TbHtml5Editor', array(
 			'model' => $this->model,
 			'attribute' => $this->attribute,
 			'editorOptions' => isset($options) ? $options : array(),
