@@ -273,21 +273,21 @@
 		}
 	};
 	
-	$.fn.datepicker = function ( option ) {
+	$.fn.bdatepicker = function ( option ) {
 		return this.each(function () {
 			var $this = $(this),
 				data = $this.data('datepicker'),
 				options = typeof option == 'object' && option;
 			if (!data) {
-				$this.data('datepicker', (data = new Datepicker(this, $.extend({}, $.fn.datepicker.defaults,options))));
+				$this.data('datepicker', (data = new Datepicker(this, $.extend({}, $.fn.bdatepicker.defaults,options))));
 			}
 			if (typeof option == 'string') data[option]();
 		});
 	};
 
-	$.fn.datepicker.defaults = {
+	$.fn.bdatepicker.defaults = {
 	};
-	$.fn.datepicker.Constructor = Datepicker;
+	$.fn.bdatepicker.Constructor = Datepicker;
 	
 	var DPGlobal = {
 		modes: [
