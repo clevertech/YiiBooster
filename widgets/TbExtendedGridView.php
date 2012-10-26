@@ -608,7 +608,7 @@ class TbExtendedGridView extends TbGridView
 			// add the required column object in
 			$config['column'] = $column;
 			// build the summary operation object
-			$op = $this->getSummaryOperationInstance($config);
+			$op = $this->getSummaryOperationInstance($column->name, $config);
 			// process the value
 			$op->processValue($value);
 		}
@@ -617,11 +617,12 @@ class TbExtendedGridView extends TbGridView
 
 	/**
 	 * Each type of 'extended' summary
-	 * @param $config
+	 * @param $name the name of the column
+	 * @param $config the configuration of the column at the extendedSummary
 	 * @return mixed
 	 * @throws CException
 	 */
-	protected function getSummaryOperationInstance($config)
+	protected function getSummaryOperationInstance($name, $config)
 	{
 		if (!isset($config['class']))
 			throw new CException(Yii::t('zii', 'Column summary configuration must be an array containing a "type" element.'));
@@ -629,12 +630,13 @@ class TbExtendedGridView extends TbGridView
 		if (!in_array($config['class'], $this->extendedSummaryOperations))
 			throw new CException(Yii::t('zii', '"{operation}" is an unsupported class operation.', array('{operation}' => $config['class'])));
 
-		if (!isset($this->extendedSummaryTypes[$config['class']]))
+		// name of the column should be unique
+		if (!isset($this->extendedSummaryTypes[$name]))
 		{
-			$this->extendedSummaryTypes[$config['class']] = Yii::createComponent($config);
-			$this->extendedSummaryTypes[$config['class']]->init();
+			$this->extendedSummaryTypes[$name] = Yii::createComponent($config);
+			$this->extendedSummaryTypes[$name]->init();
 		}
-		return $this->extendedSummaryTypes[$config['class']];
+		return $this->extendedSummaryTypes[$name];
 	}
 
 	/**
