@@ -103,7 +103,7 @@ class TbExtendedGridView extends TbGridView
 	public $sortableRows = false;
 
 	/**
-	 * @var string Database field name for sorting
+	 * @var string Database field name for row sorting
 	 */
 	public $sortableAttribute = 'sort_order';
 
@@ -225,7 +225,9 @@ class TbExtendedGridView extends TbGridView
 	 */
 	public function renderKeys()
 	{
-		if(!$this->sortableRows)
+		$data = $this->dataProvider->getData();
+
+		if(!$this->sortableRows || !$data[0]->hasAttribute($this->sortableAttribute))
 			return parent::renderKeys();
 
 		echo CHtml::openTag('div',array(
@@ -233,9 +235,30 @@ class TbExtendedGridView extends TbGridView
 			'style'=>'display:none',
 			'title'=>Yii::app()->getRequest()->getUrl(),
 		));
-		foreach($this->dataProvider->getData() as $data)
-			echo CHtml::tag('span',array('data-order' => (int)$data->{$this->sortableAttribute}), CHtml::encode($data->id));
+		foreach($data as $d)
+			echo CHtml::tag('span',array('data-order' => (int)$d->{$this->sortableAttribute}), CHtml::encode($this->getPrimaryKey($d)));
 		echo "</div>\n";
+	}
+
+	/**
+	 * Helper function to return the primary key of the $data
+	 * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
+	 *
+	 * @param $data
+	 * @return null|string
+	 */
+	protected function getPrimaryKey($data)
+	{
+		if($this->dataProvider instanceof CActiveDataProvider)
+		{
+			$key=$this->grid->dataProvider->keyAttribute===null ? $data->getPrimaryKey() : $data->{$this->keyAttribute};
+			return is_array($key) ? implode(',',$key) : $key;
+		}
+		if($this->dataProvider instanceof CArrayDataProvider)
+		{
+			return is_object($data) ? $data->{$this->dataProvider->keyField} : $data[$this->dataProvider->keyField];
+		}
+		return null;
 	}
 
 	/**
