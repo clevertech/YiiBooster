@@ -39,7 +39,7 @@ class TbSortableAction extends CAction
                 $query .= "WHEN {$model->tableSchema->primaryKey}={$id} THEN {$sort_order} ";
                 $ids[] = $id;
             }
-            $query .= "END WHERE {$sortableAttribute} IN (" . implode(',', $ids) . ');';
+            $query .= "END WHERE {$model->tableSchema->primaryKey} IN (" . implode(',', $ids) . ');';
             Yii::app()->db->createCommand($query)->execute();
         } else {
             throw new CHttpException(500, Yii::t('yii', 'Your request is invalid.'));
