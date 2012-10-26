@@ -155,8 +155,10 @@ class TbForm extends CForm
     {
         if ($element instanceof TbFormInputElement)
         {
-            if ($element->type !== 'hidden') //use default from parent for 'hidden' elements
-                return $element->render();
+	        if ($element->type === 'hidden')
+		        return "<div style=\"display:none\">\n".$element->renderInput()."</div>\n";
+	        else
+		        return $element->render();
         }
 
         return parent::renderElement($element);
