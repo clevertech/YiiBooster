@@ -36,6 +36,8 @@ The YiiBooster library includes:
 * Toggle Buttons
 * Form Builder Support
 * Typeahead
+* Datepicker
+* Colorpicker
 * WYSIWYG HTML Editors
     * RedactorJS
     * Html5Editor
