@@ -3,7 +3,7 @@
  * Gu Youn <http://github.com/guyoun>
  */
 ;(function($){
-	$.fn.datepicker.dates['kr'] = {
+	$.fn.bdatepicker.dates['kr'] = {
 		days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
 		daysShort: ["일", "월", "화", "수", "목", "금", "토", "일"],
 		daysMin: ["일", "월", "화", "수", "목", "금", "토", "일"],
