@@ -63,6 +63,11 @@ class TbToggleColumn extends CGridColumn
 	public $uncheckedIcon = 'icon-remove-sign';
 
 	/**
+	 * @var boolean display button with text or only icon with label tooltip
+	 */
+	public $displayText = false;
+
+	/**
 	 * @var boolean whether the column is sortable. If so, the header cell will contain a link that may trigger the sorting.
 	 * Defaults to true. Note that if {@link name} is not set, or if {@link name} is not allowed by {@link CSort},
 	 * this property will be treated as false.
@@ -86,7 +91,7 @@ class TbToggleColumn extends CGridColumn
 	 * @var string Name of the action to call and toggle values
 	 * @see bootstrap.action.TbToggleAction for an easy way to use with your controller
 	 */
-	public $toggleAction;
+	public $toggleAction = 'toggle';
 
 	/**
 	 * @var string a javascript function that will be invoked after the toggle ajax call.
@@ -102,7 +107,7 @@ class TbToggleColumn extends CGridColumn
 	 * <pre>
 	 *  array(
 	 *     class'=>'TbToggleColumn',
-	 *     'afterDelete'=>'function(success,data){ if(success) alert("Toggled successfuly"); }',
+	 *     'afterToggle'=>'function(success,data){ if(success) alert("Toggled successfuly"); }',
 	 *  ),
 	 * </pre>
 	 */
@@ -122,9 +127,6 @@ class TbToggleColumn extends CGridColumn
 		if ($this->name === null)
 			throw new CException(Yii::t('zii', '"{attribute}" attribute cannot be empty.', array('{attribute}'=>"name")));
 
-		if($this->toggleAction === null)
-			throw new CException(Yii::t('zii', '"{attribute}" attribute cannot be empty.', array('{attribute}'=>"toggleAction")));
-
 		$this->initButton();
 
 		$this->registerClientScript();
@@ -139,10 +141,6 @@ class TbToggleColumn extends CGridColumn
 			$this->checkedButtonLabel = Yii::t('zii', 'Uncheck');
 		if ($this->uncheckedButtonLabel === null)
 			$this->uncheckedButtonLabel = Yii::t('zii', 'Check');
-		if ($this->checkedIcon === null)
-			$this->checkedIcon = 'icon-ok-circle';
-		if ($this->uncheckedIcon === null)
-			$this->uncheckedIcon = 'icon-remove-sign';
 
 		$this->button = array(
 			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("id"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
@@ -206,14 +204,22 @@ function() {
 		$checked = CHtml::value($data, $this->name);
 		$button = $this->button;
 		$button['icon'] = $checked ? $this->checkedIcon : $this->uncheckedIcon;
-		$button['label'] = $checked ? $this->checkedButtonLabel : $this->uncheckedButtonLabel;
-
 		$button['url'] = isset($button['url']) ? $this->evaluateExpression($button['url'], array('data' => $data, 'row' => $row)) : '#';
 
-		$button['class'] = 'bootstrap.widgets.TbButton';
-		$widget = Yii::createComponent($button);
-		$widget->init();
-		$widget->run();
+		if(!$this->displayText)
+		{
+			$button['htmlOptions']['title'] = $checked ? $this->checkedButtonLabel : $this->uncheckedButtonLabel;
+			$button['htmlOptions']['rel'] = 'tooltip';
+			echo CHtml::link('<i class="'.$button['icon'].'"></i>', $button['url'], $button['htmlOptions']);
+		}
+		else
+		{
+			$button['label'] = $checked ? $this->checkedButtonLabel : $this->uncheckedButtonLabel;
+			$button['class'] = 'bootstrap.widgets.TbButton';
+			$widget = Yii::createComponent($button);
+			$widget->init();
+			$widget->run();
+		}
 	}
 
 	/**

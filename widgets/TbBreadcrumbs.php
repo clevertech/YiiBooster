@@ -16,7 +16,7 @@ Yii::import('zii.widgets.CBreadcrumbs');
 class TbBreadcrumbs extends CBreadcrumbs
 {
 	/**
-	 * @var string the separator between links in the breadcrumbs. Defaults to '/'.
+	 * @var string the tag name for the breadcrumbs container tag. Defaults to 'div'.
 	 */
 	public $separator = '/';
 
@@ -29,6 +29,9 @@ class TbBreadcrumbs extends CBreadcrumbs
 			$this->htmlOptions['class'] .= ' breadcrumb';
 		else
 			$this->htmlOptions['class'] = 'breadcrumb';
+
+		// apply bootstrap style
+		$this->separator = '<span class="divider">' . $this->separator . '</span>';
 	}
 
 	/**
@@ -47,22 +50,23 @@ class TbBreadcrumbs extends CBreadcrumbs
 		{
 			$content = CHtml::link(Yii::t('zii', 'Home'), Yii::app()->homeUrl);
 			$links[] = $this->renderItem($content);
-		}
-		else if ($this->homeLink !== false)
+		} else if ($this->homeLink !== false)
 			$links[] = $this->renderItem($this->homeLink);
 
+		$count = count($this->links);
+		$counter = 0;
 		foreach ($this->links as $label => $url)
 		{
+			++$counter; // latest is the active one
 			if (is_string($label) || is_array($url))
 			{
 				$content = CHtml::link($this->encodeLabel ? CHtml::encode($label) : $label, $url);
 				$links[] = $this->renderItem($content);
-			}
-			else
-				$links[] = $this->renderItem($this->encodeLabel ? CHtml::encode($url) : $url, true);
+			} else
+				$links[] = $this->renderItem($this->encodeLabel ? CHtml::encode($url) : $url, ($counter === $count));
 		}
 
-		echo CHtml::tag('ul', $this->htmlOptions, implode('', $links));
+		echo CHtml::tag('ul', $this->htmlOptions, implode($this->separator, $links));
 	}
 
 	/**
@@ -73,11 +77,9 @@ class TbBreadcrumbs extends CBreadcrumbs
 	 */
 	protected function renderItem($content, $active = false)
 	{
-		$separator = !$active ? '<span class="divider">'.$this->separator.'</span>' : '';
-		
 		ob_start();
-		echo CHtml::openTag('li', $active ? array('class'=>'active') : array());
-		echo $content.$separator;
+		echo CHtml::openTag('li', $active ? array('class' => 'active') : array());
+		echo $content;
 		echo '</li>';
 		return ob_get_clean();
 	}
