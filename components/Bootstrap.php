@@ -25,7 +25,7 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_TOOLTIP = 'tooltip';
 	const PLUGIN_TRANSITION = 'transition';
 	const PLUGIN_TYPEAHEAD = 'typeahead';
-	const PLUGIN_DATEPICKER = 'datepicker';
+	const PLUGIN_DATEPICKER = 'bdatepicker';
 	const PLUGIN_REDACTOR = 'redactor';
 	const PLUGIN_AFFIX = 'affix';
 	const PLUGIN_DATERANGEPICKER = 'daterangepicker';

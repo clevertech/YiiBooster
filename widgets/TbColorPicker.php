@@ -13,81 +13,77 @@
  *
  * @see http://www.eyecon.ro/bootstrap-colorpicker/
  * ------------------------------------------------------------------------
+ *
+ * - Changelog
+ * @since 10/27/12 7:28 PM
+ * @author Antonio Ramirez <antonio@clevertech.biz>
+ * Total refactor to work as a widget instead of a class and allow the use of TbActiveForm
+ *
  */
-class TbColorPicker extends CWidget
+class TbColorPicker extends CInputWidget
 {
 
+	/**
+	 * @var string the color format - hex | rgb | rgba. Defaults to 'hex'
+	 */
+	public $format = 'hex';
+	/**
+	 * @var string[] the JavaScript event handlers.
+	 * @see http://www.eyecon.ro/bootstrap-colorpicker/ events section
+	 *  show    This event fires immediately when the color picker is displayed.
+	 *  hide    This event is fired immediately when the color picker is hidden.
+	 *  changeColor    This event is fired when the color is changed.
+	 *
+	 * <pre>
+	 *  'events'=>array(
+	 *      'changeColor'=>'js:function(ev){
+	 *          console.log(ev.color.toHex());
+	 *      }',
+	 *      'hide'=>'js:function(ev){
+	 *    	console.log("I am hidden!");
+	 *   }')
+	 * </pre>
+	 */
+	public $events = array();
 
-    /**
-     * @var \CClientScript
-     */
-    protected $cs;
+	/**
+	 * Widget's run function
+	 */
+	public function run()
+	{
+		list($name, $id) = $this->resolveNameID();
 
-    /**
-     * @var array|string
-     * -------------------------
-     * the options will be passed to the underlying plugin
-     *   eg:  js:{key:val,k2:v2...}
-     *   array('key'=>$val,'k'=>v2);
-     * -------------------------
-     */
-    public $options = array();
+		$this->registerClientScript($id);
 
+		$this->htmlOptions['id'] = $id;
 
-    /**
-     * @var string
-     */
-    public $selector;
+		// Do we have a model?
+		if ($this->hasModel())
+		{
+			$html = CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
+		} else
+		{
+			$html = CHtml::textField($name, $this->value, $this->htmlOptions);
+		}
+		echo $html;
+	}
 
+	/**
+	 * Registers required
+	 * @param $id
+	 */
+	public function registerClientScript($id)
+	{
+		Yii::app()->bootstrap->registerAssetJs('bootstrap.colorpicker.js', CClientScript::POS_HEAD);
+		Yii::app()->bootstrap->registerAssetCss('bootstrap-colorpicker.css');
 
-    /**
-     * @var Bootstrap
-     */
-    protected $bootstrap ;
+		$options = !empty($this->format) ? CJavaScript::encode(array('format' => $this->format)) : '';
 
-    /**
-     * @return mixed
-     */
-    public function init()
-    {
-        parent::init();
+		ob_start();
+		echo "jQuery('#{$id}').colorpicker({$options})";
+		foreach ($this->events as $event => $handler)
+			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 
-        $this->cs = Yii::app()->getClientScript();
-        // register necessary js file and css files
-        $this->cs->registerCoreScript('jquery');
-        $this->bootstrap = Yii::app()->bootstrap ;
-        // register  bootstrap css
-        $this->bootstrap->registerCoreCss();
-        $this->bootstrap->registerAssetJs('bootstrap.colorpicker.js', CClientScript::POS_HEAD);
-        $this->bootstrap->registerAssetCss('bootstrap-colorpicker.css');
-
-        if (empty($this->selector)) {
-            //just register the necessary css and js files ; you want use it manually
-            return;
-        }
-
-        $options = empty($this->options) ? '' : CJavaScript::encode($this->options);
-
-        $jsSetup = <<<JS_INIT
-         $("{$this->selector}").colorpicker({$options});
-JS_INIT;
-        $this->cs->registerScript(__CLASS__ . '#' . $this->getId(), $jsSetup, CClientScript::POS_READY);
-
-    }
-
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __set($name, $value)
-    {
-        try {
-            //shouldn't swallow the parent ' __set operation
-            parent::__set($name, $value);
-        } catch (Exception $e) {
-            $this->options[$name] = $value;
-        }
-    }
-
+		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
+	}
 }

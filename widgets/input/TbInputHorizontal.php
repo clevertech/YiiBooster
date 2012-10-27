@@ -271,6 +271,41 @@ class TbInputHorizontal extends TbInput
 	}
 
 	/**
+	 * Renders a colorpicker field.
+	 * @return string the rendered content
+	 * @author antonio ramirez <antonio@clevertech.biz>
+	 */
+	protected function colorpickerField()
+	{
+		$format = 'hex';
+		if (isset($this->htmlOptions['format']))
+		{
+			$format = $this->htmlOptions['format'];
+			unset($this->htmlOptions['format']);
+		}
+
+		if (isset($this->htmlOptions['events']))
+		{
+			$events = $this->htmlOptions['events'];
+			unset($this->htmlOptions['events']);
+		}
+
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		$this->widget('bootstrap.widgets.TbColorPicker', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'format' => $format,
+			'events' => isset($events) ? $events : array(),
+			'htmlOptions' => $this->htmlOptions,
+		));
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
 	 * Renders a redactor.
 	 * @return string the rendered content
 	 */

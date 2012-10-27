@@ -32,6 +32,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_HTML5EDITOR = 'wysihtml5';
 	const TYPE_DATERANGEPICKER = 'daterangepicker';
 	const TYPE_TOGGLEBUTTON = 'togglebutton';
+	const TYPE_COLORPICKER = 'colorpicker';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
@@ -253,6 +254,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_TOGGLEBUTTON:
 				$this->toggleButton();
+				break;
+
+			case self::TYPE_COLORPICKER:
+				$this->colorpickerField();
 				break;
 
 			default:
@@ -524,4 +529,11 @@ abstract class TbInput extends CInputWidget
 	 * @return mixed
 	 */
 	abstract protected function dateRangeField();
+
+	/**
+	 * Renders a colorpicker field.
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function colorpickerField();
 }
