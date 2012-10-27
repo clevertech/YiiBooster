@@ -17,6 +17,8 @@ Yii::import('bootstrap.widgets.TbGridView');
  *  - Display an extended summary of the records shown. The extended summary can be configured to any of the
  *  {@link TbOperation} type of widgets.
  *  - Automatic chart display (using TbHighCharts widget), where user can 'switch' between views.
+ *  - Selectable cells
+ *  - Sortable rows
  */
 class TbExtendedGridView extends TbGridView
 {
@@ -108,16 +110,23 @@ class TbExtendedGridView extends TbGridView
 	public $sortableAttribute = 'sort_order';
 
 	/**
-	 * @var boolean Save sort order by ajax
+	 * @var boolean Save sort order by ajax defaults to false
 	 * @see bootstrap.action.TbSortableAction for an easy way to use with your controller
 	 */
-	public $sortableAjaxSave = true;
+	public $sortableAjaxSave = false;
 
 	/**
 	 * @var string Name of the action to call and sort values
 	 * @see bootstrap.action.TbSortableAction for an easy way to use with your controller
+	 *
+	 * <pre>
+	 *  'sortableAction'=>'module/controller/sortable' | 'controller/sortable'
+	 * </pre>
+	 *
+	 * The widget will make use of the string to create the URL and then append $sortableAttribute
+	 * @see $sortableAttribute
 	 */
-	public $sortableAction = 'sortable';
+	public $sortableAction;
 
 	/**
 	 * @var string a javascript function that will be invoked after a successful sorting is done.
@@ -227,8 +236,10 @@ class TbExtendedGridView extends TbGridView
 	{
 		$data = $this->dataProvider->getData();
 
-		if(!$this->sortableRows || !$data[0]->hasAttribute($this->sortableAttribute))
+		if(!$this->sortableRows || !$this->getAttribute($data[0], $this->sortableAttribute))
+		{
 			return parent::renderKeys();
+		}
 
 		echo CHtml::openTag('div',array(
 			'class'=>'keys',
@@ -236,10 +247,36 @@ class TbExtendedGridView extends TbGridView
 			'title'=>Yii::app()->getRequest()->getUrl(),
 		));
 		foreach($data as $d)
-			echo CHtml::tag('span',array('data-order' => (int)$d->{$this->sortableAttribute}), CHtml::encode($this->getPrimaryKey($d)));
+			echo CHtml::tag('span',array('data-order' => $this->getAttribute($d, $this->sortableAttribute), CHtml::encode($this->getPrimaryKey($d))));
 		echo "</div>\n";
 	}
 
+	/**
+	 * Helper function to get an attribute from the data
+	 *
+	 * @param $data
+	 * @param $attribute the attribute to get
+	 * @return mixed the attribute value null if none found
+	 */
+	protected function getAttribute($data, $attribute)
+	{
+		if($this->dataProvider instanceof CActiveDataProvider && $data->hasAttribute($attribute))
+		{
+			return $data->{$attribute};
+		}
+		if($this->dataProvider instanceof CArrayDataProvider)
+		{
+			if (is_object($data) && isset($data->{$attribute}))
+			{
+				return $data->{$attribute};
+			}
+			if (isset($data[$attribute]))
+			{
+				return $data[$attribute];
+			}
+		}
+		return null;
+	}
 	/**
 	 * Helper function to return the primary key of the $data
 	 * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
@@ -520,18 +557,9 @@ class TbExtendedGridView extends TbGridView
 			$cs->registerCoreScript('jquery.ui');
 			Yii::app()->bootstrap->registerAssetJs('jquery.sortable.gridview.js');
 
-			if($this->sortableAjaxSave)
+			if($this->sortableAjaxSave && $this->sortableAction !== null)
 			{
-				if($this->sortableAction=='sortable')//route is default
-				{
-					if($module=$this->controller->module->id)
-						$sortableAction = $module . '/' . $this->controller->id . '/' . $this->sortableAction;
-					else
-						$sortableAction = $this->controller->id . '/' . $this->sortableAction;
-				}
-				else
-					$sortableAction = $this->sortableAction;
-				$sortableAction = Yii::app()->createUrl($sortableAction, array('sortableAttribute' => $this->sortableAttribute));
+				$sortableAction = Yii::app()->createUrl($this->sortableAction, array('sortableAttribute' => $this->sortableAttribute));
 			}
 			else
 				$sortableAction = '';
