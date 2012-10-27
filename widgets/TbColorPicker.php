@@ -24,6 +24,12 @@ class TbColorPicker extends CInputWidget
 {
 
 	/**
+	 * @var TbActiveForm when created via TbActiveForm, this attribute is set to the form that renders the widget
+	 * @see TbActionForm->inputRow
+	 */
+	public $form;
+
+	/**
 	 * @var string the color format - hex | rgb | rgba. Defaults to 'hex'
 	 */
 	public $format = 'hex';
@@ -60,12 +66,14 @@ class TbColorPicker extends CInputWidget
 		// Do we have a model?
 		if ($this->hasModel())
 		{
-			$html = CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
+			if ($this->form)
+				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+			else
+				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
 		} else
 		{
-			$html = CHtml::textField($name, $this->value, $this->htmlOptions);
+			echo  CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
-		echo $html;
 	}
 
 	/**
