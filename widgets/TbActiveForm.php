@@ -298,7 +298,94 @@ class TbActiveForm extends CActiveForm
 	{
 		return $this->inputRow(TbInput::TYPE_DATERANGEPICKER, $model, $attribute, null, $htmlOptions);
 	}
+	
+	/**
+     * Renders a timepicker field row.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $htmlOptions additional HTML attributes
+     * @return string the generated row
+     * @since 0.10.0
+     */
+    public function timepickerRow($model, $attribute, $htmlOptions = array())
+    {
+        return $this->inputRow(TbInput::TYPE_TIMEPICKER, $model, $attribute, null, $htmlOptions);
+    }
+	
+	
+	/**
+     * Renders a timepicker field row.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $options additional HTML attributes
+     * @return string the generated row
+     * @since 0.10.0
+     */
+    public function dateTimepickerRow($model, $attribute, $options = array())
+    {
+        $name=CHtml::activeName($model,$attribute);
+        $id=CHtml::getIdByName($name);
 
+        echo $this->hiddenField($model, $attribute);
+
+        Yii::app()->clientScript->registerScript($id.'_event', "
+            $('#".$id."_date').add('#".$id."_time').on('blur change changeDate', function(){
+                var date = $('#".$id."_date').val(),
+                    dateArr,
+                    dateTime;
+                dateArr = date.split('.');
+                dateTime = dateArr[2] + '-' + dateArr[1] + '-' + dateArr[0] + ' ' + $('#".$id."_time').val()+':00';
+                $('#".$id."').val(dateTime);
+            });
+        ", CClientScript::POS_READY);
+
+        if ($model->isNewRecord)
+            $date = date('d.m.Y',time());
+        else
+            $date = date('d.m.Y',strtotime($model->$attribute));
+        $options['date']['htmlOptions'] = array(
+            'name'  => $id.'_date',
+            'value' => $date,
+            'class' => 'span12',
+            'autocomplete'=>'off'
+        );
+        $options['date']['options'] = array(
+            'weekStart'=>1,
+            'format'=>'dd.mm.yyyy'
+        );
+
+        $options['time']['htmlOptions']['name']  = $id.'_time';
+        $options['time']['htmlOptions']['class'] = 'span12';
+        $options['time']['htmlOptions']['autocomplete'] = 'off';
+        if ((!isset($options['time']['htmlOptions']['value'])) || (!$options['time']['htmlOptions']['value']))
+        {
+            $time = date('H:i',strtotime($model->$attribute));
+            $options['time']['htmlOptions']['value'] = $time;
+        }
+        $options['time']['options']['defaultTime'] = $options['time']['htmlOptions']['value'];
+
+        echo $this->labelEx($model, $attribute);
+
+        echo '<div class="row-fluid"><div class="span2">';
+        echo '<div class="span8">';
+        $this->widget('bootstrap.widgets.BootDatepicker', array(
+            'htmlOptions'=>$options['date']['htmlOptions'],
+            'options'=>isset($options['date']['options'])?$options['date']['options']:array(),
+            'events'=>$options['date']['events'],
+            'value'=>$options['date']['htmlOptions']['value']
+        ));
+        echo '</div>';
+        echo '<div class="span4">';
+        $this->widget('bootstrap.widgets.BootTimepicker', array(
+            'htmlOptions'=>$options['time']['htmlOptions'],
+            'options'=>isset($options['time']['options'])?$options['time']['options']:array(),
+            'events'=>isset($options['time']['events'])?$options['time']['events']:array(),
+            'value'=>$options['time']['htmlOptions']['value']
+        ));
+        echo '</div></div></div>';
+        echo $this->error($model, $attribute);
+    }
+	
 	/**
 	 * Renders a checkbox list for a model attribute.
 	 * This method is a wrapper of {@link CHtml::activeCheckBoxList}.
