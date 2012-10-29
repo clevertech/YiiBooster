@@ -368,15 +368,15 @@ class TbActiveForm extends CActiveForm
 
         echo '<div class="row-fluid"><div class="span2">';
         echo '<div class="span8">';
-        $this->widget('bootstrap.widgets.BootDatepicker', array(
+        $this->widget('bootstrap.widgets.TbDatePicker', array(
             'htmlOptions'=>$options['date']['htmlOptions'],
             'options'=>isset($options['date']['options'])?$options['date']['options']:array(),
-            'events'=>$options['date']['events'],
+            'events'=>isset($options['date']['events']) ? $options['date']['events'] : array(),
             'value'=>$options['date']['htmlOptions']['value']
         ));
         echo '</div>';
         echo '<div class="span4">';
-        $this->widget('bootstrap.widgets.BootTimepicker', array(
+        $this->widget('bootstrap.widgets.TbBootTimepicker', array(
             'htmlOptions'=>$options['time']['htmlOptions'],
             'options'=>isset($options['time']['options'])?$options['time']['options']:array(),
             'events'=>isset($options['time']['events'])?$options['time']['events']:array(),
