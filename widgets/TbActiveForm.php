@@ -366,7 +366,7 @@ class TbActiveForm extends CActiveForm
 
         echo $this->labelEx($model, $attribute);
 
-        echo '<div class="row-fluid"><div class="span2">';
+        echo '<div class="row-fluid">';
         echo '<div class="span8">';
         $this->widget('bootstrap.widgets.TbDatePicker', array(
             'htmlOptions'=>$options['date']['htmlOptions'],
@@ -382,7 +382,7 @@ class TbActiveForm extends CActiveForm
             'events'=>isset($options['time']['events'])?$options['time']['events']:array(),
             'value'=>$options['time']['htmlOptions']['value']
         ));
-        echo '</div></div></div>';
+        echo '</div></div>';
         echo $this->error($model, $attribute);
     }
 	
