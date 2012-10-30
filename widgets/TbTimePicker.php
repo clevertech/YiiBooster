@@ -1,18 +1,13 @@
 <?php
 /**
- * TbBootDatepicker class file.
- * @author Sam Stenvall <sam.stenvall@arcada.fi>
- * @author Christoffer Niska <ChristofferNiska@gmail.com>
- * @copyright Copyright &copy; Christoffer Niska 2012-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package bootstrap.widgets
- * @since 0.10.0
+ * TbTimePicker class file.
+ * @since 1.0.3
  */
 
 /**
- * TbBootstrap datepicker widget.
+ * TbTimePicker widget.
  */
-class TbBootTimepicker extends CInputWidget
+class TbTimePicker extends CInputWidget
 {
 	public $form;
 
@@ -40,8 +35,6 @@ class TbBootTimepicker extends CInputWidget
 
 		if (!isset($this->options['template']))
 			$this->options['template'] = 'dropdown';
-
-		Yii::app()->bootstrap->registerTimepicker();
 	}
 
 	/**
@@ -53,9 +46,25 @@ class TbBootTimepicker extends CInputWidget
 
 		if ($this->hasModel())
 		{
-			echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+			if($this->form)
+				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+			else
+				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
 		} else
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
+
+		$this->registerClientScript($id);
+
+	}
+
+	/**
+	 * Registers required javascript files
+	 * @param $id
+	 */
+	public function registerClientScript($id)
+	{
+		Yii::app()->registerAssetCss('bootstrap-timepicker.css');
+		Yii::app()->registerAssetJs('bootstrap.timepicker.js');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
