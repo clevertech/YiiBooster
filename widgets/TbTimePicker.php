@@ -2,7 +2,7 @@
 /**
  * TbTimePicker class file.
  * @since 1.0.3
- * http://jdewit.github.com/bootstrap-timepicker/
+ * @see http://jdewit.github.com/bootstrap-timepicker/
  */
 
 /**
@@ -47,17 +47,6 @@ class TbTimePicker extends CInputWidget
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
-
-	/**
-	 * Initializes the widget.
-	 */
-	public function init()
-	{
-		$this->htmlOptions['type'] = 'text';
-
-		if (!isset($this->options['template']))
-			$this->options['template'] = 'dropdown';
-	}
 
 	/**
 	 * Runs the widget.

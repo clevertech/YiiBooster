@@ -5,8 +5,7 @@
     margin-top: 1px;
     padding: 4px;
     top: 0;
-    min-height: 50px;
-    min-width: 50px;
+    min-width: 10px;
 }
 .bootstrap-timepicker.dropdown-menu.open {
     display: inline-block;
@@ -33,32 +32,50 @@
     margin-left: -100px;
     margin-top: 0;
     top: 30%;
-    width: 100px;
+    width: 200px;
 }
 .bootstrap-timepicker.modal .modal-content {
     padding: 0;
 }
 .bootstrap-timepicker table {
     margin: 0;
-    width: 50%;
+    width: 100%;
 }
-.bootstrap-timepicker td, .bootstrap-timepicker th {
-    border-radius: 4px 4px 4px 4px;
-    height: 20px;
+.bootstrap-timepicker table td {
+    height: 30px;
+    margin: 0;
+    padding: 2px;
     text-align: center;
 }
-.bootstrap-timepicker td.separator {
-    width: 1px;
+.bootstrap-timepicker table td span {
+    width: 100%;
 }
-.bootstrap-timepicker td a {
+.bootstrap-timepicker table td a {
     border: 1px solid transparent;
-    display: block;
-    margin: 4px;
-    padding: 4px 0;
+    display: inline-block;
+    margin: 0;
+    outline: 0 none;
+    padding: 8px 0;
+    width: 3em;
 }
-.bootstrap-timepicker td a:hover {
+.bootstrap-timepicker table td a:hover {
     background-color: #EEEEEE;
     border-color: #DDDDDD;
     border-radius: 4px 4px 4px 4px;
 }
-
+.bootstrap-timepicker table td a i {
+    margin-top: 2px;
+}
+.bootstrap-timepicker table td input {
+    margin: 0;
+    text-align: center;
+    width: 25px;
+}
+.bootstrap-timepicker-component .add-on {
+    cursor: pointer;
+}
+.bootstrap-timepicker-component .add-on i {
+    display: block;
+    height: 16px;
+    width: 16px;
+}
