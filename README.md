@@ -38,9 +38,11 @@ The YiiBooster library includes:
 * Typeahead
 * Datepicker
 * Colorpicker
+* Timepicker
 * WYSIWYG HTML Editors
     * RedactorJS
     * Html5Editor
+    * CKEditor
 * Boxes 
 * Google Charts
 * HighCharts

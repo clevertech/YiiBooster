@@ -376,7 +376,7 @@ class TbActiveForm extends CActiveForm
         ));
         echo '</div>';
         echo '<div class="span4">';
-        $this->widget('bootstrap.widgets.TbTimepicker', array(
+        $this->widget('bootstrap.widgets.TbTimePicker', array(
             'htmlOptions'=>$options['time']['htmlOptions'],
             'options'=>isset($options['time']['options'])?$options['time']['options']:array(),
             'events'=>isset($options['time']['events'])?$options['time']['events']:array(),
