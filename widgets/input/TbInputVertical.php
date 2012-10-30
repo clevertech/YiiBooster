@@ -353,7 +353,7 @@ class TbInputVertical extends TbInput
 	}
 	
 	/**
-     * Renders a datepicker field.
+     * Renders a timepicker field.
      * @return string the rendered content
 	 * @author Sergii Gamaiunov <hello@webkadabra.com>
      */
@@ -372,7 +372,8 @@ class TbInputVertical extends TbInput
         }
 
         echo $this->getLabel();
-        $this->widget('bootstrap.widgets.TbBootTimepicker', array(
+	    echo $this->getPrepend();
+        $this->widget('bootstrap.widgets.TbTimePicker', array(
             'model'=>$this->model,
             'attribute'=>$this->attribute,
             'options'=>isset($options) ? $options : array(),
@@ -380,6 +381,7 @@ class TbInputVertical extends TbInput
             'htmlOptions'=>$this->htmlOptions,
             'form'=>$this->form
         ));
+	    echo $this->getAppend();
         echo $this->getError().$this->getHint();
     }
 

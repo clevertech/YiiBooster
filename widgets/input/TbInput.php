@@ -265,7 +265,6 @@ abstract class TbInput extends CInputWidget
 			case self::TYPE_TIMEPICKER:
                 $this->timepickerField();
                 break;
-			default:
 			
 			default:
 				throw new CException(__CLASS__ . ': Failed to run widget! Type is invalid.');
@@ -545,7 +544,7 @@ abstract class TbInput extends CInputWidget
 	abstract protected function colorpickerField();
 	
 	/**
-     * Renders a datepicker field.
+     * Renders a timepicker field.
      * @return string the rendered content
      * @abstract
      */

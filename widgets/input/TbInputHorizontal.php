@@ -404,6 +404,7 @@ class TbInputHorizontal extends TbInput
 			'callback' => isset($callback) ? $callback : array(),
 			'htmlOptions' => $this->htmlOptions,
 		));
+		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
@@ -429,6 +430,7 @@ class TbInputHorizontal extends TbInput
 
         echo $this->getLabel();
         echo '<div class="controls">';
+	    echo $this->getPrepend();
         $this->widget('bootstrap.widgets.TbBootTimepicker', array(
             'model'=>$this->model,
             'attribute'=>$this->attribute,
@@ -437,6 +439,7 @@ class TbInputHorizontal extends TbInput
             'htmlOptions'=>$this->htmlOptions,
             'form'=>$this->form
         ));
+	    echo $this->getAppend();
         echo $this->getError().$this->getHint();
         echo '</div>';
     }
