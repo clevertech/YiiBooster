@@ -30,7 +30,8 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_AFFIX = 'affix';
 	const PLUGIN_DATERANGEPICKER = 'daterangepicker';
 	const PLUGIN_HTML5EDITOR = 'wysihtml5';
-
+	const PLUGIN_TIMEPICKER = 'timepicker';
+	
 	/**
 	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
 	 * Defaults to true.
@@ -337,6 +338,18 @@ class Bootstrap extends CApplicationComponent
 		$this->registerPlugin(self::PLUGIN_DATEPICKER, $selector, $options);
 	}
 
+	/**
+	 * Register the Bootstrap timepicker plugin.
+	 * @param string $selector the CSS selector
+	 * @param array $options the plugin options
+	 * @see http://www.eyecon.ro/bootstrap-datepicker/
+	 * @since 1.0.3
+	 */
+	public function registerTimePicker($selector = null, $options = array())
+	{
+		$this->registerPlugin(self::PLUGIN_TIMEPICKER, $selector, $options);
+	}
+	
 	/**
 	 * Registers the RedactorJS plugin.
 	 * @param null $selector

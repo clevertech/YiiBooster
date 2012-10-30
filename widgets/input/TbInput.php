@@ -33,7 +33,8 @@ abstract class TbInput extends CInputWidget
 	const TYPE_DATERANGEPICKER = 'daterangepicker';
 	const TYPE_TOGGLEBUTTON = 'togglebutton';
 	const TYPE_COLORPICKER = 'colorpicker';
-
+	const TYPE_TIMEPICKER = 'timepicker';
+	
 	/**
 	 * @var TbActiveForm the associated form widget.
 	 */
@@ -259,7 +260,12 @@ abstract class TbInput extends CInputWidget
 			case self::TYPE_COLORPICKER:
 				$this->colorpickerField();
 				break;
-
+		
+			// Adding timepicker (Sergii)
+			case self::TYPE_TIMEPICKER:
+                $this->timepickerField();
+                break;
+			
 			default:
 				throw new CException(__CLASS__ . ': Failed to run widget! Type is invalid.');
 		}
@@ -536,4 +542,11 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function colorpickerField();
+	
+	/**
+     * Renders a timepicker field.
+     * @return string the rendered content
+     * @abstract
+     */
+    abstract protected function timepickerField();
 }
