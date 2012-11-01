@@ -196,8 +196,8 @@ class TbBulkActions extends CComponent
 	{
 
 		$js = <<<EOD
-var grid = $("#{$this->grid->id}");
 $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
+	var grid = $("#{$this->grid->id}");
 	if($("input[name='{$this->columnName}']:checked", grid).length)
 	{
 
