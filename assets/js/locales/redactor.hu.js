@@ -21,8 +21,11 @@ RELANG['hu'] = {
 	backcolor: 'Szöveg hátterének színe',
 	unorderedlist: 'Nem számozott lista',
 	orderedlist: 'Számozott lista',	
-	outdent: 'Kihúzás',
+	outdent: 'Behúzás csökkentése',
 	indent: 'Behúzás',
+	redo: 'Újra',
+	undo: 'Visszavonás',
+	cut: 'Kivágás',
 	cancel: 'Mégsem',	
 	insert: 'Beszúrás',
 	save: 'Mentés',	
@@ -64,4 +67,7 @@ RELANG['hu'] = {
 	fullscreen: 'Teljes képernyő',
 	deleted: 'Törölt',
 	anchor: 'Horgony'
+	link_new_tab: 'Link megnyitása új fülön',
+	underline: 'Aláhúzás',
+	alignment: 'Elrendezés'  
 };
