@@ -360,6 +360,13 @@ class TbActiveForm extends CActiveForm
 	{
 		CHtml::resolveNameID($model, $attribute, $htmlOptions);
 		$select = CHtml::resolveValue($model, $attribute);
+		if (is_array($select) && !empty($select) &&  is_object($select[0])) {
+			$pks = array();
+			foreach ($select as $select_item) {
+				$pks[] = $select_item->getPrimaryKey();
+			}
+			$select = $pks;
+		}
 
 		if ($model->hasErrors($attribute))
 		{
@@ -411,9 +418,7 @@ class TbActiveForm extends CActiveForm
 
 		foreach ($data as $value => $label)
 		{
-			$checked = !is_array($select) && !strcmp($value, $select) ||
-                                   is_array($select) && !empty($select) && !is_object($select[0]) && in_array($value, $select) ||
-                                   is_array($select) && !empty($select) && is_object($select[0]) && in_array($value, array_keys(CHtml.listData($select)));
+			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);			
 			$htmlOptions['value'] = $value;
 			$htmlOptions['id'] = $baseID . '_' . $id++;
 			$option = CHtml::$method($name, $checked, $htmlOptions);
