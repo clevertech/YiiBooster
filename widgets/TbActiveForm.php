@@ -413,7 +413,7 @@ class TbActiveForm extends CActiveForm
 		{
 			$checked = !is_array($select) && !strcmp($value, $select) ||
                                    is_array($select) && !empty($select) && !is_object($select[0]) && in_array($value, $select) ||
-                                   is_array($select) && !empty($select) && is_object($select[0]) && in_array($value, array_keys(GxHtml::listDataEx($select)));
+                                   is_array($select) && !empty($select) && is_object($select[0]) && in_array($value, array_keys(CHtml.listData($select)));
 			$htmlOptions['value'] = $value;
 			$htmlOptions['id'] = $baseID . '_' . $id++;
 			$option = CHtml::$method($name, $checked, $htmlOptions);
