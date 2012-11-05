@@ -1,6 +1,6 @@
 /**
- * German translation for bootstrap-datepicker
- * Sam Zurcher <sam@orelias.ch>
+ * Hungarian translation for bootstrap-datepicker
+ * Ferenc Papp <pappfer@gmail.com>
  */
 ;(function($){
 	$.fn.bdatepicker.dates['hu'] = {
