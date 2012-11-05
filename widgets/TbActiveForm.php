@@ -411,7 +411,9 @@ class TbActiveForm extends CActiveForm
 
 		foreach ($data as $value => $label)
 		{
-			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);
+			$checked = !is_array($select) && !strcmp($value, $select) ||
+                                   is_array($select) && !empty($select) && !is_object($select[0]) && in_array($value, $select) ||
+                                   is_array($select) && !empty($select) && is_object($select[0]) && in_array($value, array_keys(CHtml.listData($select)));
 			$htmlOptions['value'] = $value;
 			$htmlOptions['id'] = $baseID . '_' . $id++;
 			$option = CHtml::$method($name, $checked, $htmlOptions);
