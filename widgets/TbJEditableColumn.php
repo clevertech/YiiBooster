@@ -162,7 +162,7 @@ class TbJEditableColumn extends TbDataColumn
 	public function registerClientScript()
 	{
 		$cs = Yii::app()->getClientScript();
-		$assetsUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__) . '/../assets', false, -1, true);
+		$assetsUrl = Yii::app()->bootstrap->getAssetsUrl();
 		$cs->registerScriptFile($assetsUrl . '/js/jquery.jeditable.js', CClientScript::POS_END);
 
 		$cs->registerCss('TbJEditableColumnTimepickerCSS#' . $this->id, "
