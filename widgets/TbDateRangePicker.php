@@ -50,19 +50,28 @@ class TbDateRangePicker extends CInputWidget
 	 */
 	public function run()
 	{
-		list($name, $id) = $this->resolveNameID();
-
-		if ($this->hasModel())
+		if($this->selector)
 		{
-			if ($this->form)
-				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+			Yii::app()->bootstrap->registerDateRangePlugin($this->selector, $this->options, $this->callback);
+		}
+		else
+		{
+			list($name, $id) = $this->resolveNameID();
+	
+			if ($this->hasModel())
+			{
+				if ($this->form)
+					echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+				else
+					echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
+	
+			} 
 			else
-				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
-
-		} else
-			echo CHtml::textField($name, $this->value, $this->htmlOptions);
-
-		Yii::app()->bootstrap->registerDateRangePlugin('#' . $id, $this->options, $this->callback);
+				echo CHtml::textField($name, $this->value, $this->htmlOptions);
+	
+			Yii::app()->bootstrap->registerDateRangePlugin('#' . $id, $this->options, $this->callback);	
+		}
+		
 	}
 
 	/**

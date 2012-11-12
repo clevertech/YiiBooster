@@ -40,6 +40,12 @@
                 base.$originalHeader = $('thead:first', this);
                 base.$clonedHeader = base.$originalHeader.clone();
 
+                // check whether the cloned header has filters
+                if($('tr.filters', base.$clonedHeader).length)
+                {
+                    // remove them, they will have to be added dynamically
+                    $('tr.filters', base.$clonedHeader).remove();
+                }
                 base.$clonedHeader.addClass('tableFloatingHeader');
                 base.$clonedHeader.css({
                     'position': 'fixed',
@@ -82,13 +88,17 @@
                 var offset = $this.offset();
                 var scrollTop = base.$window.scrollTop() + newTopOffset;
                 var scrollLeft = base.$window.scrollLeft();
-
+                var filters = null;
                 if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
                     var newLeft = offset.left - scrollLeft;
                     if (base.isCloneVisible && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
                         return;
                     }
-
+                    filters = $('tr.filters', base.$originalHeader);
+                    if(filters.length)
+                    {
+                        filters.insertAfter(base.$clonedHeader.children().eq(0));
+                    }
                     base.$clonedHeader.css({
                         'top': newTopOffset,
                         'margin-top': 0,
@@ -101,7 +111,12 @@
                     base.topOffset = newTopOffset;
                 }
                 else if (base.isCloneVisible) {
+                    filters = $('tr.filters', base.$clonedHeader);
                     base.$clonedHeader.css('display', 'none');
+                    if(filters.length)
+                    {
+                        filters.insertAfter(base.$originalHeader.children().eq(0));
+                    }
                     base.$originalHeader.css('visibility', 'visible');
                     base.isCloneVisible = false;
                 }

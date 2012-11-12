@@ -22,10 +22,6 @@ class TbDatePicker extends CInputWidget
 	 * @var string[] the JavaScript event handlers.
 	 */
 	public $events = array();
-	/**
-	 * @var array the HTML attributes for the widget container.
-	 */
-	public $htmlOptions = array();
 
 	/**
 	 * Initializes the widget.
@@ -73,11 +69,14 @@ class TbDatePicker extends CInputWidget
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-datepicker.css');
 		Yii::app()->bootstrap->registerAssetJs('bootstrap.datepicker.js');
-
+		if(isset($this->options['language']))
+		{
+			Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.'.$this->options['language'].'.js', CClientScript::POS_END);
+		}
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
 		ob_start();
-		echo "jQuery('#{$id}').datepicker({$options})";
+		echo "jQuery('#{$id}').bdatepicker({$options})";
 		foreach ($this->events as $event => $handler)
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 

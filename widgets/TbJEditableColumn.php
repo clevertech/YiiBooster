@@ -96,7 +96,7 @@ class TbJEditableColumn extends TbDataColumn
 			$this->jEditableOptions['id'] = @$this->htmlOptions['id'] ? $this->htmlOptions['id'] : $this->id;
 		}
 
-		$this->event = (!isset($this->jEditableOptions['event'])) ? $this->jEditableOptions['event'] : 'click';
+		$this->event = (isset($this->jEditableOptions['event'])) ? $this->jEditableOptions['event'] : 'click';
 
 		$this->jEditableOptions['event'] = null;
 
@@ -128,10 +128,31 @@ class TbJEditableColumn extends TbDataColumn
 				$options['class'] = $class;
 		}
 		echo CHtml::openTag('td', $options);
-		echo CHtml::openTag('span', array('class' => $this->cssClass, 'data-rowid' => $data->id));
+		echo CHtml::openTag('span', array('class' => $this->cssClass, 'data-rowid' => $this->getPrimaryKey($data)));
 		$this->renderDataCellContent($row, $data);
 		echo '</span>';
 		echo '</td>';
+	}
+
+	/**
+	 * Helper function to return the primary key of the $data
+	 * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
+	 *
+	 * @param $data
+	 * @return null|string
+	 */
+	protected function getPrimaryKey($data)
+	{
+		if($this->grid->dataProvider instanceof CActiveDataProvider)
+		{
+			$key=$this->grid->dataProvider->keyAttribute===null ? $data->getPrimaryKey() : $data->{$this->keyAttribute};
+			return is_array($key) ? implode(',',$key) : $key;
+		}
+		if($this->grid->dataProvider instanceof CArrayDataProvider)
+		{
+			return is_object($data) ? $data->{$this->grid->dataProvider->keyField} : $data[$this->grid->dataProvider->keyField];
+		}
+		return null;
 	}
 
 	/**
@@ -158,8 +179,8 @@ class TbJEditableColumn extends TbDataColumn
 				$cs->registerScriptFile($assetsUrl . '/js/jquery.jeditable.time.js', CClientScript::POS_END);
 				if (!isset($this->jEditableOptions['submit']))
 				{
-					$this->jEditableOptions['submit'] = Yii::t('booster', 'Ok');
-					$this->jEditableOptions['cancel'] = Yii::t('booster', 'Cancel');
+					$this->jEditableOptions['submit'] = Yii::t('zii', 'Ok');
+					$this->jEditableOptions['cancel'] = Yii::t('zii', 'Cancel');
 				}
 				break;
 			case 'masked':
@@ -178,7 +199,7 @@ class TbJEditableColumn extends TbDataColumn
 					->registerScriptFile($assetsUrl . '/js/jquery.jeditable.bdatepicker.js', CClientScript::POS_END);
 				if (!isset($this->jEditableOptions['submit']))
 				{
-					$this->jEditableOptions['submit'] = Yii::t('booster', 'Ok');
+					$this->jEditableOptions['submit'] = Yii::t('zii', 'Ok');
 				}
 				break;
 			case 'bcolorpicker':
@@ -192,7 +213,7 @@ class TbJEditableColumn extends TbDataColumn
 		$options = CJavaScript::encode(array_filter($this->jEditableOptions));
 		$cs->registerScript('TbJEditableColumn#' . $this->id, "
 			jQuery(document).on('{$this->event}','.{$this->cssClass}', function(){
-				var id = jQuery(this).data('rowid');
+				var id = jQuery(this).attr('data-rowid');
 				var options = jQuery.extend(true, {$options}, {'submitdata':{id:id,editable:'{$this->grid->id}'}});
 				jQuery(this).editable('{$this->saveURL}', options);
 			});

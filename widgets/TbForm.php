@@ -4,15 +4,12 @@
  *
  * Support for Yii formbuilder
  * @link http://www.yiiframework.com/doc/guide/1.1/en/form.builder
- * @author Joe Blocher <yii@myticket.at>
- * @copyright Copyright &copy; Joe Blocher 2012
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package bootstrap.widgets
  *
  * Usage:
  *
  * 1. Create a CForm model
  *
+
 
 class FormbuilderTestModel extends CFormModel
 {
@@ -35,8 +32,8 @@ class FormbuilderTestModel extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'search' => 'Text search',
-            'selectlist' => 'I agree',
+            'search'=>'Text search',
+            'selectlist'=>'I agree',
         );
     }
 
@@ -54,18 +51,16 @@ class FormbuilderTestModel extends CFormModel
                     'placeholder' => 'title',
                     'class' => 'input-large',
                     'append' => '<i class="icon-search"></i>',
-
-                    'agree' => array(
-                        'type' => 'checkbox',
-                    // 'hint' => 'Agree to terms and conditions',
                     ),
-
-                    'radiolist' => array(
-                        'type' => 'radiolist',
-                        'items' => array('item1' => '1', 'item2' => '2', 'item3' => '3'),
-                    ),
+                'agree' => array(
+                    'type' => 'checkbox',
+                  // 'hint' => 'Agree to terms and conditions',
                 ),
 
+                'radiolist' => array(
+                    'type' => 'radiolist',
+                    'items' => array('item1' => '1', 'item2' => '2', 'item3' => '3'),
+                ),
                 'buttons' => array(
                     'submit' => array(
                         'type' => 'submit', //@see TbFormButtonElement::$TbButtonTypes
@@ -82,34 +77,41 @@ class FormbuilderTestModel extends CFormModel
     }
 
  *
- * 2. Create a testaction in the controller
- *
- * Check TbFormInputElement::$tbActiveFormMethods for available types
- *
+* 2. Create a testaction in the controller
+*
+* Check TbFormInputElement::$tbActiveFormMethods for available types
+*
+	public function actionFormbuilderTest()
+	{
+	        $model = new FormbuilderTestModel;
 
-    public function actionFormbuilderTest()
-    {
-        $model = new FormbuilderTestModel;
+	        if(isset($_POST['FormbuilderTestModel']))
+	        $model->attributes = $_POST['FormbuilderTestModel'];
 
-        if (isset($_POST['FormbuilderTestModel']))
-            $model->attributes = $_POST['FormbuilderTestModel'];
+	        $model->validate();
 
-        $model->validate();
+	        $form = TbForm::createForm($model->getFormConfig(),$model,
+	                    array( //@see TbActiveForm attributes
+	                        'htmlOptions'=>array('class'=>'well'),
+	                        'type'=>'horizontal', //'inline','horizontal','vertical'
+	                        ...
+	                    )
+	                );
 
-        $form = TbForm::createForm($model->getFormConfig(), $model,
-        array( //@see TbActiveForm attributes
-            'htmlOptions' => array('class' => 'well'),
-            'type' => 'horizontal', //'inline','horizontal','vertical'
-        ...
-        )
-        );
+	        //no need for an extra view file for testing
+	        $this->renderText($form);
+	        //$this->render('formbuildertest',array('form'=>$form);
+}
+*
+*
+*
+* @author Joe Blocher <yii@myticket.at>
+* @copyright Copyright &copy; Joe Blocher 2012
+* @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+* @package bootstrap.widgets
+*/
 
-    //no need for an extra view file for testing
-    $this->renderText($form);
-    //$this->render('formbuildertest',array('form'=>$form);
-    }
-
- */
+Yii::import('bootstrap.widgets.*');
 
 class TbForm extends CForm
 {
@@ -153,10 +155,10 @@ class TbForm extends CForm
     {
         if ($element instanceof TbFormInputElement)
         {
-            if ($element->type === 'hidden')
-                return "<div style=\"visibility:hidden\">\n" . $element->renderInput() . "</div>\n";
-            else
-                return $element->render();
+	        if ($element->type === 'hidden')
+		        return "<div style=\"display:none\">\n".$element->renderInput()."</div>\n";
+	        else
+		        return $element->render();
         }
 
         return parent::renderElement($element);
@@ -172,7 +174,7 @@ class TbForm extends CForm
         $output = '';
         foreach ($this->getButtons() as $button)
         {
-            $output .= $this->renderElement($button);
+            $output .= $this->renderElement($button) . '&nbsp;';
         }
 
         //form-actions div wrapper only if not is inline form

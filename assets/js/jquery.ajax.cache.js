@@ -85,7 +85,7 @@ $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
 function cleanOldStorage(){
     if(window.localStorage.toString()=='[object Storage]')
     {
-        for(var i=window.localStorage.length-1; i >=0; i--)
+        for(i=window.localStorage.length-1; i >=0; i--)
         {
             key = window.localStorage.key(i);
             if(key && key.match(/cachettl/i)){

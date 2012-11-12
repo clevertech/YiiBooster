@@ -17,6 +17,8 @@ Yii::import('bootstrap.widgets.TbGridView');
  *  - Display an extended summary of the records shown. The extended summary can be configured to any of the
  *  {@link TbOperation} type of widgets.
  *  - Automatic chart display (using TbHighCharts widget), where user can 'switch' between views.
+ *  - Selectable cells
+ *  - Sortable rows
  */
 class TbExtendedGridView extends TbGridView
 {
@@ -103,12 +105,53 @@ class TbExtendedGridView extends TbGridView
 	public $sortableRows = false;
 
 	/**
+	 * @var string Database field name for row sorting
+	 */
+	public $sortableAttribute = 'sort_order';
+
+	/**
+	 * @var boolean Save sort order by ajax defaults to false
+	 * @see bootstrap.action.TbSortableAction for an easy way to use with your controller
+	 */
+	public $sortableAjaxSave = false;
+
+	/**
+	 * @var string Name of the action to call and sort values
+	 * @see bootstrap.action.TbSortableAction for an easy way to use with your controller
+	 *
+	 * <pre>
+	 *  'sortableAction'=>'module/controller/sortable' | 'controller/sortable'
+	 * </pre>
+	 *
+	 * The widget will make use of the string to create the URL and then append $sortableAttribute
+	 * @see $sortableAttribute
+	 */
+	public $sortableAction;
+
+	/**
 	 * @var string a javascript function that will be invoked after a successful sorting is done.
 	 * The function signature is <code>function(id, position)</code> where 'id' refers to the ID of the model id key,
 	 * 'position' the new position in the list.
 	 */
 	public $afterSortableUpdate;
 
+	/**
+	 * @var bool whether to allow selecting of cells
+	 */
+	public $selectableCells = false;
+
+	/**
+	 * @var string the filter to use to allow selection. For example, if you set the "htmlOptions" property of a column to have a
+	 * "class" of "tobeselected", you could set this property as: "td.tobeselected" in order to allow  selection to
+	 * those columns with that class only.
+	 */
+	public $selectableCellsFilter = 'td';
+
+	/**
+	 * @var string a javascript function that will be invoked after a selection is done.
+	 * The function signature is <code>function(selected)</code> where 'selected' refers to the selected columns.
+	 */
+	public $afterSelectableCells;
 	/**
 	 * @var array the configuration options to display a TbBulkActions widget
 	 * @see TbBulkActions widget for its configuration
@@ -187,6 +230,75 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 * Renders the key values of the data in a hidden tag.
+	 */
+	public function renderKeys()
+	{
+		$data = $this->dataProvider->getData();
+
+		if(!$this->sortableRows || !$this->getAttribute($data[0], $this->sortableAttribute))
+		{
+			return parent::renderKeys();
+		}
+
+		echo CHtml::openTag('div',array(
+			'class'=>'keys',
+			'style'=>'display:none',
+			'title'=>Yii::app()->getRequest()->getUrl(),
+		));
+		foreach($data as $d)
+			echo CHtml::tag('span',array('data-order' => $this->getAttribute($d, $this->sortableAttribute), CHtml::encode($this->getPrimaryKey($d))));
+		echo "</div>\n";
+	}
+
+	/**
+	 * Helper function to get an attribute from the data
+	 *
+	 * @param $data
+	 * @param $attribute the attribute to get
+	 * @return mixed the attribute value null if none found
+	 */
+	protected function getAttribute($data, $attribute)
+	{
+		if($this->dataProvider instanceof CActiveDataProvider && $data->hasAttribute($attribute))
+		{
+			return $data->{$attribute};
+		}
+		if($this->dataProvider instanceof CArrayDataProvider)
+		{
+			if (is_object($data) && isset($data->{$attribute}))
+			{
+				return $data->{$attribute};
+			}
+			if (isset($data[$attribute]))
+			{
+				return $data[$attribute];
+			}
+		}
+		return null;
+	}
+	/**
+	 * Helper function to return the primary key of the $data
+	 * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
+	 *
+	 * @param $data
+	 * @return null|string
+	 */
+	protected function getPrimaryKey($data)
+	{
+		if($this->dataProvider instanceof CActiveDataProvider)
+		{
+			$key=$this->grid->dataProvider->keyAttribute===null ? $data->getPrimaryKey() : $data->{$this->keyAttribute};
+			return is_array($key) ? implode(',',$key) : $key;
+		}
+		if($this->dataProvider instanceof CArrayDataProvider)
+		{
+			return is_object($data) ? $data->{$this->dataProvider->keyField} : $data[$this->dataProvider->keyField];
+		}
+		return null;
+	}
+
+	/**
 	 * Renders grid header
 	 */
 	public function renderTableHeader()
@@ -240,11 +352,11 @@ class TbExtendedGridView extends TbGridView
 			return;
 
 		if (!isset($this->chartOptions['data']['series']))
-			throw new CException(Yii::t('booster', 'You need to set the "series" attribute in order to render a chart'));
+			throw new CException(Yii::t('zii', 'You need to set the "series" attribute in order to render a chart'));
 
 		$configSeries = $this->chartOptions['data']['series'];
 		if (!is_array($configSeries))
-			throw new CException(Yii::t('booster', '"chartOptions.series" is expected to be an array.'));
+			throw new CException(Yii::t('zii', '"chartOptions.series" is expected to be an array.'));
 
 		$chartId = 'exgvwChart' . $this->getId();
 
@@ -256,8 +368,8 @@ class TbExtendedGridView extends TbGridView
 		$buttons = Yii::createComponent(array('class' => 'bootstrap.widgets.TbButtonGroup',
 			'toggle' => 'radio',
 			'buttons' => array(
-				array('label' => Yii::t('booster', 'Grid'), 'url' => '#', 'htmlOptions' => array('class' => 'active ' . $this->getId() . '-grid-control grid')),
-				array('label' => Yii::t('booster', 'Chart'), 'url' => '#', 'htmlOptions' => array('class' => $this->getId() . '-grid-control chart')),
+				array('label' => Yii::t('zii', 'Grid'), 'url' => '#', 'htmlOptions' => array('class' => 'active ' . $this->getId() . '-grid-control grid')),
+				array('label' => Yii::t('zii', 'Chart'), 'url' => '#', 'htmlOptions' => array('class' => $this->getId() . '-grid-control chart')),
 			),
 			'htmlOptions' => array('style' => 'margin-bottom:5px')
 		));
@@ -432,7 +544,7 @@ class TbExtendedGridView extends TbGridView
 		{
 			if ($this->afterSortableUpdate !== null)
 			{
-				if ((!$this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos($this->afterSortableUpdate, 'js:') !== 0)
+				if (!($this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos($this->afterSortableUpdate, 'js:') !== 0)
 				{
 					$afterSortableUpdate = new CJavaScriptExpression($this->afterSortableUpdate);
 				} else
@@ -445,9 +557,36 @@ class TbExtendedGridView extends TbGridView
 			$cs->registerCoreScript('jquery.ui');
 			Yii::app()->bootstrap->registerAssetJs('jquery.sortable.gridview.js');
 
+			if($this->sortableAjaxSave && $this->sortableAction !== null)
+			{
+				$sortableAction = Yii::app()->createUrl($this->sortableAction, array('sortableAttribute' => $this->sortableAttribute));
+			}
+			else
+				$sortableAction = '';
+
 			$afterSortableUpdate = CJavaScript::encode($afterSortableUpdate);
-			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
-			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', {$afterSortableUpdate});";
+			$this->componentsReadyScripts[] = "$.fn.yiiGridView.sortable('{$this->id}', '{$sortableAction}', {$afterSortableUpdate});";
+			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.sortable('{$this->id}', '{$sortableAction}', {$afterSortableUpdate});";
+		}
+
+		if($this->selectableCells)
+		{
+			if($this->afterSelectableCells !== null)
+			{
+				echo strpos($this->afterSelectableCells, 'js:');
+				if (!($this->afterSelectableCells instanceof CJavaScriptExpression) && strpos($this->afterSelectableCells, 'js:') !== 0)
+				{
+					$afterSelectableCells = new CJavaScriptExpression($this->afterSelectableCells);
+				} else
+				{
+					$afterSelectableCells = $this->afterSelectableCells;
+				}
+			}
+			$cs->registerCoreScript('jquery.ui');
+			Yii::app()->bootstrap->registerAssetJs('jquery.selectable.gridview.js');
+			$afterSelectableCells = CJavaScript::encode($afterSelectableCells);
+			$this->componentsReadyScripts[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}',{$afterSelectableCells});";
+			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}', {$afterSelectableCells});";
 		}
 
 		$cs->registerScript(__CLASS__ . '#' . $this->id . 'Ex', '
@@ -497,7 +636,7 @@ class TbExtendedGridView extends TbGridView
 			// add the required column object in
 			$config['column'] = $column;
 			// build the summary operation object
-			$op = $this->getSummaryOperationInstance($config);
+			$op = $this->getSummaryOperationInstance($column->name, $config);
 			// process the value
 			$op->processValue($value);
 		}
@@ -506,24 +645,26 @@ class TbExtendedGridView extends TbGridView
 
 	/**
 	 * Each type of 'extended' summary
-	 * @param $config
+	 * @param $name the name of the column
+	 * @param $config the configuration of the column at the extendedSummary
 	 * @return mixed
 	 * @throws CException
 	 */
-	protected function getSummaryOperationInstance($config)
+	protected function getSummaryOperationInstance($name, $config)
 	{
 		if (!isset($config['class']))
-			throw new CException(Yii::t('booster', 'Column summary configuration must be an array containing a "type" element.'));
+			throw new CException(Yii::t('zii', 'Column summary configuration must be an array containing a "type" element.'));
 
 		if (!in_array($config['class'], $this->extendedSummaryOperations))
-			throw new CException(Yii::t('booster', '"{operation}" is an unsupported class operation.', array('{operation}' => $config['class'])));
+			throw new CException(Yii::t('zii', '"{operation}" is an unsupported class operation.', array('{operation}' => $config['class'])));
 
-		if (!isset($this->extendedSummaryTypes[$config['class']]))
+		// name of the column should be unique
+		if (!isset($this->extendedSummaryTypes[$name]))
 		{
-			$this->extendedSummaryTypes[$config['class']] = Yii::createComponent($config);
-			$this->extendedSummaryTypes[$config['class']]->init();
+			$this->extendedSummaryTypes[$name] = Yii::createComponent($config);
+			$this->extendedSummaryTypes[$name]->init();
 		}
-		return $this->extendedSummaryTypes[$config['class']];
+		return $this->extendedSummaryTypes[$name];
 	}
 
 	/**
@@ -577,7 +718,7 @@ abstract class TbOperation extends CWidget
 	public function init()
 	{
 		if (null == $this->column)
-			throw new CException(Yii::t('booster', '"{attribute}" attribute must be defined', array('{attribute}' => 'column')));
+			throw new CException(Yii::t('zii', '"{attribute}" attribute must be defined', array('{attribute}' => 'column')));
 	}
 
 	/**
@@ -631,7 +772,7 @@ class TbSumOperation extends TbOperation
 
 		if (!in_array($this->column->type, $this->supportedTypes))
 		{
-			throw new CException(Yii::t('booster', 'Unsupported column type. Supported column types are: "{types}"', array(
+			throw new CException(Yii::t('zii', 'Unsupported column type. Supported column types are: "{types}"', array(
 				'{types}' => implode(', ', $this->supportedTypes))));
 		}
 	}
@@ -709,11 +850,11 @@ class TbCountOfTypeOperation extends TbOperation
 	public function init()
 	{
 		if (empty($this->types))
-			throw new CException(Yii::t('booster', '"{attribute}" attribute must be defined', array('{attribute}' => 'types')));
+			throw new CException(Yii::t('zii', '"{attribute}" attribute must be defined', array('{attribute}' => 'types')));
 		foreach ($this->types as $type)
 		{
 			if (!isset($type['label']))
-				throw new CException(Yii::t('booster', 'The "label" of a type must be defined.'));
+				throw new CException(Yii::t('zii', 'The "label" of a type must be defined.'));
 		}
 		parent::init();
 	}

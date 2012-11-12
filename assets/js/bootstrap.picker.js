@@ -72,10 +72,9 @@
 
     $.fn.picker.defaults = $.extend({}, $.fn.tooltip.defaults, {
         placement:'bottom', trigger:'manual', content:'', template:'<div class="picker dropdown-menu"><div class="picker-title"></div><div class="picker-content"><p></p></div></div>'
-    })
+    });
 
     $(document).on('click', function(){
         $('a.pickeron').removeClass('pickeron').picker('toggle');
     });
-
 }(window.jQuery);

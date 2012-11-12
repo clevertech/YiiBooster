@@ -28,11 +28,21 @@ The YiiBooster library includes:
 * Modals 
 * Dropdowns
 * Tooltips
+* Extended Tooltips
 * Popovers
 * Accordion
 * Carousel
+* Bootstrap Wizard
+* Toggle Buttons
+* Form Builder Support
 * Typeahead
+* Datepicker
+* Colorpicker
+* Timepicker
 * WYSIWYG HTML Editors
+    * RedactorJS
+    * Html5Editor
+    * CKEditor
 * Boxes 
 * Google Charts
 * HighCharts
@@ -43,12 +53,15 @@ The YiiBooster library includes:
 	* JSON Data Column
 	* JSON Pager 
 * Extended Grid
+    * Selectable Cells
+    * Sortable Rows
 	* Extended Summary
-	* Inline Column Edition
 	* Grid/Chart Switcher
-	* Image Column
-	* Picker Column
 	* Total Sum Column
+* Inline Column Edition
+* Image Column
+* Picker Column
+* TbToggleColumn
 * Grouping Grid
     * Merge cells or columns
 
