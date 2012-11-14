@@ -67,7 +67,7 @@ class TbPickerColumn extends TbDataColumn
 		$class = preg_replace('/\s+/', '.', $this->class);
 
 		$cs = Yii::app()->getClientScript();
-		$assetsUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__) . '/../assets', false, -1, true);
+		$assetsUrl = Yii::app()->bootstrap->getAssetsUrl();
 
 		$cs->registerCssFile($assetsUrl . '/css/bootstrap-picker.css');
 		$cs->registerScriptFile($assetsUrl . '/js/bootstrap.picker.js');

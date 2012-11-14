@@ -312,80 +312,6 @@ class TbActiveForm extends CActiveForm
         return $this->inputRow(TbInput::TYPE_TIMEPICKER, $model, $attribute, null, $htmlOptions);
     }
 	
-	
-	/**
-     * Renders a timepicker field row.
-     * @param CModel $model the data model
-     * @param string $attribute the attribute
-     * @param array $options additional HTML attributes
-     * @return string the generated row
-     * @since 0.10.0
-     */
-    public function dateTimepickerRow($model, $attribute, $options = array())
-    {
-        $name=CHtml::activeName($model,$attribute);
-        $id=CHtml::getIdByName($name);
-
-        echo $this->hiddenField($model, $attribute);
-
-        Yii::app()->clientScript->registerScript($id.'_event', "
-            $('#".$id."_date').add('#".$id."_time').on('blur change changeDate', function(){
-                var date = $('#".$id."_date').val(),
-                    dateArr,
-                    dateTime;
-                dateArr = date.split('.');
-                dateTime = dateArr[2] + '-' + dateArr[1] + '-' + dateArr[0] + ' ' + $('#".$id."_time').val()+':00';
-                $('#".$id."').val(dateTime);
-            });
-        ", CClientScript::POS_READY);
-
-        if ($model->isNewRecord)
-            $date = date('d.m.Y',time());
-        else
-            $date = date('d.m.Y',strtotime($model->$attribute));
-        $options['date']['htmlOptions'] = array(
-            'name'  => $id.'_date',
-            'value' => $date,
-            'class' => 'span12',
-            'autocomplete'=>'off'
-        );
-        $options['date']['options'] = array(
-            'weekStart'=>1,
-            'format'=>'dd.mm.yyyy'
-        );
-
-        $options['time']['htmlOptions']['name']  = $id.'_time';
-        $options['time']['htmlOptions']['class'] = 'span12';
-        $options['time']['htmlOptions']['autocomplete'] = 'off';
-        if ((!isset($options['time']['htmlOptions']['value'])) || (!$options['time']['htmlOptions']['value']))
-        {
-            $time = date('H:i',strtotime($model->$attribute));
-            $options['time']['htmlOptions']['value'] = $time;
-        }
-        $options['time']['options']['defaultTime'] = $options['time']['htmlOptions']['value'];
-
-        echo $this->labelEx($model, $attribute);
-
-        echo '<div class="row-fluid">';
-        echo '<div class="span8">';
-        $this->widget('bootstrap.widgets.TbDatePicker', array(
-            'htmlOptions'=>$options['date']['htmlOptions'],
-            'options'=>isset($options['date']['options'])?$options['date']['options']:array(),
-            'events'=>isset($options['date']['events']) ? $options['date']['events'] : array(),
-            'value'=>$options['date']['htmlOptions']['value']
-        ));
-        echo '</div>';
-        echo '<div class="span4">';
-        $this->widget('bootstrap.widgets.TbTimePicker', array(
-            'htmlOptions'=>$options['time']['htmlOptions'],
-            'options'=>isset($options['time']['options'])?$options['time']['options']:array(),
-            'events'=>isset($options['time']['events'])?$options['time']['events']:array(),
-            'value'=>$options['time']['htmlOptions']['value']
-        ));
-        echo '</div></div>';
-        echo $this->error($model, $attribute);
-    }
-	
 	/**
 	 * Renders a checkbox list for a model attribute.
 	 * This method is a wrapper of {@link CHtml::activeCheckBoxList}.
@@ -434,6 +360,13 @@ class TbActiveForm extends CActiveForm
 	{
 		CHtml::resolveNameID($model, $attribute, $htmlOptions);
 		$select = CHtml::resolveValue($model, $attribute);
+		if (is_array($select) && !empty($select) &&  is_object($select[0])) {
+			$pks = array();
+			foreach ($select as $select_item) {
+				$pks[] = $select_item->getPrimaryKey();
+			}
+			$select = $pks;
+		}
 
 		if ($model->hasErrors($attribute))
 		{
@@ -485,7 +418,7 @@ class TbActiveForm extends CActiveForm
 
 		foreach ($data as $value => $label)
 		{
-			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);
+			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);			
 			$htmlOptions['value'] = $value;
 			$htmlOptions['id'] = $baseID . '_' . $id++;
 			$option = CHtml::$method($name, $checked, $htmlOptions);

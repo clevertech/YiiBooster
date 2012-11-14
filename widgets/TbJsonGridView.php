@@ -366,7 +366,7 @@ class TbJsonGridView extends TbGridView
 		$cs->registerCoreScript('bbq');
 		if ($this->enableHistory)
 			$cs->registerCoreScript('history');
-		$assetsUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__) . '/../assets', false, -1, true);
+		$assetsUrl = Yii::app()->bootstrap->getAssetsUrl();
 		// jqote2 template engine
 		$cs->registerScriptFile($assetsUrl . '/js/jquery.jqote2.min.js', CClientScript::POS_END);
 		// ajax cache
