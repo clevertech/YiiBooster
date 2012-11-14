@@ -540,7 +540,7 @@ $('#$itemId').prop('checked', !$("input[name='$name']:not(:checked)").length);
 EOD;
 			$cs=Yii::app()->getClientScript();
 			$cs->registerCoreScript('jquery');
-			$cs->registerScript($id,$js);
+			$cs->registerScript($itemId,$js);
 		}
 
 		return $hidden . implode('', $items);
