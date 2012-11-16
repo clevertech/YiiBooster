@@ -54,6 +54,10 @@ class Bootstrap extends CApplicationComponent
 	public $jqueryCss = true;
 
 	/**
+	 * @var string if set, use this path for loading assets 
+	 */
+	public $assetsPath;
+	/**
 	 * @var boolean whether to register jQuery and the Bootstrap JavaScript.
 	 * @since 0.9.10
 	 */
@@ -444,7 +448,11 @@ class Bootstrap extends CApplicationComponent
 			return $this->_assetsUrl;
 		else
 		{
-			$assetsPath = Yii::getPathOfAlias('bootstrap.assets');
+			if ($this->assetsPath !== null)
+				$assetsPath = $this->assetsPath;
+			else
+				$assetsPath = Yii::getPathOfAlias('bootstrap.assets');
+
 			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, YII_DEBUG);
 			return $this->_assetsUrl = $assetsUrl;
 		}
