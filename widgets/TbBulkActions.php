@@ -214,7 +214,7 @@ EOD;
 		foreach ($this->events as $buttonId => $handler)
 		{
 			$js .= "\n$(document).on('click','#{$buttonId}', function(){var checked = $('input[name=\"{$this->columnName}\"]:checked');\n
-			var fn = $handler; if($.isFunction(fn)){fn(checked);}\nreturn false;});\n";
+			var fn = $handler; if($.isFunction(fn)){ fn.apply($(this), [checked]); }\nreturn false;});\n";
 		}
 		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $js);
 	}
