@@ -180,9 +180,7 @@ class TbBox extends CWidget
 	 */
 	public function registerClientScript()
 	{
-		$assetsUrl = Yii::app()->getAssetManager()->publish(dirname(__FILE__) . '/../assets', false, -1, true);
-
-		Yii::app()->getClientScript()->registerCssFile($assetsUrl . '/css/bootstrap-box.css');
+		Yii::app()->bootstrap->registerAssetCss('bootstrap-box.css');
 
 	}
 }
