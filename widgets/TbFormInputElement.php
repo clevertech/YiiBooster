@@ -50,6 +50,7 @@ class TbFormInputElement extends CFormInputElement
         'captcha' => 'captchaRow',
         'daterange' => 'dateRangeRow',
         'redactor' => 'redactorRow',
+        'markdowneditor' => 'markdownEditorRow',
         'uneditable' => 'uneditableRow',
         'radiolistinline' => 'radioButtonListInlineRow',
         'checkboxlistinline' => 'checkBoxListInlineRow',
