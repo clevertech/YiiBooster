@@ -411,6 +411,12 @@ class TbActiveForm extends CActiveForm
 		if ($checkbox && substr($name, -2) !== '[]')
 			$name .= '[]';
 
+		if(isset($htmlOptions['checkAll']))
+		{
+			$checkAllLabel=$htmlOptions['checkAll'];
+			$checkAllLast=isset($htmlOptions['checkAllLast']) && $htmlOptions['checkAllLast'];
+		}
+
 		unset($htmlOptions['checkAll'], $htmlOptions['checkAllLast']);
 
 		$labelOptions = isset($htmlOptions['labelOptions']) ? $htmlOptions['labelOptions'] : array();
@@ -428,9 +434,11 @@ class TbActiveForm extends CActiveForm
 			unset($htmlOptions['inline']);
 		}
 
+		$checkAll=true;
 		foreach ($data as $value => $label)
 		{
-			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);			
+			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);
+			$checkAll=$checkAll && $checked;
 			$htmlOptions['value'] = $value;
 			$htmlOptions['id'] = $baseID . '_' . $id++;
 			$option = CHtml::$method($name, $checked, $htmlOptions);
@@ -440,6 +448,37 @@ class TbActiveForm extends CActiveForm
 				'{input}' => $option,
 				'{label}' => $label,
 			));
+		}
+
+		if(isset($checkAllLabel))
+		{
+			$htmlOptions['value']=1;
+			$itemId = $baseID.'_all';
+			$htmlOptions['id']=$itemId;
+			$option=CHtml::$method($id,$checkAll,$htmlOptions);
+			$label=CHtml::label($checkAllLabel,$id,$labelOptions);
+			$item = strtr($template, array(
+				'{labelCssClass}' => $labelCssClass,
+				'{input}' => $option,
+				'{label}' => $label,
+			));
+			if($checkAllLast)
+				$items[]=$item;
+			else
+				array_unshift($items,$item);
+			$name=strtr($name,array('['=>'\\[',']'=>'\\]'));
+			$js=<<<EOD
+$('#$itemId').click(function() {
+	$("input[name='$name']").prop('checked', this.checked);
+});
+$("input[name='$name']").click(function() {
+	$('#$itemId').prop('checked', !$("input[name='$name']:not(:checked)").length);
+});
+$('#$itemId').prop('checked', !$("input[name='$name']:not(:checked)").length);
+EOD;
+			$cs=Yii::app()->getClientScript();
+			$cs->registerCoreScript('jquery');
+			$cs->registerScript($itemId,$js);
 		}
 
 		return $hidden . implode('', $items);
