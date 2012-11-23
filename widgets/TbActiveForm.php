@@ -222,6 +222,18 @@ class TbActiveForm extends CActiveForm
 		return $this->inputRow(TbInput::TYPE_REDACTOR, $model, $attribute, null, $htmlOptions);
 	}
 
+    /**
+     * Renders a WYSIWYG Markdown editor
+     * @param $model
+     * @param $attribute
+     * @param array $htmlOptions
+     * @return string
+     */
+    public function markdownEditorRow($model, $attribute, $htmlOptions = array())
+    {
+        return $this->inputRow(TbInput::TYPE_MARKDOWNEDITOR, $model, $attribute, null, $htmlOptions);
+    }
+
 	/**
 	 * Renders a WYSIWYG bootstrap editor
 	 * @param $model
