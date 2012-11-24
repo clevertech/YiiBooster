@@ -35,7 +35,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public $input;
 	/**
-	 * @var boolean flag that indicates if the errors should be displayed as blocks.
+	 * @var boolean indicates whether to display errors as blocks.
 	 */
 	public $inlineErrors;
 
@@ -395,7 +395,8 @@ class TbActiveForm extends CActiveForm
 		{
 			$uncheck = $htmlOptions['uncheckValue'];
 			unset($htmlOptions['uncheckValue']);
-		} else
+		}
+		else
 			$uncheck = '';
 
 		$hiddenOptions = isset($htmlOptions['id']) ? array('id' => CHtml::ID_PREFIX . $htmlOptions['id']) : array('id' => false);
