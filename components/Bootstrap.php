@@ -455,6 +455,6 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function getVersion()
 	{
-		return '1.0.5';
+		return '1.0.4';
 	}
 }
