@@ -98,10 +98,6 @@ class TbButton extends CWidget
 	*/
 	public $items;
 	/**
-	 * @var boolean indicates whether to encode the label.
-	 */
-	public $encodeLabel = true;	
-	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
