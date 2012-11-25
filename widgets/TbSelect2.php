@@ -68,7 +68,7 @@ class TbSelect2 extends CInputWidget
 	}
 
 	/**
-	 * Registers required client script for bootstrap datepicker. It is not used through bootstrap->registerPlugin
+	 * Registers required client script for bootstrap select2. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
 	 */
 	public function registerClientScript($id)
