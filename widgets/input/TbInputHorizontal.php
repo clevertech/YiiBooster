@@ -65,7 +65,7 @@ class TbInputHorizontal extends TbInput
 			'model' => $this->model,
 			'attribute' => $this->attribute
 		);
-		if(isset($this->htmlOptions['options']))
+		if (isset($this->htmlOptions['options']))
 		{
 			$options = CMap::mergeArray($options, $this->htmlOptions['options']);
 			unset($this->htmlOptions['options']);
@@ -341,6 +341,44 @@ class TbInputHorizontal extends TbInput
 	}
 
 	/**
+	 * Renders a Markdown Editor.
+	 * @return string the rendered content
+	 */
+	protected function markdownEditorJs()
+	{
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+		if (isset($this->htmlOptions['width']))
+		{
+			$width = $this->htmlOptions['width'];
+			unset($this->htmlOptions['width']);
+		}
+		if (isset($this->htmlOptions['height']))
+		{
+			$height = $this->htmlOptions['height'];
+			unset($this->htmlOptions['height']);
+		}
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo '<div class="wmd-panel">';
+		echo '<div id="wmd-button-bar" class="btn-toolbar"></div>';
+		$this->widget('bootstrap.widgets.TbMarkdownEditorJs', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'width' => isset($width) ? $width : '100%',
+			'height' => isset($height) ? $height : '400px',
+			'htmlOptions' => $this->htmlOptions
+		));
+		echo $this->getError() . $this->getHint();
+		echo '<div id="wmd-preview" class="wmd-panel wmd-preview" style="width:' . (isset($width) ? $width : '100%') . '"></div>';
+		echo '</div>'; // wmd-panel
+		echo '</div>'; // controls
+	}
+
+	/**
 	 * Renders Bootstrap wysihtml5 editor.
 	 * @return mixed|void
 	 */
@@ -407,6 +445,7 @@ class TbInputHorizontal extends TbInput
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
+
 	/**
 	 * Renders a daterange field.
 	 * @return string the rendered content
@@ -463,15 +502,15 @@ class TbInputHorizontal extends TbInput
 		echo '<div class="controls">';
 		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbTimePicker', array(
-			'model'=>$this->model,
-			'attribute'=>$this->attribute,
-			'options'=>isset($options) ? $options : array(),
-			'events'=>isset($events) ? $events : array(),
-			'htmlOptions'=>$this->htmlOptions,
-			'form'=>$this->form
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'options' => isset($options) ? $options : array(),
+			'events' => isset($events) ? $events : array(),
+			'htmlOptions' => $this->htmlOptions,
+			'form' => $this->form
 		));
 		echo $this->getAppend();
-		echo $this->getError().$this->getHint();
+		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
 }
