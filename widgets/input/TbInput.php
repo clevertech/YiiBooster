@@ -33,8 +33,9 @@ abstract class TbInput extends CInputWidget
 	const TYPE_DATERANGEPICKER = 'daterangepicker';
 	const TYPE_TOGGLEBUTTON = 'togglebutton';
 	const TYPE_COLORPICKER = 'colorpicker';
+	const TYPE_CKEDITOR = 'ckeditor';
 	const TYPE_TIMEPICKER = 'timepicker';
-	
+
 	/**
 	 * @var TbActiveForm the associated form widget.
 	 */
@@ -260,12 +261,16 @@ abstract class TbInput extends CInputWidget
 			case self::TYPE_COLORPICKER:
 				$this->colorpickerField();
 				break;
-		
+
+			case self::TYPE_CKEDITOR:
+				$this->ckEditor();
+				break;
+
 			// Adding timepicker (Sergii)
 			case self::TYPE_TIMEPICKER:
-                $this->timepickerField();
-                break;
-			
+				$this->timepickerField();
+				break;
+
 			default:
 				throw new CException(__CLASS__ . ': Failed to run widget! Type is invalid.');
 		}
@@ -523,12 +528,18 @@ abstract class TbInput extends CInputWidget
 	abstract protected function redactorJs();
 
 	/**
+	 * Renders a bootstrap CKEditor wysiwyg editor.
+	 * @abstract
+	 * @return mixed
+	 */
+	abstract protected function ckEditor();
+
+	/**
 	 * Renders a bootstrap wysihtml5 editor.
 	 * @abstract
 	 * @return mixed
 	 */
 	abstract protected function html5Editor();
-
 	/**
 	 * Renders a daterange picker field
 	 * @abstract
@@ -542,11 +553,11 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function colorpickerField();
-	
+
 	/**
-     * Renders a timepicker field.
-     * @return string the rendered content
-     * @abstract
-     */
-    abstract protected function timepickerField();
+	 * Renders a timepicker field.
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function timepickerField();
 }
