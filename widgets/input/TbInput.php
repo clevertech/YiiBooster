@@ -36,6 +36,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_COLORPICKER = 'colorpicker';
 	const TYPE_CKEDITOR = 'ckeditor';
 	const TYPE_TIMEPICKER = 'timepicker';
+	const TYPE_SELECT2 = 'select2';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
@@ -274,6 +275,10 @@ abstract class TbInput extends CInputWidget
 			// Adding timepicker (Sergii)
 			case self::TYPE_TIMEPICKER:
 				$this->timepickerField();
+				break;
+
+			case self::TYPE_SELECT2:
+				$this->select2Field();
 				break;
 
 			default:
@@ -574,4 +579,10 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function timepickerField();
+
+	/**
+	 * Renders a select2 field.
+	 * @return mixed
+	 */
+	abstract protected function select2Field();
 }

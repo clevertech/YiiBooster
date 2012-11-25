@@ -337,6 +337,18 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a select2 field row
+	 * @param $model
+	 * @param $attribute
+	 * @param array $htmlOptions
+	 * @return string
+	 */
+	public function select2Row($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_SELECT2, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
 	 * Renders a checkbox list for a model attribute.
 	 * This method is a wrapper of {@link CHtml::activeCheckBoxList}.
 	 * Please check {@link CHtml::activeCheckBoxList} for detailed information

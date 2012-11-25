@@ -1,4 +1,4 @@
-<?php
+TbActiveForm.php<?php
 /**
  * TbInputVertical class file.
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
@@ -296,11 +296,7 @@ class TbInputVertical extends TbInput
 	 */
 	protected function markdownEditorJs()
 	{
-		if (isset($this->htmlOptions['options']))
-		{
-			$options = $this->htmlOptions['options'];
-			unset($this->htmlOptions['options']);
-		}
+
 		if (isset($this->htmlOptions['width']))
 		{
 			$width = $this->htmlOptions['width'];
@@ -439,6 +435,52 @@ class TbInputVertical extends TbInput
 			'attribute' => $this->attribute,
 			'options' => isset($options) ? $options : array(),
 			'events' => isset($events) ? $events : array(),
+			'htmlOptions' => $this->htmlOptions,
+			'form' => $this->form
+		));
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+	}
+
+	/**
+	 * Renders a select2Field
+	 * @return mixed|void
+	 */
+	protected function select2Field()
+	{
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+
+		if (isset($this->htmlOptions['events']))
+		{
+			$events = $this->htmlOptions['events'];
+			unset($this->htmlOptions['events']);
+		}
+
+		if (isset($this->htmlOptions['data']))
+		{
+			$data = $this->htmlOptions['data'];
+			unset($this->htmlOptions['data']);
+		}
+
+		if (isset($this->htmlOptions['asDropDownList']))
+		{
+			$asDropDownList = $this->htmlOptions['asDropDownList'];
+			unset($this->htmlOptions['asDropDownList']);
+		}
+
+		echo $this->getLabel();
+		echo $this->getPrepend();
+		$this->widget('bootstrap.widgets.TbSelect2', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'options' => isset($options) ? $options : array(),
+			'events' => isset($events) ? $events : array(),
+			'data' => isset($data) ? $data : array(),
+			'asDropDownList' => isset($asDropDownList) ? $asDropDownList : true,
 			'htmlOptions' => $this->htmlOptions,
 			'form' => $this->form
 		));

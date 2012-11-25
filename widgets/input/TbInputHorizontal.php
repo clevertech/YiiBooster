@@ -346,11 +346,7 @@ class TbInputHorizontal extends TbInput
 	 */
 	protected function markdownEditorJs()
 	{
-		if (isset($this->htmlOptions['options']))
-		{
-			$options = $this->htmlOptions['options'];
-			unset($this->htmlOptions['options']);
-		}
+
 		if (isset($this->htmlOptions['width']))
 		{
 			$width = $this->htmlOptions['width'];
@@ -416,6 +412,7 @@ class TbInputHorizontal extends TbInput
 	/**
 	 * Renders a ckEditor.
 	 * @return string the rendered content
+	 * @author antonio ramirez <antonio@clevertech.biz>
 	 */
 	protected function ckEditor()
 	{
@@ -424,16 +421,7 @@ class TbInputHorizontal extends TbInput
 			$options = $this->htmlOptions['options'];
 			unset($this->htmlOptions['options']);
 		}
-//		if (isset($this->htmlOptions['width']))
-//		{
-//			$width = $this->htmlOptions['width'];
-//			unset($this->htmlOptions['width']);
-//		}
-//		if (isset($this->htmlOptions['height']))
-//		{
-//			$height = $this->htmlOptions['height'];
-//			unset($this->htmlOptions['height']);
-//		}
+
 		echo $this->getLabel();
 		echo '<div class="controls">';
 		$this->widget('bootstrap.widgets.TbCKEditor', array(
@@ -480,7 +468,7 @@ class TbInputHorizontal extends TbInput
 	}
 
 	/**
-	 * Renders a datepicker field.
+	 * Renders a timepicker field.
 	 * @return string the rendered content
 	 * @author Sergii Gamaiunov <hello@webkadabra.com>
 	 */
@@ -506,6 +494,54 @@ class TbInputHorizontal extends TbInput
 			'attribute' => $this->attribute,
 			'options' => isset($options) ? $options : array(),
 			'events' => isset($events) ? $events : array(),
+			'htmlOptions' => $this->htmlOptions,
+			'form' => $this->form
+		));
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
+	/**
+	 * Renders a select2Field
+	 * @return mixed|void
+	 */
+	protected function select2Field()
+	{
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+
+		if (isset($this->htmlOptions['events']))
+		{
+			$events = $this->htmlOptions['events'];
+			unset($this->htmlOptions['events']);
+		}
+
+		if (isset($this->htmlOptions['data']))
+		{
+			$data = $this->htmlOptions['data'];
+			unset($this->htmlOptions['data']);
+		}
+
+		if (isset($this->htmlOptions['asDropDownList']))
+		{
+			$asDropDownList = $this->htmlOptions['asDropDownList'];
+			unset($this->htmlOptions['asDropDownList']);
+		}
+
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		$this->widget('bootstrap.widgets.TbSelect2', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'options' => isset($options) ? $options : array(),
+			'events' => isset($events) ? $events : array(),
+			'data' => isset($data) ? $data : array(),
+			'asDropDownList' => isset($asDropDownList) ? $asDropDownList : true,
 			'htmlOptions' => $this->htmlOptions,
 			'form' => $this->form
 		));
