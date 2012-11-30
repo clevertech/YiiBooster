@@ -187,6 +187,19 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a radio button list input row using Button Groups.
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $data the list data
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
+	public function radioButtonGroupsListRow($model, $attribute, $data = array(), $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_RADIOBUTTONGROUPSLIST, $model, $attribute, $data, $htmlOptions);
+	}
+
+	/**
 	 * Renders a text field input row.
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
@@ -380,6 +393,54 @@ class TbActiveForm extends CActiveForm
 	public function radioButtonList($model, $attribute, $data, $htmlOptions = array())
 	{
 		return $this->inputsList(false, $model, $attribute, $data, $htmlOptions);
+	}
+
+	/**
+	 * Renders a radio button list for a model attribute using Button Groups.
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $data value-label pairs used to generate the radio button list.
+	 * @param array $htmlOptions additional HTML options.
+	 * @return string the generated radio button list
+	 * @since 0.9.5
+	 */
+	public function radioButtonGroupsList($model, $attribute, $data, $htmlOptions = array())
+	{
+		$buttons = array();
+		$scripts = array();
+
+		$hiddenFieldId = CHtml::getIdByName(get_class($model) . '[' . $attribute . ']');
+		$buttonType = isset($htmlOptions['type']) ? $htmlOptions['type'] : null;
+
+		foreach ($data as $key => $value) {
+			$btnId = CHtml::getIdByName(get_class($model) . '[' . $attribute . '][' . $key . ']');
+
+			$button = array();
+			$button['label'] = $value;
+			$button['htmlOptions'] = array(
+				'value' => $key,
+				'id' => $btnId,
+				'class' => (isset($model->$attribute) && $model->$attribute == $key ? 'active': ''),
+			);
+			$buttons[] = $button;
+
+			// event as ordinary input
+			$scripts[] = "\$('#" . $btnId . "').click(function(){
+                \$('#" . $hiddenFieldId . "').val('" . $key . "').trigger('change');
+            });";
+		}
+
+		Yii::app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
+			'buttonType' => 'button',
+			'toggle' => 'radio',
+			'htmlOptions' => $htmlOptions,
+			'buttons' => $buttons,
+			'type' => $buttonType,
+		));
+
+		echo $this->hiddenField($model, $attribute);
+
+		Yii::app()->clientScript->registerScript('radiobuttongrouplist-' . $attribute, implode("\n", $scripts));
 	}
 
 	/**
