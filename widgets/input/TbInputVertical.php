@@ -145,6 +145,28 @@ class TbInputVertical extends TbInput
 	}
 
 	/**
+	 * Renders a list of radio buttons using Button Groups.
+	 * @return string the rendered content
+	 */
+	protected function radioButtonGroupsList()
+	{
+		if (isset($this->htmlOptions['for']) && !empty($this->htmlOptions['for'])) {
+			$label_for = $this->htmlOptions['for'];
+			unset($this->htmlOptions['for']);
+		} else if (isset($this->data) && !empty($this->data)) {
+			$label_for = CHtml::getIdByName(get_class($this->model) . '[' . $this->attribute . '][' . key($this->data) . ']');
+		}
+
+		if (isset($label_for)) {
+			$this->labelOptions = array('for' => $label_for);
+		}
+
+		echo $this->getLabel();
+		echo $this->form->radioButtonGroupsList($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getError().$this->getHint();
+	}
+
+	/**
 	 * Renders a textarea.
 	 * @return string the rendered content
 	 */
