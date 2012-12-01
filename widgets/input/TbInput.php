@@ -23,6 +23,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_RADIO = 'radiobutton';
 	const TYPE_RADIOLIST = 'radiobuttonlist';
 	const TYPE_RADIOLIST_INLINE = 'radiobuttonlist_inline';
+	const TYPE_RADIOBUTTONGROUPSLIST = 'radiobuttongroupslist';
 	const TYPE_TEXTAREA = 'textarea';
 	const TYPE_TEXT = 'textfield';
 	const TYPE_CAPTCHA = 'captcha';
@@ -222,6 +223,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_RADIOLIST_INLINE:
 				$this->radioButtonListInline();
+				break;
+
+			case self::TYPE_RADIOBUTTONGROUPSLIST:
+				$this->radioButtonGroupsList();
 				break;
 
 			case self::TYPE_TEXTAREA:
@@ -494,6 +499,13 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function radioButtonListInline();
+
+	/**
+	 * Renders a list of radio buttons using Button Groups.
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function radioButtonGroupsList();
 
 	/**
 	 * Renders a textarea.
