@@ -104,6 +104,7 @@ span.required { color:#ff0000; }
     box-shadow:0 0 6px #d59392;
 }
 .form-inline .help-block.error, .form-inline .help-inline.error, .form-horizontal .help-block.error, .form-horizontal .help-inline.error, .form-vertical .help-block.error, .form-vertical .help-inline.error { color:#b94a48; }
+
 .select2-container {
     margin-bottom:9px;
 }
