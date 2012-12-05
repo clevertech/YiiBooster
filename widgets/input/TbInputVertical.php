@@ -247,6 +247,37 @@ class TbInputVertical extends TbInput
 	}
 
 	/**
+	 * Renders a JUI datepicker field.
+	 * @return string the rendered content
+	 * @author antonio ramirez <antonio@clevertech.biz>
+	 */
+	protected function juiDatePickerField() {
+		if (isset($this->htmlOptions['options']))
+		{
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+
+//		if (isset($this->htmlOptions['events']))
+//		{
+//			$events = $this->htmlOptions['events'];
+//			unset($this->htmlOptions['events']);
+//		}
+
+		echo $this->getLabel();
+		echo $this->getPrepend();
+		$this->widget('bootstrap.widgets.TbDatePicker', array(
+			'model' => $this->model,
+			'attribute' => $this->attribute,
+			'options' => isset($options) ? $options : array(),
+//			'events' => isset($events) ? $events : array(),
+			'htmlOptions' => $this->htmlOptions,
+		));
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+	}
+
+	/**
 	 * Renders a colorpicker field.
 	 * @return string the rendered content
 	 * @author antonio ramirez <antonio@clevertech.biz>
