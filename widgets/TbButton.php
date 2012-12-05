@@ -119,7 +119,7 @@ class TbButton extends CWidget
 		$classes = array('btn');
 
 		$validTypes = array(self::TYPE_LINK, self::TYPE_PRIMARY, self::TYPE_INFO, self::TYPE_SUCCESS,
-				self::TYPE_WARNING, self::TYPE_DANGER, self::TYPE_INVERSE);
+			self::TYPE_WARNING, self::TYPE_DANGER, self::TYPE_INVERSE);
 
 		if (isset($this->type) && in_array($this->type, $validTypes))
 			$classes[] = 'btn-'.$this->type;
