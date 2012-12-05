@@ -29,6 +29,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_CAPTCHA = 'captcha';
 	const TYPE_UNEDITABLE = 'uneditable';
 	const TYPE_DATEPICKER = 'datepicker';
+        const TYPE_JUIDATEPICKER = 'juidatepicker';
 	const TYPE_REDACTOR = 'redactor';
 	const TYPE_MARKDOWNEDITOR = 'markdowneditor';
 	const TYPE_HTML5EDITOR = 'wysihtml5';
@@ -247,6 +248,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_DATEPICKER:
 				$this->datepickerField();
+				break;
+
+			case self::TYPE_JUIDATEPICKER:
+				$this->juiDatepickerField();
 				break;
 
 			case self::TYPE_REDACTOR:
@@ -543,6 +548,13 @@ abstract class TbInput extends CInputWidget
 	abstract protected function datepickerField();
 
 	/**
+	 * Renders a JUI datepicker field.
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function juiDatepickerField();
+
+        /**
 	 * Renders a redactorJS wysiwyg field.
 	 * @abstract
 	 * @return mixed
