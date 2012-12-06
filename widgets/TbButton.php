@@ -50,7 +50,7 @@ class TbButton extends CWidget
 	public $type;
 	/**
 	 * @var string the button size.
-	 * Valid values are 'small' and 'large'.
+	 * Valid values are 'large', 'small' and 'mini'.
 	 */
 	public $size;
 	/**
@@ -66,13 +66,21 @@ class TbButton extends CWidget
 	 */
 	public $url;
 	/**
+	 * @var boolean indicates whether the button should span the full width of the a parent.
+	 */
+	public $block = false;
+	/**
 	 * @var boolean indicates whether the button is active.
 	 */
 	public $active = false;
 	/**
-	 * @var array the dropdown button items.
+	 * @var boolean indicates whether the button is disabled.
 	 */
-	public $items;
+	public $disabled = false;
+	/**
+	 * @var boolean indicates whether to encode the label.
+	 */
+	public $encodeLabel = true;
 	/**
 	 * @var boolean indicates whether to enable toggle.
 	 */
@@ -86,9 +94,10 @@ class TbButton extends CWidget
 	 */
 	public $completeText;
 	/**
-	 * @var boolean indicates whether to encode the label.
+	 * @var array the dropdown button items.
 	 */
-	public $encodeLabel = true;
+	public $items;
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
@@ -98,7 +107,7 @@ class TbButton extends CWidget
 	 */
 	public $ajaxOptions = array();
 	/**
-	 * @var array the HTML options for the dropdown menu.
+	 * @var array the HTML attributes for the dropdown menu.
 	 * @since 0.9.11
 	 */
 	public $dropdownOptions = array();
@@ -114,7 +123,7 @@ class TbButton extends CWidget
 		$classes = array('btn');
 
 		$validTypes = array(self::TYPE_LINK, self::TYPE_PRIMARY, self::TYPE_INFO, self::TYPE_SUCCESS,
-				self::TYPE_WARNING, self::TYPE_DANGER, self::TYPE_INVERSE);
+			self::TYPE_WARNING, self::TYPE_DANGER, self::TYPE_INVERSE);
 
 		if (isset($this->type) && in_array($this->type, $validTypes))
 			$classes[] = 'btn-'.$this->type;
@@ -124,8 +133,14 @@ class TbButton extends CWidget
 		if (isset($this->size) && in_array($this->size, $validSizes))
 			$classes[] = 'btn-'.$this->size;
 
+		if ($this->block)
+			$classes[] = 'btn-block';
+
 		if ($this->active)
 			$classes[] = 'active';
+
+		if ($this->disabled)
+			$classes[] = 'disabled';
 
 		if ($this->encodeLabel)
 			$this->label = CHtml::encode($this->label);
