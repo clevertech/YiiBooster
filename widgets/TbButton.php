@@ -25,13 +25,13 @@ class TbButton extends CWidget
 	const BUTTON_AJAXSUBMIT = 'ajaxSubmit';
 
 	// Button types.
-	const TYPE_LINK = 'link';
 	const TYPE_PRIMARY = 'primary';
 	const TYPE_INFO = 'info';
 	const TYPE_SUCCESS = 'success';
 	const TYPE_WARNING = 'warning';
 	const TYPE_DANGER = 'danger';
 	const TYPE_INVERSE = 'inverse';
+	const TYPE_LINK = 'link';
 
 	// Button sizes.
 	const SIZE_MINI = 'mini';
@@ -94,10 +94,9 @@ class TbButton extends CWidget
 	 */
 	public $completeText;
 	/**
-	 * @var array the dropdown button items.
-	 */
+	* @var array the dropdown button items.
+	*/
 	public $items;
-
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
@@ -117,9 +116,6 @@ class TbButton extends CWidget
 	 */
 	public function init()
 	{
-		if(!isset($this->htmlOptions['id']))
-			$this->htmlOptions['id'] = $this->getId();
-
 		$classes = array('btn');
 
 		$validTypes = array(self::TYPE_LINK, self::TYPE_PRIMARY, self::TYPE_INFO, self::TYPE_SUCCESS,
