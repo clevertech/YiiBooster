@@ -201,12 +201,12 @@ $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
 	if($("input[name='{$this->columnName}']:checked", grid).length)
 	{
 
-		$(".btn", grid).removeClass("disabled");
+		$(".bulk-actions-btn", grid).removeClass("disabled");
 		$("div.bulk-actions-blocker",grid).hide();
 	}
 	else
 	{
-		$(".btn", grid).addClass("disabled");
+		$(".bulk-actions-btn", grid).addClass("disabled");
 		$("div.bulk-actions-blocker",grid).show();
 	}
 });
@@ -227,8 +227,8 @@ EOD;
 	{
 		// create widget and display
 		if (isset($actionButton['htmlOptions']['class']))
-			$actionButton['htmlOptions']['class'] .= ' disabled';
-		else $actionButton['htmlOptions']['class'] = 'disabled';
+			$actionButton['htmlOptions']['class'] .= ' disabled bulk-actions-btn';
+		else $actionButton['htmlOptions']['class'] = 'disabled bulk-actions-btn';
 
 		$action = null;
 
