@@ -25,11 +25,13 @@
         </button>
         <input type="checkbox" class="toggle">
     </div>
-    <div class="span5">
+    <div class="span5 fileupload-progress fade">
         <!-- The global progress bar -->
-        <div class="progress progress-success progress-striped active fade">
+        <div class="progress progress-success progress-striped active" role="progressbar">
             <div class="bar" style="width:0%;"></div>
         </div>
+        <!-- The extended global progress information -->
+        <div class="progress-extended">&nbsp;</div>
     </div>
 </div>
 <!-- The loading indicator is shown during image processing -->
