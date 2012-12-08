@@ -77,6 +77,12 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public $tooltipSelector = 'a[rel="tooltip"]';
 
+	/**
+	 * @var bool whether to enable bootbox messages or not. Default value is true.
+	 * @since YiiBooster 1.0.5
+	 */
+	public $enableBootboxJS = true;
+
 	protected $_assetsUrl;
 
 	/**
@@ -178,7 +184,12 @@ class Bootstrap extends CApplicationComponent
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript('jquery');
-		$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.bootbox.min.js', $position);
+
+		/** enable bootboxJS? */
+		if($this->enableBootboxJS)
+		{
+			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.bootbox.min.js', $position);
+		}
 		$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap' . (!YII_DEBUG ? '.min' : '') . '.js', $position);
 	}
 
