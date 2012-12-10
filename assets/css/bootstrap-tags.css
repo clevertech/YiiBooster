@@ -42,7 +42,7 @@ ul.tags-suggestion-list {
 	position:absolute;
 	z-index:2;
 	max-height:160px;
-	overflow: scroll;
+	overflow: auto;
 }
 li.tags-suggestion {
 	padding:3px 20px;
