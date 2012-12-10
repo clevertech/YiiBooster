@@ -5,6 +5,10 @@
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version 1.0.0
+ *
+ * Modified for YiiBooster
+ * @author Antonio Ramirez <antonio@clevertech.biz>
+ * @version 1.0.5
  */
 
 /**
@@ -83,6 +87,15 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public $enableBootboxJS = true;
 
+	/**
+	 * @var bool enable [bootstrap notifier](https://github.com/Nijikokun/bootstrap-notify). Default value is `true`
+	 * @see [https://github.com/Nijikokun/bootstrap-notify](https://github.com/Nijikokun/bootstrap-notify]
+	 */
+	public $enableNotifierJS = true;
+
+	/**
+	 * @var string handles the assets folder path.
+	 */
 	protected $_assetsUrl;
 
 	/**
@@ -181,14 +194,20 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerJS($position = CClientScript::POS_HEAD)
 	{
-		/** @var CClientScript $cs */
+		/* @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript('jquery');
 
-		/** enable bootboxJS? */
+		/* enable bootboxJS? */
 		if($this->enableBootboxJS)
 		{
 			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.bootbox.min.js', $position);
+		}
+		/* enable bootstrap notifier ? */
+		if($this->enableNotifierJS)
+		{
+			// notifier requires a style
+			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.notify.js', $position);
 		}
 		$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap' . (!YII_DEBUG ? '.min' : '') . '.js', $position);
 	}
