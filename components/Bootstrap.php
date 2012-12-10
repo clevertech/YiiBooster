@@ -207,6 +207,7 @@ class Bootstrap extends CApplicationComponent
 		if($this->enableNotifierJS)
 		{
 			// notifier requires a style
+			$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-notify.css');
 			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.notify.js', $position);
 		}
 		$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap' . (!YII_DEBUG ? '.min' : '') . '.js', $position);
