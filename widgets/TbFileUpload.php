@@ -108,7 +108,12 @@ class TbFileUpload extends CJuiInputWidget
 		{
 			$htmlOptions["multiple"] = true;
 		}
-
+    
+    if (isset($this->htmlOptions['name']))
+    {
+      $name = $this->htmlOptions['name'];
+    }
+      
 		$this->render($this->uploadView);
 		$this->render($this->downloadView);
 		$this->render($this->formView, compact('htmlOptions'));
