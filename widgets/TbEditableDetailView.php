@@ -22,7 +22,13 @@ class TbEditableDetailView extends CDetailView
 
     //set bootstrap css
     public $htmlOptions = array('class'=> 'table table-bordered table-striped table-hover table-condensed');
-
+    
+    /**
+     * @var string the URL of the CSS file used by this detail view.
+     * Defaults to false, meaning that no CSS will be included.
+     */
+    public $cssFile = false;
+    
     public function init()
     {
         if (!$this->data instanceof CModel) {
