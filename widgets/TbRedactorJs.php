@@ -31,6 +31,11 @@ class TbRedactorJS extends CInputWidget
 	 * Editor height
 	 */
 	public $height = '400px';
+    /**
+     * Languages list for check
+     * @var array
+     */
+    private $_languages = array('en', 'de', 'fr', 'lv', 'pl', 'pt_br', 'ru', 'ua' ,'hu');
 
 	/**
 	 * Display editor
@@ -67,9 +72,11 @@ class TbRedactorJS extends CInputWidget
 	{
 		Yii::app()->bootstrap->registerAssetCss('redactor.css');
 		Yii::app()->bootstrap->registerAssetJs('redactor.min.js');
-		
-		if ($this->lang != 'en')
-			Yii::app()->bootstrap->registerAssetJs('locales/redactor.'.$this->lang.'.js');
+
+        if($this->editorOptions['lang'] != $this->lang) {
+            $this->lang = $this->editorOptions['lang'];
+            Yii::app()->bootstrap->registerAssetJs('locales/redactor.'.$this->lang.'.js');
+        }
 
 		if (isset($this->editorOptions['plugins']))
 		{
