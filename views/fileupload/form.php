@@ -7,7 +7,7 @@
 			<?php
 			if ($this->hasModel()) :
 				echo CHtml::activeFileField($this->model, $this->attribute, $htmlOptions) . "\n"; else :
-				echo CHtml::fileField($name, $this->value, $htmlOptions) . "\n";
+				echo CHtml::fileField($htmlOptions['name'], $this->value, $htmlOptions) . "\n";
 			endif;
 			?>
 		</span>
@@ -44,4 +44,3 @@
     </table>
 </div>
 <?php echo CHtml::endForm(); ?>
-
