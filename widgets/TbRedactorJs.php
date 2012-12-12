@@ -31,11 +31,6 @@ class TbRedactorJS extends CInputWidget
 	 * Editor height
 	 */
 	public $height = '400px';
-    /**
-     * Languages list for check
-     * @var array
-     */
-    private $_languages = array('en', 'de', 'fr', 'lv', 'pl', 'pt_br', 'ru', 'ua' ,'hu');
 
 	/**
 	 * Display editor
