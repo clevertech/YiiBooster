@@ -9,9 +9,6 @@
  * Modified for YiiBooster
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @version 1.0.5
- *
- * Added Bootstrap Modal Manager Plugin
- * @author Thiago Otaviani Vidal <thiagovidal@gmail.com>
  */
 
 /**
@@ -26,7 +23,6 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_COLLAPSE = 'collapse';
 	const PLUGIN_DROPDOWN = 'dropdown';
 	const PLUGIN_MODAL = 'modal';
-	const PLUGIN_MODALMANAGER = 'modalmanager';
 	const PLUGIN_POPOVER = 'popover';
 	const PLUGIN_SCROLLSPY = 'scrollspy';
 	const PLUGIN_TAB = 'tab';
@@ -298,18 +294,6 @@ class Bootstrap extends CApplicationComponent
 	public function registerModal($selector = null, $options = array())
 	{
 		$this->registerPlugin(self::PLUGIN_MODAL, $selector, $options);
-	}
-
-	/**
-	 * Registers the Modal manager plugin.
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 * @see https://github.com/jschr/bootstrap-modal/
-	 * @since 0.9.8
-	 */
-	public function registerModalManager($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_MODALMANAGER, $selector, $options);
 	}
 
 	/**
