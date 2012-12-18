@@ -74,12 +74,12 @@ class Bootstrap extends CApplicationComponent
 	 * @var string default popover CSS selector.
 	 * @since 0.10.0
 	 */
-	public $popoverSelector = 'a[rel="popover"]';
+	public $popoverSelector = 'body';
 	/**
 	 * @var string default tooltip CSS selector.
 	 * @since 0.10.0
 	 */
-	public $tooltipSelector = 'a[rel="tooltip"]';
+	public $tooltipSelector = 'body';
 
 	/**
 	 * @var bool whether to enable bootbox messages or not. Default value is true.
@@ -318,6 +318,14 @@ class Bootstrap extends CApplicationComponent
 	public function registerPopover($selector = null, $options = array())
 	{
 		$this->registerTooltip(); // Popover requires the tooltip plugin
+		if (!isset($options['selector']))
+		{
+			$options['selector'] = '[rel=popover]';
+			if(null === $selector)
+			{
+				$selector = 'body';
+			}
+		}
 		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options, $this->popoverSelector);
 	}
 
@@ -342,6 +350,14 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerTooltip($selector = null, $options = array())
 	{
+		if (!isset($options['selector']))
+		{
+			$options['selector'] = '[rel=tooltip]';
+			if(null === $selector)
+			{
+				$selector = 'body';
+			}
+		}
 		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options, $this->tooltipSelector);
 	}
 
