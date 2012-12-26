@@ -44,14 +44,14 @@ class TbBreadcrumbs extends CBreadcrumbs
 		if (empty($this->links))
 			return;
 
-		$links = array();
+		$links = '';
 
 		if (!isset($this->homeLink))
 		{
 			$content = CHtml::link(Yii::t('zii', 'Home'), Yii::app()->homeUrl);
-			$links[] = $this->renderItem($content);
+			$links .= $this->renderItem($content);
 		} else if ($this->homeLink !== false)
-			$links[] = $this->renderItem($this->homeLink);
+			$links .= $this->renderItem($this->homeLink);
 
 		$count = count($this->links);
 		$counter = 0;
@@ -61,12 +61,12 @@ class TbBreadcrumbs extends CBreadcrumbs
 			if (is_string($label) || is_array($url))
 			{
 				$content = CHtml::link($this->encodeLabel ? CHtml::encode($label) : $label, $url);
-				$links[] = $this->renderItem($content);
+				$links .= $this->renderItem($content);
 			} else
-				$links[] = $this->renderItem($this->encodeLabel ? CHtml::encode($url) : $url, ($counter === $count));
+				$links .= $this->renderItem($this->encodeLabel ? CHtml::encode($url) : $url, ($counter === $count));
 		}
 
-		echo CHtml::tag('ul', $this->htmlOptions, implode($this->separator, $links));
+		echo CHtml::tag('ul', $this->htmlOptions, $links);
 	}
 
 	/**
@@ -80,6 +80,7 @@ class TbBreadcrumbs extends CBreadcrumbs
 		ob_start();
 		echo CHtml::openTag('li', $active ? array('class' => 'active') : array());
 		echo $content;
+		if (!$active) echo $this->separator;
 		echo '</li>';
 		return ob_get_clean();
 	}
