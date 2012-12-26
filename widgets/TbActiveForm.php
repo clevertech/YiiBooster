@@ -679,6 +679,7 @@ class TbActiveForm extends CActiveForm
 			'data' => $data,
 			'htmlOptions' => $htmlOptions,
 		));
+		echo "\n";
 		return ob_get_clean();
 	}
 
