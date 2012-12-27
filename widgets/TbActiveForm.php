@@ -718,6 +718,7 @@ EOD;
 			'data' => $data,
 			'htmlOptions' => $htmlOptions,
 		));
+		echo "\n";
 		return ob_get_clean();
 	}
 

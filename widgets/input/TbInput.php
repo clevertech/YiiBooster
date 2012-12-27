@@ -143,6 +143,12 @@ abstract class TbInput extends CInputWidget
 			unset($this->htmlOptions['hint']);
 		}
 
+		if (isset($this->htmlOptions['label']))
+		{
+			$this->label = $this->htmlOptions['label'];
+			unset($this->htmlOptions['label']);
+		}
+		
 		if (isset($this->htmlOptions['labelOptions']))
 		{
 			$this->labelOptions = $this->htmlOptions['labelOptions'];
