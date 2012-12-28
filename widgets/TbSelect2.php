@@ -53,16 +53,16 @@ class TbSelect2 extends CInputWidget
 			if($this->form)
 				echo $this->asDropDownList?
 					$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
-					$this->form->hiddenField($this->model, $this->attribute);
+					$this->form->hiddenField($this->model, $this->attribute, $this->htmlOptions);
 			else
 				echo $this->asDropDownList?
 					CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
-					CHtml::activeHiddenField($this->model, $this->attribute);
+					CHtml::activeHiddenField($this->model, $this->attribute, $this->htmlOptions);
 
 		} else
 			echo $this->asDropDownList ?
 				CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions) :
-				CHtml::hiddenField($name, $this->value);
+				CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 
 		$this->registerClientScript($id);
 	}
