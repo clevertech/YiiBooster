@@ -54,7 +54,16 @@ class TbCollapse extends CWidget
 
 		if (isset($this->toggle) && !isset($this->options['toggle']))
 			$this->options['toggle'] = $this->toggle;
-
+			
+		// NOTE: we depend on the htmlOptions being initialized to empty array already.
+		if (empty($this->htmlOptions['class']))
+		{
+			$this->htmlOptions['class'] => 'collapse';
+		}
+		else
+		{
+			$this->htmlOptions['class'] += ' collapse';
+		}
 		echo CHtml::openTag($this->tagName, $this->htmlOptions);
 	}
 
