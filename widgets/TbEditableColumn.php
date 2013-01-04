@@ -8,8 +8,8 @@
  * @version 1.0.0
 */
 
-Yii::import('ext.bootstrap.widgets.TbEditableField');
-Yii::import('ext.bootstrap.widgets.TbDataColumn');
+Yii::import('bootstrap.widgets.TbEditableField');
+Yii::import('bootstrap.widgets.TbDataColumn');
 
 /**
 * EditableColumn widget makes editable one column in CGridView.
