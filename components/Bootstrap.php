@@ -98,6 +98,14 @@ class Bootstrap extends CApplicationComponent
 	public $enableNotifierJS = true;
 
 	/**
+	 * @var bool|null Whether to republish assets on each request. Defaults to YII_DEBUG, resulting in a the republication of all YiiBooster-assets 
+	 * on each request if the application is in debug mode. Passing null to this option restores 
+	 * the default handling of CAssetManager of YiiBooster assets.
+	 * @since YiiBooster 1.0.6
+	 */
+	public $republishAssetsOnRequest = YII_DEBUG;
+	
+	/**
 	 * @var string handles the assets folder path.
 	 */
 	protected $_assetsUrl;
@@ -507,7 +515,7 @@ class Bootstrap extends CApplicationComponent
 		else
 		{
 			$assetsPath = Yii::getPathOfAlias('bootstrap.assets');
-			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, YII_DEBUG);
+			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, $this->republishAssetsOnRequest);
 			return $this->_assetsUrl = $assetsUrl;
 		}
 	}
