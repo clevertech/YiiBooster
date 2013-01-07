@@ -120,7 +120,7 @@ class Bootstrap extends CApplicationComponent
 			Yii::setPathOfAlias('bootstrap', realpath(dirname(__FILE__) . '/..'));
 
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
-		if (Yii::app() instanceof CConsoleApplication)
+		if (Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli')
 			return;
 
 		if ($this->coreCss !== false)
