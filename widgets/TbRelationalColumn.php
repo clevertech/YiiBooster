@@ -154,7 +154,7 @@ $(document).on('click','.{$this->cssClass}', function(){
 	var status = that.data('status');
 	var rowid = that.data('rowid');
 	var tr = $('#relatedinfo'+rowid);
-	var parent = that.parents('tr');
+	var parent = that.parents('tr').eq(0);
 	var afterAjaxUpdate = {$afterAjaxUpdate};
 
 	if(status && status=='on'){return}
