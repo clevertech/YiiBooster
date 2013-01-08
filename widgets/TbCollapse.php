@@ -58,7 +58,7 @@ class TbCollapse extends CWidget
 		// NOTE: we depend on the htmlOptions being initialized to empty array already.
 		if (empty($this->htmlOptions['class']))
 		{
-			$this->htmlOptions['class'] => 'collapse';
+			$this->htmlOptions['class'] = 'collapse';
 		}
 		else
 		{
