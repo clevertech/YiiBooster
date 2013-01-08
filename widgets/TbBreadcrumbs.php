@@ -66,7 +66,7 @@ class TbBreadcrumbs extends CBreadcrumbs
 				$links .= $this->renderItem($this->encodeLabel ? CHtml::encode($url) : $url, ($counter === $count));
 		}
 
-		echo CHtml::tag('ul', $this->htmlOptions, implode("\n", $links));
+		echo CHtml::tag('ul', $this->htmlOptions, $links);
 	}
 
 	/**
