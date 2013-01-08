@@ -377,10 +377,10 @@ class TbEditableField extends CWidget
               'Select' => array('select', 'date'),
               'Check' => array('checklist')
             );
-            $title = Yii::t('EditableField.editable', 'Enter');
+            $title = Yii::t('TbEditableField.editable', 'Enter');
             foreach($titles as $t => $types) {
                 if(in_array($this->type, $types)) {
-                   $title = Yii::t('EditableField.editable', $t); 
+                   $title = Yii::t('TbEditableField.editable', $t);
                 }
             }
             $this->title = $title . ' ' . $this->model->getAttributeLabel($this->attribute);
