@@ -49,7 +49,7 @@ class TbInputHorizontal extends TbInput
 		echo '<div class="controls">';
 		echo '<label class="checkbox" for="' . $this->getAttributeId($attribute) . '">';
 		echo $this->form->checkBox($this->model, $attribute, $this->htmlOptions) . PHP_EOL;
-		echo $this->model->getAttributeLabel($attribute);
+		echo $this->form->labelEx($this->model, $attribute);
 		echo $this->getError() . $this->getHint();
 		echo '</label></div>';
 	}
