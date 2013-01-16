@@ -27,3 +27,4 @@ Senior Web Developer
 - **(fix)** TbFileUpload - bug in global progressbar (appenshin)
 - **(enhancement)** Added support to TbActiveForm to use TbSelect2 widget (antonio ramirez)
 - **(enhancement)** Added MarkDown Editor (kazuo)
+- **(fix)** Now it is possible to provide custom 'class' and 'style' `htmlOptions` for `TbProgress` #216 (hijarian)
