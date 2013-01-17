@@ -64,7 +64,7 @@ class TbToggleAction extends CAction
 		{
 			$model = $this->loadModel($id);
 			$model->$attribute = ($model->$attribute == $this->noValue) ? $this->yesValue : $this->noValue;
-			$success = $model->save(false);
+			$success = $model->save(false, array($attribute));
 
 			if (Yii::app()->getRequest()->isAjaxRequest)
 			{
