@@ -112,7 +112,11 @@ class TbToggleColumn extends CGridColumn
 	 * </pre>
 	 */
 	public $afterToggle;
-
+	
+	/**
+	 * @var string suffix substituted to a name class of the tag <a>
+	 */
+	public $uniqueClassSuffix = '';
 	/**
 	 * @var array the configuration for toggle button.
 	 */
@@ -144,7 +148,7 @@ class TbToggleColumn extends CGridColumn
 
 		$this->button = array(
 			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("id"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
-			'htmlOptions' => array('class' => $this->name . '_toggle'),
+			'htmlOptions' => array('class' => $this->name . '_toggle'.$this->uniqueClassSuffix),
 		);
 
 		if (Yii::app()->request->enableCsrfValidation)
