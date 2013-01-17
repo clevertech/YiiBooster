@@ -147,7 +147,7 @@ class TbGridView extends CGridView
 			$column->renderHeaderCell();
 			$name = strip_tags(ob_get_clean());
 
-			$labels .= "td:nth-of-type($cnt):before { content: '{$name}'; }\n";
+			$labels .= "#$this->id td:nth-of-type($cnt):before { content: '{$name}'; }\n";
 			$cnt++;
 		}
 
