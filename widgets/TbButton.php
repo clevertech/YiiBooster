@@ -112,6 +112,12 @@ class TbButton extends CWidget
 	public $dropdownOptions = array();
 
 	/**
+	 * @var whether the button is visible or not
+	 * @since 0.9.11
+	 */
+	public $visible = true;
+
+	/**
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -188,6 +194,8 @@ class TbButton extends CWidget
 	 */
 	public function run()
 	{
+		if(!$this->visible)
+				return false;
 		echo $this->createButton();
 
 		if ($this->hasDropdown())
