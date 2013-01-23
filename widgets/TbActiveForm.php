@@ -215,6 +215,7 @@ class TbActiveForm extends CActiveForm
 	 * Renders a masked text field input row.
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
+	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
 	 * @param array $htmlOptions additional HTML attributes
 	 * @return string the generated row
 	 */
