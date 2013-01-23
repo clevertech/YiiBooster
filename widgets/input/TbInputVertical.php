@@ -198,7 +198,7 @@ class TbInputVertical extends TbInput
 	{
 		echo $this->getLabel();
 		echo $this->getPrepend();
-		echo $this->form->maskedTextField($this->model, $this->attribute, $this->htmlOptions);
+		echo $this->form->maskedTextField($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 	}
