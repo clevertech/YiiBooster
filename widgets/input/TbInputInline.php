@@ -58,4 +58,16 @@ class TbInputInline extends TbInputVertical
 		echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 		echo $this->getAppend();
 	}
+	
+	/**
+	 * Renders a masked text field.
+	 * @return string the rendered content
+	 */
+	protected function maskedTextField()
+	{
+		$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
+		echo $this->getPrepend();
+		echo $this->form->maskedTextField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+	}
 }
