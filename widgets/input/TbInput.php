@@ -26,6 +26,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_RADIOBUTTONGROUPSLIST = 'radiobuttongroupslist';
 	const TYPE_TEXTAREA = 'textarea';
 	const TYPE_TEXT = 'textfield';
+	const TYPE_MASKEDTEXT = 'maskedtextfield';
 	const TYPE_CAPTCHA = 'captcha';
 	const TYPE_UNEDITABLE = 'uneditable';
 	const TYPE_DATEPICKER = 'datepicker';
@@ -236,7 +237,11 @@ abstract class TbInput extends CInputWidget
 			case self::TYPE_TEXT:
 				$this->textField();
 				break;
-
+			
+			case self::TYPE_MASKEDTEXT:
+				$this->maskedTextField();
+				break;
+			
 			case self::TYPE_CAPTCHA:
 				$this->captcha();
 				break;
