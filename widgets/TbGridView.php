@@ -47,6 +47,11 @@ class TbGridView extends CGridView
 	public $responsiveTable = false;
 
 	/**
+	 * @var array of additional parameters to pass to values
+	 */
+	public $extraParams = array();
+
+	/**
 	 * Initializes the widget.
 	 */
 	public function init()
