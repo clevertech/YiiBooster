@@ -108,8 +108,18 @@ class TbProgress extends CWidget
 			foreach($this->stacked as $bar)
 			{
 				$options = isset($bar['htmlOptions'])? $bar['htmlOptions'] : array();
-				$options['style'] = 'width: ' . $bar['percent']. '%';
-				$options['class'] = 'bar bar-'.$bar['type'];
+				if (empty($options['style']))
+					$options['style'] = '';
+				else
+					$options['style'] .= ' ';
+				$options['style'] .= 'width: ' . $bar['percent']. '%';
+
+				if (empty($options['class']))
+					$options['class'] = '';
+				else
+					$options['style'] .= ' ';
+				$options['class'] .= 'bar bar-'.$bar['type'];
+
 				echo '<div '.CHtml::renderAttributes($options).'>'.@$bar['content'].'</div>';
 			}
 		}
