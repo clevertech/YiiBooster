@@ -62,7 +62,7 @@ class TbCollapse extends CWidget
 		}
 		else
 		{
-			$this->htmlOptions['class'] += ' collapse';
+			$this->htmlOptions['class'] .= ' collapse';
 		}
 		echo CHtml::openTag($this->tagName, $this->htmlOptions);
 	}
