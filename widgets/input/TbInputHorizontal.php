@@ -260,7 +260,22 @@ class TbInputHorizontal extends TbInput
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
-
+	
+	/**
+	 * Renders a masked text field.
+	 * @return string the rendered content
+	 */
+	protected function maskedTextField()
+	{
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		echo $this->form->maskedTextField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+	
 	/**
 	 * Renders a CAPTCHA.
 	 * @return string the rendered content
