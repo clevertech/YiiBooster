@@ -263,6 +263,22 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 *### .maskedTextFieldRow()
+	 * 
+	 * Renders a masked text field input row.
+	 * 
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
+	public function maskedTextFieldRow($model, $attribute, $mask, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_MASKEDTEXT, $model, $attribute, $mask, $htmlOptions);
+	}
+	
+	/**
 	 *### .textAreaRow()
 	 *
 	 * Renders a text area input row.
@@ -624,6 +640,26 @@ class TbActiveForm extends CActiveForm
 		Yii::app()->clientScript->registerScript('radiobuttongrouplist-' . $attribute, implode("\n", $scripts));
 	}
 
+	/**
+	 * Renders a masked text field row
+	 * 
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
+	 * @param array $htmlOptions additional HTML options.
+	 * @return string the generated masked text field
+	 * @since 0.9.5
+	 */
+	public function maskedTextField($model,$attribute,$mask,$htmlOptions=array())
+	{
+		return Yii::app()->controller->widget('CMaskedTextField', array(
+			'model' => $model,
+			'attribute' => $attribute,
+			'mask' => $mask,
+			'htmlOptions'=> $htmlOptions
+			),TRUE);
+	}
+	
 	/**
 	 * Renders an input list.
 	 *
