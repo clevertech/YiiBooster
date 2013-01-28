@@ -40,6 +40,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_CKEDITOR = 'ckeditor';
 	const TYPE_TIMEPICKER = 'timepicker';
 	const TYPE_SELECT2 = 'select2';
+	const TYPE_TYPEAHEAD = 'typeahead';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
