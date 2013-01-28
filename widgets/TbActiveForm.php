@@ -471,6 +471,18 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a typeAhead input row
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
+	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_TYPEAHEAD, $model, $attribute, $widgetOptions, $htmlOptions);
+	}
+
+	/**
 	 *### .checkBoxList()
 	 *
 	 * Renders a checkbox list for a model attribute.
@@ -658,6 +670,32 @@ class TbActiveForm extends CActiveForm
 			'mask' => $mask,
 			'htmlOptions'=> $htmlOptions
 			),TRUE);
+	}
+	
+	/**
+	 * Renders a type ahead field row
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
+	 * @param array $htmlOptions additional HTML options.
+	 * @return string the generated typeahead field
+	 * @since 1.0.6
+	 */
+	public function typeAheadField($model,$attribute,$widgetOptions,$htmlOptions=array())
+	{
+		if (!isset($widgetOptions['source'])) throw new CException(__CLASS__ . ': \'source\' parameter must be defined. ');
+		
+		$widgetOptions += array(
+							'items'=>4,
+						    'matcher'=>'js:function(item) {
+						        return ~item.toLowerCase().indexOf(this.query.toLowerCase());
+						    }');
+		
+		return Yii::app()->controller->widget('bootstrap.widgets.TbTypeahead', array(
+			'name'=>$attribute,
+			'model'=>$model,
+			'options'=>$widgetOptions
+			)+$htmlOptions,TRUE);
 	}
 	
 	/**
