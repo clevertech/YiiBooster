@@ -545,4 +545,17 @@ class TbInputVertical extends TbInput
 		echo $this->getError() . $this->getHint();
 	}
 
+	/**
+	 * Renders a typeahead field
+	 * @return string the rendered content
+	 */
+	protected function typeAheadField()
+	{
+		echo $this->getLabel();
+		echo $this->getPrepend();
+		echo $this->form->typeAheadField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+	}
+
 }
