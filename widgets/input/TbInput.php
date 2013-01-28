@@ -1,9 +1,9 @@
 <?php
-/**
- * TbInput class file.
+/*## TbInput class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets.input
  */
 
@@ -45,59 +45,75 @@ abstract class TbInput extends CInputWidget
 	 * @var TbActiveForm the associated form widget.
 	 */
 	public $form;
+
 	/**
 	 * @var string the input label text.
 	 */
 	public $label;
+
 	/**
 	 * @var string the input type.
+   *
 	 * Following types are supported: checkbox, checkboxlist, dropdownlist, filefield, password,
 	 * radiobutton, radiobuttonlist, textarea, textfield, captcha and uneditable.
 	 */
 	public $type;
+
 	/**
 	 * @var array the data for list inputs.
 	 */
 	public $data = array();
+
 	/**
 	 * @var string text to prepend.
 	 */
 	public $prependText;
+
 	/**
 	 * @var string text to append.
 	 */
 	public $appendText;
+
 	/**
 	 * @var string the hint text.
 	 */
 	public $hintText;
+
 	/**
 	 * @var array label html attributes.
 	 */
 	public $labelOptions = array();
+
 	/**
 	 * @var array prepend html attributes.
 	 */
 	public $prependOptions = array();
+
 	/**
 	 * @var array append html attributes.
 	 */
 	public $appendOptions = array();
+
 	/**
 	 * @var array hint html attributes.
 	 */
 	public $hintOptions = array();
+
 	/**
 	 * @var array error html attributes.
 	 */
 	public $errorOptions = array();
+
 	/**
 	 * @var array captcha html attributes.
 	 */
 	public $captchaOptions = array();
 
 	/**
+	 *### .init()
+   *
 	 * Initializes the widget.
+   *
 	 * @throws CException if the widget could not be initialized.
 	 */
 	public function init()
@@ -123,6 +139,8 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .processHtmlOptions()
+   *
 	 * Processes the html options.
 	 */
 	protected function processHtmlOptions()
@@ -173,7 +191,6 @@ abstract class TbInput extends CInputWidget
 		{
 			$this->hintOptions = $this->htmlOptions['hintOptions'];
 			unset($this->htmlOptions['hintOptions']);
-
 		}
 
 		if (isset($this->htmlOptions['errorOptions']))
@@ -190,7 +207,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .run()
+   *
 	 * Runs the widget.
+   *
 	 * @throws CException if the widget type is invalid.
 	 */
 	public function run()
@@ -308,7 +328,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getLabel()
+   *
 	 * Returns the label for the input.
+   *
 	 * @return string the label
 	 */
 	protected function getLabel()
@@ -322,7 +345,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getPrepend()
+   *
 	 * Returns the prepend element for the input.
+   *
 	 * @return string the element
 	 */
 	protected function getPrepend()
@@ -347,7 +373,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getAppend()
+   *
 	 * Returns the append element for the input.
+   *
 	 * @return string the element
 	 */
 	protected function getAppend()
@@ -372,7 +401,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getAppend()
+   *
 	 * Returns the id that should be used for the specified attribute
+   *
 	 * @param string $attribute the attribute
 	 * @return string the id
 	 */
@@ -384,7 +416,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getError()
+   *
 	 * Returns the error text for the input.
+   *
 	 * @return string the error text
 	 */
 	protected function getError()
@@ -393,7 +428,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getHint()
+   *
 	 * Returns the hint text for the input.
+   *
 	 * @return string the hint text
 	 */
 	protected function getHint()
@@ -413,7 +451,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getContainerCssClass()
+   *
 	 * Returns the container CSS class for the input.
+   *
 	 * @return string the CSS class
 	 */
 	protected function getContainerCssClass()
@@ -423,7 +464,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .getAddonCssClass()
+   *
 	 * Returns the input container CSS classes.
+   *
 	 * @return string the CSS class
 	 */
 	protected function getAddonCssClass()
@@ -438,7 +482,10 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .hasAddOn()
+   *
 	 * Returns whether the input has an add-on (prepend and/or append).
+   *
 	 * @return boolean the result
 	 */
 	protected function hasAddOn()
@@ -447,176 +494,250 @@ abstract class TbInput extends CInputWidget
 	}
 
 	/**
+	 *### .checkBox()
+   *
 	 * Renders a checkbox.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function checkBox();
 
 	/**
+	 *### .toggleButton()
+   *
 	 * Renders a toggle button.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function toggleButton();
 
 	/**
+	 *### .checkBoxList()
+   *
 	 * Renders a list of checkboxes.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function checkBoxList();
 
 	/**
+	 *### .checkBoxListInline()
+   *
 	 * Renders a list of inline checkboxes.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function checkBoxListInline();
 
 	/**
+	 *### .checkBoxGroupsList()
+   *
 	 * Renders a list of checkboxes using Button Groups.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function checkBoxGroupsList();
 
 	/**
+	 *### .dropDownList()
+   *
 	 * Renders a drop down list (select).
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function dropDownList();
 
 	/**
+	 *### .fileField()
+   *
 	 * Renders a file field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function fileField();
 
 	/**
+	 *### .passwordField()
+   *
 	 * Renders a password field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function passwordField();
 
 	/**
+	 *### .radioButton()
+   *
 	 * Renders a radio button.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function radioButton();
 
 	/**
+	 *### .radioButtonList()
+   *
 	 * Renders a list of radio buttons.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function radioButtonList();
 
 	/**
+	 *### .radioButtonListInline()
+   *
 	 * Renders a list of inline radio buttons.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function radioButtonListInline();
 
 	/**
+	 *### .radioButtonGroupsList()
+   *
 	 * Renders a list of radio buttons using Button Groups.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function radioButtonGroupsList();
 
 	/**
+	 *### .textArea()
+   *
 	 * Renders a textarea.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function textArea();
 
 	/**
+	 *### .textField()
+   *
 	 * Renders a text field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function textField();
 
 	/**
+	 *### .captcha()
+   *
 	 * Renders a CAPTCHA.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function captcha();
 
 	/**
+	 *### .uneditableField()
+   *
 	 * Renders an uneditable field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function uneditableField();
 
 	/**
+	 *### .datepicketField()
+   *
 	 * Renders a datepicker field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function datepickerField();
 
 	/**
+	 *### .redactorJs()
+   *
 	 * Renders a redactorJS wysiwyg field.
+   *
 	 * @abstract
 	 * @return mixed
 	 */
 	abstract protected function redactorJs();
 
-
 	/**
+	 *### .markdownEditorJs()
+   *
 	 * Renders a markdownEditorJS wysiwyg field.
+   *
 	 * @abstract
 	 * @return mixed
 	 */
 	abstract protected function markdownEditorJs();
 
 	/**
+	 *### .ckEditor()
+   *
 	 * Renders a bootstrap CKEditor wysiwyg editor.
+   *
 	 * @abstract
 	 * @return mixed
 	 */
 	abstract protected function ckEditor();
 
 	/**
+	 *### .html5Editor()
+   *
 	 * Renders a bootstrap wysihtml5 editor.
+   *
 	 * @abstract
 	 * @return mixed
 	 */
 	abstract protected function html5Editor();
 
 	/**
+	 *### .dateRangeField()
+   *
 	 * Renders a daterange picker field
+   *
 	 * @abstract
 	 * @return mixed
 	 */
 	abstract protected function dateRangeField();
 
 	/**
+	 *### .colorpickerField()
+   *
 	 * Renders a colorpicker field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function colorpickerField();
 
 	/**
+	 *### .timepickerField()
+   *
 	 * Renders a timepicker field.
+   *
 	 * @return string the rendered content
 	 * @abstract
 	 */
 	abstract protected function timepickerField();
 
 	/**
+	 *### .select2Field()
+   *
 	 * Renders a select2 field.
+   *
 	 * @return mixed
 	 */
 	abstract protected function select2Field();
