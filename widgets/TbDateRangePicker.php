@@ -80,8 +80,8 @@ class TbDateRangePicker extends CInputWidget
 	public function registerClientScript()
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-daterangepicker.css');
-		Yii::app()->bootstrap->registerAssetJs('bootstrap.daterangepicker.js', CClientScript::POS_HEAD);
-		Yii::app()->bootstrap->registerAssetJs('date.js', CClientScript::POS_HEAD);
+		Yii::app()->bootstrap->registerAssetJs('bootstrap.daterangepicker.js');
+		Yii::app()->bootstrap->registerAssetJs('date.js');
 
 	}
 }
