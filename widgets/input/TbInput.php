@@ -14,32 +14,32 @@
 abstract class TbInput extends CInputWidget
 {
 	// The different input types.
-	const TYPE_CHECKBOX = 'checkbox';
-	const TYPE_CHECKBOXLIST = 'checkboxlist';
-	const TYPE_CHECKBOXLIST_INLINE = 'checkboxlist_inline';
-	const TYPE_CHECKBOXGROUPSLIST = 'checkboxgroupslist';
-	const TYPE_DROPDOWN = 'dropdownlist';
-	const TYPE_FILE = 'filefield';
-	const TYPE_PASSWORD = 'password';
-	const TYPE_RADIO = 'radiobutton';
-	const TYPE_RADIOLIST = 'radiobuttonlist';
-	const TYPE_RADIOLIST_INLINE = 'radiobuttonlist_inline';
+	const TYPE_CHECKBOX              = 'checkbox';
+	const TYPE_CHECKBOXLIST          = 'checkboxlist';
+	const TYPE_CHECKBOXLIST_INLINE   = 'checkboxlist_inline';
+	const TYPE_CHECKBOXGROUPSLIST    = 'checkboxgroupslist';
+	const TYPE_DROPDOWN              = 'dropdownlist';
+	const TYPE_FILE                  = 'filefield';
+	const TYPE_PASSWORD              = 'password';
+	const TYPE_RADIO                 = 'radiobutton';
+	const TYPE_RADIOLIST             = 'radiobuttonlist';
+	const TYPE_RADIOLIST_INLINE      = 'radiobuttonlist_inline';
 	const TYPE_RADIOBUTTONGROUPSLIST = 'radiobuttongroupslist';
-	const TYPE_TEXTAREA = 'textarea';
-	const TYPE_TEXT = 'textfield';
-	const TYPE_MASKEDTEXT = 'maskedtextfield';
-	const TYPE_CAPTCHA = 'captcha';
-	const TYPE_UNEDITABLE = 'uneditable';
-	const TYPE_DATEPICKER = 'datepicker';
-	const TYPE_REDACTOR = 'redactor';
-	const TYPE_MARKDOWNEDITOR = 'markdowneditor';
-	const TYPE_HTML5EDITOR = 'wysihtml5';
-	const TYPE_DATERANGEPICKER = 'daterangepicker';
-	const TYPE_TOGGLEBUTTON = 'togglebutton';
-	const TYPE_COLORPICKER = 'colorpicker';
-	const TYPE_CKEDITOR = 'ckeditor';
-	const TYPE_TIMEPICKER = 'timepicker';
-	const TYPE_SELECT2 = 'select2';
+	const TYPE_TEXTAREA              = 'textarea';
+	const TYPE_TEXT                  = 'textfield';
+	const TYPE_MASKEDTEXT            = 'maskedtextfield';
+	const TYPE_CAPTCHA               = 'captcha';
+	const TYPE_UNEDITABLE            = 'uneditable';
+	const TYPE_DATEPICKER            = 'datepicker';
+	const TYPE_REDACTOR              = 'redactor';
+	const TYPE_MARKDOWNEDITOR        = 'markdowneditor';
+	const TYPE_HTML5EDITOR           = 'wysihtml5';
+	const TYPE_DATERANGEPICKER       = 'daterangepicker';
+	const TYPE_TOGGLEBUTTON          = 'togglebutton';
+	const TYPE_COLORPICKER           = 'colorpicker';
+	const TYPE_CKEDITOR              = 'ckeditor';
+	const TYPE_TIMEPICKER            = 'timepicker';
+	const TYPE_SELECT2               = 'select2';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
