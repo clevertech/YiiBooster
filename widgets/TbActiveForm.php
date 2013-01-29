@@ -692,10 +692,11 @@ class TbActiveForm extends CActiveForm
 						    }');
 		
 		return Yii::app()->controller->widget('bootstrap.widgets.TbTypeahead', array(
-			'name'=>$attribute,
 			'model'=>$model,
-			'options'=>$widgetOptions
-			)+$htmlOptions,TRUE);
+			'attribute'=>$attribute,
+			'options'=>$widgetOptions,
+			'htmlOptions'=>+$htmlOptions
+			),TRUE);
 	}
 	
 	/**
