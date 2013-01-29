@@ -40,6 +40,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_CKEDITOR = 'ckeditor';
 	const TYPE_TIMEPICKER = 'timepicker';
 	const TYPE_SELECT2 = 'select2';
+	const TYPE_TYPEAHEAD = 'typeahead';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
@@ -301,6 +302,10 @@ abstract class TbInput extends CInputWidget
 			case self::TYPE_SELECT2:
 				$this->select2Field();
 				break;
+			
+			case self::TYPE_TYPEAHEAD:
+				$this->typeAheadField();
+				break;
 
 			default:
 				throw new CException(__CLASS__ . ': Failed to run widget! Type is invalid.');
@@ -543,6 +548,13 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function textField();
+	
+	/**
+	 * Renders a masked text field.
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function maskedTextField();
 
 	/**
 	 * Renders a CAPTCHA.
@@ -620,4 +632,10 @@ abstract class TbInput extends CInputWidget
 	 * @return mixed
 	 */
 	abstract protected function select2Field();
+	
+	/**
+	 * Renders a typeAhead field.
+	 * @return mixed
+	 */
+	abstract protected function typeAheadField();
 }

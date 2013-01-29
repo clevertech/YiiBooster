@@ -616,4 +616,20 @@ class TbInputHorizontal extends TbInput
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
+
+	/**
+	 * Renders a typeAhead field.
+	 * @return string the rendered content
+	 */
+	protected function typeAheadField()
+	{
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		echo $this->form->typeAheadField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
 }
