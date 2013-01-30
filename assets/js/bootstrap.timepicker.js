@@ -60,7 +60,7 @@
                     focus: $.proxy(this.highlightUnit, this),
                     click: $.proxy(this.highlightUnit, this),
                     keypress: $.proxy(this.elementKeypress, this),
-                    blur: $.proxy(this.updateFromElementVal, this)
+                    blur: function(){$.proxy(this.updateFromElementVal, this);}
                 });
 
             } else {
@@ -68,14 +68,14 @@
                     this.$element.on({
                         focus: $.proxy(this.showWidget, this),
                         click: $.proxy(this.showWidget, this),
-                        blur: $.proxy(this.updateFromElementVal, this)
+                        blur: function(){$.proxy(this.updateFromElementVal, this);}
                     });
                 } else {
                     this.$element.on({
                         focus: $.proxy(this.highlightUnit, this),
                         click: $.proxy(this.highlightUnit, this),
                         keypress: $.proxy(this.elementKeypress, this),
-                        blur: $.proxy(this.updateFromElementVal, this)
+                        blur: function(){$.proxy(this.updateFromElementVal, this);}
                     });
                 }
             }
