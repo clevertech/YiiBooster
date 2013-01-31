@@ -1,9 +1,9 @@
-<?php
-/**
- * TbCrumb class file.
+﻿<?php
+/*##  TbCrumb class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  */
 
@@ -11,7 +11,7 @@ Yii::import('zii.widgets.CBreadcrumbs');
 
 /**
  * Bootstrap breadcrumb widget.
- * @see http://twitter.github.com/bootstrap/components.html#breadcrumbs
+ * @see <http://twitter.github.com/bootstrap/components.html#breadcrumbs>
  */
 class TbBreadcrumbs extends CBreadcrumbs
 {
@@ -21,6 +21,8 @@ class TbBreadcrumbs extends CBreadcrumbs
 	public $separator = '/';
 
 	/**
+   *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -35,7 +37,10 @@ class TbBreadcrumbs extends CBreadcrumbs
 	}
 
 	/**
+   *### .run()
+   *
 	 * Renders the content of the widget.
+   *
 	 * @throws CException
 	 */
 	public function run()
@@ -70,7 +75,10 @@ class TbBreadcrumbs extends CBreadcrumbs
 	}
 
 	/**
+   *### .renderItem()
+   *
 	 * Renders a single breadcrumb item.
+   *
 	 * @param string $content the content.
 	 * @param boolean $active whether the item is active.
 	 * @return string the markup.
