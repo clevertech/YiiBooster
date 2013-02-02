@@ -10,6 +10,13 @@
 class TbBox extends CWidget
 {
 	/**
+	 * Whether to show or hide the box
+	 * If set to false, a box will be shown and vice versa
+	 * @var boolean
+	 */
+	public $hide = false;
+	
+	/**
 	 * Box title
 	 * If set to false, a box with no title is rendered
 	 * @var mixed
@@ -76,6 +83,9 @@ class TbBox extends CWidget
 	 */
 	public function init()
 	{
+        if($this->hide)
+            return ;//do not render
+            
 		if (isset($this->htmlOptions['class']))
 			$this->htmlOptions['class'] = 'bootstrap-widget ' . $this->htmlOptions['class'];
 		else
@@ -106,6 +116,9 @@ class TbBox extends CWidget
 	 */
 	public function run()
 	{
+        if($this->hide)
+            return ;//do not render
+            
 		$this->renderContentEnd();
 		echo CHtml::closeTag('div') . "\n";
 	}
@@ -115,6 +128,9 @@ class TbBox extends CWidget
 	 */
 	public function renderHeader()
 	{
+        if($this->hide)
+            return ;//do not render
+            
 		if ($this->title !== false || $this->headerCtrl !== false)
 		{
 			echo CHtml::openTag('div', $this->htmlHeaderOptions);
@@ -140,6 +156,9 @@ class TbBox extends CWidget
 	 */
 	public function renderButtons()
 	{
+        if($this->hide)
+            return ;//do not render
+            
 		if (empty($this->headerButtons))
 			return;
 
@@ -174,6 +193,9 @@ class TbBox extends CWidget
 	  */
 	public function renderContentBegin()
 	{
+        if($this->hide)
+            return ;//do not render
+            
 		echo CHtml::openTag('div', $this->htmlContentOptions);
 		if (!empty($this->content))
 			echo $this->content;
@@ -184,6 +206,9 @@ class TbBox extends CWidget
 	 */
 	public function renderContentEnd()
 	{
+        if($this->hide)
+            return ;//do not render
+            
 		echo CHtml::closeTag('div');
 	}
 
