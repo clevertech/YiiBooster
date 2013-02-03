@@ -86,9 +86,13 @@ class TbHtml5Editor extends CInputWidget
 		{
 			$this->editorOptions['stylesheets'][] = Yii::app()->bootstrap->getAssetsUrl() . '/css/wysiwyg-color.css';
 		}
-		else
+		elseif(isset($this->editorOptions['stylesheets']) && $this->editorOptions['stylesheets'] !== FALSE)
 		{
 			$this->editorOptions['stylesheets'] = array($this->editorOptions['stylesheets'][] = Yii::app()->bootstrap->getAssetsUrl() . '/css/wysiwyg-color.css');
+		}
+		elseif(isset($this->editorOptions['stylesheets']) && $this->editorOptions['stylesheets'] === FALSE)
+		{
+			$this->editorOptions['stylesheets'] = array();
 		}
 		$options = CJSON::encode($this->editorOptions);
 
