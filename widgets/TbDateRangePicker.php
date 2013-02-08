@@ -97,7 +97,7 @@ class TbDateRangePicker extends CInputWidget
 	private function setMonthNames()
 	{
 		if (empty($this->options['locale']['monthNames']))
-			$this->options['locale']['monthNames'] = array_values(Yii::app()->locale->getMonthNames('wide', true))
+			$this->options['locale']['monthNames'] = array_values(Yii::app()->locale->getMonthNames('wide', true));
 	}
 
 	/**
