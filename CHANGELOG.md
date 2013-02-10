@@ -17,6 +17,7 @@ Senior Web Developer
 - **(fix)** TbExtendedGridView Bulk Actions Bug #155 (tonydspaniard)
 - **(enh)** Add option to disable asset publication in debug mode #229 (suralc)
 - **(fix)** Fixed the CSS-including behavior of TbHtml5Editor #290 #311 (hijarian)
+- **(fix)** Now assets for TbDateRangePicker are being registered with default settings instead of hard-coded POS_HEAD #266 #297 (hijarian)
 
 
 ### YiiBooster version 1.0.5 
