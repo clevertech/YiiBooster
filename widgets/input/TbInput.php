@@ -656,6 +656,16 @@ abstract class TbInput extends CInputWidget
 	abstract protected function textField();
 
 	/**
+	 *### .maskedTextField()
+   *
+	 * Renders a masked text field.
+   *
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function maskedTextField();
+
+	/**
 	 *### .captcha()
    *
 	 * Renders a CAPTCHA.
