@@ -1,9 +1,9 @@
 <?php
-/**
- * TbNavbar class file.
+/*## TbNavbar class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @package bootstrap.widgets
  * @since 0.9.7
  */
@@ -66,6 +66,8 @@ class TbNavbar extends CWidget
 	public $htmlOptions = array();
 
 	/**
+	 *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -105,6 +107,8 @@ class TbNavbar extends CWidget
 	}
 
 	/**
+	 *### .run()
+   *
 	 * Runs the widget.
 	 */
 	public function run()
@@ -156,6 +160,8 @@ class TbNavbar extends CWidget
 	}
 
 	/**
+	 *### .getContainerCssClass()
+   *
 	 * Returns the navbar container CSS class.
 	 * @return string the class
 	 */

@@ -1,12 +1,10 @@
 <?php
-/**
- * TbExtendedGridView class file
+/*## TbExtendedGridView class file
  *
- *
- * @author: antonio ramirez <antonio@clevertech.biz>
+ * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @package bootstrap.widgets
  */
 Yii::import('bootstrap.widgets.TbGridView');
 
@@ -41,7 +39,8 @@ class TbExtendedGridView extends TbGridView
 	public $template = "{summary}\n{items}\n{pager}\n{extendedSummary}";
 
 	/**
-	 * @var array $extendedSummary displays an extended summary version. There are different types of summary types,
+	 * @var array $extendedSummary displays an extended summary version. 
+   * There are different types of summary types,
 	 * please, see {@link TbSumOperation}, {@link TbSumOfTypeOperation},{@link TbPercentOfTypeGooglePieOperation}
 	 * {@link TbPercentOfTypeOperation} and {@link TbPercentOfTypeEasyPieOperation}.
 	 *
@@ -195,6 +194,8 @@ class TbExtendedGridView extends TbGridView
 	);
 
 	/**
+	 *### .init()
+   *
 	 * Widget initialization
 	 */
 	public function init()
@@ -221,6 +222,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .renderContent()
+   *
 	 * Renders grid content
 	 */
 	public function renderContent()
@@ -230,6 +233,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .renderKeys()
+   *
 	 * Renders the key values of the data in a hidden tag.
 	 */
 	public function renderKeys()
@@ -257,6 +262,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .getAttribute()
+   *
 	 * Helper function to get an attribute from the data
 	 *
 	 * @param $data
@@ -283,6 +290,8 @@ class TbExtendedGridView extends TbGridView
 		return null;
 	}
 	/**
+	 *### .getPrimaryKey()
+   *
 	 * Helper function to return the primary key of the $data
 	 * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
 	 *
@@ -304,6 +313,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .renderTableHeader()
+   *
 	 * Renders grid header
 	 */
 	public function renderTableHeader()
@@ -313,6 +324,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .renderTableFooter()
+   *
 	 * Renders the table footer.
 	 */
 	public function renderTableFooter()
@@ -339,6 +352,9 @@ class TbExtendedGridView extends TbGridView
 		}
 	}
 
+	/**
+	 *### .renderBulkActions()
+   */
 	public function renderBulkActions()
 	{
 		echo '<tr><td colspan="' . count($this->columns) . '">';
@@ -348,6 +364,8 @@ class TbExtendedGridView extends TbGridView
 
 
 	/**
+	 *### .renderChart()
+   *
 	 * Renders chart
 	 * @throws CException
 	 */
@@ -472,7 +490,10 @@ class TbExtendedGridView extends TbGridView
 
 
 	/**
+	 *### .renderTableRow()
+   *
 	 * Renders a table body row.
+   *
 	 * @param integer $row the row number (zero-based).
 	 */
 	public function renderTableRow($row)
@@ -493,6 +514,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .renderExtendedSummary()
+   *
 	 * Renders summary
 	 */
 	public function renderExtendedSummary()
@@ -506,6 +529,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .renderExtendedSummaryContent()
+   *
 	 * Renders summary content. Will be appended to
 	 */
 	public function renderExtendedSummaryContent()
@@ -530,6 +555,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .registerCustomClientScript()
+   *
 	 * This script must be run at the end of content rendering not at the beginning as it is common with normal CGridViews
 	 */
 	public function registerCustomClientScript()
@@ -625,6 +652,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .parseColumnValue()
+   *
 	 * @param CDataColumn $column
 	 * @param $row the current row  numbeer
 	 */
@@ -649,7 +678,10 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .getSummaryOperationInstance()
+   *
 	 * Each type of 'extended' summary
+   *
 	 * @param $name the name of the column
 	 * @param $config the configuration of the column at the extendedSummary
 	 * @return mixed
@@ -673,6 +705,8 @@ class TbExtendedGridView extends TbGridView
 	}
 
 	/**
+	 *### .getColumnByName()
+   *
 	 * Helper function to get a column by its name
 	 * @param $name
 	 * @return null

@@ -1,9 +1,9 @@
 <?php
-/**
- * TbDetailView class file.
+/*## TbDetailView class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  */
 
@@ -15,8 +15,8 @@ Yii::import('zii.widgets.CDetailView');
 class TbDetailView extends CDetailView
 {
 	// Table types.
-	const TYPE_STRIPED = 'striped';
-	const TYPE_BORDERED = 'bordered';
+	const TYPE_STRIPED   = 'striped';
+	const TYPE_BORDERED  = 'bordered';
 	const TYPE_CONDENSED = 'condensed';
 
 	/**
@@ -31,6 +31,8 @@ class TbDetailView extends CDetailView
 	public $cssFile = false;
 
 	/**
+	 *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()

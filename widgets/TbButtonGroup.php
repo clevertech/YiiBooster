@@ -1,9 +1,9 @@
 <?php
-/**
- * TbButtonGroup class file.
+/*##  TbButtonGroup class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  * @since 0.9.10
  */
@@ -12,13 +12,13 @@ Yii::import('bootstrap.widgets.TbButton');
 
 /**
  * Bootstrap button group widget.
- * @see http://twitter.github.com/bootstrap/components.html#buttonGroups
+ * @see <http://twitter.github.com/bootstrap/components.html#buttonGroups>
  */
 class TbButtonGroup extends CWidget
 {
 	// Toggle options.
 	const TOGGLE_CHECKBOX = 'checkbox';
-	const TOGGLE_RADIO = 'radio';
+	const TOGGLE_RADIO    = 'radio';
 
 	/**
 	 * @var string the button callback type.
@@ -61,6 +61,8 @@ class TbButtonGroup extends CWidget
 	public $dropup = false;
 
 	/**
+   *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -89,6 +91,8 @@ class TbButtonGroup extends CWidget
 	}
 
 	/**
+   *### .run()
+   *
 	 * Runs the widget.
 	 */
 	public function run()
