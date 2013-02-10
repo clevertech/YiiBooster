@@ -16,6 +16,7 @@ Senior Web Developer
 - **(fix)** datepicker 404 error #189 (tonydspaniard)
 - **(fix)** TbExtendedGridView Bulk Actions Bug #155 (tonydspaniard)
 - **(enh)** Add option to disable asset publication in debug mode #229 (suralc)
+- **(fix)** Fixed the CSS-including behavior of TbHtml5Editor #290 #311 (hijarian)
 
 
 ### YiiBooster version 1.0.5 
