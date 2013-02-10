@@ -110,10 +110,24 @@ abstract class TbInput extends CInputWidget
 	public $captchaOptions = array();
 
 	/**
+	 * This property allows you to disable AJAX valiadtion for certain fields within a form.
+	 * @var boolean the value to be set as fourth parameter to {@link CActiveForm::error}.
+	 * @see http://www.yiiframework.com/doc/api/1.1/CActiveForm#error-detail
+	 */
+	public $enableAjaxValidation = true;
+
+	/**
+	 * This property allows you to disable client valiadtion for certain fields within a form.
+	 * @var boolean the value to be set as fifth parameter to {@link CActiveForm::error}.
+	 * @see http://www.yiiframework.com/doc/api/1.1/CActiveForm#error-detail
+	 */
+	public $enableClientValidation = true;
+
+	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
-   *
+	 *
 	 * @throws CException if the widget could not be initialized.
 	 */
 	public function init()
@@ -196,6 +210,14 @@ abstract class TbInput extends CInputWidget
 		if (isset($this->htmlOptions['errorOptions']))
 		{
 			$this->errorOptions = $this->htmlOptions['errorOptions'];
+			if (isset($this->htmlOptions['errorOptions']['enableAjaxValidation']))
+			{
+				$this->enableAjaxValidation = (boolean)$this->htmlOptions['errorOptions']['enableAjaxValidation'];
+			}
+			if (isset($this->htmlOptions['errorOptions']['enableClientValidation']))
+			{
+				$this->enableClientValidation = (boolean)$this->htmlOptions['errorOptions']['enableClientValidation'];
+			}
 			unset($this->htmlOptions['errorOptions']);
 		}
 
@@ -424,7 +446,7 @@ abstract class TbInput extends CInputWidget
 	 */
 	protected function getError()
 	{
-		return $this->form->error($this->model, $this->attribute, $this->errorOptions);
+		return $this->form->error($this->model, $this->attribute, $this->errorOptions, $this->enableAjaxValidation, $this->enableClientValidation);
 	}
 
 	/**
