@@ -40,6 +40,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_CKEDITOR              = 'ckeditor';
 	const TYPE_TIMEPICKER            = 'timepicker';
 	const TYPE_SELECT2               = 'select2';
+	const TYPE_TYPEAHEAD             = 'typeahead';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
@@ -335,13 +336,16 @@ abstract class TbInput extends CInputWidget
 				$this->ckEditor();
 				break;
 
-			// Adding timepicker (Sergii)
 			case self::TYPE_TIMEPICKER:
 				$this->timepickerField();
 				break;
 
 			case self::TYPE_SELECT2:
 				$this->select2Field();
+				break;
+
+			case self::TYPE_TYPEAHEAD:
+				$this->typeAheadField();
 				break;
 
 			default:
@@ -773,4 +777,10 @@ abstract class TbInput extends CInputWidget
 	 * @return mixed
 	 */
 	abstract protected function select2Field();
+
+	/**
+	 * Renders a typeAhead field.
+	 * @return mixed
+	 */
+	abstract protected function typeAheadField();
 }
