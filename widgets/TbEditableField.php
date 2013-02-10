@@ -335,7 +335,7 @@ class TbEditableField extends CWidget
     $htmlOptions = array(
         'href'      => '#',
         'rel'       => $this->getSelector(),
-        'data-pk'   => $this->model->primaryKey,
+        'data-pk'   => $this->encodeDataPk($this->model->primaryKey),
         );
 
     //if preparing to autotext we need to define value directly in data-value.
@@ -367,6 +367,20 @@ class TbEditableField extends CWidget
     //merging options
     $this->htmlOptions = CMap::mergeArray($this->htmlOptions, $htmlOptions);
   }
+
+	/**
+	 * Encodes primary key if it is composite,
+	 * else returns source value.
+	 *
+	 * @param array|string $value
+	 * @return string
+	 */
+	private function encodeDataPk($value)
+	{
+		return is_array($value)
+			? json_encode($value)
+			: $value;
+	}
 
   /*
    *### .buildJsOptions()
