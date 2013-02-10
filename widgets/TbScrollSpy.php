@@ -1,16 +1,16 @@
 <?php
-/**
- * TbScrollSpy class file.
+/*## TbScrollSpy class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2012-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  * @since 1.0.0
  */
 
 /**
  * Bootstrap scrollspy widget.
- * @see http://twitter.github.com/bootstrap/javascript.html#scrollspy
+ * @see <http://twitter.github.com/bootstrap/javascript.html#scrollspy>
  */
 class TbScrollSpy extends CWidget
 {
@@ -32,6 +32,8 @@ class TbScrollSpy extends CWidget
 	public $events = array();
 
 	/**
+   *### .run()
+   *
 	 * Runs the widget.
 	 */
 	public function run()

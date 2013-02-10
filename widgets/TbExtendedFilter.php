@@ -1,15 +1,13 @@
 <?php
-/**
- * TbExtendedFilter widget
+/*## TbExtendedFilter widget
  *
  * This widget displays an extra row to the grid is attached to and renders a visual feedback of the filter values used
  * plus an option to save them for later use.
  *
- * @uses JSONStorage component
+ * @author Antonio Ramirez <antonio@clevertech.biz>
+ * @copyright Copyright &copy; Clevertech 2012-
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
- * @author: antonio ramirez <antonio@clevertech.biz>
- * Date: 10/15/12
- * Time: 12:12 PM
  */
 Yii::import('bootstrap.components.JSONStorage', true);
 
@@ -56,6 +54,8 @@ class TbExtendedFilter extends CWidget
 	protected $jsonStorage;
 
 	/**
+	 *### .init()
+   *
 	 * Widget initialization
 	 * @throws CException
 	 */
@@ -84,6 +84,8 @@ class TbExtendedFilter extends CWidget
 	}
 
 	/**
+	 *### .checkRequestRemovalFilter()
+   *
 	 * Checks whether there has been send the command to remove a filter from the registry and redirects to
 	 * specified route
 	 */
@@ -99,8 +101,11 @@ class TbExtendedFilter extends CWidget
 	}
 
 	/**
+	 *### .checkRequestFilters()
+   *
 	 * Checkes whether there has been send the command to save a filter to the registry and redirects to
 	 * specified route
+   *
 	 * @return bool
 	 */
 	protected function checkRequestFilters()
@@ -127,6 +132,8 @@ class TbExtendedFilter extends CWidget
 	}
 
 	/**
+	 *### .run()
+   *
 	 * Widget's run method
 	 */
 	public function run()
@@ -154,6 +161,8 @@ class TbExtendedFilter extends CWidget
 	}
 
 	/**
+	 *### .registerClientScript()
+   *
 	 * Registers the required
 	 */
 	public function registerClientScript()
@@ -204,7 +213,10 @@ EOD
 	}
 
 	/**
+	 *### .displaySaveButton()
+   *
 	 * Displays the save filter button
+   *
 	 * @param $registryKey
 	 * @return bool
 	 */
@@ -218,7 +230,10 @@ EOD
 	}
 
 	/**
+	 *### .displaySavedFilters()
+   *
 	 * displays the saved filters as a dropdown list
+   *
 	 * @param $registryKey
 	 */
 	protected function displaySavedFilters($registryKey)
@@ -249,7 +264,10 @@ EOD
 	}
 
 	/**
+	 *### .generateRegistryItemKey()
+   *
 	 * Generates a registry item key with the filtered attributes + the grid id
+   *
 	 * @return null|string
 	 */
 	protected function generateRegistryItemKey()
@@ -262,7 +280,10 @@ EOD
 	}
 
 	/**
+	 *### .displayExtendedFilterValues()
+   *
 	 * Displays the filtered options
+   *
 	 * @param $filteredBy
 	 * @return string
 	 */
