@@ -1,10 +1,10 @@
 <?php
-/**
- * TbExtendedTooltip class
+/*## TbExtendedTooltip class
  *
- * @author: antonio ramirez <antonio@clevertech.biz>
- * Date: 10/18/12
- * Time: 5:53 PM
+ * @author Antonio Ramirez <antonio@clevertech.biz>
+ * @copyright Copyright &copy; Clevertech 2012-
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @package bootstrap.widgets
  */
 class TbExtendedTooltip extends CWidget
 {
@@ -57,6 +57,8 @@ class TbExtendedTooltip extends CWidget
 	private $_db;
 
 	/**
+	 *### .init()
+   *
 	 * Widget's initialization
 	 * @throws CException
 	 */
@@ -69,6 +71,8 @@ class TbExtendedTooltip extends CWidget
 	}
 
 	/**
+	 *### .run()
+   *
 	 * Widget's run
 	 */
 	public function run()
@@ -78,6 +82,8 @@ class TbExtendedTooltip extends CWidget
 	}
 
 	/**
+	 *### .renderContent()
+   *
 	 * Renders the HTML tag element that renders
 	 */
 	protected function renderContent()
@@ -92,6 +98,8 @@ class TbExtendedTooltip extends CWidget
 	}
 
 	/**
+	 *### .registerClientScript()
+   *
 	 * Registers the
 	 */
 	protected function registerClientScript()
@@ -122,7 +130,10 @@ class TbExtendedTooltip extends CWidget
 	}
 
 	/**
+	 *### .getTooltip()
+   *
 	 * Returns the tooltip stored at the database.
+   *
 	 * @param $key
 	 * @return mixed|string emptyTool
 	 */
@@ -144,11 +155,14 @@ class TbExtendedTooltip extends CWidget
 	}
 
 	/**
+	 *### .getDbConnection()
+   *
 	 * Returns the currently active database connection.
 	 * By default, the 'db' application component will be returned and activated.
 	 * You can call {@link setDbConnection} to switch to a different database connection.
 	 * Methods such as {@link insert}, {@link createTable} will use this database connection
 	 * to perform DB queries.
+   *
 	 * @return CDbConnection the currently active database connection
 	 */
 	protected function getDbConnection()
@@ -163,6 +177,8 @@ class TbExtendedTooltip extends CWidget
 	}
 
 	/**
+	 *### .createTooltipsTable()
+   *
 	 * Creates the database table to store all edited tooltips
 	 */
 	protected function createTooltipsTable()

@@ -1,16 +1,16 @@
 <?php
-/**
- * TbModal class file.
+/*## TbModal class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @package bootstrap.widgets
  * @since 0.9.3
  */
 
 /**
  * Bootstrap modal widget.
- * @see http://twitter.github.com/bootstrap/javascript.html#modals
+ * @see <http://twitter.github.com/bootstrap/javascript.html#modals>
  */
 class TbModal extends CWidget
 {
@@ -36,6 +36,8 @@ class TbModal extends CWidget
 	public $htmlOptions = array();
 
 	/**
+	 *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -64,6 +66,8 @@ class TbModal extends CWidget
 	}
 
 	/**
+	 *### .run()
+   *
 	 * Runs the widget.
 	 */
 	public function run()

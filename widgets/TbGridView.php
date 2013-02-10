@@ -1,9 +1,9 @@
 <?php
-/**
- * TbGridView class file.
+/*## TbGridView class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  */
 
@@ -16,10 +16,10 @@ Yii::import('bootstrap.widgets.TbDataColumn');
 class TbGridView extends CGridView
 {
 	// Table types.
-	const TYPE_STRIPED = 'striped';
-	const TYPE_BORDERED = 'bordered';
-	const TYPE_CONDENSED = 'condensed';
-	const TYPE_HOVER = 'hover';
+	const TYPE_STRIPED    = 'striped';
+	const TYPE_BORDERED   = 'bordered';
+	const TYPE_CONDENSED  = 'condensed';
+	const TYPE_HOVER      = 'hover';
 
 	/**
 	 * @var string|array the table type.
@@ -52,6 +52,8 @@ class TbGridView extends CGridView
 	public $extraParams = array();
 
 	/**
+   *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -101,6 +103,8 @@ class TbGridView extends CGridView
 	}
 
 	/**
+   *### .initColumns()
+   *
 	 * Creates column objects and initializes them.
 	 */
 	protected function initColumns()
@@ -118,7 +122,10 @@ class TbGridView extends CGridView
 	}
 
 	/**
+   *### .createDataColumn()
+   *
 	 * Creates a column based on a shortcut column specification string.
+   *
 	 * @param mixed $text the column specification string
 	 * @return \TbDataColumn|\CDataColumn the column instance
 	 * @throws CException if the column format is incorrect
@@ -141,6 +148,8 @@ class TbGridView extends CGridView
 	}
 
 	/**
+   *### .writeReponsiveCss()
+   *
 	 * Writes responsiveCSS
 	 */
 	protected function writeResponsiveCss()
