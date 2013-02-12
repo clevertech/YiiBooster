@@ -22,6 +22,7 @@ Senior Web Developer
 - **(enh)** Added masked text field type #281 (tkijewski)
 - **(enh)** Added typeahead text field type #296 (tkijewski)
 - **(enh)** TbToggleColumn now extends TbDataColumn #303 #323 (kev360) 
+- **(fix)** Ajax submit button does not force the POST method anymore #284 (yourilima)
 
 ### YiiBooster version 1.0.5 
 

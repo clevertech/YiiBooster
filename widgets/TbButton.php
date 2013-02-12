@@ -250,7 +250,9 @@ class TbButton extends CWidget
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 
 			case self::BUTTON_AJAXSUBMIT:
-				$this->ajaxOptions['type'] = 'POST';
+				$this->ajaxOptions['type'] = isset($this->ajaxOptions['type'])
+					? $this->ajaxOptions['type']
+					: 'POST';
 				$this->ajaxOptions['url'] = $this->url;
 				$this->htmlOptions['type'] = 'submit';
 				$this->htmlOptions['ajax'] = $this->ajaxOptions;
