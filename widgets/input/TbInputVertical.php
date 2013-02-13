@@ -451,6 +451,7 @@ class TbInputVertical extends TbInput
 		}
 
 		echo $this->getLabel();
+		echo '<div class="bootstrap-timepicker">';
 		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbTimePicker', array(
 			'model' => $this->model,
@@ -462,6 +463,7 @@ class TbInputVertical extends TbInput
 		));
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
+		echo '</div>';
 	}
 
 	/**
