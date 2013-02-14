@@ -23,6 +23,7 @@ Senior Web Developer
 - **(enh)** Added typeahead text field type #296 (tkijewski)
 - **(enh)** TbToggleColumn now extends TbDataColumn #303 #323 (kev360) 
 - **(fix)** Ajax submit button does not force the POST method anymore #284 (yourilima)
+- **(fix)** Fixed TimePicker #314 (marsuboss)
 
 ### YiiBooster version 1.0.5 
 
