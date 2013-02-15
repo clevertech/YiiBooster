@@ -378,7 +378,7 @@ class TbEditableField extends CWidget
 	private function encodeDataPk($value)
 	{
 		return is_array($value)
-			? json_encode($value)
+			? implode('-', array_values($value))
 			: $value;
 	}
 
@@ -562,7 +562,7 @@ class TbEditableField extends CWidget
    */
   public function getSelector()
   {
-    return get_class($this->model) . '_' . $this->attribute . ($this->model->primaryKey ? '_' . $this->model->primaryKey : '_new');
+    return get_class($this->model) . '_' . $this->attribute . ($this->encodeDataPk($this->model->primaryKey) ? '_' . $this->encodeDataPk($this->model->primaryKey) : '_new');
   }
 
   /*
