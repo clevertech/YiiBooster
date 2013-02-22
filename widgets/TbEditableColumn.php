@@ -1,10 +1,10 @@
 <?php
-/**
- * EditableColumn class file.
+/*## EditableColumn class file.
+ * @see <https://github.com/vitalets/x-editable-yii>
  * 
  * @author Vitaliy Potapov <noginsk@rambler.ru>
- * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
+ * @package bootstrap.widgets
  * @version 1.0.0
 */
 
@@ -13,8 +13,6 @@ Yii::import('bootstrap.widgets.TbDataColumn');
 
 /**
 * EditableColumn widget makes editable one column in CGridView.
-* 
-* @package widgets
 */
 class TbEditableColumn extends TbDataColumn
 {
@@ -27,6 +25,11 @@ class TbEditableColumn extends TbDataColumn
     //flag to render client script only once for all column cells
     private $_isScriptRendered = false;
 
+  /**
+   *### .init()
+   *
+   * Widget initialization
+   */
     public function init()
     {
         if (!$this->grid->dataProvider instanceOf CActiveDataProvider) {
@@ -43,6 +46,9 @@ class TbEditableColumn extends TbDataColumn
         $this->attachAjaxUpdateEvent();
     }
 
+  /**
+   *### .renderDataCellContent()
+   */
     protected function renderDataCellContent($row, $data)
     {
         $options = CMap::mergeArray($this->editable, array(
@@ -90,11 +96,13 @@ class TbEditableColumn extends TbDataColumn
         }
     }
     
-   /**
+  /**
+   *### .attachAjaxUpdateEvent()
+   *
    * Yii yet does not support custom js events in widgets. 
    * So we need to invoke it manually to ensure update of editables on grid ajax update.
    * 
-   * issue in Yii github: https://github.com/yiisoft/yii/issues/1313
+   * issue in Yii github: <https://github.com/yiisoft/yii/issues/1313>
    * 
    */
     protected function attachAjaxUpdateEvent()

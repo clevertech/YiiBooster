@@ -1,24 +1,24 @@
 <?php
-/**
- * TbProgress class file.
+/*## TbProgress class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  * @since 0.9.10
  */
 
 /**
  * Bootstrap progress bar widget.
- * @see http://twitter.github.com/bootstrap/components.html#progress
+ * @see <http://twitter.github.com/bootstrap/components.html#progress>
  */
 class TbProgress extends CWidget
 {
 	// Progress bar types.
-	const TYPE_INFO = 'info';
+	const TYPE_INFO    = 'info';
 	const TYPE_SUCCESS = 'success';
 	const TYPE_WARNING = 'warning';
-	const TYPE_DANGER = 'danger';
+	const TYPE_DANGER  = 'danger';
 
 	/**
 	 * @var string the bar type. Valid values are 'info', 'success', and 'danger'.
@@ -57,6 +57,8 @@ class TbProgress extends CWidget
 	public $stacked;
 
 	/**
+   *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -92,6 +94,8 @@ class TbProgress extends CWidget
 	}
 
 	/**
+   *### .run()
+   *
 	 * Runs the widget.
 	 * @since  9/21/12 8:13 PM  antonio ramirez <antonio@clevertech.biz>
 	 * Updated to use stacked progress bars
@@ -108,8 +112,18 @@ class TbProgress extends CWidget
 			foreach($this->stacked as $bar)
 			{
 				$options = isset($bar['htmlOptions'])? $bar['htmlOptions'] : array();
-				$options['style'] = 'width: ' . $bar['percent']. '%';
-				$options['class'] = 'bar bar-'.$bar['type'];
+				if (empty($options['style']))
+					$options['style'] = '';
+				else
+					$options['style'] .= ' ';
+				$options['style'] .= 'width: ' . $bar['percent']. '%';
+
+				if (empty($options['class']))
+					$options['class'] = '';
+				else
+					$options['style'] .= ' ';
+				$options['class'] .= 'bar bar-'.$bar['type'];
+
 				echo '<div '.CHtml::renderAttributes($options).'>'.@$bar['content'].'</div>';
 			}
 		}

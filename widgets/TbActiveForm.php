@@ -263,6 +263,22 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 *### .maskedTextFieldRow()
+	 * 
+	 * Renders a masked text field input row.
+	 * 
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
+	public function maskedTextFieldRow($model, $attribute, $mask, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_MASKEDTEXT, $model, $attribute, $mask, $htmlOptions);
+	}
+	
+	/**
 	 *### .textAreaRow()
 	 *
 	 * Renders a text area input row.
@@ -455,6 +471,18 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a typeAhead input row
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
+	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_TYPEAHEAD, $model, $attribute, $widgetOptions, $htmlOptions);
+	}
+
+	/**
 	 *### .checkBoxList()
 	 *
 	 * Renders a checkbox list for a model attribute.
@@ -624,6 +652,53 @@ class TbActiveForm extends CActiveForm
 		Yii::app()->clientScript->registerScript('radiobuttongrouplist-' . $attribute, implode("\n", $scripts));
 	}
 
+	/**
+	 * Renders a masked text field row
+	 * 
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
+	 * @param array $htmlOptions additional HTML options.
+	 * @return string the generated masked text field
+	 * @since 0.9.5
+	 */
+	public function maskedTextField($model,$attribute,$mask,$htmlOptions=array())
+	{
+		return Yii::app()->controller->widget('CMaskedTextField', array(
+			'model' => $model,
+			'attribute' => $attribute,
+			'mask' => $mask,
+			'htmlOptions'=> $htmlOptions
+			),TRUE);
+	}
+	
+	/**
+	 * Renders a type ahead field row
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
+	 * @param array $htmlOptions additional HTML options.
+	 * @return string the generated typeahead field
+	 * @since 1.0.6
+	 */
+	public function typeAheadField($model,$attribute,$widgetOptions,$htmlOptions=array())
+	{
+		if (!isset($widgetOptions['source'])) throw new CException(__CLASS__ . ': \'source\' parameter must be defined. ');
+		
+		$widgetOptions += array(
+							'items'=>4,
+						    'matcher'=>'js:function(item) {
+						        return ~item.toLowerCase().indexOf(this.query.toLowerCase());
+						    }');
+		
+		return Yii::app()->controller->widget('bootstrap.widgets.TbTypeahead', array(
+			'model'=>$model,
+			'attribute'=>$attribute,
+			'options'=>$widgetOptions,
+			'htmlOptions'=>+$htmlOptions
+			),TRUE);
+	}
+	
 	/**
 	 * Renders an input list.
 	 *
@@ -919,6 +994,7 @@ EOD;
 			'data' => $data,
 			'htmlOptions' => $htmlOptions,
 		));
+		echo "\n";
 		return ob_get_clean();
 	}
 

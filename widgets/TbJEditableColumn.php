@@ -59,7 +59,7 @@ class TbJEditableColumn extends TbDataColumn
 		'cssclass' => null, // CSS class to apply to input form. 'inherit' to copy from parent.
 		'style' => null, //  Style to apply to input form 'inherit' to copy from parent.
 		'select' => false, // true or false, when true text is highlighted
-		'placeholder' => null, // Placeholder text or html to insert when element is empty.
+		'placeholder' => 'empty', // Placeholder text or html to insert when element is empty.
 		'onblur' => null, // 'cancel', 'submit', 'ignore' or function
 		'onsubmit' => null, // function(settings, original) { ... } called before submit
 		'onreset' => null, // function(settings, original) { ... } called before reset

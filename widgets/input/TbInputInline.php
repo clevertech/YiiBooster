@@ -58,7 +58,33 @@ class TbInputInline extends TbInputVertical
 		echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 		echo $this->getAppend();
 	}
-
+	
+	/**
+	 * Renders a masked text field.
+	 * @return string the rendered content
+	 */
+	protected function maskedTextField()
+	{
+		$this->setPlaceholder();
+		$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
+		echo $this->getPrepend();
+		echo $this->form->maskedTextField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+	}
+	
+	/**
+	 * Renders a masked text field.
+	 * @return string the rendered content
+	 */
+	protected function typeAheadField()
+	{
+		$this->setPlaceholder();
+		$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
+		echo $this->getPrepend();
+		echo $this->form->typeAheadField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+	}	
+	
 	protected function setPlaceholder()
 	{
 		if (empty($this->htmlOptions['placeholder']))
@@ -66,4 +92,6 @@ class TbInputInline extends TbInputVertical
 			$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
 		}
 	}
+	
+
 }

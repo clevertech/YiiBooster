@@ -103,7 +103,7 @@ class Bootstrap extends CApplicationComponent
 	 * the default handling of CAssetManager of YiiBooster assets.
 	 * @since YiiBooster 1.0.6
 	 */
-	public $republishAssetsOnRequest = YII_DEBUG;
+	public $forceCopyAssets = false;
 	
 	/**
 	 * @var string handles the assets folder path.
@@ -515,7 +515,7 @@ class Bootstrap extends CApplicationComponent
 		else
 		{
 			$assetsPath = Yii::getPathOfAlias('bootstrap.assets');
-			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, $this->republishAssetsOnRequest);
+			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, $this->forceCopyAssets);
 			return $this->_assetsUrl = $assetsUrl;
 		}
 	}

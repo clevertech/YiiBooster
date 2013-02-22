@@ -1,10 +1,10 @@
 <?php
-/**
- * TbWizard class file.
+/*##  TbWizard class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @copyright Copyright &copy; Vincent Gabriel 2012
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @package bootstrap.widgets
  */
 
@@ -12,7 +12,7 @@ Yii::import('bootstrap.widgets.TbMenu');
 
 /**
  * Bootstrap Javascript tabs widget.
- * @see http://twitter.github.com/bootstrap/javascript.html#tabs
+ * @see <http://twitter.github.com/bootstrap/javascript.html#tabs>
  */
 class TbWizard extends CWidget
 {
@@ -23,7 +23,8 @@ class TbWizard extends CWidget
 	const PLACEMENT_RIGHT = 'right';
 
 	/**
-	 * @var string the type of tabs to display. Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
+	 * @var string the type of tabs to display. 
+   * Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
 	 * Please not that Javascript pills are not fully supported in Bootstrap yet!
 	 * @see TbMenu::$type
 	 */
@@ -76,6 +77,8 @@ class TbWizard extends CWidget
 			</ul>';
 	
 	/**
+	 *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -101,6 +104,8 @@ class TbWizard extends CWidget
 	}
 
 	/**
+	 *### .run()
+   *
 	 * Run this widget.
 	 */
 	public function run()
@@ -155,7 +160,10 @@ class TbWizard extends CWidget
 	}
 
 	/**
+	 *### .normalizeTabs()
+   *
 	 * Normalizes the tab configuration.
+   *
 	 * @param array $tabs the tab configuration
 	 * @param array $panes a reference to the panes array
 	 * @param integer $i the current index

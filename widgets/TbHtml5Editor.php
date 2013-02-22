@@ -82,16 +82,41 @@ class TbHtml5Editor extends CInputWidget
 			Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-wysihtml5.'.$this->lang.'.js');
 			$this->editorOptions['locale'] = $this->lang;
 		}
-		if(isset($this->editorOptions['stylesheets']) && is_array($this->editorOptions['stylesheets']))
-		{
-			$this->editorOptions['stylesheets'][] = Yii::app()->bootstrap->getAssetsUrl() . '/css/wysiwyg-color.css';
-		}
-		else
-		{
-			$this->editorOptions['stylesheets'] = array($this->editorOptions['stylesheets'][] = Yii::app()->bootstrap->getAssetsUrl() . '/css/wysiwyg-color.css');
-		}
+
+		$this->normalizeStylesheetsProperty();
+		$this->insertDefaultStylesheetIfColorsEnabled();
+
 		$options = CJSON::encode($this->editorOptions);
 
 		Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$id, "$('#{$id}').wysihtml5({$options});");
+	}
+
+	private function insertDefaultStylesheetIfColorsEnabled()
+	{
+		if (empty($this->editorOptions['color']))
+			return;
+
+		$defaultStyleSheetUrl = Yii::app()->bootstrap->getAssetsUrl() . '/css/wysiwyg-color.css';
+		array_unshift( $this->editorOptions['stylesheets'], $defaultStyleSheetUrl ); // we want default css to be first
+	}
+
+	private function normalizeStylesheetsProperty()
+	{
+		if (empty($this->editorOptions['stylesheets']))
+		{
+			$this->editorOptions['stylesheets'] = array();
+		}
+		else if (is_array($this->editorOptions['stylesheets']))
+		{
+			$this->editorOptions['stylesheets'] = array_filter($this->editorOptions['stylesheets'], 'is_string');
+		}
+		else if (is_string($this->editorOptions['stylesheets']))
+		{
+			$this->editorOptions['stylesheets'] = array($this->editorOptions['stylesheets']);
+		}
+		else // presumably if this option is neither an array or string then it's some erroneous value; clean it
+		{
+			$this->editorOptions['stylesheets'] = array();
+		}
 	}
 }

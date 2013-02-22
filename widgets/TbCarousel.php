@@ -1,16 +1,16 @@
 <?php
-/**
- * TbCarousel class file.
+/*## TbCarousel class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
  * @since 0.9.10
  */
 
 /**
  * Bootstrap carousel widget.
- * @see http://twitter.github.com/bootstrap/javascript.html#carousel
+ * @see <http://twitter.github.com/bootstrap/javascript.html#carousel>
  */
 class TbCarousel extends CWidget
 {
@@ -48,6 +48,8 @@ class TbCarousel extends CWidget
 	public $htmlOptions = array();
 
 	/**
+   *### .init()
+   *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -71,6 +73,8 @@ class TbCarousel extends CWidget
 	}
 
 	/**
+   *### .run()
+   *
 	 * Runs the widget.
 	 */
 	public function run()
@@ -107,7 +111,10 @@ class TbCarousel extends CWidget
 	}
 
 	/**
+   *### .renderItems()
+   *
 	 * Renders the carousel items.
+   *
 	 * @param array $items the item configuration.
 	 */
 	protected function renderItems($items)
