@@ -3,7 +3,7 @@
  * Serkan Algur <kaisercrazy_2@hotmail.com>
  */
 ;(function($){
-	$.fn.bdatepicker.dates['tr'] = {
+	$.fn.datepicker.dates['tr'] = {
 		days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"],
 		daysShort: ["Pz", "Pzt", "Sal", "Çrş", "Prş", "Cu", "Cts", "Pz"],
 		daysMin: ["Pz", "Pzt", "Sa", "Çr", "Pr", "Cu", "Ct", "Pz"],
