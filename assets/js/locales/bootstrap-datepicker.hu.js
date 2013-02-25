@@ -3,7 +3,7 @@
  * Ferenc Papp <pappfer@gmail.com>
  */
 ;(function($){
-	$.fn.bdatepicker.dates['hu'] = {
+	$.fn.datepicker.dates['hu'] = {
 		days: ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"],
 		daysShort: ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo", "Vas"],
 		daysMin: ["Va", "Hé", "Ke", "Sz", "Cs", "Pé", "Sz", "Va"],
