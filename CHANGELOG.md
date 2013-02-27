@@ -25,6 +25,7 @@ Senior Web Developer
 - **(fix)** Ajax submit button does not force the POST method anymore #284 (yourilima)
 - **(fix)** Fixed TimePicker #314 (marsuboss)
 - **(fix)** Fixed bootstrap.datepicker.<lang>.js #341 (fdelprete)
+- **(fix)** Fixed TbJEditableColumn which could not be edited when value is empty initially #339 (rumal)
 
 ### YiiBooster version 1.0.5 
 
