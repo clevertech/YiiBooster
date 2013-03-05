@@ -69,7 +69,7 @@ class TbDatePicker extends CInputWidget
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-datepicker.css');
 		Yii::app()->bootstrap->registerAssetJs('bootstrap.datepicker.js');
-		if(isset($this->options['language']))
+		if(isset($this->options['language']) && $this->options['language'] != 'en')
 		{
 			Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.'.$this->options['language'].'.js', CClientScript::POS_END);
 		}
