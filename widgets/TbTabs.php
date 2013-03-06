@@ -151,7 +151,8 @@ class TbTabs extends CWidget
 			if (!isset($item['itemOptions']))
 				$item['itemOptions'] = array();
 
-			$item['linkOptions']['data-toggle'] = 'tab';
+            if (!isset($item['url']))
+				$item['linkOptions']['data-toggle'] = 'tab';
 
 			if (isset($tab['items']))
 				$item['items'] = $this->normalizeTabs($item['items'], $panes, $i);
@@ -160,7 +161,8 @@ class TbTabs extends CWidget
 				if (!isset($item['id']))
 					$item['id'] = $id.'_tab_'.($i + 1);
 
-				$item['url'] = '#'.$item['id'];
+				if (!isset($item['url']))
+					$item['url'] = '#'.$item['id'];
 
 				if (!isset($item['content']))
 					$item['content'] = '';
