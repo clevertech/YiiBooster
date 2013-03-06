@@ -3,7 +3,7 @@
  * Yasen Petrov <yasenpetrov@gmail.com>
  */
 ;(function($){
-	$.fn.bdatepicker.dates['bg'] = {
+	$.fn.datepicker.dates['bg'] = {
 		days: ["Неделя", "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота", "Неделя"],
 		daysShort: ["Нед", "Пон", "Вто", "Сря", "Чет", "Пет", "Съб", "Нед"],
 		daysMin: ["Не", "По", "Вт", "Ср", "Че", "Пе", "Съ", "So"],
