@@ -3,7 +3,7 @@
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @package bootstrap.widgets
  */
 
@@ -23,7 +23,7 @@ class TbTabs extends CWidget
 	const PLACEMENT_RIGHT = 'right';
 
 	/**
-	 * @var string the type of tabs to display. 
+	 * @var string the type of tabs to display.
    *
    * Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
 	 * Please not that Javascript pills are not fully supported in Bootstrap yet!
@@ -151,7 +151,7 @@ class TbTabs extends CWidget
 			if (!isset($item['itemOptions']))
 				$item['itemOptions'] = array();
 
-            if (!isset($item['url']))
+			if (!isset($item['url']))
 				$item['linkOptions']['data-toggle'] = 'tab';
 
 			if (isset($tab['items']))
