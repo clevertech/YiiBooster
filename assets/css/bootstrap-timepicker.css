@@ -118,3 +118,7 @@
 		width: 100%;
 	}
 }
+/* Fix for user focus issue on webkit browsers */
+.no-user-select {
+    -webkit-user-select: none;
+}
