@@ -54,6 +54,7 @@ class TbEditableColumn extends TbDataColumn
         $options = CMap::mergeArray($this->editable, array(
             'model'     => $data,
             'attribute' => $this->name,
+            'parentid'  => $this->grid->id,
         ));
         
         //if value defined for column --> use it as element text
