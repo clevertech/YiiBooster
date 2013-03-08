@@ -55,6 +55,11 @@ class TbTimePicker extends CInputWidget
 	{
 		list($name, $id) = $this->resolveNameID();
 
+		// Add a class of no-user-select to widget
+		$this->htmlOptions['class'] = empty($this->htmlOptions['class']) 
+									? 'no-user-select' 
+									: 'no-user-select ' . $this->htmlOptions['class'];
+
 		if ($this->hasModel())
 		{
 			if($this->form)

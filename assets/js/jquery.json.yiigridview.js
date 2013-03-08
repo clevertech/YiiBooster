@@ -260,7 +260,13 @@
                         $grid.removeClass(settings.loadingClass);
                         $grid.find('tbody').jqotesub(settings.rowTemplate, data.rows);
                         $grid.find('.keys').jqotesub(settings.keysTemplate, data.keys);
-                        data.pager.length ? $grid.find('.'+settings.pagerClass+' ul').jqotesub(settings.pagerTemplate, data.pager).show() : $grid.find('.' + settings.pagerClass).hide();
+
+                        if (data.pager.length ) {
+                            $( '.' + settings.pagerClass + ' ul', $grid ).jqotesub(settings.pagerTemplate, data.pager);
+                            $( '.' + settings.pagerClass, $grid ).show();
+                        } else {
+                            $( '.' + settings.pagerClass, $grid ).hide();
+                        }
 
 
                         $.each(data.headers, function(){

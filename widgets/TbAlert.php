@@ -126,13 +126,20 @@ class TbAlert extends CWidget
 
 				echo CHtml::openTag('div', $alert['htmlOptions']);
 
-				if ($this->closeText !== false && !isset($alert['closeText']))
-					$alert['closeText'] = $this->closeText;
-				else
-					$alert['closeText'] = false;
+				// Logic is this: if no type-specific `closeText` was defined, let's show `$this->closeText`.
+				// Else, show type-specific `closeText`. Treat 'false' differently.
+				if (!isset($alert['closeText']))
+				{
+					$alert['closeText'] = (isset($this->closeText) && $this->closeText !== false)
+						? $this->closeText
+						: false;
+				}
 
-				if (isset($alert['closeText']) && $alert['closeText'] !== false)
+				// If `closeText` which is in effect now is `false` then do not show button.
+				if ($alert['closeText'] !== false)
+				{
 					echo '<a class="close" data-dismiss="alert">'.$alert['closeText'].'</a>';
+				}
 
 				echo Yii::app()->getComponent($this->userComponentId)->getFlash($type);
 

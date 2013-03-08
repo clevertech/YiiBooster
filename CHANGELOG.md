@@ -24,6 +24,9 @@ Senior Web Developer
 - **(enh)** TbToggleColumn now extends TbDataColumn #303 #323 (kev360) 
 - **(fix)** Ajax submit button does not force the POST method anymore #284 (yourilima)
 - **(fix)** Fixed TimePicker #314 (marsuboss)
+- **(fix)** Fixed bootstrap.datepicker.<lang>.js #341 (fdelprete)
+- **(fix)** Fixed TbJEditableColumn which could not be edited when value is empty initially #339 (rumal)
+- **(fix)** TimePicker did not released focus in Webkit browsers #364 (ciarand)
 
 ### YiiBooster version 1.0.5 
 
