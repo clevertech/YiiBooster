@@ -41,6 +41,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_TIMEPICKER            = 'timepicker';
 	const TYPE_SELECT2               = 'select2';
 	const TYPE_TYPEAHEAD             = 'typeahead';
+	const TYPE_NUMBER                = 'numberfield';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
@@ -346,6 +347,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_TYPEAHEAD:
 				$this->typeAheadField();
+				break;
+
+			case self::TYPE_NUMBER:
+				$this->numberField();
 				break;
 
 			default:
@@ -783,4 +788,14 @@ abstract class TbInput extends CInputWidget
 	 * @return mixed
 	 */
 	abstract protected function typeAheadField();
+
+	/**
+	 *### . numberField()
+   *
+	 * Renders a number field.
+   *
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function numberField();
 }
