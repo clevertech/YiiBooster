@@ -530,6 +530,7 @@ class TbInputHorizontal extends TbInput
 			'callback' => isset($callback) ? $callback : array(),
 			'htmlOptions' => $this->htmlOptions,
 		));
+		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}

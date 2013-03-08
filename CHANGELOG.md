@@ -27,6 +27,7 @@ Senior Web Developer
 - **(fix)** Fixed bootstrap.datepicker.<lang>.js #341 (fdelprete)
 - **(fix)** Fixed TbJEditableColumn which could not be edited when value is empty initially #339 (rumal)
 - **(fix)** TimePicker did not released focus in Webkit browsers #364 (ciarand)
+- **(fix)** DateRangePicker TbActiveForm field row was not closed properly #352 (despro3)
 
 ### YiiBooster version 1.0.5 
 
