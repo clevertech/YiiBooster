@@ -483,6 +483,18 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a number field input row.
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
+	public function numberFieldRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_NUMBER, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
 	 *### .checkBoxList()
 	 *
 	 * Renders a checkbox list for a model attribute.

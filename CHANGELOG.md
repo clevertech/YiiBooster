@@ -21,6 +21,7 @@ Senior Web Developer
 - **(fix)** Added correct handling of the composite primary keys in the `TbEditableField` #287 (abeel)
 - **(enh)** Added masked text field type #281 (tkijewski)
 - **(enh)** Added typeahead text field type #296 (tkijewski)
+- **(enh)** Added number field type (xt99)
 - **(enh)** TbToggleColumn now extends TbDataColumn #303 #323 (kev360) 
 - **(fix)** Ajax submit button does not force the POST method anymore #284 (yourilima)
 - **(fix)** Fixed TimePicker #314 (marsuboss)
