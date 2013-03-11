@@ -31,6 +31,7 @@ Senior Web Developer
 - **(fix)** DateRangePicker TbActiveForm field row was not closed properly #352 (despro3)
 - **(enh)** Added a TbImageGallery widget #335 (magefad)
 - **(fix)** Allow to use url parameter in TbTabs #360 (magefad)
+- **(fix)** Added rowHtmlOptionsExpression support for TbExtendedGridView (xt99)
 
 ### YiiBooster version 1.0.5 
 
