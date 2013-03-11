@@ -498,7 +498,11 @@ class TbEditableField extends CWidget
     $options = CJavaScript::encode($this->options);        
     $script .= ".editable($options);";
 
-    Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $script);
+    // unique script ID depending on the parent
+    if ($this->parentid)
+    	Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->parentid . '-' . $this->id, $script);
+    else
+    	Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $script);
 
     return $script;
   }
