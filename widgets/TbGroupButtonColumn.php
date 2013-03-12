@@ -53,15 +53,16 @@ class TbGroupButtonColumn extends CButtonColumn
 	{
 		$tr=array();
 		ob_start();
-		echo '<div class="btn-group">';
 		foreach($this->buttons as $id=>$button)
 		{
 			$this->renderButton($id,$button,$row,$data);
 			$tr['{'.$id.'}']=ob_get_contents();
 			ob_clean();
 		}
-		echo '</div>';
+
 		ob_end_clean();
+        echo '<div class="btn-group">';
 		echo strtr($this->template,$tr);
+        echo '</div>';
 	}
 }
