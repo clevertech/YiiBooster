@@ -34,9 +34,6 @@ class TbGroupButtonColumn extends CButtonColumn
 		if (!isset($options['title']))
 			$options['title'] = $label;
 
-		if (!isset($options['rel']))
-			$options['rel'] = 'tooltip';
-
         //Forsing btn class
 		if (!isset($options['class']))
 			$options['class'] = 'btn';
