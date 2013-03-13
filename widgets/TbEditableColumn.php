@@ -54,6 +54,7 @@ class TbEditableColumn extends TbDataColumn
         $options = CMap::mergeArray($this->editable, array(
             'model'     => $data,
             'attribute' => $this->name,
+            'parentid'  => $this->grid->id,
         ));
         
         //if value defined for column --> use it as element text
@@ -89,7 +90,7 @@ class TbEditableColumn extends TbDataColumn
         if (!$this->_isScriptRendered) {
             $script = $widget->registerClientScript();
             //use parent() as grid is totally replaced by new content
-            Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $selector.'-event', '
+            Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->grid->id . $selector.'-event', '
                 $("#'.$this->grid->id.'").parent().on("ajaxUpdate.yiiGridView", "#'.$this->grid->id.'", function() {'.$script.'});
             ');
             $this->_isScriptRendered = true;

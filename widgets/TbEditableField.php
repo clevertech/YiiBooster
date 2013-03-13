@@ -24,6 +24,10 @@ class TbEditableField extends CWidget
    */
   public $attribute = null;
   /**
+   * @var string parent ID.
+   */
+  public $parentid = null;
+  /**
    * @var string type of editable widget. Can be `text`, `textarea`, `select`, `date`, `checklist`, etc.
    * @see x-editable
    */
@@ -473,7 +477,11 @@ class TbEditableField extends CWidget
    */
   public function registerClientScript()
   {
-    $script = "$('a[rel={$this->htmlOptions['rel']}]')";
+  	// target the specific field if parent ID is specified
+  	if ($this->parentid)
+  		$script = "$('#{$this->parentid} a[rel={$this->htmlOptions['rel']}]')";
+  	else
+  		$script = "$('a[rel={$this->htmlOptions['rel']}]')";
 
     //attach events
     foreach(array('init', 'shown', 'save', 'hidden') as $event) {
@@ -490,7 +498,11 @@ class TbEditableField extends CWidget
     $options = CJavaScript::encode($this->options);        
     $script .= ".editable($options);";
 
-    Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $script);
+    // unique script ID depending on the parent
+    if ($this->parentid)
+    	Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->parentid . '-' . $this->id, $script);
+    else
+    	Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $script);
 
     return $script;
   }
