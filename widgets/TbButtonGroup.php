@@ -59,10 +59,6 @@ class TbButtonGroup extends CWidget
 	 * @var boolean indicates whether dropdowns should be dropups instead. Defaults to 'false'.
 	 */
 	public $dropup = false;
-	/**
-	 * @var boolean indicates whether button is disabled or not. Defaults to 'false'.
-	 */
-	public $disabled = false;
 
 	/**
 	 * Initializes the widget.
