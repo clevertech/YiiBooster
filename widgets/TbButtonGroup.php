@@ -108,6 +108,7 @@ class TbButtonGroup extends CWidget
 				'label'=>isset($button['label']) ? $button['label'] : null,
 				'url'=>isset($button['url']) ? $button['url'] : null,
 				'active'=>isset($button['active']) ? $button['active'] : false,
+				'disabled'=>isset($button['disabled']) ? $button['disabled'] : false,
 				'items'=>isset($button['items']) ? $button['items'] : array(),
 				'ajaxOptions'=>isset($button['ajaxOptions']) ? $button['ajaxOptions'] : array(),
 				'htmlOptions'=>isset($button['htmlOptions']) ? $button['htmlOptions'] : array(),
