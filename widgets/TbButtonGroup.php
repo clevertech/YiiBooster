@@ -59,6 +59,10 @@ class TbButtonGroup extends CWidget
 	 * @var boolean indicates whether dropdowns should be dropups instead. Defaults to 'false'.
 	 */
 	public $dropup = false;
+	/**
+	 * @var boolean indicates whether button is disabled or not. Defaults to 'false'.
+	 */
+	public $disabled = false;
 
 	/**
 	 * Initializes the widget.
@@ -108,6 +112,7 @@ class TbButtonGroup extends CWidget
 				'label'=>isset($button['label']) ? $button['label'] : null,
 				'url'=>isset($button['url']) ? $button['url'] : null,
 				'active'=>isset($button['active']) ? $button['active'] : false,
+				'disabled'=>isset($button['disabled']) ? $button['disabled'] : false,
 				'items'=>isset($button['items']) ? $button['items'] : array(),
 				'ajaxOptions'=>isset($button['ajaxOptions']) ? $button['ajaxOptions'] : array(),
 				'htmlOptions'=>isset($button['htmlOptions']) ? $button['htmlOptions'] : array(),
