@@ -62,7 +62,16 @@ class TbDatePicker extends CInputWidget
 		} else
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 
-		$this->registerClientScript($id);
+		$this->registerClientScript();
+		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
+
+		ob_start();
+		echo "jQuery('#{$id}').bdatepicker({$options})";
+		foreach ($this->events as $event => $handler)
+			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
+
+		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
+
 	}
 
 	/**
@@ -71,7 +80,7 @@ class TbDatePicker extends CInputWidget
 	 * Registers required client script for bootstrap datepicker. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
 	 */
-	public function registerClientScript($id)
+	public function registerClientScript()
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-datepicker.css');
 		Yii::app()->bootstrap->registerAssetJs('bootstrap.datepicker.js');
@@ -83,14 +92,5 @@ class TbDatePicker extends CInputWidget
 				Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.'.$this->options['language'].'.js', CClientScript::POS_END);
 			}
 		}
-		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
-
-		ob_start();
-		echo "jQuery('#{$id}').bdatepicker({$options})";
-		foreach ($this->events as $event => $handler)
-			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
-
-		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
-
 	}
 }
