@@ -86,7 +86,7 @@ class TbDatePicker extends CInputWidget
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
 		ob_start();
-		echo "jQuery('#{$id}').bdatepicker({$options})";
+		echo "jQuery('#{$id}').datepicker({$options})";
 		foreach ($this->events as $event => $handler)
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 
