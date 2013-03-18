@@ -52,6 +52,11 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public $responsiveCss = false;
 	/**
+	 * @var boolean whether to register the Font Awesome CSS (font-awesome.min.css).
+	 * Defaults to false.
+	 */
+	public $fontAwesomeCss = false;
+	/**
 	 * @var boolean whether to register the Yii-specific CSS missing from Bootstrap.
 	 * @since 0.9.12
 	 */
@@ -129,6 +134,9 @@ class Bootstrap extends CApplicationComponent
 		if ($this->responsiveCss !== false)
 			$this->registerResponsiveCss();
 
+		if ($this->fontAwesomeCss !== false)
+			$this->registerFontAwesomeCss();
+
 		if ($this->yiiCss !== false)
 			$this->registerYiiCss();
 
@@ -159,6 +167,15 @@ class Bootstrap extends CApplicationComponent
 		$cs = Yii::app()->getClientScript();
 		$cs->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 		$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-responsive' . (!YII_DEBUG ? '.min' : '') . '.css');
+	}
+
+	/**
+	 * Registers the Font Awesome CSS.
+	 * @since 1.0.6
+	 */
+	public function registerFontAwesomeCss()
+	{
+		$this->registerAssetCss('font-awesome' . (!YII_DEBUG ? '.min' : '') . '.css');
 	}
 
 	/**
