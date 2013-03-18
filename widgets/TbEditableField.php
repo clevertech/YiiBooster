@@ -1,6 +1,6 @@
 <?php
-/**
- * EditableField class file.
+/*## EditableField class file.
+ * @see <https://github.com/vitalets/x-editable-yii>
  * 
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
@@ -253,6 +253,8 @@ class TbEditableField extends CWidget
     private $_prepareToAutotext = false;
     
     /**
+   *### .init()
+   *
     * initialization of widget
     * 
     */
@@ -336,6 +338,9 @@ class TbEditableField extends CWidget
         $this->registerAssets();
     }
 
+  /*
+   *### .buildHtmlOptions()
+   */
     public function buildHtmlOptions()
     {
         //html options
@@ -473,6 +478,9 @@ class TbEditableField extends CWidget
         $this->options = CMap::mergeArray($this->options, $options);
     }
 
+  /*
+   *### .registerClientScript()
+   */
     public function registerClientScript()
     {
         // target the specific field if parent ID is specified
@@ -505,6 +513,9 @@ class TbEditableField extends CWidget
         return $script;
     }
 
+  /*
+   *### .registerAssets()
+   */
     public function registerAssets()
     {
         Yii::app()->bootstrap->registerAssetCss('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.css');
@@ -515,6 +526,9 @@ class TbEditableField extends CWidget
         $widget->registerClientScript();
     }
     
+  /*
+   *### .run()
+   */
     public function run()
     {
         if($this->apply) {
@@ -525,6 +539,9 @@ class TbEditableField extends CWidget
         }
     }
 
+  /*
+   *### .renderLink()
+   */
     public function renderLink()
     {
         echo CHtml::openTag('a', $this->htmlOptions);
@@ -532,6 +549,9 @@ class TbEditableField extends CWidget
         echo CHtml::closeTag('a');
     }
 
+  /*
+   *### .renderText()
+   */
     public function renderText()
     {   
         $encodedText = $this->encode ? CHtml::encode($this->text) : $this->text;
@@ -541,12 +561,17 @@ class TbEditableField extends CWidget
         echo $encodedText;
     }    
     
+  /*
+   *### .getSelector()
+   */
     public function getSelector()
     {
         return get_class($this->model) . '_' . $this->attribute . ($this->encodeDataPk($this->model->primaryKey) ? '_' . $this->encodeDataPk($this->model->primaryKey) : '_new');
     }
     
-    /**
+  /*
+   *### .resolveModel()
+   *
     * check if attribute points to related model and resolve it
     * 
     * @param mixed $model
@@ -572,6 +597,8 @@ class TbEditableField extends CWidget
     } 
     
     /**
+   *### .registerJQueryUI()
+   *
     * method to register jQuery UI with build-in or custom theme
     *    
     */

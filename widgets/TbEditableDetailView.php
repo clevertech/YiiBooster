@@ -1,6 +1,6 @@
 <?php
-/**
- * EditableDetailView class file.
+/*## EditableDetailView class file.
+ * @see <https://github.com/vitalets/x-editable-yii>
  *
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @copyright Copyright &copy; Vitaliy Potapov 2012
@@ -13,8 +13,6 @@ Yii::import('bootstrap.widgets.TbDetailView');
 
 /**
 * EditableDetailView widget makes editable CDetailView (several attributes of single model shown as name-value table).
-*
-* @package widgets
 */
 class TbEditableDetailView extends TbDetailView
 {
@@ -28,6 +26,11 @@ class TbEditableDetailView extends TbDetailView
     */
     public $params = null;
 
+  /**
+   *### .init()
+   *
+   * Widget initialization
+   */
     public function init()
     {
         if (!$this->data instanceof CModel) {
@@ -41,6 +44,9 @@ class TbEditableDetailView extends TbDetailView
         parent::init();
     }
 
+  /**
+   *### .renderItem()
+   */
     protected function renderItem($options, $templateData)
     {
         //apply editable if not set 'editable' params or set and not false

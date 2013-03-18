@@ -1,6 +1,6 @@
 <?php
-/**
- * EditableSaver class file.
+/*## EditableSaver class file.
+ * @see <https://github.com/vitalets/x-editable-yii>
  * 
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
@@ -66,6 +66,8 @@ class TbEditableSaver extends CComponent
     protected $changedAttributes = array();
     
     /**
+   *### ._construct()
+   *
      * Constructor
      *
      * @param mixed $modelName
@@ -80,6 +82,8 @@ class TbEditableSaver extends CComponent
     }
 
     /**
+   *### .update()
+   *
      * main function called to update column in database
      *
      */
@@ -141,6 +145,8 @@ class TbEditableSaver extends CComponent
     }
 
     /**
+   *### .checkErros()
+   *
      * errors as CHttpException
      * @param $msg
      * @throws CHttpException
@@ -159,6 +165,8 @@ class TbEditableSaver extends CComponent
     }     
     
     /**
+   *### .error()
+   *
      * errors as CHttpException
      * @param $msg
      * @throws CHttpException
@@ -169,6 +177,8 @@ class TbEditableSaver extends CComponent
     }  
     
     /**
+   *### .setAttribute()
+   *
     * setting new value of attribute.
     * Attrubute name also stored in array to save only changed attributes
     * 
@@ -184,6 +194,8 @@ class TbEditableSaver extends CComponent
     }      
     
     /**
+   *### .onBeforeUpdate()
+   *
      * This event is raised before the update is performed.
      * @param CModelEvent $event the event parameter
      */
@@ -193,6 +205,8 @@ class TbEditableSaver extends CComponent
     }
 
     /**
+   *### .onAfterUpdate()
+   *
      * This event is raised after the update is performed.
      * @param CEvent $event the event parameter
      */
@@ -202,6 +216,8 @@ class TbEditableSaver extends CComponent
     }
 
     /**
+   *### .beforeUpdate()
+   *
      * beforeUpdate
      *
      */
@@ -211,6 +227,8 @@ class TbEditableSaver extends CComponent
     }
 
     /**
+   *### .afterUpdate()
+   *
      * afterUpdate
      *
      */
