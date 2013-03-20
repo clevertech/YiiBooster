@@ -32,6 +32,7 @@ Senior Web Developer
 - **(enh)** Added a TbImageGallery widget #335 (magefad)
 - **(fix)** Allow to use url parameter in TbTabs #360 (magefad)
 - **(enh)** Add option "fontAwesomeCss" for to active Font Awesome CSS (marsuboss)
+- **(fix)** Add option "disabled" on TbEditableField
 
 ### YiiBooster version 1.0.5 
 
