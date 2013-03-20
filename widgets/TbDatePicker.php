@@ -34,7 +34,7 @@ class TbDatePicker extends CInputWidget
 		$this->htmlOptions['autocomplete'] = 'off';
 
 		if (!isset($this->options['language']))
-			$this->options['language'] = Yii::app()->language;
+			$this->options['language'] = substr(Yii::app()->getLanguage(), 0, 2);
 
 		if (!isset($this->options['format']))
 			$this->options['format'] = 'mm/dd/yyyy';
@@ -63,10 +63,11 @@ class TbDatePicker extends CInputWidget
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 
 		$this->registerClientScript();
+		$this->registerLanguageScript();
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
 		ob_start();
-		echo "jQuery('#{$id}').bdatepicker({$options})";
+		echo "jQuery('#{$id}').datepicker({$options})";
 		foreach ($this->events as $event => $handler)
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 
@@ -84,10 +85,14 @@ class TbDatePicker extends CInputWidget
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-datepicker.css');
 		Yii::app()->bootstrap->registerAssetJs('bootstrap.datepicker.js');
-		if(isset($this->options['language']))
+	}
+
+	public function registerLanguageScript()
+	{
+		if (isset($this->options['language']) && $this->options['language'] != 'en')
 		{
 			$file = 'locales/bootstrap-datepicker.'.$this->options['language'].'.js';
-			if(@file_exists(Yii::getPathOfAlias('bootstrap.assets').'/js/'.$file))
+			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets').'/js/'.$file))
 			{
 				Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.'.$this->options['language'].'.js', CClientScript::POS_END);
 			}

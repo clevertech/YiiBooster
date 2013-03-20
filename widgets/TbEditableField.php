@@ -520,10 +520,9 @@ class TbEditableField extends CWidget
     {
         Yii::app()->bootstrap->registerAssetCss('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.css');
         Yii::app()->bootstrap->registerAssetJs($this->mode === 'popup' ? 'bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.js' : 'bootstrap-editable-inline.js', CClientScript::POS_END);
-        /** @var $widget TbDatepicker */
-        $widget = Yii::app()->widgetFactory->createWidget($this->getOwner(), 'bootstrap.widgets.TbDatePicker');
-        $widget->init();
-        $widget->registerClientScript();
+        /** @var $widget TbDatePicker */
+        $widget = Yii::app()->widgetFactory->createWidget($this->getOwner(), 'bootstrap.widgets.TbDatePicker', array('options' => $this->options['datepicker']));
+        $widget->registerLanguageScript();
     }
 
   /*
