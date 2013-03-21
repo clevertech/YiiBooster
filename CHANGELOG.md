@@ -33,6 +33,7 @@ Senior Web Developer
 - **(fix)** Allow to use url parameter in TbTabs #360 (magefad)
 - **(enh)** Add option "fontAwesomeCss" for to active Font Awesome CSS (marsuboss)
 - **(enh)** Fixed TbEditable - mode(modal|inline); language,support for datepicker, app lang by default (magefad)
+- **(fix)** Fixed typeAheadField #396 (magefad)
 
 ### YiiBooster version 1.0.5
 
