@@ -561,7 +561,7 @@ class TbExtendedGridView extends TbGridView
 	 */
 	public function registerCustomClientScript()
 	{
-        /** @var $cs CClientScript */
+		/** @var $cs CClientScript */
 		$cs = Yii::app()->getClientScript();
 
 		$fixedHeaderJs = '';
