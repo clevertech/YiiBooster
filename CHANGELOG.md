@@ -34,6 +34,7 @@ Senior Web Developer
 - **(enh)** Add option "fontAwesomeCss" for to active Font Awesome CSS (marsuboss)
 - **(enh)** Fixed TbEditable - mode(modal|inline); language,support for datepicker, app lang by default (magefad)
 - **(enh)** Add empty (null) value display for TbToggleColumn ("icon-question-sign" icon with "Not Set" label) (magefad)
+- **(fix)** StickyTableHeader issue dynamic cell width #338, updated js, added compressed js (magefad)
 
 ### YiiBooster version 1.0.5
 
