@@ -175,6 +175,7 @@ class TbBulkActions extends CComponent
 				'icon' => isset($action['icon']) ? $action['icon'] : null,
 				'label' => isset($action['label']) ? $action['label'] : null,
 				'url' => isset($action['url']) ? $action['url'] : null,
+				'id' => isset($action['id']) ? $action['id'] : null,
 				'active' => isset($action['active']) ? $action['active'] : false,
 				'items' => isset($action['items']) ? $action['items'] : array(),
 				'ajaxOptions' => isset($action['ajaxOptions']) ? $action['ajaxOptions'] : array(),
