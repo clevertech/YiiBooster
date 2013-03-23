@@ -427,7 +427,7 @@ class TbEditableField extends CWidget
         );
 
         //options set directly in config
-        foreach(array('placement', 'emptytext', 'params', 'inputclass', 'format', 'viewformat') as $option) {
+        foreach(array('placement', 'emptytext', 'params', 'inputclass', 'format', 'viewformat', 'disabled') as $option) {
             if ($this->$option) {
                 $options[$option] = $this->$option;
             }
