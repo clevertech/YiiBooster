@@ -245,6 +245,7 @@ class TbJsonGridView extends TbGridView
 			$tbody['rows'][0]['class'] = " ";
 		}
 		$tbody['pager'] = $this->renderPager();
+		$tbody['url'] = Yii::app()->getRequest()->getUrl();
 
 		return $tbody;
 	}
