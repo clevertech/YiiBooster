@@ -35,6 +35,7 @@ Senior Web Developer
 - **(enh)** Fixed TbEditable - mode(modal|inline); language,support for datepicker, app lang by default (magefad)
 - **(fix)** Add option "disabled" on TbEditableField
 - **(enh)** Add empty (null) value display for TbToggleColumn ("icon-question-sign" icon with "Not Set" label) (magefad)
+- **(fix)** StickyTableHeader issue dynamic cell width #338, updated js, added compressed js (magefad)
 
 ### YiiBooster version 1.0.5
 
