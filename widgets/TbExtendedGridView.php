@@ -551,7 +551,7 @@ class TbExtendedGridView extends TbGridView
 		$fixedHeaderJs = '';
 		if ($this->fixedHeader)
 		{
-			Yii::app()->bootstrap->registerAssetJs('jquery.stickytableheaders.js');
+			Yii::app()->bootstrap->registerAssetJs('jquery.stickytableheaders' . (!YII_DEBUG ? '.min' : '') . '.js');
 			$fixedHeaderJs = "$('#{$this->id} table.items').stickyTableHeaders({fixedOffset:{$this->headerOffset}});";
 			$this->componentsAfterAjaxUpdate[] = $fixedHeaderJs;
 		}

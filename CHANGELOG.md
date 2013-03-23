@@ -36,7 +36,7 @@ Senior Web Developer
 - **(fix)** Add option "disabled" on TbEditableField
 - **(enh)** Add empty (null) value display for TbToggleColumn ("icon-question-sign" icon with "Not Set" label) (magefad)
 - **(fix)** Fixed typeAheadField #396 (magefad)
->>>>>>> 35b57224c38eefd39cb9605c38115d6b2ff3e43c
+- **(fix)** StickyTableHeader issue dynamic cell width #338, updated js, added compressed js (magefad)
 
 ### YiiBooster version 1.0.5
 
