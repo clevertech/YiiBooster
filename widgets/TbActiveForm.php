@@ -277,7 +277,7 @@ class TbActiveForm extends CActiveForm
 	{
 		return $this->inputRow(TbInput::TYPE_MASKEDTEXT, $model, $attribute, $mask, $htmlOptions);
 	}
-	
+
 	/**
 	 *### .textAreaRow()
 	 *
@@ -430,7 +430,8 @@ class TbActiveForm extends CActiveForm
 	 * @param $attribute
 	 * @param array $htmlOptions addition HTML attributes. In order to pass initialization parameters to dateRange, you
 	 * need to set the HTML 'options' key with an array of configuration options.
-	 */
+     * @return string
+     */
 	public function dateRangeRow($model, $attribute, $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_DATERANGEPICKER, $model, $attribute, null, $htmlOptions);
@@ -470,13 +471,14 @@ class TbActiveForm extends CActiveForm
 		return $this->inputRow(TbInput::TYPE_SELECT2, $model, $attribute, null, $htmlOptions);
 	}
 
-	/**
-	 * Renders a typeAhead input row
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 * @return string the generated row
-	 */
+    /**
+     * Renders a typeAhead input row
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $widgetOptions
+     * @param array $htmlOptions additional HTML attributes
+     * @return string the generated row
+     */
 	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_TYPEAHEAD, $model, $attribute, $widgetOptions, $htmlOptions);
@@ -681,36 +683,37 @@ class TbActiveForm extends CActiveForm
 			'attribute' => $attribute,
 			'mask' => $mask,
 			'htmlOptions'=> $htmlOptions
-			),TRUE);
+			),true);
 	}
-	
-	/**
-	 * Renders a type ahead field row
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
-	 * @param array $htmlOptions additional HTML options.
-	 * @return string the generated typeahead field
-	 * @since 1.0.6
-	 */
+
+    /**
+     * Renders a type ahead field row
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
+     * @param array $htmlOptions additional HTML options.
+     * @throws CException
+     * @return string the generated typeahead field
+     * @since 1.0.6
+     */
 	public function typeAheadField($model,$attribute,$widgetOptions,$htmlOptions=array())
 	{
 		if (!isset($widgetOptions['source'])) throw new CException(__CLASS__ . ': \'source\' parameter must be defined. ');
-		
+
 		$widgetOptions += array(
 							'items'=>4,
 						    'matcher'=>'js:function(item) {
 						        return ~item.toLowerCase().indexOf(this.query.toLowerCase());
 						    }');
-		
+
 		return Yii::app()->controller->widget('bootstrap.widgets.TbTypeahead', array(
 			'model'=>$model,
 			'attribute'=>$attribute,
 			'options'=>$widgetOptions,
-			'htmlOptions'=>+$htmlOptions
-			),TRUE);
+			'htmlOptions'=>$htmlOptions
+			),true);
 	}
-	
+
 	/**
 	 * Renders an input list.
 	 *
