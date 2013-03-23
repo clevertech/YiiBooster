@@ -28,6 +28,12 @@ class TbSelect2 extends CInputWidget
    * @var bool whether to display a dropdown select box or use it for tagging
    */
   public $asDropDownList = true;
+
+  /**
+   * @var string the default value.
+   */
+  public $val;
+
   /**
    * @var
    */
@@ -85,8 +91,10 @@ class TbSelect2 extends CInputWidget
 
     $options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
+    $defValue = !empty($this->val) ? ".select2('val', '$this->val')" : '';
+
     ob_start();
-    echo "jQuery('#{$id}').select2({$options})";
+    echo "jQuery('#{$id}').select2({$options})$defValue";
     foreach ($this->events as $event => $handler)
       echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 
