@@ -91,7 +91,7 @@ class JSONStorage extends CComponent
 	}
 
 	/**
-	 * class destructor - flassh data
+	 * class destructor - flush data
 	 */
 	public function __destruct()
 	{
