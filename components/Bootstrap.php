@@ -98,7 +98,7 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * @var bool whether to enable bootbox messages or not. Default value is true.
-	 * @since YiiBooster 1.0.6
+	 * @since YiiBooster 1.0.5
 	 */
 	public $enableBootboxJS = true;
 
