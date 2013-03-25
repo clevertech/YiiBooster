@@ -17,6 +17,9 @@ Yii::import('bootstrap.widgets.TbGridView');
  *  - Automatic chart display (using TbHighCharts widget), where user can 'switch' between views.
  *  - Selectable cells
  *  - Sortable rows
+ *
+ * @property CActiveDataProvider $dataProvider the data provider for the view.
+ * @property TbDataColumn[] $columns
  */
 class TbExtendedGridView extends TbGridView
 {
@@ -41,7 +44,7 @@ class TbExtendedGridView extends TbGridView
 
 	/**
 	 * @var array $extendedSummary displays an extended summary version. 
-   * There are different types of summary types,
+	 * There are different types of summary types,
 	 * please, see {@link TbSumOperation}, {@link TbSumOfTypeOperation},{@link TbPercentOfTypeGooglePieOperation}
 	 * {@link TbPercentOfTypeOperation} and {@link TbPercentOfTypeEasyPieOperation}.
 	 *
@@ -208,9 +211,7 @@ class TbExtendedGridView extends TbGridView
 			$this->displayExtendedSummary = true;
 		}
 		if (!empty($this->chartOptions) && @$this->chartOptions['data'] && $this->dataProvider->getItemCount())
-		{
 			$this->displayChart = true;
-		}
 		if ($this->bulkActions !== array() && isset($this->bulkActions['actionButtons']))
 		{
 			if (!isset($this->bulkActions['class']))
@@ -316,7 +317,7 @@ class TbExtendedGridView extends TbGridView
 
 	/**
 	 *### .renderTableFooter()
-   *
+	 *
 	 * Renders the table footer.
 	 */
 	public function renderTableFooter()
@@ -515,7 +516,7 @@ class TbExtendedGridView extends TbGridView
 
 	/**
 	 *### .renderExtendedSummaryContent()
-   *
+	 *
 	 * Renders summary content. Will be appended to
 	 */
 	public function renderExtendedSummaryContent()

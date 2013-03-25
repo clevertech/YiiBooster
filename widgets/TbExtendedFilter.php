@@ -55,7 +55,7 @@ class TbExtendedFilter extends CWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Widget initialization
 	 * @throws CException
 	 */
@@ -85,46 +85,40 @@ class TbExtendedFilter extends CWidget
 
 	/**
 	 *### .checkRequestRemovalFilter()
-   *
+	 *
 	 * Checks whether there has been send the command to remove a filter from the registry and redirects to
 	 * specified route
 	 */
 	protected function checkRequestRemovalFilter()
 	{
-		if($key = Yii::app()->getRequest()->getParam($this->removeFilterVar))
+		if ($key = Yii::app()->getRequest()->getParam($this->removeFilterVar))
 		{
-			if($this->jsonStorage->removeData($key, $this->registry))
-			{
+			if ($this->jsonStorage->removeData($key, $this->registry))
 				Yii::app()->getController()->redirect($this->redirectRoute);
-			}
 		}
 	}
 
 	/**
 	 *### .checkRequestFilters()
-   *
+	 *
 	 * Checkes whether there has been send the command to save a filter to the registry and redirects to
 	 * specified route
-   *
+	 *
 	 * @return bool
 	 */
 	protected function checkRequestFilters()
 	{
 		if ($filterName = Yii::app()->getRequest()->getParam($this->saveFilterVar))
 		{
-
 			if (!count($this->filteredBy))
 				return false;
-
 			$key = $this->generateRegistryItemKey();
 
 			if ($this->jsonStorage->getData($key, $this->registry))
 				return false;
 
 			$data = array('name' => $filterName);
-
 			$data['options'] = array(get_class($this->model) => $this->filteredBy);
-
 			$this->jsonStorage->setData($key, $data, $this->registry);
 
 			Yii::app()->getController()->redirect($this->redirectRoute);
@@ -133,7 +127,7 @@ class TbExtendedFilter extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Widget's run method
 	 */
 	public function run()
@@ -148,11 +142,10 @@ class TbExtendedFilter extends CWidget
 		$cols = count($this->grid->columns);
 		echo "<td colspan='{$cols}'>\n";
 		echo "<div id='{$this->getId()}'>\n";
-		if(count($this->filteredBy))
+		if (count($this->filteredBy))
 			echo '<p><span class="label label-success">Filtered by</span> ' . $this->displayExtendedFilterValues($this->filteredBy) . '</p>';
 
 		$this->displaySaveButton($registryKey);
-
 		$this->displaySavedFilters($registryKey);
 
 		echo "</div>\n";
@@ -162,7 +155,7 @@ class TbExtendedFilter extends CWidget
 
 	/**
 	 *### .registerClientScript()
-   *
+	 *
 	 * Registers the required
 	 */
 	public function registerClientScript()
@@ -170,59 +163,58 @@ class TbExtendedFilter extends CWidget
 		$url = CHtml::normalizeUrl($this->redirectRoute);
 
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#extended-filter' . $this->grid->id, <<<EOD
-        $(document).on('click', '#{$this->grid->id} .btn-extended-filter-save', function(e){
-            e.preventDefault();
-            bootbox.prompt("How do you wish to save this filter?", "Cancel", "Ok", function(result){
-                if($.trim(result).length > 0)
-                {
-                    $('#{$this->grid->id}').yiiGridView('update',{data:{{$this->saveFilterVar}:result}});
-                }
-            });
-        });
-        $(document).on('click', '#{$this->grid->id} .btn-extended-filter-apply', function(e) {
-            e.preventDefault();
-            var option = $('#{$this->getId()} select.select-extended-filter option:selected');
-            if(!option.length || !option.data('filter'))
-            {
-                return false;
-            }
-            var data ={data:option.data('filter')};
-            if(option.val()==-1)
-            {
-                data.url = "{$url}";
-            }
-            $('#{$this->grid->id}').yiiGridView('update',data);
-        });
+		$(document).on('click', '#{$this->grid->id} .btn-extended-filter-save', function(e){
+			e.preventDefault();
+			bootbox.prompt("How do you wish to save this filter?", "Cancel", "Ok", function(result){
+				if ($.trim(result).length > 0)
+				{
+					$('#{$this->grid->id}').yiiGridView('update',{data:{{$this->saveFilterVar}:result}});
+				}
+			});
+		});
+		$(document).on('click', '#{$this->grid->id} .btn-extended-filter-apply', function(e) {
+			e.preventDefault();
+			var option = $('#{$this->getId()} select.select-extended-filter option:selected');
+			if (!option.length || !option.data('filter'))
+			{
+				return false;
+			}
+			var data ={data:option.data('filter')};
+			if (option.val()==-1)
+			{
+				data.url = "{$url}";
+			}
+			$('#{$this->grid->id}').yiiGridView('update',data);
+		});
 
-        $(document).on('click', '#{$this->grid->id} .btn-extended-filter-delete', function(e) {
-            e.preventDefault();
-            var option = $('#{$this->grid->id} select.select-extended-filter option:selected');
-            if(!option.length || !option.data('key') || option.val()==-1)
-            {
-                return false;
-            }
-            bootbox.confirm('Delete "'+option.text()+'" filter?', function(confirmed){
-                if(confirmed)
-                {
-                    $('#{$this->grid->id}').yiiGridView('update',{data:{{$this->removeFilterVar}:option.data('key')}});
-                }
-            });
-        });
+		$(document).on('click', '#{$this->grid->id} .btn-extended-filter-delete', function(e) {
+			e.preventDefault();
+			var option = $('#{$this->grid->id} select.select-extended-filter option:selected');
+			if (!option.length || !option.data('key') || option.val()==-1)
+			{
+				return false;
+			}
+			bootbox.confirm('Delete "'+option.text()+'" filter?', function(confirmed){
+				if (confirmed)
+				{
+					$('#{$this->grid->id}').yiiGridView('update',{data:{{$this->removeFilterVar}:option.data('key')}});
+				}
+			});
+		});
 EOD
 		);
 	}
 
 	/**
 	 *### .displaySaveButton()
-   *
+	 *
 	 * Displays the save filter button
-   *
-	 * @param $registryKey
+	 *
+	 * @param string $registryKey
 	 * @return bool
 	 */
 	protected function displaySaveButton($registryKey)
 	{
-
 		if (null == $registryKey || $this->jsonStorage->getData($registryKey, $this->registry))
 			return false;
 
@@ -231,14 +223,13 @@ EOD
 
 	/**
 	 *### .displaySavedFilters()
-   *
+	 *
 	 * displays the saved filters as a dropdown list
-   *
-	 * @param $registryKey
+	 *
+	 * @param string $registryKey
 	 */
 	protected function displaySavedFilters($registryKey)
 	{
-
 		if ($this->jsonStorage->getLength($this->registry))
 		{
 			$registry = $this->jsonStorage->getRegistry($this->registry);
@@ -260,31 +251,28 @@ EOD
 			echo CHtml::link('<i class="icon-trash"></i>', '#', array('class'=>'btn btn-warning btn-extended-filter-delete', 'style'=>'margin-bottom:9px'));
 			echo '</span></p>';
 		}
-
 	}
 
 	/**
 	 *### .generateRegistryItemKey()
-   *
+	 *
 	 * Generates a registry item key with the filtered attributes + the grid id
-   *
+	 *
 	 * @return null|string
 	 */
 	protected function generateRegistryItemKey()
 	{
 		if (!count($this->filteredBy))
 			return null;
-
-
 		return md5($this->grid->id . CJSON::encode($this->filteredBy));
 	}
 
 	/**
 	 *### .displayExtendedFilterValues()
-   *
+	 *
 	 * Displays the filtered options
-   *
-	 * @param $filteredBy
+	 *
+	 * @param array $filteredBy
 	 * @return string
 	 */
 	protected function displayExtendedFilterValues($filteredBy)

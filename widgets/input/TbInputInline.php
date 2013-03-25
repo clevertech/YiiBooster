@@ -88,10 +88,6 @@ class TbInputInline extends TbInputVertical
 	protected function setPlaceholder()
 	{
 		if (empty($this->htmlOptions['placeholder']))
-		{
 			$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
-		}
 	}
-	
-
 }

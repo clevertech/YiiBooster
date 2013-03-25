@@ -55,7 +55,7 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 * @var string the input type.
-   *
+	 *
 	 * Following types are supported: checkbox, checkboxlist, dropdownlist, filefield, password,
 	 * radiobutton, radiobuttonlist, textarea, textfield, captcha and uneditable.
 	 */
@@ -156,7 +156,7 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .processHtmlOptions()
-   *
+	 *
 	 * Processes the html options.
 	 */
 	protected function processHtmlOptions()
@@ -213,13 +213,10 @@ abstract class TbInput extends CInputWidget
 		{
 			$this->errorOptions = $this->htmlOptions['errorOptions'];
 			if (isset($this->htmlOptions['errorOptions']['enableAjaxValidation']))
-			{
 				$this->enableAjaxValidation = (boolean)$this->htmlOptions['errorOptions']['enableAjaxValidation'];
-			}
+
 			if (isset($this->htmlOptions['errorOptions']['enableClientValidation']))
-			{
 				$this->enableClientValidation = (boolean)$this->htmlOptions['errorOptions']['enableClientValidation'];
-			}
 			unset($this->htmlOptions['errorOptions']);
 		}
 
@@ -232,9 +229,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Runs the widget.
-   *
+	 *
 	 * @throws CException if the widget type is invalid.
 	 */
 	public function run()
@@ -360,9 +357,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getLabel()
-   *
+	 *
 	 * Returns the label for the input.
-   *
+	 *
 	 * @return string the label
 	 */
 	protected function getLabel()
@@ -377,9 +374,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getPrepend()
-   *
+	 *
 	 * Returns the prepend element for the input.
-   *
+	 *
 	 * @return string the element
 	 */
 	protected function getPrepend()
@@ -405,9 +402,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getAppend()
-   *
+	 *
 	 * Returns the append element for the input.
-   *
+	 *
 	 * @return string the element
 	 */
 	protected function getAppend()
@@ -433,9 +430,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getAppend()
-   *
+	 *
 	 * Returns the id that should be used for the specified attribute
-   *
+	 *
 	 * @param string $attribute the attribute
 	 * @return string the id
 	 */
@@ -448,9 +445,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getError()
-   *
+	 *
 	 * Returns the error text for the input.
-   *
+	 *
 	 * @return string the error text
 	 */
 	protected function getError()
@@ -460,9 +457,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getHint()
-   *
+	 *
 	 * Returns the hint text for the input.
-   *
+	 *
 	 * @return string the hint text
 	 */
 	protected function getHint()
@@ -483,9 +480,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getContainerCssClass()
-   *
+	 *
 	 * Returns the container CSS class for the input.
-   *
+	 *
 	 * @return string the CSS class
 	 */
 	protected function getContainerCssClass()
@@ -496,9 +493,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .getAddonCssClass()
-   *
+	 *
 	 * Returns the input container CSS classes.
-   *
+	 *
 	 * @return string the CSS class
 	 */
 	protected function getAddonCssClass()
@@ -514,9 +511,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .hasAddOn()
-   *
+	 *
 	 * Returns whether the input has an add-on (prepend and/or append).
-   *
+	 *
 	 * @return boolean the result
 	 */
 	protected function hasAddOn()
@@ -526,9 +523,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .checkBox()
-   *
+	 *
 	 * Renders a checkbox.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -536,9 +533,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .toggleButton()
-   *
+	 *
 	 * Renders a toggle button.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -546,9 +543,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .checkBoxList()
-   *
+	 *
 	 * Renders a list of checkboxes.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -556,9 +553,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .checkBoxListInline()
-   *
+	 *
 	 * Renders a list of inline checkboxes.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -566,9 +563,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .checkBoxGroupsList()
-   *
+	 *
 	 * Renders a list of checkboxes using Button Groups.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -576,9 +573,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .dropDownList()
-   *
+	 *
 	 * Renders a drop down list (select).
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -586,9 +583,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .fileField()
-   *
+	 *
 	 * Renders a file field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -596,9 +593,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .passwordField()
-   *
+	 *
 	 * Renders a password field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -606,9 +603,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .radioButton()
-   *
+	 *
 	 * Renders a radio button.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -616,9 +613,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .radioButtonList()
-   *
+	 *
 	 * Renders a list of radio buttons.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -626,9 +623,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .radioButtonListInline()
-   *
+	 *
 	 * Renders a list of inline radio buttons.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -636,9 +633,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .radioButtonGroupsList()
-   *
+	 *
 	 * Renders a list of radio buttons using Button Groups.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -646,9 +643,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .textArea()
-   *
+	 *
 	 * Renders a textarea.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -656,9 +653,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .textField()
-   *
+	 *
 	 * Renders a text field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -666,9 +663,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .maskedTextField()
-   *
+	 *
 	 * Renders a masked text field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -676,9 +673,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .captcha()
-   *
+	 *
 	 * Renders a CAPTCHA.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -686,9 +683,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .uneditableField()
-   *
+	 *
 	 * Renders an uneditable field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -696,9 +693,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .datepicketField()
-   *
+	 *
 	 * Renders a datepicker field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -706,9 +703,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .redactorJs()
-   *
+	 *
 	 * Renders a redactorJS wysiwyg field.
-   *
+	 *
 	 * @abstract
 	 * @return mixed
 	 */
@@ -716,9 +713,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .markdownEditorJs()
-   *
+	 *
 	 * Renders a markdownEditorJS wysiwyg field.
-   *
+	 *
 	 * @abstract
 	 * @return mixed
 	 */
@@ -726,9 +723,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .ckEditor()
-   *
+	 *
 	 * Renders a bootstrap CKEditor wysiwyg editor.
-   *
+	 *
 	 * @abstract
 	 * @return mixed
 	 */
@@ -736,9 +733,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .html5Editor()
-   *
+	 *
 	 * Renders a bootstrap wysihtml5 editor.
-   *
+	 *
 	 * @abstract
 	 * @return mixed
 	 */
@@ -746,9 +743,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .dateRangeField()
-   *
+	 *
 	 * Renders a daterange picker field
-   *
+	 *
 	 * @abstract
 	 * @return mixed
 	 */
@@ -756,9 +753,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .colorpickerField()
-   *
+	 *
 	 * Renders a colorpicker field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -766,9 +763,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .timepickerField()
-   *
+	 *
 	 * Renders a timepicker field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */
@@ -776,9 +773,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### .select2Field()
-   *
+	 *
 	 * Renders a select2 field.
-   *
+	 *
 	 * @return mixed
 	 */
 	abstract protected function select2Field();
@@ -791,9 +788,9 @@ abstract class TbInput extends CInputWidget
 
 	/**
 	 *### . numberField()
-   *
+	 *
 	 * Renders a number field.
-   *
+	 *
 	 * @return string the rendered content
 	 * @abstract
 	 */

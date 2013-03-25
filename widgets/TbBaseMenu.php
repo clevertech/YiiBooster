@@ -47,7 +47,7 @@ abstract class TbBaseMenu extends CMenu
   {
     $n = count($items);
 
-    if($n > 0)
+    if ($n > 0)
     {
       echo CHtml::openTag('ul', $this->htmlOptions);
 
@@ -146,7 +146,7 @@ abstract class TbBaseMenu extends CMenu
 
     if (isset($item['items']) && !empty($item['items']))
     {
-      if(empty($item['url']))
+      if (empty($item['url']))
       {
         $item['url'] = '#';
       }

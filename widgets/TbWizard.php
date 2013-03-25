@@ -24,16 +24,18 @@ class TbWizard extends CWidget
 
 	/**
 	 * @var string the type of tabs to display. 
-   * Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
+	 * Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
 	 * Please not that Javascript pills are not fully supported in Bootstrap yet!
 	 * @see TbMenu::$type
 	 */
 	public $type = TbMenu::TYPE_TABS;
+
 	/**
 	 * @var string the placement of the tabs.
 	 * Valid values are 'above', 'below', 'left' and 'right'.
 	 */
 	public $placement;
+
 	/**
 	 * @var array the tab configuration.
 	 */
@@ -43,29 +45,32 @@ class TbWizard extends CWidget
 	 * @var boolean indicates whether to stack navigation items.
 	 */
 	public $stacked = false;
-	/**
+
 	/**
 	 * @var boolean whether to encode item labels.
 	 */
 	public $encodeLabel = true;
+
 	/**
 	 * @var string[] the Javascript event handlers.
 	 */
 	public $events = array();
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
+
 	/**
 	 * @var array the JS options for the bootstrap wizard plugin
 	 */
 	public $options = array();
-	
+
 	/**
 	 * @var boolean Add tabs navbar to the main tab navigation
 	 */
 	public $addTabsNavBar = false;
-	
+
 	/**
 	 * @var string Pager HTML code
 	 */
@@ -73,12 +78,12 @@ class TbWizard extends CWidget
 				<li class="previous first" style="display:none;"><a href="#">First</a></li>
 				<li class="previous"><a href="#">Previous</a></li>
 				<li class="next last" style="display:none;"><a href="#">Last</a></li>
-			  	<li class="next"><a href="#">Next</a></li>
+				<li class="next"><a href="#">Next</a></li>
 			</ul>';
-	
+
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -105,7 +110,7 @@ class TbWizard extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Run this widget.
 	 */
 	public function run()
@@ -115,7 +120,7 @@ class TbWizard extends CWidget
 		$items = $this->normalizeTabs($this->tabs, $content);
 
 		ob_start();
-		if($this->addTabsNavBar) {
+		if ($this->addTabsNavBar) {
 			echo '<div class="navbar"><div class="navbar-inner">';
 		}
 		$this->controller->widget('bootstrap.widgets.TbMenu', array(
@@ -124,7 +129,7 @@ class TbWizard extends CWidget
 			'encodeLabel'=>$this->encodeLabel,
 			'items'=>$items,
 		));
-		if($this->addTabsNavBar) {
+		if ($this->addTabsNavBar) {
 			echo '</div></div>';
 		}
 		$tabs = ob_get_clean();
@@ -144,12 +149,12 @@ class TbWizard extends CWidget
 		$cs = Yii::app()->getClientScript();
 		Yii::app()->bootstrap->registerAssetJs('jquery.bootstrap.wizard.js');
 		// Override options
-		if($this->type && !isset($this->options['class'])) {
+		if ($this->type && !isset($this->options['class'])) {
 			$this->options['class'] = $this->type;
 		}
-		
+
 		$options = CJavaScript::encode($this->options);
-		
+
 		$cs->registerScript(__CLASS__.'#'.$id, "jQuery('#{$id}').bootstrapWizard({$options});");
 
 		foreach ($this->events as $name => $handler)
@@ -161,9 +166,9 @@ class TbWizard extends CWidget
 
 	/**
 	 *### .normalizeTabs()
-   *
+	 *
 	 * Normalizes the tab configuration.
-   *
+	 *
 	 * @param array $tabs the tab configuration
 	 * @param array $panes a reference to the panes array
 	 * @param integer $i the current index
@@ -221,13 +226,10 @@ class TbWizard extends CWidget
 					$paneOptions['class'] = $classes;
 
 				$panes[] = CHtml::tag('div', $paneOptions, $content);
-
 				$i++; // increment the tab-index
 			}
-
 			$items[] = $item;
 		}
-
 		return $items;
 	}
 }

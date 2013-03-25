@@ -19,14 +19,17 @@ class TbHeroUnit extends CWidget
 	 * @var string the heading text.
 	 */
 	public $heading;
+    
 	/**
 	 * @var boolean indicates whether to encode the heading.
 	 */
 	public $encodeHeading = true;
+    
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
+    
 	/**
 	 * @var array the HTML attributes for the heading element.
 	 * @since 1.0.0
@@ -34,8 +37,8 @@ class TbHeroUnit extends CWidget
 	public $headingOptions = array();
 
 	/**
-   *### .init()
-   *
+	 *### .init()
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -55,8 +58,8 @@ class TbHeroUnit extends CWidget
 	}
 
 	/**
-   *### .run()
-   *
+	 *### .run()
+	 *
 	 * Runs the widget.
 	 */
 	public function run()

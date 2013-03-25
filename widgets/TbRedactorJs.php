@@ -14,19 +14,23 @@ class TbRedactorJS extends CInputWidget
 	 * Supports: de, en, fr, lv, pl, pt_br, ru, ua, hu, bg
 	 */
 	public $lang = 'en';
+
 	/**
 	 * Editor options that will be passed to the editor
 	 */
 	public $editorOptions = array();
+
 	/**
 	 * Debug mode
 	 * Used to publish full js file instead of min version
 	 */
 	public $debugMode = false;
+
 	/**
 	 * Editor width
 	 */
 	public $width = '100%';
+
 	/**
 	 * Editor height
 	 */
@@ -37,7 +41,6 @@ class TbRedactorJS extends CInputWidget
 	 */
 	public function run()
 	{
-
 		list($name, $id) = $this->resolveNameID();
 
 		$this->registerClientScript($id);
@@ -45,34 +48,28 @@ class TbRedactorJS extends CInputWidget
 		$this->htmlOptions['id'] = $id;
 
 		if (!array_key_exists('style', $this->htmlOptions))
-		{
 			$this->htmlOptions['style'] = "width:{$this->width};height:{$this->height};";
-		}
 		// Do we have a model?
 		if ($this->hasModel())
-		{
-			$html = CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
-		} else
-		{
-			$html = CHtml::textArea($name, $this->value, $this->htmlOptions);
-		}
-		echo $html;
+			echo CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
+		else
+			echo CHtml::textArea($name, $this->value, $this->htmlOptions);
 	}
 
 	/**
 	 * Register required script files
-	 * @param $id
+	 * @param integer $id
 	 */
 	public function registerClientScript($id)
 	{
 		Yii::app()->bootstrap->registerAssetCss('redactor.css');
 		Yii::app()->bootstrap->registerAssetJs('redactor.min.js');
-		
-    if(isset($this->editorOptions['lang']) && $this->editorOptions['lang'] != 'en')
-    {
-       $this->lang = $this->editorOptions['lang'];
-       Yii::app()->bootstrap->registerAssetJs('locales/redactor.'.$this->lang.'.js');
-    }
+
+		if (isset($this->editorOptions['lang']) && $this->editorOptions['lang'] != 'en')
+		{
+			$this->lang = $this->editorOptions['lang'];
+			Yii::app()->bootstrap->registerAssetJs('locales/redactor.'.$this->lang.'.js');
+		}
 
 		if (isset($this->editorOptions['plugins']))
 		{
@@ -84,9 +81,6 @@ class TbRedactorJS extends CInputWidget
 		}
 
 		$options = CMap::mergeArray($this->editorOptions, array('lang' => $this->lang));
-
 		Yii::app()->bootstrap->registerRedactor('#'.$id, $options);
 	}
 }
-
-?>

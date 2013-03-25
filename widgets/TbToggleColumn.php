@@ -115,7 +115,7 @@ class TbToggleColumn extends TbDataColumn
 	 * <pre>
 	 *  array(
 	 *     class'=>'TbToggleColumn',
-	 *     'afterToggle'=>'function(success,data){ if(success) alert("Toggled successfuly"); }',
+	 *     'afterToggle'=>'function(success,data){ if (success) alert("Toggled successfuly"); }',
 	 *  ),
 	 * </pre>
 	 */
@@ -125,6 +125,7 @@ class TbToggleColumn extends TbDataColumn
 	 * @var string suffix substituted to a name class of the tag <a>
 	 */
 	public $uniqueClassSuffix = '';
+
 	/**
 	 * @var array the configuration for toggle button.
 	 */
@@ -140,7 +141,6 @@ class TbToggleColumn extends TbDataColumn
 			throw new CException(Yii::t('zii', '"{attribute}" attribute cannot be empty.', array('{attribute}'=>"name")));
 
 		$this->initButton();
-
 		$this->registerClientScript();
 	}
 
@@ -169,7 +169,7 @@ class TbToggleColumn extends TbDataColumn
 		} else
 			$csrf = '';
 
-		if($this->afterToggle===null)
+		if ($this->afterToggle===null)
 			$this->afterToggle='function(){}';
 
 		$this->button['click'] = "js:
@@ -220,7 +220,7 @@ function() {
 		$button['icon'] = $checked === null ? $this->emptyIcon : ($checked ? $this->checkedIcon : $this->uncheckedIcon);
 		$button['url'] = isset($button['url']) ? $this->evaluateExpression($button['url'], array('data' => $data, 'row' => $row)) : '#';
 
-		if(!$this->displayText)
+		if (!$this->displayText)
 		{
 			$button['htmlOptions']['title'] = $this->getButtonLabel($checked);
 			$button['htmlOptions']['rel'] = 'tooltip';

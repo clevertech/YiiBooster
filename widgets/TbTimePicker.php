@@ -10,6 +10,9 @@
  */
 class TbTimePicker extends CInputWidget
 {
+	/**
+	 * @var TbActiveForm
+	 */
 	public $form;
 
 	/**
@@ -62,7 +65,7 @@ class TbTimePicker extends CInputWidget
 
 		if ($this->hasModel())
 		{
-			if($this->form)
+			if ($this->form)
 				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 			else
 				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
@@ -75,7 +78,7 @@ class TbTimePicker extends CInputWidget
 
 	/**
 	 * Registers required javascript files
-	 * @param $id
+	 * @param string $id
 	 */
 	public function registerClientScript($id)
 	{
