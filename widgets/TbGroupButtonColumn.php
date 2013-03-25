@@ -40,7 +40,15 @@ class TbGroupButtonColumn extends CButtonColumn
 		else if (!preg_match('/[^A-z\-]btn[^A-z\-]/', $options['class']))
 			$options['class'] = 'btn '.$options['class'];
 
-        echo CHtml::link($label, $url, $options);
+        if (isset($button['icon']))
+        {
+            if (strpos($button['icon'], 'icon') === false)
+                $button['icon'] = 'icon-'.implode(' icon-', explode(' ', $button['icon']));
+
+            echo CHtml::link('<i class="'.$button['icon'].'"></i>', $url, $options);
+        }
+        else
+            echo CHtml::link($label, $url, $options);
 	}
 
     /**
