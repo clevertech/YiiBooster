@@ -37,6 +37,7 @@ Senior Web Developer
 - **(enh)** Add empty (null) value display for TbToggleColumn ("icon-question-sign" icon with "Not Set" label) (magefad)
 - **(fix)** Fixed typeAheadField #396 (magefad)
 - **(fix)** StickyTableHeader issue dynamic cell width #338, updated js, added compressed js (magefad)
+- **(fix)** Keep document title when HTML5 history API is enabled (nevkontakte)
 
 ### YiiBooster version 1.0.5
 
