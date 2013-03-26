@@ -572,5 +572,4 @@ class TbInputVertical extends TbInput
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 	}
-
 }

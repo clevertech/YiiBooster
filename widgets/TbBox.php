@@ -72,7 +72,7 @@ class TbBox extends CWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Widget initialization
 	 */
 	public function init()
@@ -104,7 +104,7 @@ class TbBox extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Widget run - used for closing procedures
 	 */
 	public function run()
@@ -115,7 +115,7 @@ class TbBox extends CWidget
 
 	/**
 	 *### .renderHeader()
-   *
+	 *
 	 * Renders the header of the box with the header control (button to show/hide the box)
 	 */
 	public function renderHeader()
@@ -128,21 +128,18 @@ class TbBox extends CWidget
 				$this->title = '<h3>' . $this->title . '</h3>';
 
 				if ($this->headerIcon)
-				{
 					$this->title = '<i class="' . $this->headerIcon . '"></i>' . $this->title;
-				}
 
 				echo $this->title;
 				$this->renderButtons();
 			}
-
 			echo CHtml::closeTag('div');
 		}
 	}
 
 	/**
 	 *### .renderButtons()
-   *
+	 *
 	 * Renders a header buttons to display the configured actions
 	 */
 	public function renderButtons()
@@ -152,7 +149,7 @@ class TbBox extends CWidget
 
 		echo '<div class="bootstrap-toolbar pull-right">';
 
-		if(!empty($this->headerButtons) && is_array($this->headerButtons))
+		if (!empty($this->headerButtons) && is_array($this->headerButtons))
 		{
 			foreach($this->headerButtons as $button)
 			{
@@ -160,10 +157,10 @@ class TbBox extends CWidget
 				$button = $options['class'];
 				unset($options['class']);
 
-				if(strpos($button, 'TbButton') === false)
+				if (strpos($button, 'TbButton') === false)
 					throw new CException('message');
 
-				if(!isset($options['htmlOptions']))
+				if (!isset($options['htmlOptions']))
 					$options['htmlOptions'] = array();
 
 				$class = isset($options['htmlOptions']['class']) ? $options['htmlOptions']['class'] : '';
@@ -178,7 +175,7 @@ class TbBox extends CWidget
 
 	/*
 	 *### .renderContentBegin()
-   *
+	 *
 	 * Renders the opening of the content element and the optional content
 	 */
 	public function renderContentBegin()
@@ -190,7 +187,7 @@ class TbBox extends CWidget
 
 	/*
 	 *### .renderContentEnd()
-   *
+	 *
 	 * Closes the content element
 	 */
 	public function renderContentEnd()
@@ -200,12 +197,11 @@ class TbBox extends CWidget
 
 	/**
 	 *### .registerClientScript()
-   *
+	 *
 	 * Registers required script files (CSS in this case)
 	 */
 	public function registerClientScript()
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-box.css');
-
 	}
 }

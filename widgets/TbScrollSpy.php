@@ -18,22 +18,25 @@ class TbScrollSpy extends CWidget
 	 * @var string the CSS selector for the scrollspy element. Defaults to 'body'.
 	 */
 	public $selector = 'body';
+
 	/**
 	 * @var string the CSS selector for the spying element.
 	 */
 	public $target;
+
 	/**
 	 * @var integer the scroll offset (in pixels).
 	 */
 	public $offset;
+
 	/**
 	 * @var array string[] the Javascript event handlers.
 	 */
 	public $events = array();
 
 	/**
-   *### .run()
-   *
+	 *### .run()
+	 *
 	 * Runs the widget.
 	 */
 	public function run()

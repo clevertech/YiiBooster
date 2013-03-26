@@ -46,7 +46,7 @@ class TbSelect2 extends CInputWidget
    */
   public function init()
   {
-    if(empty($this->data) && $this->asDropDownList === true)
+    if (empty($this->data) && $this->asDropDownList === true)
       throw new CException(Yii::t('zii', '"data" attribute cannot be blank'));
   }
 
@@ -61,7 +61,7 @@ class TbSelect2 extends CInputWidget
 
     if ($this->hasModel())
     {
-      if($this->form)
+      if ($this->form)
         echo $this->asDropDownList?
           $this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
           $this->form->hiddenField($this->model, $this->attribute, $this->htmlOptions);

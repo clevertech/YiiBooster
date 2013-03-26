@@ -12,11 +12,11 @@ class TbBadge extends CWidget
 	/*
 	 * Valid badge types.
 	 */
-	const TYPE_SUCCESS = 'success';
-	const TYPE_WARNING = 'warning';
+	const TYPE_SUCCESS   = 'success';
+	const TYPE_WARNING   = 'warning';
 	const TYPE_IMPORTANT = 'important';
-	const TYPE_INFO = 'info';
-	const TYPE_INVERSE = 'inverse';
+	const TYPE_INFO      = 'info';
+	const TYPE_INVERSE   = 'inverse';
 
 	/**
 	 * @var string the badge type.

@@ -24,18 +24,20 @@ class TbTabs extends CWidget
 
 	/**
 	 * @var string the type of tabs to display.
-   *
-   * Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
+	 *
+	 * Defaults to 'tabs'. Valid values are 'tabs' and 'pills'.
 	 * Please not that Javascript pills are not fully supported in Bootstrap yet!
 	 * @see TbMenu::$type
 	 */
 	public $type = TbMenu::TYPE_TABS;
+
 	/**
 	 * @var string the placement of the tabs.
-   *
+	 *
 	 * Valid values are 'above', 'below', 'left' and 'right'.
 	 */
 	public $placement;
+
 	/**
 	 * @var array the tab configuration.
 	 */
@@ -45,14 +47,17 @@ class TbTabs extends CWidget
 	 * @var boolean indicates whether to stack navigation items.
 	 */
 	public $stacked = false;
+
 	/**
 	 * @var boolean whether to encode item labels.
 	 */
 	public $encodeLabel = true;
+
 	/**
 	 * @var string[] the Javascript event handlers.
 	 */
 	public $events = array();
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
@@ -60,7 +65,7 @@ class TbTabs extends CWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -87,7 +92,7 @@ class TbTabs extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Run this widget.
 	 */
 	public function run()
@@ -128,9 +133,9 @@ class TbTabs extends CWidget
 
 	/**
 	 *### .normalizeTabs()
-   *
+	 *
 	 * Normalizes the tab configuration.
-   *
+	 *
 	 * @param array $tabs the tab configuration
 	 * @param array $panes a reference to the panes array
 	 * @param integer $i the current index
@@ -196,7 +201,6 @@ class TbTabs extends CWidget
 
 			$items[] = $item;
 		}
-
 		return $items;
 	}
 }

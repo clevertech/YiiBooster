@@ -10,14 +10,16 @@ class TbDatePicker extends CInputWidget
 {
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
-   * This attribute is set to the form that renders the widget
+	 * This attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
 	 */
 	public $form;
+
 	/**
 	 * @var array the options for the Bootstrap JavaScript plugin.
 	 */
 	public $options = array();
+
 	/**
 	 * @var string[] the JavaScript event handlers.
 	 */
@@ -25,7 +27,7 @@ class TbDatePicker extends CInputWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -45,7 +47,7 @@ class TbDatePicker extends CInputWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Runs the widget.
 	 */
 	public function run()
@@ -54,7 +56,7 @@ class TbDatePicker extends CInputWidget
 
 		if ($this->hasModel())
 		{
-			if($this->form)
+			if ($this->form)
 				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 			else
 				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
@@ -77,7 +79,7 @@ class TbDatePicker extends CInputWidget
 
 	/**
 	 *### .registerClientScript()
-   *
+	 *
 	 * Registers required client script for bootstrap datepicker. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
 	 */
@@ -93,9 +95,7 @@ class TbDatePicker extends CInputWidget
 		{
 			$file = 'locales/bootstrap-datepicker.'.$this->options['language'].'.js';
 			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets').'/js/'.$file))
-			{
 				Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.'.$this->options['language'].'.js', CClientScript::POS_END);
-			}
 		}
 	}
 }

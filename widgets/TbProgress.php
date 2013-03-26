@@ -28,22 +28,27 @@ class TbProgress extends CWidget
 	 * @var boolean indicates whether the bar is striped.
 	 */
 	public $striped = false;
+
 	/**
 	 * @var boolean indicates whether the bar is animated.
 	 */
 	public $animated = false;
+
 	/**
 	 * @var integer the amount of progress in percent.
 	 */
 	public $percent = 0;
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
+
 	/**
 	 * @var string div content
 	 */
 	public $content;
+
 	/**
 	 * @var array $stacked set to an array of progress bar values to display stacked progress bars
 	 * <pre>
@@ -57,23 +62,21 @@ class TbProgress extends CWidget
 	public $stacked;
 
 	/**
-   *### .init()
-   *
+	 *### .init()
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
 	{
 		$classes = array('progress');
-		if(empty($this->stacked))
+		if (empty($this->stacked))
 		{
 			$validTypes = array(self::TYPE_INFO, self::TYPE_SUCCESS, self::TYPE_WARNING, self::TYPE_DANGER);
 
 			if (isset($this->type) && in_array($this->type, $validTypes))
 				$classes[] = 'progress-'.$this->type;
-
 			if ($this->striped)
 				$classes[] = 'progress-striped';
-
 			if ($this->animated)
 				$classes[] = 'active';
 
@@ -94,8 +97,8 @@ class TbProgress extends CWidget
 	}
 
 	/**
-   *### .run()
-   *
+	 *### .run()
+	 *
 	 * Runs the widget.
 	 * @since  9/21/12 8:13 PM  antonio ramirez <antonio@clevertech.biz>
 	 * Updated to use stacked progress bars
@@ -103,7 +106,7 @@ class TbProgress extends CWidget
 	public function run()
 	{
 		echo CHtml::openTag('div', $this->htmlOptions);
-		if(empty($this->stacked))
+		if (empty($this->stacked))
 		{
 			echo '<div class="bar" style="width: '.$this->percent.'%;">'.$this->content.'</div>';
 		}

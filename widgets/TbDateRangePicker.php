@@ -15,7 +15,7 @@ class TbDateRangePicker extends CInputWidget
 {
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
-   * this attribute is set to the form that renders the widget
+	 * this attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
 	 */
 	public $form;
@@ -29,10 +29,12 @@ class TbDateRangePicker extends CInputWidget
 	 * @var string JS Callback for Daterange picker
 	 */
 	public $callback;
+
 	/**
 	 * @var array Options to be passed to daterange picker
 	 */
 	public $options = array();
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
@@ -40,7 +42,7 @@ class TbDateRangePicker extends CInputWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -50,39 +52,37 @@ class TbDateRangePicker extends CInputWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Runs the widget.
 	 */
 	public function run()
 	{
-		if($this->selector)
-		{
+		if ($this->selector)
 			Yii::app()->bootstrap->registerDateRangePlugin($this->selector, $this->options, $this->callback);
-		}
 		else
 		{
 			list($name, $id) = $this->resolveNameID();
-	
+
 			if ($this->hasModel())
 			{
 				if ($this->form)
 					echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 				else
 					echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
-	
+
 			} 
 			else
 				echo CHtml::textField($name, $this->value, $this->htmlOptions);
-			
+
 			$this->setLocaleSettings();
 			Yii::app()->bootstrap->registerDateRangePlugin('#' . $id, $this->options, $this->callback);	
 		}
-		
+
 	}
-	
+
 	/**
 	 *### .setLocaleSettings()
-   *
+	 *
 	 * If user did not provided the names of weekdays and months in $this->options['locale']
 	 *  (which he should not care about anyway)
 	 *  then we populate this names from Yii's locales database.
@@ -94,10 +94,10 @@ class TbDateRangePicker extends CInputWidget
 		$this->setDaysOfWeekNames();
 		$this->setMonthNames();
 	}
-	
+
 	/**
 	 *### .setDaysOfWeekNames()
-   */
+	 */
 	private function setDaysOfWeekNames()
 	{
 		if (empty($this->options['locale']['daysOfWeek']))
@@ -106,7 +106,7 @@ class TbDateRangePicker extends CInputWidget
 
 	/**
 	 *### .setMonthNames()
-   */
+	 */
 	private function setMonthNames()
 	{
 		if (empty($this->options['locale']['monthNames']))
@@ -115,7 +115,7 @@ class TbDateRangePicker extends CInputWidget
 
 	/**
 	 *### .registerClientScript()
-   *
+	 *
 	 * Registers required css js files
 	 */
 	public function registerClientScript()

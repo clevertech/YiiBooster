@@ -19,19 +19,22 @@ class TbPager extends CLinkPager
 
 	/**
 	 * @var string the pager alignment. 
-   * Valid values are 'centered' and 'right'.
+	 * Valid values are 'centered' and 'right'.
 	 */
 	public $alignment;
+
 	/**
 	 * @var string the text shown before page buttons.
 	 * Defaults to an empty string, meaning that no header will be displayed.
 	 */
 	public $header = '';
+
 	/**
 	 * @var string the URL of the CSS file used by this pager.
 	 * Defaults to false, meaning that no CSS will be included.
 	 */
 	public $cssFile = false;
+
 	/**
 	 * @var boolean whether to display the first and last items.
 	 */
@@ -39,7 +42,7 @@ class TbPager extends CLinkPager
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the pager by setting some default property values.
 	 */
 	public function init()
@@ -71,7 +74,7 @@ class TbPager extends CLinkPager
 
 	/**
 	 *### .createPageButtons()
-   *
+	 *
 	 * Creates the page buttons.
 	 * @return array a list of page buttons (in HTML code).
 	 */
@@ -115,10 +118,10 @@ class TbPager extends CLinkPager
 
 	/**
 	 *### .createPageButton()
-   *
+	 *
 	 * Creates a page button.
 	 * You may override this method to customize the page buttons.
-   *
+	 *
 	 * @param string $label the text label for the button
 	 * @param integer $page the page number
 	 * @param string $class the CSS class for the page button. This could be 'page', 'first', 'last', 'next' or 'previous'.
