@@ -38,6 +38,7 @@ Senior Web Developer
 - **(fix)** Fixed typeAheadField #396 (magefad)
 - **(fix)** StickyTableHeader issue dynamic cell width #338, updated js, added compressed js (magefad)
 - **(fix)** Keep document title when HTML5 history API is enabled (nevkontakte)
+- **(fix)** Fixed wrong behavior of TbJsonGridView when doing AJAX updates like row deletion when there is pagination (nevkontakte)
 
 ### YiiBooster version 1.0.5
 
