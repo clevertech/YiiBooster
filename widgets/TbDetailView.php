@@ -24,6 +24,7 @@ class TbDetailView extends CDetailView
 	 * Valid values are 'striped', 'bordered' and/or 'condensed'.
 	 */
 	public $type = array(self::TYPE_STRIPED, self::TYPE_CONDENSED);
+    
 	/**
 	 * @var string the URL of the CSS file used by this detail view.
 	 * Defaults to false, meaning that no CSS will be included.
@@ -32,7 +33,7 @@ class TbDetailView extends CDetailView
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()

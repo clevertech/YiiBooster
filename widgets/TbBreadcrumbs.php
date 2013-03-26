@@ -21,8 +21,8 @@ class TbBreadcrumbs extends CBreadcrumbs
 	public $separator = '/';
 
 	/**
-   *### .init()
-   *
+	 *### .init()
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -37,10 +37,10 @@ class TbBreadcrumbs extends CBreadcrumbs
 	}
 
 	/**
-   *### .run()
-   *
+	 *### .run()
+	 *
 	 * Renders the content of the widget.
-   *
+	 *
 	 * @throws CException
 	 */
 	public function run()
@@ -75,10 +75,10 @@ class TbBreadcrumbs extends CBreadcrumbs
 	}
 
 	/**
-   *### .renderItem()
-   *
+	 *### .renderItem()
+	 *
 	 * Renders a single breadcrumb item.
-   *
+	 *
 	 * @param string $content the content.
 	 * @param boolean $active whether the item is active.
 	 * @return string the markup.

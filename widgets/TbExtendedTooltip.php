@@ -58,7 +58,7 @@ class TbExtendedTooltip extends CWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Widget's initialization
 	 * @throws CException
 	 */
@@ -72,7 +72,7 @@ class TbExtendedTooltip extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Widget's run
 	 */
 	public function run()
@@ -83,23 +83,20 @@ class TbExtendedTooltip extends CWidget
 
 	/**
 	 *### .renderContent()
-   *
+	 *
 	 * Renders the HTML tag element that renders
 	 */
 	protected function renderContent()
 	{
 		echo CHtml::openTag('span', array('rel' => 'editable-tooltip', 'title' => $this->getTooltip($this->key), 'name' => $this->key));
 		if (!$this->editable)
-		{
-			// the bootstrap-editable-tooltip plugin, renders the icon automatically
-			echo '<i class="icon-info-sign"></i>';
-		}
+			echo '<i class="icon-info-sign"></i>';// the bootstrap-editable-tooltip plugin, renders the icon automatically
 		echo '</span>';
 	}
 
 	/**
 	 *### .registerClientScript()
-   *
+	 *
 	 * Registers the
 	 */
 	protected function registerClientScript()
@@ -110,10 +107,8 @@ class TbExtendedTooltip extends CWidget
 
 		// if not editable, just render the tooltip
 		if (!$this->editable)
-		{
-			// not editable, just make the tooltip
-			$js = "$('span[name=\"{$this->key}\"]').tooltip();";
-		} else
+			$js = "$('span[name=\"{$this->key}\"]').tooltip();";// not editable, just make the tooltip
+		else
 		{
 			// editable, make use of bootstrap-editable-tooltip plugin
 			Yii::app()->bootstrap->registerAssetCss('bootstrap-editable-tooltip.css');
@@ -131,10 +126,10 @@ class TbExtendedTooltip extends CWidget
 
 	/**
 	 *### .getTooltip()
-   *
+	 *
 	 * Returns the tooltip stored at the database.
-   *
-	 * @param $key
+	 *
+	 * @param string $key
 	 * @return mixed|string emptyTool
 	 */
 	protected function getTooltip($key)
@@ -156,13 +151,14 @@ class TbExtendedTooltip extends CWidget
 
 	/**
 	 *### .getDbConnection()
-   *
+	 *
 	 * Returns the currently active database connection.
 	 * By default, the 'db' application component will be returned and activated.
 	 * You can call {@link setDbConnection} to switch to a different database connection.
 	 * Methods such as {@link insert}, {@link createTable} will use this database connection
 	 * to perform DB queries.
-   *
+	 *
+	 * @throws CException
 	 * @return CDbConnection the currently active database connection
 	 */
 	protected function getDbConnection()
@@ -178,7 +174,7 @@ class TbExtendedTooltip extends CWidget
 
 	/**
 	 *### .createTooltipsTable()
-   *
+	 *
 	 * Creates the database table to store all edited tooltips
 	 */
 	protected function createTooltipsTable()

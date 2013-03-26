@@ -23,18 +23,21 @@ class TbMenu extends TbBaseMenu
 
 	/**
 	 * @var string the menu type.
-   *
+	 *
 	 * Valid values are 'tabs', 'pills', or 'list'.
 	 */
 	public $type;
+
 	/**
 	 * @var string|array the scrollspy target or configuration.
 	 */
 	public $scrollspy;
+
 	/**
 	 * @var boolean indicates whether the menu should appear vertically stacked.
 	 */
 	public $stacked = false;
+
 	/**
 	 * @var boolean indicates whether dropdowns should be dropups instead.
 	 */
@@ -42,7 +45,7 @@ class TbMenu extends TbBaseMenu
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -80,9 +83,9 @@ class TbMenu extends TbBaseMenu
 
 	/**
 	 *### .getDividerCssClass()
-   *
+	 *
 	 * Returns the divider css class.
-   *
+	 *
 	 * @return string the class name
 	 */
 	public function getDividerCssClass()
@@ -92,9 +95,9 @@ class TbMenu extends TbBaseMenu
 
 	/**
 	 *### .getDropdownCssClass()
-   *
+	 *
 	 * Returns the dropdown css class.
-   *
+	 *
 	 * @return string the class name
 	 */
 	public function getDropdownCssClass()
@@ -104,9 +107,9 @@ class TbMenu extends TbBaseMenu
 
 	/**
 	 *### .isVertical()
-   *
+	 *
 	 * Returns whether this is a vertical menu.
-   *
+	 *
 	 * @return boolean the result
 	 */
 	public function isVertical()

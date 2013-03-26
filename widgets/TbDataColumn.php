@@ -78,23 +78,23 @@ class TbDataColumn extends CDataColumn
 	 */
 	protected function renderFilterCellContent()
 	{
-		if(is_string($this->filter))
+		if (is_string($this->filter))
 			echo $this->filter;
-		else if($this->filter!==false && $this->grid->filter!==null && $this->name!==null && strpos($this->name,'.')===false)
+		else if ($this->filter!==false && $this->grid->filter!==null && $this->name!==null && strpos($this->name,'.')===false)
 		{
-			if($this->filterInputOptions) {
+			if ($this->filterInputOptions) {
 				$filterInputOptions = $this->filterInputOptions;
-				if(empty($filterInputOptions['id'])) {
+				if (empty($filterInputOptions['id'])) {
 					$filterInputOptions['id'] = false;
 				}
 			} else
 				$filterInputOptions=array();
-			if(is_array($this->filter)) {
-				if(!isset($filterInputOptions['prompt'])) {
+			if (is_array($this->filter)) {
+				if (!isset($filterInputOptions['prompt'])) {
 					$filterInputOptions['prompt'] = '';
 				}
 				echo CHtml::activeDropDownList($this->grid->filter, $this->name, $this->filter, $filterInputOptions);
-			} else if($this->filter===null) {
+			} else if ($this->filter===null) {
 				echo CHtml::activeTextField($this->grid->filter, $this->name, $filterInputOptions);
 			}
 		}

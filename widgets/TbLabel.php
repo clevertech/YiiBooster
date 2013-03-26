@@ -22,18 +22,21 @@ class TbLabel extends CWidget
 
 	/**
 	 * @var string the label type.
-   *
+	 *
 	 * Valid types are 'success', 'warning', 'important', 'info' and 'inverse'.
 	 */
 	public $type;
+
 	/**
 	 * @var string the label text.
 	 */
 	public $label;
+
 	/**
 	 * @var boolean whether to encode the label.
 	 */
 	public $encodeLabel = true;
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
@@ -41,7 +44,7 @@ class TbLabel extends CWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -68,7 +71,7 @@ class TbLabel extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Runs the widget.
 	 */
 	public function run()

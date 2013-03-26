@@ -63,10 +63,8 @@ class TbRelationalColumn extends TbDataColumn
 	{
 		parent::init();
 
-		if(empty($this->url))
-		{
+		if (empty($this->url))
 			$this->url = Yii::app()->getRequest()->requestUri;
-		}
 
 		$this->registerClientScript();
 	}
@@ -99,20 +97,19 @@ class TbRelationalColumn extends TbDataColumn
 	/**
 	 * Helper function to return the primary key of the $data
 	 *  * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
-	 * @param $data
+	 * @param CActiveRecord $data
 	 * @return null|string
 	 */
 	protected function getPrimaryKey($data)
 	{
-		if($this->grid->dataProvider instanceof CActiveDataProvider)
+		if ($this->grid->dataProvider instanceof CActiveDataProvider)
 		{
 			$key=$this->grid->dataProvider->keyAttribute===null ? $data->getPrimaryKey() : $data->{$this->keyAttribute};
 			return is_array($key) ? implode(',',$key) : $key;
 		}
-		if($this->grid->dataProvider instanceof CArrayDataProvider)
-		{
+		if ($this->grid->dataProvider instanceof CArrayDataProvider)
 			return is_object($data) ? $data->{$this->grid->dataProvider->keyField} : $data[$this->grid->dataProvider->keyField];
-		}
+
 		return null;
 	}
 
@@ -122,19 +119,12 @@ class TbRelationalColumn extends TbDataColumn
 	public function registerClientScript()
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-relational.css');
-
+		/** @var $cs CClientScript */
 		$cs = Yii::app()->getClientScript();
-
-		if($this->afterAjaxUpdate!==null)
+		if ($this->afterAjaxUpdate!==null)
 		{
-			if((!$this->afterAjaxUpdate instanceof CJavaScriptExpression) && strpos($this->afterAjaxUpdate,'js:')!==0)
-			{
+			if ((!$this->afterAjaxUpdate instanceof CJavaScriptExpression) && strpos($this->afterAjaxUpdate,'js:')!==0)
 				$this->afterAjaxUpdate=new CJavaScriptExpression($this->afterAjaxUpdate);
-			}
-			else
-			{
-				$this->afterAjaxUpdate=$this->afterAjaxUpdate;
-			}
 		}
 		else
 			$this->afterAjaxUpdate = 'js:$.noop';
@@ -157,24 +147,24 @@ $(document).on('click','.{$this->cssClass}', function(){
 	var parent = that.parents('tr').eq(0);
 	var afterAjaxUpdate = {$afterAjaxUpdate};
 
-	if(status && status=='on'){return}
+	if (status && status=='on'){return}
 	that.data('status','on');
 
-	if(tr.length && !tr.is(':visible') && {$cache})
+	if (tr.length && !tr.is(':visible') && {$cache})
 	{
 		tr.slideDown();
 		that.data('status','off');
 		return;
-	}else if(tr.length && tr.is(':visible'))
+	}else if (tr.length && tr.is(':visible'))
 	{
 		tr.slideUp();
 		that.data('status','off');
 		return;
 	}
-	if(tr.length)
+	if (tr.length)
 	{
 		tr.find('td').html('{$loadingPic}');
-		if(!tr.is(':visible')){
+		if (!tr.is(':visible')){
 			tr.slideDown();
 		}
 	}
@@ -192,12 +182,12 @@ $(document).on('click','.{$this->cssClass}', function(){
 		url: '{$this->url}',
 		data: data,
 		success: function(data){
-		    tr.find('td').html(data);
-		    that.data('status','off');
-		    if($.isFunction(afterAjaxUpdate))
-		    {
-		        afterAjaxUpdate(tr,rowid,data);
-		    }
+			tr.find('td').html(data);
+			that.data('status','off');
+			if ($.isFunction(afterAjaxUpdate))
+			{
+				afterAjaxUpdate(tr,rowid,data);
+			}
 		},
 		error: function()
 		{

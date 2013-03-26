@@ -27,23 +27,28 @@ class TbNavbar extends CWidget
 	 * @since 1.0.0
 	 */
 	public $type;
+
 	/**
 	 * @var string the text for the brand.
 	 */
 	public $brand;
+
 	/**
 	 * @var string the URL for the brand link.
 	 */
 	public $brandUrl;
+
 	/**
 	 * @var array the HTML attributes for the brand link.
 	 */
 	public $brandOptions = array();
+
 	/**
 	 * @var array navigation items.
 	 * @since 0.9.8
 	 */
 	public $items = array();
+
 	/**
 	 * @var mixed fix location of the navbar if applicable.
 	 * Valid values are 'top' and 'bottom'. Defaults to 'top'.
@@ -51,15 +56,18 @@ class TbNavbar extends CWidget
 	 * @since 0.9.8
 	 */
 	public $fixed = self::FIXED_TOP;
+
 	/**
 	* @var boolean whether the nav span over the full width. Defaults to false.
 	* @since 0.9.8
 	*/
 	public $fluid = false;
+
 	/**
 	 * @var boolean whether to enable collapsing on narrow screens. Default to false.
 	 */
 	public $collapse = false;
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
@@ -67,7 +75,7 @@ class TbNavbar extends CWidget
 
 	/**
 	 *### .init()
-   *
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -108,7 +116,7 @@ class TbNavbar extends CWidget
 
 	/**
 	 *### .run()
-   *
+	 *
 	 * Runs the widget.
 	 */
 	public function run()
@@ -161,7 +169,7 @@ class TbNavbar extends CWidget
 
 	/**
 	 *### .getContainerCssClass()
-   *
+	 *
 	 * Returns the navbar container CSS class.
 	 * @return string the class
 	 */

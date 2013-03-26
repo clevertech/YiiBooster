@@ -23,7 +23,7 @@ class TbColorPicker extends CInputWidget
 
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
-   * this attribute is set to the form that renders the widget
+	 * this attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
 	 */
 	public $form;
@@ -32,6 +32,7 @@ class TbColorPicker extends CInputWidget
 	 * @var string the color format - hex | rgb | rgba. Defaults to 'hex'
 	 */
 	public $format = 'hex';
+
 	/**
 	 * @var string[] the JavaScript event handlers.
 	 * @see <http://www.eyecon.ro/bootstrap-colorpicker/> events section
@@ -52,8 +53,8 @@ class TbColorPicker extends CInputWidget
 	public $events = array();
 
 	/**
-   *### .run()
-   *
+	 *### .run()
+	 *
 	 * Widget's run function
 	 */
 	public function run()
@@ -71,18 +72,17 @@ class TbColorPicker extends CInputWidget
 				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 			else
 				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
-		} else
-		{
-			echo  CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
+		else
+			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 	}
 
 	/**
-   *### .registerClientScript()
-   *
+	 *### .registerClientScript()
+	 *
 	 * Registers required
-   *
-	 * @param $id
+	 *
+	 * @param string $id
 	 */
 	public function registerClientScript($id)
 	{

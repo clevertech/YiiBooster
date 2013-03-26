@@ -12,7 +12,7 @@ class TbCKEditor extends CInputWidget
 {
 	/**
 	 * @var TbActiveForm when created via TbActiveForm
-   * This attribute is set to the form that renders the widget
+	 * This attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
 	 */
 	public $form;
@@ -25,8 +25,8 @@ class TbCKEditor extends CInputWidget
 	public $editorOptions = array();
 
 	/**
-   *### .run()
-   *
+	 *### .run()
+	 *
 	 * Display editor
 	 */
 	public function run()
@@ -41,22 +41,21 @@ class TbCKEditor extends CInputWidget
 		// Do we have a model?
 		if ($this->hasModel())
 		{
-			if($this->form)
+			if ($this->form)
 				$html = $this->form->textArea($this->model, $this->attribute, $this->htmlOptions);
 			else
 				$html = CHtml::activeTextArea($this->model, $this->attribute, $this->htmlOptions);
-		} else
-		{
-			$html = CHtml::textArea($name, $this->value, $this->htmlOptions);
 		}
+		else
+			$html = CHtml::textArea($name, $this->value, $this->htmlOptions);
 		echo $html;
 	}
 
 	/**
-   *### .registerClientScript()
-   *
+	 *### .registerClientScript()
+	 *
 	 * Registers required javascript
-	 * @param $id
+	 * @param string $id
 	 */
 	public function registerClientScript($id)
 	{

@@ -12,6 +12,8 @@ Yii::import('bootstrap.widgets.TbDataColumn');
 
 /**
  * Bootstrap Zii grid view.
+ *
+ * @property CActiveDataProvider $dataProvider the data provider for the view.
  */
 class TbGridView extends CGridView
 {

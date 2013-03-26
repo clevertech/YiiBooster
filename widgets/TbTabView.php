@@ -41,7 +41,7 @@ class TbTabView extends TbTabs
     foreach ($tabs as $tab)
     {
       $hasActiveItem = isset($tab['active']) ? $tab['active'] : false;
-      if($hasActiveItem)
+      if ($hasActiveItem)
         break;
     }
     //---------------- end new -------------------
@@ -55,13 +55,13 @@ class TbTabView extends TbTabs
 
       //---------------- new -------------------
       //check first active
-      if(!$hasActiveItem && $i == 0)
+      if (!$hasActiveItem && $i == 0)
         $item['active'] = true;
 
       //title -> label
       if (isset($item['title']))
       {
-        if(!isset($item['label']))
+        if (!isset($item['label']))
           $item['label'] = $item['title'];
         unset($item['title']);
       }

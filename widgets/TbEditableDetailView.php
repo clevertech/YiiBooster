@@ -36,11 +36,6 @@ class TbEditableDetailView extends TbDetailView
         if (!$this->data instanceof CModel) {
             throw new CException('Property "data" should be of CModel class.');
         }
-
-        //set bootstrap css
-        /*if(yii::app()->editable->form === EditableConfig::FORM_BOOTSTRAP) {
-            $this->htmlOptions = array('class'=> 'table table-bordered table-striped table-hover');
-        }*/
         parent::init();
     }
 
@@ -54,7 +49,7 @@ class TbEditableDetailView extends TbDetailView
 
         if ($apply) {
             //ensure $options['editable'] is array
-            if(!isset($options['editable'])) $options['editable'] = array();
+            if (!isset($options['editable'])) $options['editable'] = array();
 
             //take common url if not defined for particular item and not related model
             if (!isset($options['editable']['url']) && strpos($options['name'], '.') === false) {
@@ -73,22 +68,20 @@ class TbEditableDetailView extends TbDetailView
             ));
 
             //if value in detailview options provided, set text directly (as value means text)
-            if(isset($options['value']) && $options['value'] !== null) {
+            if (isset($options['value']) && $options['value'] !== null) {
                 $editableOptions['text'] = $templateData['{value}'];
                 $editableOptions['encode'] = false;
             }
-
+            /** @var $widget TbEditableField */
             $widget = $this->controller->createWidget('TbEditableField', $editableOptions);
 
             //'apply' can be changed during init of widget (e.g. if related model and unsafe attribute)
-            if($widget->apply) {
+            if ($widget->apply) {
                 ob_start();
                 $widget->run();
                 $templateData['{value}'] = ob_get_clean();
             }
         }
-
         parent::renderItem($options, $templateData);
     }
-
 }

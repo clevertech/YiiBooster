@@ -61,7 +61,7 @@ class TbEditableColumn extends TbDataColumn
         ));
 
         //if value defined for column --> use it as element text
-        if(strlen($this->value)) {
+        if (strlen($this->value)) {
             ob_start();
             parent::renderDataCellContent($row, $data);
             $text = ob_get_clean();
@@ -69,12 +69,13 @@ class TbEditableColumn extends TbDataColumn
             $options['encode'] = false;
         }
 
+        /** @var $widget TbEditableField */
         $widget = $this->grid->controller->createWidget('TbEditableField', $options);
 
         //if editable not applied --> render original text
-        if(!$widget->apply) {
+        if (!$widget->apply) {
 
-           if(isset($text)) {
+           if (isset($text)) {
                echo $text;
            } else {
                parent::renderDataCellContent($row, $data);
@@ -114,12 +115,12 @@ class TbEditableColumn extends TbDataColumn
         $trigger = '$("#"+id).trigger("ajaxUpdate.yiiGridView");';
 
         //check if trigger already inserted by another column
-        if(strpos($this->grid->afterAjaxUpdate, $trigger) !== false) return;
+        if (strpos($this->grid->afterAjaxUpdate, $trigger) !== false) return;
 
         //inserting trigger
-        if(strlen($this->grid->afterAjaxUpdate)) {
+        if (strlen($this->grid->afterAjaxUpdate)) {
             $orig = $this->grid->afterAjaxUpdate;
-            if(strpos($orig, 'js:')===0) $orig = substr($orig,3);
+            if (strpos($orig, 'js:')===0) $orig = substr($orig,3);
             $orig = "\n($orig).apply(this, arguments);";
         } else {
             $orig = '';

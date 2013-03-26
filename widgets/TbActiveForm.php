@@ -298,8 +298,8 @@ class TbActiveForm extends CActiveForm
 	 *
 	 * Renders a WYSIWYG redactor editor
 	 *
-	 * @param $model
-	 * @param $attribute
+	 * @param CModel $model
+	 * @param string $attribute
 	 * @param array $htmlOptions
 	 * @return string
 	 */
@@ -313,8 +313,8 @@ class TbActiveForm extends CActiveForm
 	 *
 	 * Renders a WYSIWYG Markdown editor
 	 *
-	 * @param $model
-	 * @param $attribute
+	 * @param CModel $model
+	 * @param string $attribute
 	 * @param array $htmlOptions
 	 * @return string
 	 */
@@ -328,8 +328,8 @@ class TbActiveForm extends CActiveForm
 	 *
 	 * Renders a WYSIWYG bootstrap editor
 	 *
-	 * @param $model
-	 * @param $attribute
+	 * @param CModel $model
+	 * @param string $attribute
 	 * @param array $htmlOptions
 	 * @return string
 	 */
@@ -343,8 +343,8 @@ class TbActiveForm extends CActiveForm
 	 *
 	 * Renders a WYSIWYG  ckeditor
 	 *
-	 * @param $model
-	 * @param $attribute
+	 * @param CModel $model
+	 * @param string $attribute
 	 * @param array $htmlOptions
 	 * @return string
 	 */
@@ -426,12 +426,12 @@ class TbActiveForm extends CActiveForm
 	/**
 	 *### .dateRangeRow()
 	 *
-	 * @param $model
-	 * @param $attribute
+	 * @param CModel $model
+	 * @param string $attribute
 	 * @param array $htmlOptions addition HTML attributes. In order to pass initialization parameters to dateRange, you
 	 * need to set the HTML 'options' key with an array of configuration options.
-     * @return string
-     */
+	 * @return string
+	 */
 	public function dateRangeRow($model, $attribute, $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_DATERANGEPICKER, $model, $attribute, null, $htmlOptions);
@@ -461,8 +461,8 @@ class TbActiveForm extends CActiveForm
 	 *
 	 * Renders a select2 field row
 	 *
-	 * @param $model
-	 * @param $attribute
+	 * @param CModel $model
+	 * @param string $attribute
 	 * @param array $htmlOptions
 	 * @return string
 	 */
@@ -471,14 +471,14 @@ class TbActiveForm extends CActiveForm
 		return $this->inputRow(TbInput::TYPE_SELECT2, $model, $attribute, null, $htmlOptions);
 	}
 
-    /**
-     * Renders a typeAhead input row
-     * @param CModel $model the data model
-     * @param string $attribute the attribute
-     * @param array $widgetOptions
-     * @param array $htmlOptions additional HTML attributes
-     * @return string the generated row
-     */
+	/**
+	 * Renders a typeAhead input row
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $widgetOptions
+	 * @param array $htmlOptions additional HTML attributes
+	 * @return string the generated row
+	 */
 	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $htmlOptions = array())
 	{
 		return $this->inputRow(TbInput::TYPE_TYPEAHEAD, $model, $attribute, $widgetOptions, $htmlOptions);
@@ -552,33 +552,28 @@ class TbActiveForm extends CActiveForm
 			$button = array();
 			$button['label'] = $value;
 			$button['active'] = $active;
-			$button['htmlOptions'] = array(
-				'value' => $key,
-				'id' => $btnId,
-			);
+			$button['htmlOptions'] = array('value' => $key, 'id' => $btnId,);
 			$buttons[] = $button;
 
 			// event as ordinary input
 			$hiddenFieldName = get_class($model) . '[' . $attribute . '][]';
 			$hiddenFieldId = CHtml::getIdByName(get_class($model) . '[' . $attribute . '][' . $key . '][hidden]');
 			$scripts[] = "\$('#" . $btnId . "').click(function(){
-                if (\$('#" . $hiddenFieldId . "').length > 0)
-                {
-                	\$('#" . $hiddenFieldId . "').remove();
-                }
-                else
-                {
-                	var hidden = \$('<input type=\"hidden\">')
-                		.attr('id', '" . $hiddenFieldId . "')
-                		.attr('name', '" . $hiddenFieldName . "')
-                		.val('" . $key . "');
-                	hidden.appendTo(\$('#" . $btnId . "'));
-                }
-            });";
+				if (\$('#" . $hiddenFieldId . "').length > 0)
+				{
+					\$('#" . $hiddenFieldId . "').remove();
+				}
+				else
+				{
+					var hidden = \$('<input type=\"hidden\">')
+						.attr('id', '" . $hiddenFieldId . "')
+						.attr('name', '" . $hiddenFieldName . "')
+						.val('" . $key . "');
+					hidden.appendTo(\$('#" . $btnId . "'));
+				}
+			});";
 			if ($active)
-			{
 				echo CHtml::hiddenField($hiddenFieldName, $key, array('id' => $hiddenFieldId));
-			}
 		}
 
 		Yii::app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
@@ -649,8 +644,8 @@ class TbActiveForm extends CActiveForm
 
 			// event as ordinary input
 			$scripts[] = "\$('#" . $btnId . "').click(function(){
-                \$('#" . $hiddenFieldId . "').val('" . $key . "').trigger('change');
-            });";
+				\$('#" . $hiddenFieldId . "').val('" . $key . "').trigger('change');
+			});";
 		}
 
 		Yii::app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
@@ -682,35 +677,37 @@ class TbActiveForm extends CActiveForm
 			'model' => $model,
 			'attribute' => $attribute,
 			'mask' => $mask,
-			'htmlOptions'=> $htmlOptions
-			),true);
+			'htmlOptions' => $htmlOptions
+			), true);
 	}
 
-    /**
-     * Renders a type ahead field row
-     * @param CModel $model the data model
-     * @param string $attribute the attribute
-     * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
-     * @param array $htmlOptions additional HTML options.
-     * @throws CException
-     * @return string the generated typeahead field
-     * @since 1.0.6
-     */
-	public function typeAheadField($model,$attribute,$widgetOptions,$htmlOptions=array())
+	/**
+	 * Renders a type ahead field row
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
+	 * @param array $htmlOptions additional HTML options.
+	 * @throws CException
+	 * @return string the generated typeahead field
+	 * @since 1.0.6
+	 */
+	public function typeAheadField($model, $attribute, $widgetOptions, $htmlOptions = array())
 	{
-		if (!isset($widgetOptions['source'])) throw new CException(__CLASS__ . ': \'source\' parameter must be defined. ');
+		if (!isset($widgetOptions['source']))
+			throw new CException(__CLASS__ . ': \'source\' parameter must be defined. ');
 
 		$widgetOptions += array(
-							'items'=>4,
-						    'matcher'=>'js:function(item) {
-						        return ~item.toLowerCase().indexOf(this.query.toLowerCase());
-						    }');
+			'items'   => 4,
+			'matcher' => 'js:function(item) {
+								return ~item.toLowerCase().indexOf(this.query.toLowerCase());
+							}'
+		);
 
 		return Yii::app()->controller->widget('bootstrap.widgets.TbTypeahead', array(
-			'model'=>$model,
-			'attribute'=>$attribute,
-			'options'=>$widgetOptions,
-			'htmlOptions'=>$htmlOptions
+			'model' => $model,
+			'attribute' => $attribute,
+			'options' => $widgetOptions,
+			'htmlOptions' => $htmlOptions
 			),true);
 	}
 
@@ -762,7 +759,8 @@ class TbActiveForm extends CActiveForm
 		if ($checkbox && substr($name, -2) !== '[]')
 			$name .= '[]';
 
-		if(isset($htmlOptions['checkAll']))
+		$checkAllLast = '';
+		if (isset($htmlOptions['checkAll']))
 		{
 			$checkAllLabel = $htmlOptions['checkAll'];
 			$checkAllLast = isset($htmlOptions['checkAllLast']) && $htmlOptions['checkAllLast'];
@@ -801,7 +799,7 @@ class TbActiveForm extends CActiveForm
 			));
 		}
 
-		if(isset($checkAllLabel))
+		if (isset($checkAllLabel))
 		{
 			$htmlOptions['value']=1;
 			$itemId = $baseID.'_all';
@@ -813,12 +811,12 @@ class TbActiveForm extends CActiveForm
 				'{input}' => $option,
 				'{label}' => $label,
 			));
-			if($checkAllLast)
+			if ($checkAllLast)
 				$items[]=$item;
 			else
 				array_unshift($items,$item);
 			$name = strtr($name,array('['=>'\\[',']'=>'\\]'));
-			$js=<<<EOD
+			$js = <<<EOD
 $('#$itemId').click(function() {
 	$("input[name='$name']").prop('checked', this.checked);
 });
@@ -827,6 +825,7 @@ $("input[name='$name']").click(function() {
 });
 $('#$itemId').prop('checked', !$("input[name='$name']:not(:checked)").length);
 EOD;
+			/** @var $cs CClientScript */
 			$cs = Yii::app()->getClientScript();
 			$cs->registerCoreScript('jquery');
 			$cs->registerScript($itemId,$js);
@@ -918,10 +917,8 @@ EOD;
 		foreach ($optionNames as $name)
 		{
 			if (isset($htmlOptions[$name]))
-			{
 				$option[$name] = $htmlOptions[$name];
 				unset($htmlOptions[$name]);
-			}
 		}
 
 		if ($model instanceof CActiveRecord && !$model->isNewRecord)
@@ -937,6 +934,7 @@ EOD;
 
 			foreach ($model->getValidators($attributeName) as $validator)
 			{
+				/** @var $validator CValidator */
 				if ($validator->enableClientValidation)
 					if (($js = $validator->clientValidateAttribute($model, $attributeName)) != '')
 						$validators[] = $js;

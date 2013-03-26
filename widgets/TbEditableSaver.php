@@ -64,14 +64,16 @@ class TbEditableSaver extends CComponent
     * @var mixed
     */
     protected $changedAttributes = array();
-    
+
     /**
-   *### ._construct()
-   *
+     *### ._construct()
+     *
      * Constructor
      *
-     * @param mixed $modelName
-     * @return EditableBackend
+     * @param $modelClass
+     * @throws CException
+     * @internal param mixed $modelName
+     * @return \TbEditableSaver
      */
     public function __construct($modelClass)
     {
@@ -145,11 +147,10 @@ class TbEditableSaver extends CComponent
     }
 
     /**
-   *### .checkErros()
-   *
+     *### .checkErros()
+     *
      * errors as CHttpException
-     * @param $msg
-     * @throws CHttpException
+     * @internal param $msg
      */
     public function checkErrors()
     {
@@ -188,7 +189,7 @@ class TbEditableSaver extends CComponent
     public function setAttribute($name, $value)
     {
          $this->model->$name = $value;
-         if(!in_array($name, $this->changedAttributes)) {
+         if (!in_array($name, $this->changedAttributes)) {
              $this->changedAttributes[] = $name;
          }
     }      
