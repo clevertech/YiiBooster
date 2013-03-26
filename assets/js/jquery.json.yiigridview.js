@@ -268,6 +268,11 @@
                             $( '.' + settings.pagerClass, $grid ).hide();
                         }
 
+                        var url_params = $.deparam.querystring(data.url);
+                        delete url_params[settings.ajaxVar];
+                        $grid.find('.keys').attr('title', $.param.querystring(data.url.substr(0, data.url.indexOf('?')), url_params));
+
+                        data.pager.length ? $grid.find('.'+settings.pagerClass+' ul').jqotesub(settings.pagerTemplate, data.pager).show() : $grid.find('.' + settings.pagerClass).hide();
 
                         $.each(data.headers, function(){
                             var $header = $('#' + this.id );
