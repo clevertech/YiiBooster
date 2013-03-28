@@ -134,7 +134,15 @@ class TbNavbar extends CWidget
 		}
 
 		if ($this->brand !== false)
-			echo CHtml::openTag('a', $this->brandOptions).$this->brand.'</a>';
+		{
+			if ($this->brandUrl !== false)
+				echo CHtml::openTag('a', $this->brandOptions).$this->brand.'</a>';
+			else
+			{
+				unset($this->brandOptions['href']); // spans cannot have a href attribute
+				echo CHtml::openTag('span', $this->brandOptions).$this->brand.'</span>';
+			}
+		}
 
 		if ($this->collapse !== false)
 		{

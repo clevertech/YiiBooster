@@ -26,7 +26,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_RADIOLIST_INLINE      = 'radiobuttonlist_inline';
 	const TYPE_RADIOBUTTONGROUPSLIST = 'radiobuttongroupslist';
 	const TYPE_TEXTAREA              = 'textarea';
-	const TYPE_TEXT                  = 'textfield';
+	const TYPE_TEXT                  = 'text';
 	const TYPE_MASKEDTEXT            = 'maskedtextfield';
 	const TYPE_CAPTCHA               = 'captcha';
 	const TYPE_UNEDITABLE            = 'uneditable';
@@ -143,6 +143,7 @@ abstract class TbInput extends CInputWidget
 		if (!isset($this->type))
 			throw new CException(__CLASS__ . ': Failed to initialize widget! Input type is not set.');
 
+		// todo: move this logic elsewhere, it doesn't belong here ...
 		if ($this->type === self::TYPE_UNEDITABLE)
 		{
 			if (isset($this->htmlOptions['class']))
@@ -161,6 +162,12 @@ abstract class TbInput extends CInputWidget
 	 */
 	protected function processHtmlOptions()
 	{
+		if (isset($this->htmlOptions['label']))
+		{
+			$this->label = $this->htmlOptions['label'];
+			unset($this->htmlOptions['label']);
+		}
+
 		if (isset($this->htmlOptions['prepend']))
 		{
 			$this->prependText = $this->htmlOptions['prepend'];
@@ -184,7 +191,7 @@ abstract class TbInput extends CInputWidget
 			$this->label = $this->htmlOptions['label'];
 			unset($this->htmlOptions['label']);
 		}
-		
+
 		if (isset($this->htmlOptions['labelOptions']))
 		{
 			$this->labelOptions = $this->htmlOptions['labelOptions'];
@@ -286,14 +293,15 @@ abstract class TbInput extends CInputWidget
 				$this->textArea();
 				break;
 
+			case 'textfield': // backwards compatibility
 			case self::TYPE_TEXT:
 				$this->textField();
 				break;
-			
+
 			case self::TYPE_MASKEDTEXT:
 				$this->maskedTextField();
 				break;
-				
+
 			case self::TYPE_CAPTCHA:
 				$this->captcha();
 				break;

@@ -25,21 +25,21 @@ class TbGridView extends CGridView
 
 	/**
 	 * @var string|array the table type.
-	 * Valid values are 'striped', 'bordered', ' condensed' and/or 'hover'.
+	 * Valid values are 'striped', 'bordered', 'condensed' and/or 'hover'.
 	 */
 	public $type;
-    
+
 	/**
 	 * @var string the CSS class name for the pager container. Defaults to 'pagination'.
 	 */
 	public $pagerCssClass = 'pagination';
-    
+
 	/**
 	 * @var array the configuration for the pager.
 	 * Defaults to <code>array('class'=>'ext.bootstrap.widgets.TbPager')</code>.
 	 */
 	public $pager = array('class'=>'bootstrap.widgets.TbPager');
-    
+
 	/**
 	 * @var string the URL of the CSS file used by this grid view.
 	 * Defaults to false, meaning that no CSS will be included.
@@ -71,10 +71,10 @@ class TbGridView extends CGridView
 			if (is_string($this->type))
 				$this->type = explode(' ', $this->type);
 
-			$validTypes = array(self::TYPE_STRIPED, self::TYPE_BORDERED, self::TYPE_CONDENSED, self::TYPE_HOVER);
-
 			if (!empty($this->type))
 			{
+				$validTypes = array(self::TYPE_STRIPED, self::TYPE_BORDERED, self::TYPE_CONDENSED, self::TYPE_HOVER);
+
 				foreach ($this->type as $type)
 				{
 					if (in_array($type, $validTypes))
@@ -94,7 +94,7 @@ class TbGridView extends CGridView
 
 		$popover = Yii::app()->bootstrap->popoverSelector;
 		$tooltip = Yii::app()->bootstrap->tooltipSelector;
-		
+
 		$afterAjaxUpdate = "js:function() {
 			jQuery('.popover').remove();
 			jQuery('{$popover}').popover();
@@ -161,7 +161,7 @@ class TbGridView extends CGridView
 		$cnt = 1; $labels='';
 		foreach($this->columns as $column)
 		{
-            /** @var TbDataColumn $column */
+			/** @var TbDataColumn $column */
 			ob_start();
 			$column->renderHeaderCell();
 			$name = strip_tags(ob_get_clean());
