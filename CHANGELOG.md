@@ -44,8 +44,9 @@ Senior Web Developer
 - **(enh)** TbButtonGroup does not accept TbButton.dropdownOptions #149 (russ666)
 - **(enh)** Added GridView visual aid on hover for sorting (Wiseon3)
 - **(enh)** Updated daterangepicker plugin (magefad)
+- **(fix)** Corrected close link (with twitter bootstrap recommendations) bb53
 
-### YiiBooster version 1.0.5 
+### YiiBooster version 1.0.5
 
 - **(fix)** TbCarousel displayPrevAndNext set to false breaks the page (amosviedo)
 - **(enh)** Bootstrap upgrade to 2.2.1 (kazuo)

@@ -47,7 +47,7 @@ class TbAlert extends CWidget
 	 */
 	public $events = array();
 
-    /**
+	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
@@ -142,7 +142,7 @@ class TbAlert extends CWidget
 
 				// If `closeText` which is in effect now is `false` then do not show button.
 				if ($alert['closeText'] !== false)
-					echo '<a class="close" data-dismiss="alert">'.$alert['closeText'].'</a>';
+					echo '<a href="#" class="close" data-dismiss="alert">'.$alert['closeText'].'</a>';
 
 				echo Yii::app()->getComponent($this->userComponentId)->getFlash($type);
 				echo '</div>';
