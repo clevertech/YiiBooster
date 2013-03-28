@@ -49,6 +49,7 @@ Senior Web Developer
 - **(fix)** Button input, button submit added in TbButton
 - **(fix)** Fix missing close tags in TbCarousel
 - **(enh)** Added CONTAINER_PREFIX constant for html div container id
+- **(fix)** Added class "hide" to modal div
 
 ### YiiBooster version 1.0.5
 

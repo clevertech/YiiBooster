@@ -52,7 +52,7 @@ class TbModal extends CWidget
 		if ($this->autoOpen === false && !isset($this->options['show']))
 			$this->options['show'] = false;
 
-		$classes = array('modal');
+		$classes = array('modal hide');
 
 		if ($this->fade === true)
 			$classes[] = 'fade';
