@@ -48,6 +48,7 @@ Senior Web Developer
 - **(fix)** Fixed label association when input has a user-defined id attribute (fixes bb72)
 - **(fix)** Button input, button submit added in TbButton
 - **(fix)** Fix missing close tags in TbCarousel
+- **(enh)** Added CONTAINER_PREFIX constant for html div container id
 
 ### YiiBooster version 1.0.5
 
