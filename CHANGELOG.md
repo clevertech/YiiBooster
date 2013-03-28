@@ -43,6 +43,7 @@ Senior Web Developer
 - **(fix)** Added rowHtmlOptionsExpression support for TbExtendedGridView (xt99)
 - **(enh)** TbButtonGroup does not accept TbButton.dropdownOptions #149 (russ666)
 - **(enh)** Added GridView visual aid on hover for sorting (Wiseon3)
+- **(enh)** Updated daterangepicker plugin (magefad)
 
 ### YiiBooster version 1.0.5 
 
