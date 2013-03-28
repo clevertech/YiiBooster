@@ -484,17 +484,36 @@ class TbExtendedGridView extends TbGridView
 	 */
 	public function renderTableRow($row)
 	{
-		if ($this->rowCssClassExpression !== null)
+		$htmlOptions=array();
+		if($this->rowHtmlOptionsExpression!==null)
 		{
-			$data = $this->dataProvider->data[$row];
-			echo '<tr class="' . $this->evaluateExpression($this->rowCssClassExpression, array('row' => $row, 'data' => $data)) . '">';
+			$data=$this->dataProvider->data[$row];
+			$options=$this->evaluateExpression($this->rowHtmlOptionsExpression,array('row'=>$row,'data'=>$data));
+			if(is_array($options))
+				$htmlOptions = $options;
 		}
-		else if (is_array($this->rowCssClass) && ($n = count($this->rowCssClass)) > 0)
-			echo '<tr class="' . $this->rowCssClass[$row % $n] . '">';
-		else
-			echo '<tr>';
+
+		if($this->rowCssClassExpression!==null)
+		{
+			$data=$this->dataProvider->data[$row];
+			$class=$this->evaluateExpression($this->rowCssClassExpression,array('row'=>$row,'data'=>$data));
+		}
+		elseif(is_array($this->rowCssClass) && ($n=count($this->rowCssClass))>0)
+			$class=$this->rowCssClass[$row%$n];
+
+		if(!empty($class))
+		{
+			if(isset($htmlOptions['class']))
+				$htmlOptions['class'].=' '.$class;
+			else
+				$htmlOptions['class']=$class;
+		}
+
+		echo CHtml::openTag('tr', $htmlOptions)."\n";
 		foreach ($this->columns as $column)
+		{ 
 			echo $this->displayExtendedSummary && !empty($this->extendedSummary['columns']) ? $this->parseColumnValue($column, $row) : $column->renderDataCell($row);
+		}
 
 		echo "</tr>\n";
 	}
