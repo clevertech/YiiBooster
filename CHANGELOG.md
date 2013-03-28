@@ -41,9 +41,10 @@ Senior Web Developer
 - **(fix)** Fixed wrong behavior of TbJsonGridView when doing AJAX updates like row deletion when there is pagination (nevkontakte)
 - **(enh)** Bootstrap upgrade to 2.3.1 (magefad)
 - **(fix)** Added rowHtmlOptionsExpression support for TbExtendedGridView (xt99)
+- **(enh)** TbButtonGroup does not accept TbButton.dropdownOptions #149 (russ666)
+- **(enh)** Added GridView visual aid on hover for sorting (Wiseon3)
 
-
-### YiiBooster version 1.0.5
+### YiiBooster version 1.0.5 
 
 - **(fix)** TbCarousel displayPrevAndNext set to false breaks the page (amosviedo)
 - **(enh)** Bootstrap upgrade to 2.2.1 (kazuo)
@@ -65,4 +66,3 @@ Senior Web Developer
 - **(fix)** 2nd header from responsive table overlaps the 1st responsive table header #246 (hijarian)
 - **(fix)** Divider symbols in breadcrumbs changed to HTML entities (wkii)
 - **(fix)** Divider in active items in breadcrumbs was outside of the `li` tag (wkii)
-Enh #149: TbButtonGroup does not accept TbButton.dropdownOptions (russ666)
