@@ -46,6 +46,7 @@ Senior Web Developer
 - **(enh)** Updated daterangepicker plugin (magefad)
 - **(fix)** Corrected close link (with twitter bootstrap recommendations) bb53
 - **(fix)** Fixed label association when input has a user-defined id attribute (fixes bb72)
+- **(fix)** Button input, button submit added in TbButton
 
 ### YiiBooster version 1.0.5
 
