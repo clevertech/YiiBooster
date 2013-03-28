@@ -50,6 +50,7 @@ Senior Web Developer
 - **(fix)** Fix missing close tags in TbCarousel
 - **(enh)** Added CONTAINER_PREFIX constant for html div container id
 - **(fix)** Added class "hide" to modal div
+- **(fix)** Add support for non-link brand in TbNavbar
 
 ### YiiBooster version 1.0.5
 
