@@ -64,3 +64,4 @@ Senior Web Developer
 - **(fix)** 2nd header from responsive table overlaps the 1st responsive table header #246 (hijarian)
 - **(fix)** Divider symbols in breadcrumbs changed to HTML entities (wkii)
 - **(fix)** Divider in active items in breadcrumbs was outside of the `li` tag (wkii)
+Enh #149: TbButtonGroup does not accept TbButton.dropdownOptions (russ666)
