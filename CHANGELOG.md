@@ -44,6 +44,7 @@ Senior Web Developer
 - **(enh)** TbButtonGroup does not accept TbButton.dropdownOptions #149 (russ666)
 - **(enh)** Added GridView visual aid on hover for sorting (Wiseon3)
 - **(enh)** Updated daterangepicker plugin (magefad)
+- **(fix)** baseID in checkBoxList and radioButtonList can now be customized via htmlOptions, added container support - yii 1.1.13 (fad)
 
 ### YiiBooster version 1.0.5 
 
