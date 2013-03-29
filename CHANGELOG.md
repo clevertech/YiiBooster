@@ -44,6 +44,7 @@ Senior Web Developer
 - **(enh)** TbButtonGroup does not accept TbButton.dropdownOptions #149 (russ666)
 - **(enh)** Added GridView visual aid on hover for sorting (Wiseon3)
 - **(enh)** Updated daterangepicker plugin (magefad)
+- **(fix)** TbTypeahead - Add attribute autocomplete="off" by default #285
 
 ### YiiBooster version 1.0.5 
 
