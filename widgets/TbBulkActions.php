@@ -294,7 +294,7 @@ EOD;
 				else if (is_array($table->primaryKey))
 					$columnName = $table->primaryKey[0]; // just get the first one
 			}
-			if ($dataProvider instanceof CArrayDataProvider)
+			if ($dataProvider instanceof CArrayDataProvider || $dataProvider instanceof CSqlDataProvider)
 				$columnName = $dataProvider->keyField; // key Field
 		}
 		// create CCheckBoxColumn and attach to columns at its beginning

@@ -137,7 +137,7 @@ class TbJEditableColumn extends TbDataColumn
 			$key=$this->grid->dataProvider->keyAttribute===null ? $data->getPrimaryKey() : $data->{$this->keyAttribute};
 			return is_array($key) ? implode(',',$key) : $key;
 		}
-		if ($this->grid->dataProvider instanceof CArrayDataProvider)
+		if ($this->grid->dataProvider instanceof CArrayDataProvider || $this->grid->dataProvider instanceof CSqlDataProvider)
 			return is_object($data) ? $data->{$this->grid->dataProvider->keyField} : $data[$this->grid->dataProvider->keyField];
 
 		return null;
