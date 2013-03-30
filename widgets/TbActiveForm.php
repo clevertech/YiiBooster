@@ -749,11 +749,8 @@ class TbActiveForm extends CActiveForm
 		$hiddenOptions = isset($htmlOptions['id']) ? array('id' => CHtml::ID_PREFIX . $htmlOptions['id']) : array('id' => false);
 		$hidden = $uncheck !== null ? CHtml::hiddenField($name, $uncheck, $hiddenOptions) : '';
 
-		if (isset($htmlOptions['template']))
-			$template = $htmlOptions['template'];
-		else
-			$template = '<label class="{labelCssClass}">{input}{label}</label>';
-
+		$template = isset($htmlOptions['template']) ? $htmlOptions['template'] : '<label class="{labelCssClass}">{input}{label}</label>';
+		$container = isset($htmlOptions['container']) ? $htmlOptions['container'] : '';
 		unset($htmlOptions['template'], $htmlOptions['separator'], $htmlOptions['hint']);
 
 		if ($checkbox && substr($name, -2) !== '[]')
@@ -765,15 +762,16 @@ class TbActiveForm extends CActiveForm
 			$checkAllLabel = $htmlOptions['checkAll'];
 			$checkAllLast = isset($htmlOptions['checkAllLast']) && $htmlOptions['checkAllLast'];
 		}
-
 		unset($htmlOptions['checkAll'], $htmlOptions['checkAllLast']);
 
 		$labelOptions = isset($htmlOptions['labelOptions']) ? $htmlOptions['labelOptions'] : array();
 		unset($htmlOptions['labelOptions']);
 
 		$items = array();
-		$baseID = CHtml::getIdByName($name);
+		$baseID = isset($htmlOptions['baseID']) ? $htmlOptions['baseID'] : CHtml::getIdByName($name);
+		unset($htmlOptions['baseID']);
 		$id = 0;
+		$checkAll = true;
 		$method = $checkbox ? 'checkBox' : 'radioButton';
 		$labelCssClass = $checkbox ? 'checkbox' : 'radio';
 
@@ -783,7 +781,6 @@ class TbActiveForm extends CActiveForm
 			unset($htmlOptions['inline']);
 		}
 
-		$checkAll = true;
 		foreach ($data as $value => $label)
 		{
 			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);
@@ -802,8 +799,7 @@ class TbActiveForm extends CActiveForm
 		if (isset($checkAllLabel))
 		{
 			$htmlOptions['value']=1;
-			$itemId = $baseID.'_all';
-			$htmlOptions['id'] = $itemId;
+			$htmlOptions['id']=$id=$baseID.'_all';
 			$option = CHtml::$method($id,$checkAll,$htmlOptions);
 			$label = CHtml::label($checkAllLabel,$id,$labelOptions);
 			$item = strtr($template, array(
@@ -817,21 +813,24 @@ class TbActiveForm extends CActiveForm
 				array_unshift($items,$item);
 			$name = strtr($name,array('['=>'\\[',']'=>'\\]'));
 			$js = <<<EOD
-$('#$itemId').click(function() {
+jQuery('#$id').click(function() {
 	$("input[name='$name']").prop('checked', this.checked);
 });
-$("input[name='$name']").click(function() {
-	$('#$itemId').prop('checked', !$("input[name='$name']:not(:checked)").length);
+jQuery("input[name='$name']").click(function() {
+	$('#$id').prop('checked', !jQuery("input[name='$name']:not(:checked)").length);
 });
-$('#$itemId').prop('checked', !$("input[name='$name']:not(:checked)").length);
+jQuery('#$id').prop('checked', !jQuery("input[name='$name']:not(:checked)").length);
 EOD;
 			/** @var $cs CClientScript */
 			$cs = Yii::app()->getClientScript();
 			$cs->registerCoreScript('jquery');
-			$cs->registerScript($itemId,$js);
+			$cs->registerScript($id,$js);
 		}
 
-		return $hidden . implode('', $items);
+		if(empty($container))
+			return $hidden . implode('', $items);
+		else
+			return $hidden . CHtml::tag($container, array('id' => $baseID), implode('', $items));
 	}
 
 	/**
