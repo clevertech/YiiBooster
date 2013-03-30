@@ -48,9 +48,16 @@ Senior Web Developer
 - **(fix)** TbTypeahead - Add attribute autocomplete="off" by default #285
 - **(enh)** Update Redactor to 8.2.3 #386 (magefad)
 - **(fix)** baseID in checkBoxList and radioButtonList can now be customized via htmlOptions, added container support - yii 1.1.13 (fad)
+- **(fix)** Corrected close link (with twitter bootstrap recommendations) bb53
+- **(fix)** Fixed label association when input has a user-defined id attribute (fixes bb72)
+- **(fix)** Button input, button submit added in TbButton
+- **(fix)** Fix missing close tags in TbCarousel
+- **(enh)** Added CONTAINER_PREFIX constant for html div container id
+- **(fix)** Added class "hide" to modal div
+- **(fix)** Add support for non-link brand in TbNavbar
 
 
-### YiiBooster version 1.0.5 
+### YiiBooster version 1.0.5
 
 - **(fix)** TbCarousel displayPrevAndNext set to false breaks the page (amosviedo)
 - **(enh)** Bootstrap upgrade to 2.2.1 (kazuo)

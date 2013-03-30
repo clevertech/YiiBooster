@@ -36,6 +36,9 @@ class TbInputHorizontal extends TbInput
 		else
 			$this->labelOptions['class'] = 'control-label';
 
+		if(isset($this->htmlOptions['id']))
+			$this->labelOptions['for'] = $this->htmlOptions['id'];
+
 		return parent::getLabel();
 	}
 
@@ -260,7 +263,7 @@ class TbInputHorizontal extends TbInput
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
-	
+
 	/**
 	 * Renders a masked text field.
 	 * @return string the rendered content
@@ -275,7 +278,7 @@ class TbInputHorizontal extends TbInput
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
 	}
-	
+
 	/**
 	 * Renders a CAPTCHA.
 	 * @return string the rendered content
