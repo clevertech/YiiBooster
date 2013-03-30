@@ -240,7 +240,7 @@ class TbExtendedGridView extends TbGridView
 			return false;
 		}
 
-		if(!$this->sortableRows || !$this->getAttribute($data[0], $this->sortableAttribute))
+		if(!$this->sortableRows || !$this->getAttribute($data[0], (string)$this->sortableAttribute))
 		{
 			return parent::renderKeys();
 		}
