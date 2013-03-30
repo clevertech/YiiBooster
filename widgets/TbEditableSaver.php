@@ -1,17 +1,19 @@
 <?php
-/**
- * EditableSaver class file.
- * 
- * This component is server-side part for editable widgets. It performs update of one model attribute.
+/*## EditableSaver class file.
+ * @see <https://github.com/vitalets/x-editable-yii>
  * 
  * @author Vitaliy Potapov <noginsk@rambler.ru>
- * @link https://github.com/vitalets/yii-bootstrap-editable
+ * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @package bootstrap.widgets
  * @version 1.0.0
- * @since 10/2/12 12:24 AM  renamed class for YiiBooster integration antonio ramirez <antonio@clevertech.ibz>
- */
- 
+*/
+
+/**
+* EditableSaver helps to update model by editable widget submit request.
+* 
+* @package saver
+*/ 
 class TbEditableSaver extends CComponent
 {
     /**
@@ -45,9 +47,14 @@ class TbEditableSaver extends CComponent
      * @var CActiveRecord
      */
     public $model;
+    
+    /**
+     * @var mixed new value of attribute
+     */
+    public $value;    
 
     /**
-     * http status code ruterned for errors
+     * http status code returned in case of error
     */
     public $errorHttpCode = 400;
 
@@ -57,38 +64,44 @@ class TbEditableSaver extends CComponent
     * @var mixed
     */
     protected $changedAttributes = array();
-    
+
     /**
+     *### ._construct()
+     *
      * Constructor
      *
-     * @param mixed $modelName
-     * @return EditableBackend
+     * @param $modelClass
+     * @throws CException
+     * @internal param mixed $modelName
+     * @return \TbEditableSaver
      */
     public function __construct($modelClass)
     {
         if (empty($modelClass)) {
-            throw new CException(Yii::t('zii', 'You should provide modelClass in constructor of TbEditableSaver.'));
+            throw new CException(Yii::t('editable', 'You should provide modelClass in constructor of EditableSaver.'));
         }
         $this->modelClass = ucfirst($modelClass);
     }
 
     /**
+   *### .update()
+   *
      * main function called to update column in database
      *
      */
     public function update()
     {
-        //set params from request
+        //get params from request
         $this->primaryKey = yii::app()->request->getParam('pk');
         $this->attribute = yii::app()->request->getParam('name');
-        $value = Yii::app()->request->getParam('value');
+        $this->value = yii::app()->request->getParam('value');
 
         //checking params
         if (empty($this->attribute)) {
-            throw new CException(Yii::t('zii','Property "attribute" should be defined.'));
+            throw new CException(Yii::t('editable','Property "attribute" should be defined.'));
         }
         if (empty($this->primaryKey)) {
-            throw new CException(Yii::t('zii','Property "primaryKey" should be defined.'));
+            throw new CException(Yii::t('editable','Property "primaryKey" should be defined.'));
         }
 
         //loading model
@@ -97,6 +110,8 @@ class TbEditableSaver extends CComponent
             throw new CException(Yii::t('editable', 'Model {class} not found by primary key "{pk}"', array(
                '{class}'=>get_class($this->model), '{pk}'=>$this->primaryKey)));
         }
+        
+        //set scenario
         $this->model->setScenario($this->scenario);
         
         //is attribute exists
@@ -107,81 +122,64 @@ class TbEditableSaver extends CComponent
 
         //is attribute safe
         if (!$this->model->isAttributeSafe($this->attribute)) {
-            throw new CException(Yii::t('zii', 'Model {class} rules do not allow to update attribute "{attr}"', array(
+            throw new CException(Yii::t('editable', 'Model {class} rules do not allow to update attribute "{attr}"', array(
               '{class}'=>get_class($this->model), '{attr}'=>$this->attribute))); 
         }
 
         //setting new value
-        $this->setAttribute($this->attribute, $value);
-
-        //validate
+        $this->setAttribute($this->attribute, $this->value);
+        
+        //validate attribute
         $this->model->validate(array($this->attribute));
-        if ($this->model->hasErrors()) {
-            $this->error($this->model->getError($this->attribute));
-        }
+        $this->checkErrors();
 
-        //save
-        if ($this->beforeUpdate()) {
-            //saving (only chnaged attributes)
-            if ($this->model->save(false, $this->changedAttributes)) {
-                $this->afterUpdate();
-            } else {
-                $this->error(Yii::t('zii', 'Error while saving record!'));
-            }
+        //trigger beforeUpdate event
+        $this->beforeUpdate();
+        $this->checkErrors();
+        
+        //saving (no validation, only changed attributes)
+        if ($this->model->save(false, $this->changedAttributes)) {
+            //trigger afterUpdate event
+            $this->afterUpdate();
         } else {
-            $firstError = reset($this->model->getErrors());
-            $this->error($firstError[0]);
+            $this->error(Yii::t('editable', 'Error while saving record!')); 
         }
     }
 
     /**
-     * This event is raised before the update is performed.
-     * @param CModelEvent $event the event parameter
+     *### .checkErros()
+     *
+     * errors as CHttpException
+     * @internal param $msg
      */
-    public function onBeforeUpdate($event)
+    public function checkErrors()
     {
-        $this->raiseEvent('onBeforeUpdate', $event);
-    }
-
+        if ($this->model->hasErrors()) {
+            $msg = array();
+            foreach($this->model->getErrors() as $attribute => $errors) {
+               $msg = array_merge($msg, $errors); 
+            }
+            //todo: show several messages. should be checked in x-editable js
+            //$this->error(join("\n", $msg));
+            $this->error($msg[0]);
+        }
+    }     
+    
     /**
-     * This event is raised after the update is performed.
-     * @param CEvent $event the event parameter
-     */
-    public function onAfterUpdate($event)
-    {
-        $this->raiseEvent('onAfterUpdate', $event);
-    }
-
-    /**
-     * errors  as CHttpException
+   *### .error()
+   *
+     * errors as CHttpException
      * @param $msg
      * @throws CHttpException
      */
-    protected function error($msg)
+    public function error($msg)
     {
         throw new CHttpException($this->errorHttpCode, $msg);
-    }
-
-    /**
-     * beforeUpdate
-     *
-     */
-    protected function beforeUpdate()
-    {
-        $this->onBeforeUpdate(new CEvent($this));
-        return !$this->model->hasErrors();
-    }
-
-    /**
-     * afterUpdate
-     *
-     */
-    protected function afterUpdate()
-    {
-        $this->onAfterUpdate(new CEvent($this));
-    }
+    }  
     
     /**
+   *### .setAttribute()
+   *
     * setting new value of attribute.
     * Attrubute name also stored in array to save only changed attributes
     * 
@@ -191,7 +189,52 @@ class TbEditableSaver extends CComponent
     public function setAttribute($name, $value)
     {
          $this->model->$name = $value;
-         $this->changedAttributes[] = $name;
-         $this->changedAttributes = array_unique($this->changedAttributes);
+         if (!in_array($name, $this->changedAttributes)) {
+             $this->changedAttributes[] = $name;
+         }
+    }      
+    
+    /**
+   *### .onBeforeUpdate()
+   *
+     * This event is raised before the update is performed.
+     * @param CModelEvent $event the event parameter
+     */
+    public function onBeforeUpdate($event)
+    {
+        $this->raiseEvent('onBeforeUpdate', $event);
+    }
+
+    /**
+   *### .onAfterUpdate()
+   *
+     * This event is raised after the update is performed.
+     * @param CEvent $event the event parameter
+     */
+    public function onAfterUpdate($event)
+    {
+        $this->raiseEvent('onAfterUpdate', $event);
+    }
+
+    /**
+   *### .beforeUpdate()
+   *
+     * beforeUpdate
+     *
+     */
+    protected function beforeUpdate()
+    {
+        $this->onBeforeUpdate(new CEvent($this));
+    }
+
+    /**
+   *### .afterUpdate()
+   *
+     * afterUpdate
+     *
+     */
+    protected function afterUpdate()
+    {
+        $this->onAfterUpdate(new CEvent($this));
     }
 }

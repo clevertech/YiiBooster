@@ -5,6 +5,13 @@
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version 1.0.0
+ *
+ * Modified for YiiBooster
+ * @author Antonio Ramirez <antonio@clevertech.biz>
+ * @version 1.0.6
+ *
+ * Added Bootstrap Modal Manager Plugin
+ * @author Thiago Otaviani Vidal <thiagovidal@gmail.com>
  */
 
 /**
@@ -19,6 +26,7 @@ class Bootstrap extends CApplicationComponent
 	const PLUGIN_COLLAPSE = 'collapse';
 	const PLUGIN_DROPDOWN = 'dropdown';
 	const PLUGIN_MODAL = 'modal';
+	const PLUGIN_MODALMANAGER = 'modalmanager';
 	const PLUGIN_POPOVER = 'popover';
 	const PLUGIN_SCROLLSPY = 'scrollspy';
 	const PLUGIN_TAB = 'tab';
@@ -38,11 +46,19 @@ class Bootstrap extends CApplicationComponent
 	 * Defaults to true.
 	 */
 	public $coreCss = true;
+
 	/**
 	 * @var boolean whether to register the Bootstrap responsive CSS (bootstrap-responsive.min.css).
 	 * Defaults to false.
 	 */
 	public $responsiveCss = false;
+
+	/**
+	 * @var boolean whether to register the Font Awesome CSS (font-awesome.min.css).
+	 * Defaults to false.
+	 */
+	public $fontAwesomeCss = false;
+
 	/**
 	 * @var boolean whether to register the Yii-specific CSS missing from Bootstrap.
 	 * @since 0.9.12
@@ -59,6 +75,7 @@ class Bootstrap extends CApplicationComponent
 	 * @since 0.9.10
 	 */
 	public $enableJS = true;
+
 	/**
 	 * @var array plugin initial options (name=>options).
 	 * Each array key-value pair represents the initial options for a single plugin class,
@@ -66,16 +83,18 @@ class Bootstrap extends CApplicationComponent
 	 * @since 0.9.8
 	 */
 	public $plugins = array();
+
 	/**
 	 * @var string default popover CSS selector.
 	 * @since 0.10.0
 	 */
-	public $popoverSelector = 'a[rel="popover"]';
+	public $popoverSelector = 'body';
+
 	/**
 	 * @var string default tooltip CSS selector.
 	 * @since 0.10.0
 	 */
-	public $tooltipSelector = 'a[rel="tooltip"]';
+	public $tooltipSelector = 'body';
 
 	/**
 	 * @var bool whether to enable bootbox messages or not. Default value is true.
@@ -83,6 +102,23 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public $enableBootboxJS = true;
 
+	/**
+	 * @var bool enable [bootstrap notifier](https://github.com/Nijikokun/bootstrap-notify). Default value is `true`
+	 * @see [https://github.com/Nijikokun/bootstrap-notify](https://github.com/Nijikokun/bootstrap-notify]
+	 */
+	public $enableNotifierJS = true;
+
+	/**
+	 * @var bool|null Whether to republish assets on each request. Defaults to YII_DEBUG, resulting in a the republication of all YiiBooster-assets 
+	 * on each request if the application is in debug mode. Passing null to this option restores 
+	 * the default handling of CAssetManager of YiiBooster assets.
+	 * @since YiiBooster 1.0.6
+	 */
+	public $forceCopyAssets = false;
+
+	/**
+	 * @var string handles the assets folder path.
+	 */
 	protected $_assetsUrl;
 
 	/**
@@ -95,7 +131,7 @@ class Bootstrap extends CApplicationComponent
 			Yii::setPathOfAlias('bootstrap', realpath(dirname(__FILE__) . '/..'));
 
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
-		if (Yii::app() instanceof CConsoleApplication)
+		if (Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli')
 			return;
 
 		if ($this->coreCss !== false)
@@ -104,10 +140,13 @@ class Bootstrap extends CApplicationComponent
 		if ($this->responsiveCss !== false)
 			$this->registerResponsiveCss();
 
+		if ($this->fontAwesomeCss !== false)
+			$this->registerFontAwesomeCss();
+
 		if ($this->yiiCss !== false)
 			$this->registerYiiCss();
 
-		if($this->jqueryCss !== false)
+		if ($this->jqueryCss !== false)
 			$this->registerJQueryCss();
 
 		if ($this->enableJS !== false)
@@ -134,6 +173,15 @@ class Bootstrap extends CApplicationComponent
 		$cs = Yii::app()->getClientScript();
 		$cs->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 		$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-responsive' . (!YII_DEBUG ? '.min' : '') . '.css');
+	}
+
+	/**
+	 * Registers the Font Awesome CSS.
+	 * @since 1.0.6
+	 */
+	public function registerFontAwesomeCss()
+	{
+		$this->registerAssetCss('font-awesome' . (!YII_DEBUG ? '.min' : '') . '.css');
 	}
 
 	/**
@@ -181,14 +229,20 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerJS($position = CClientScript::POS_HEAD)
 	{
-		/** @var CClientScript $cs */
+		/* @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript('jquery');
 
-		/** enable bootboxJS? */
-		if($this->enableBootboxJS)
-		{
+		/* enable bootboxJS? */
+		if ($this->enableBootboxJS)
 			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.bootbox.min.js', $position);
+
+		/* enable bootstrap notifier ? */
+		if ($this->enableNotifierJS)
+		{
+			// notifier requires a style
+			$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-notify.css');
+			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.notify.js', $position);
 		}
 		$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap' . (!YII_DEBUG ? '.min' : '') . '.js', $position);
 	}
@@ -277,6 +331,18 @@ class Bootstrap extends CApplicationComponent
 	}
 
 	/**
+	 * Registers the Modal manager plugin.
+	 * @param string $selector the CSS selector
+	 * @param array $options the plugin options
+	 * @see https://github.com/jschr/bootstrap-modal/
+	 * @since 0.9.8
+	 */
+	public function registerModalManager($selector = null, $options = array())
+	{
+		$this->registerPlugin(self::PLUGIN_MODALMANAGER, $selector, $options);
+	}
+
+	/**
 	 * Registers the Bootstrap scrollspy plugin.
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
@@ -298,6 +364,12 @@ class Bootstrap extends CApplicationComponent
 	public function registerPopover($selector = null, $options = array())
 	{
 		$this->registerTooltip(); // Popover requires the tooltip plugin
+		if (!isset($options['selector']))
+		{
+			$options['selector'] = '[rel=popover]';
+			if (null === $selector)
+				$selector = 'body';
+		}
 		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options, $this->popoverSelector);
 	}
 
@@ -322,6 +394,12 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerTooltip($selector = null, $options = array())
 	{
+		if (!isset($options['selector']))
+		{
+			$options['selector'] = '[rel=tooltip]';
+			if (null === $selector)
+				$selector = 'body';
+		}
 		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options, $this->tooltipSelector);
 	}
 
@@ -353,7 +431,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * Registers the RedactorJS plugin.
 	 * @param null $selector
-	 * @param $options
+	 * @param array $options
 	 */
 	public function registerRedactor($selector = null, $options = array())
 	{
@@ -363,7 +441,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * Registers the Bootstrap-whysihtml5 plugin.
 	 * @param null $selector
-	 * @param $options
+	 * @param array $options
 	 */
 	public function registerHtml5Editor($selector = null, $options = array())
 	{
@@ -373,7 +451,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * Registers the Bootstrap-colorpicker plugin.
 	 * @param null $selector
-	 * @param $options
+	 * @param array $options
 	 */
 	public function registerColorPicker($selector = null, $options = array())
 	{
@@ -396,18 +474,14 @@ class Bootstrap extends CApplicationComponent
 	 * Registers the Bootstrap daterange plugin
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
-	 * @param $callback the javascript callback function
+	 * @param string $callback the javascript callback function
 	 * @see  http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/
 	 * @since 1.1.0
 	 */
 	public function registerDateRangePlugin($selector, $options = array(), $callback = null)
 	{
-
 		$key = __CLASS__ . '.' . md5(self::PLUGIN_DATERANGEPICKER . $selector . serialize($options) . $callback);
-
 		Yii::app()->clientScript->registerScript($key, '$("' . $selector . '").daterangepicker(' . CJavaScript::encode($options) . ($callback ? ', ' . CJavaScript::encode($callback) : '') . ');');
-
-
 	}
 
 
@@ -455,7 +529,7 @@ class Bootstrap extends CApplicationComponent
 		else
 		{
 			$assetsPath = Yii::getPathOfAlias('bootstrap.assets');
-			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, YII_DEBUG);
+			$assetsUrl = Yii::app()->assetManager->publish($assetsPath, false, -1, $this->forceCopyAssets);
 			return $this->_assetsUrl = $assetsUrl;
 		}
 	}
@@ -466,6 +540,6 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function getVersion()
 	{
-		return '1.0.5';
+		return '1.0.6';
 	}
 }

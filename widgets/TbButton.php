@@ -1,9 +1,9 @@
 <?php
-/**
- * TbButton class file.
+/*##  TbButton class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @package bootstrap.widgets
  * @since 0.9.10
  */
@@ -15,26 +15,28 @@
 class TbButton extends CWidget
 {
 	// Button callback types.
-	const BUTTON_LINK = 'link';
-	const BUTTON_BUTTON = 'button';
-	const BUTTON_SUBMIT = 'submit';
+	const BUTTON_LINK       = 'link';
+	const BUTTON_BUTTON     = 'button';
+	const BUTTON_SUBMIT     = 'submit';
 	const BUTTON_SUBMITLINK = 'submitLink';
-	const BUTTON_RESET = 'reset';
-	const BUTTON_AJAXLINK = 'ajaxLink';
+	const BUTTON_RESET      = 'reset';
+	const BUTTON_AJAXLINK   = 'ajaxLink';
 	const BUTTON_AJAXBUTTON = 'ajaxButton';
 	const BUTTON_AJAXSUBMIT = 'ajaxSubmit';
+	const BUTTON_INPUTBUTTON = 'inputButton';
+	const BUTTON_INPUTSUBMIT = 'inputSubmit';
 
 	// Button types.
 	const TYPE_PRIMARY = 'primary';
-	const TYPE_INFO = 'info';
+	const TYPE_INFO    = 'info';
 	const TYPE_SUCCESS = 'success';
 	const TYPE_WARNING = 'warning';
-	const TYPE_DANGER = 'danger';
+	const TYPE_DANGER  = 'danger';
 	const TYPE_INVERSE = 'inverse';
-	const TYPE_LINK = 'link';
+	const TYPE_LINK    = 'link';
 
 	// Button sizes.
-	const SIZE_MINI = 'mini';
+	const SIZE_MINI  = 'mini';
 	const SIZE_SMALL = 'small';
 	const SIZE_LARGE = 'large';
 
@@ -43,68 +45,84 @@ class TbButton extends CWidget
 	 * Valid values are 'link', 'button', 'submit', 'submitLink', 'reset', 'ajaxLink', 'ajaxButton' and 'ajaxSubmit'.
 	 */
 	public $buttonType = self::BUTTON_LINK;
+
 	/**
 	 * @var string the button type.
 	 * Valid values are 'primary', 'info', 'success', 'warning', 'danger' and 'inverse'.
 	 */
 	public $type;
+
 	/**
 	 * @var string the button size.
 	 * Valid values are 'large', 'small' and 'mini'.
 	 */
 	public $size;
+
 	/**
 	 * @var string the button icon, e.g. 'ok' or 'remove white'.
 	 */
 	public $icon;
+
 	/**
 	 * @var string the button label.
 	 */
 	public $label;
+
 	/**
 	 * @var string the button URL.
 	 */
 	public $url;
+
 	/**
 	 * @var boolean indicates whether the button should span the full width of the a parent.
 	 */
 	public $block = false;
+
 	/**
 	 * @var boolean indicates whether the button is active.
 	 */
 	public $active = false;
+
 	/**
 	 * @var boolean indicates whether the button is disabled.
 	 */
 	public $disabled = false;
+
 	/**
 	 * @var boolean indicates whether to encode the label.
 	 */
 	public $encodeLabel = true;
+
 	/**
 	 * @var boolean indicates whether to enable toggle.
 	 */
 	public $toggle;
+
 	/**
 	 * @var string the loading text.
 	 */
 	public $loadingText;
+
 	/**
 	 * @var string the complete text.
 	 */
 	public $completeText;
+
 	/**
 	* @var array the dropdown button items.
 	*/
 	public $items;
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
+
 	/**
 	 * @var array the button ajax options (used by 'ajaxLink' and 'ajaxButton').
 	 */
 	public $ajaxOptions = array();
+
 	/**
 	 * @var array the HTML attributes for the dropdown menu.
 	 * @since 0.9.11
@@ -118,10 +136,15 @@ class TbButton extends CWidget
 	public $visible = true;
 
 	/**
+	 *### .init()
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
 	{
+		if (false === $this->visible)
+			return;
+
 		$classes = array('btn');
 
 		$validTypes = array(self::TYPE_LINK, self::TYPE_PRIMARY, self::TYPE_INFO, self::TYPE_SUCCESS,
@@ -142,7 +165,21 @@ class TbButton extends CWidget
 			$classes[] = 'active';
 
 		if ($this->disabled)
+		{
+			$disableTypes = array(self::BUTTON_BUTTON, self::BUTTON_SUBMIT, self::BUTTON_RESET,
+				self::BUTTON_AJAXBUTTON, self::BUTTON_AJAXSUBMIT, self::BUTTON_INPUTBUTTON, self::BUTTON_INPUTSUBMIT);
+
+			if (in_array($this->buttonType, $disableTypes))
+				$this->htmlOptions['disabled'] = 'disabled';
+
 			$classes[] = 'disabled';
+		}
+
+		if (!isset($this->url) && isset($this->htmlOptions['href']))
+		{
+			$this->url = $this->htmlOptions['href'];
+			unset($this->htmlOptions['href']);
+		}
 
 		if ($this->encodeLabel)
 			$this->label = CHtml::encode($this->label);
@@ -174,10 +211,8 @@ class TbButton extends CWidget
 			$this->label = '<i class="'.$this->icon.'"></i> '.$this->label;
 		}
 
-		if(!isset($this->htmlOptions['id']))
-		{
+		if (!isset($this->htmlOptions['id']))
 			$this->htmlOptions['id'] = $this->getId();
-		}
 
 		if (isset($this->toggle))
 			$this->htmlOptions['data-toggle'] = 'button';
@@ -190,12 +225,15 @@ class TbButton extends CWidget
 	}
 
 	/**
+	 *### .run()
+	 *
 	 * Runs the widget.
 	 */
 	public function run()
 	{
-		if(!$this->visible)
-				return false;
+		if (false === $this->visible)
+			return;
+
 		echo $this->createButton();
 
 		if ($this->hasDropdown())
@@ -209,7 +247,10 @@ class TbButton extends CWidget
 	}
 
 	/**
+	 *### .createButton()
+	 *
 	 * Creates the button element.
+	 *
 	 * @return string the created button.
 	 */
 	protected function createButton()
@@ -239,11 +280,18 @@ class TbButton extends CWidget
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 
 			case self::BUTTON_AJAXSUBMIT:
-				$this->ajaxOptions['type'] = 'POST';
+				$this->ajaxOptions['type'] = isset($this->ajaxOptions['type']) ? $this->ajaxOptions['type'] : 'POST';
 				$this->ajaxOptions['url'] = $this->url;
 				$this->htmlOptions['type'] = 'submit';
 				$this->htmlOptions['ajax'] = $this->ajaxOptions;
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
+
+			case self::BUTTON_INPUTBUTTON:
+				return CHtml::button($this->label, $this->htmlOptions);
+
+			case self::BUTTON_INPUTSUBMIT:
+				$this->htmlOptions['type'] = 'submit';
+				return CHtml::button($this->label, $this->htmlOptions);
 
 			default:
 			case self::BUTTON_LINK:
@@ -252,7 +300,10 @@ class TbButton extends CWidget
 	}
 
 	/**
+	 *### .hasDropdown()
+	 *
 	 * Returns whether the button has a dropdown.
+	 *
 	 * @return bool the result.
 	 */
 	protected function hasDropdown()

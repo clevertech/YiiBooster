@@ -10,6 +10,9 @@
  */
 class TbTimePicker extends CInputWidget
 {
+	/**
+	 * @var TbActiveForm
+	 */
 	public $form;
 
 	/**
@@ -55,9 +58,14 @@ class TbTimePicker extends CInputWidget
 	{
 		list($name, $id) = $this->resolveNameID();
 
+		// Add a class of no-user-select to widget
+		$this->htmlOptions['class'] = empty($this->htmlOptions['class']) 
+									? 'no-user-select' 
+									: 'no-user-select ' . $this->htmlOptions['class'];
+
 		if ($this->hasModel())
 		{
-			if($this->form)
+			if ($this->form)
 				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 			else
 				echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
@@ -70,7 +78,7 @@ class TbTimePicker extends CInputWidget
 
 	/**
 	 * Registers required javascript files
-	 * @param $id
+	 * @param string $id
 	 */
 	public function registerClientScript($id)
 	{

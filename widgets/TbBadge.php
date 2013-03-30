@@ -1,45 +1,49 @@
 <?php
-/**
- * TbBadge class file.
+/*## Bootstrap badge widget.
+ * @see <http://twitter.github.com/bootstrap/components.html#badges>
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright  Copyright &copy; Christoffer Niska 2011-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
- */
-
-/**
- * Bootstrap badge widget.
- * @see http://twitter.github.com/bootstrap/components.html#badges
  */
 class TbBadge extends CWidget
 {
-	// Badge types.
-	const TYPE_SUCCESS = 'success';
-	const TYPE_WARNING = 'warning';
+	/*
+	 * Valid badge types.
+	 */
+	const TYPE_SUCCESS   = 'success';
+	const TYPE_WARNING   = 'warning';
 	const TYPE_IMPORTANT = 'important';
-	const TYPE_INFO = 'info';
-	const TYPE_INVERSE = 'inverse';
+	const TYPE_INFO      = 'info';
+	const TYPE_INVERSE   = 'inverse';
 
 	/**
 	 * @var string the badge type.
-	 * Valid types are 'success', 'warning', 'important', 'info' and 'inverse'.
+	 *
+	 * See `TYPE_*` constants for list of allowed types.
 	 */
 	public $type;
+
 	/**
 	 * @var string the badge text.
 	 */
 	public $label;
+
 	/**
 	 * @var boolean whether to encode the label.
 	 */
 	public $encodeLabel = true;
+
 	/**
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
 
 	/**
-	 * Initializes the widget.
+	 *### .init()
+	 *
+	 * At the start of widget we collect the attributes for badge tag.
 	 */
 	public function init()
 	{
@@ -64,7 +68,9 @@ class TbBadge extends CWidget
 	}
 
 	/**
-	 * Runs the widget.
+	 *### .run()
+	 *
+	 * Upon completing the badge we write the span tag with collected attributes to document.
 	 */
 	public function run()
 	{

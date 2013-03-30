@@ -1,30 +1,39 @@
 <?php
-/**
- * TbJsonPager.php
+/*## TbJsonPager class file.
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package YiiBooster bootstrap.widgets
  */
 Yii::import('bootstrap.widgets.TbPager');
 
 class TbJsonPager extends TbPager
 {
+	/**
+	 * @var string json.
+	 */
 	public $json;
 
+	/**
+	 *### .run()
+	 *
+	 * Runs the widget.
+	 */
 	public function run()
 	{
 		if (!$this->json)
-		{
 			parent::run();
-		}
+
 		return $this->createPageButtons();
 	}
 
 	/**
+	 *### .createPageButton()
+	 *
 	 * Creates a page button.
 	 * You may override this method to customize the page buttons.
+	 *
 	 * @param string $label the text label for the button
 	 * @param integer $page the page number
 	 * @param string $class the CSS class for the page button. This could be 'page', 'first', 'last', 'next' or 'previous'.
@@ -34,7 +43,6 @@ class TbJsonPager extends TbPager
 	 */
 	protected function createPageButton($label, $page, $class, $hidden, $selected)
 	{
-
 		if ($this->json)
 		{
 			if ($hidden || $selected)

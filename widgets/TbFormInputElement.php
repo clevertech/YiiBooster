@@ -14,7 +14,6 @@
 
 class TbFormInputElement extends CFormInputElement
 {
-
 	/**
 	 * Wrap control-group/controls tags around custom types (CInputWidget or CJuiInputWidget)
 	 *
@@ -27,42 +26,39 @@ class TbFormInputElement extends CFormInputElement
 	 * @var array this->type => TbActiveForm::method
 	 */
 	public static $tbActiveFormMethods = array(
-		'text' => 'textFieldRow',
-		'password' => 'passwordFieldRow',
-		'textarea' => 'textAreaRow',
-		'file' => 'fileFieldRow',
-		'radio' => 'radioButtonRow',
-		'checkbox' => 'checkBoxRow',
-		'listbox' => 'dropDownListRow',
-		'dropdownlist' => 'dropDownListRow',
-		'checkboxlist' => 'checkBoxListRow',
-		'radiolist' => 'radioButtonListRow',
-
+		'text'               => 'textFieldRow',
+		'password'           => 'passwordFieldRow',
+		'textarea'           => 'textAreaRow',
+		'file'               => 'fileFieldRow',
+		'radio'              => 'radioButtonRow',
+		'checkbox'           => 'checkBoxRow',
+		'listbox'            => 'dropDownListRow',
+		'dropdownlist'       => 'dropDownListRow',
+		'checkboxlist'       => 'checkBoxListRow',
+		'radiolist'          => 'radioButtonListRow',
 		//HTML5 types not supported in YiiBooster yet: render as textField
-		'url' => 'textFieldRow',
-		'email' => 'textFieldRow',
-		'number' => 'textFieldRow',
-
+		'url'                => 'textFieldRow',
+		'email'              => 'textFieldRow',
+		'number'             => 'textFieldRow',
 		//'range'=>'activeRangeField', not supported yet
-		'date' => 'datepickerRow',
-
+		'date'               => 'datepickerRow',
 		//new YiiBooster types
-		'captcha' => 'captchaRow',
-		'daterange' => 'dateRangeRow',
-		'redactor' => 'redactorRow',
-		'markdowneditor' => 'markdownEditorRow',
-		'uneditable' => 'uneditableRow',
-		'radiolistinline' => 'radioButtonListInlineRow',
+		'captcha'            => 'captchaRow',
+		'daterange'          => 'dateRangeRow',
+		'redactor'           => 'redactorRow',
+		'markdowneditor'     => 'markdownEditorRow',
+		'uneditable'         => 'uneditableRow',
+		'radiolistinline'    => 'radioButtonListInlineRow',
 		'checkboxlistinline' => 'checkBoxListInlineRow',
-		'select2' => 'select2Row'
+		'select2'            => 'select2Row'
 	);
 
 	/**
 	 * @var array map the htmlOptions input type: not supported by YiiBooster yet
 	 */
 	public static $htmlOptionTypes = array(
-		'url' => 'url',
-		'email' => 'email',
+		'url'    => 'url',
+		'email'  => 'email',
 		'number' => 'number',
 	);
 
@@ -78,7 +74,7 @@ class TbFormInputElement extends CFormInputElement
 	/**
 	 * Prepare the htmlOptions before calling the TbActiveForm method
 	 *
-	 * @param $options
+	 * @param array $options
 	 * @return mixed
 	 */
 	protected function prepareHtmlOptions($options)
@@ -118,19 +114,18 @@ class TbFormInputElement extends CFormInputElement
 				default:
 					return $this->getActiveFormWidget()->$method($model, $attribute, $htmlOptions);
 			}
-		} else
-			if ($this->wrapBootstrapTags) //wrap tags controls/control-group
-			{
-				$error = $this->getParent()->showErrorSummary ? '' : $this->renderError();
-				$output = array(
-					'{label}' => $this->renderControlLabel(),
-					'{input}' => "<div class=\"controls\">\n" . $this->renderInput() . $error . $this->renderHint() . '</div>',
-					'{hint}' => '',
-					'{error}' => '',
-				);
-
-				return "<div class=\"control-group\">\n" . strtr($this->layout, $output) . '</div>';
-			}
+		}
+		elseif ($this->wrapBootstrapTags) //wrap tags controls/control-group
+		{
+			$error = $this->getParent()->showErrorSummary ? '' : $this->renderError();
+			$output = array(
+				'{label}' => $this->renderControlLabel(),
+				'{input}' => "<div class=\"controls\">\n" . $this->renderInput() . $error . $this->renderHint() . '</div>',
+				'{hint}' => '',
+				'{error}' => '',
+			);
+			return "<div class=\"control-group\">\n" . strtr($this->layout, $output) . '</div>';
+		}
 
 		return parent::render();
 	}
@@ -147,9 +142,7 @@ class TbFormInputElement extends CFormInputElement
 		);
 
 		if (!empty($this->attributes['id']))
-		{
 			$options['for'] = $this->attributes['id'];
-		}
 
 		return CHtml::activeLabel($this->getParent()->getModel(), $this->name, $options);
 	}

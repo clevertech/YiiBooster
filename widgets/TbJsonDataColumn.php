@@ -4,7 +4,6 @@
  *
  * This column works specifically with TbJsonGridView.
  *
- *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
@@ -12,15 +11,19 @@
  */
 Yii::import('bootstrap.widgets.TbJsonGridColumn');
 
+/**
+ * @property TbJsonGridView $grid
+ */
 class TbJsonDataColumn extends TbJsonGridColumn
 {
 	/**
 	 * Renders a data cell.
 	 * @param integer $row the row number (zero-based)
+	 * @return array|void
 	 */
 	public function renderDataCell($row)
 	{
-		if($this->grid->json)
+		if ($this->grid->json)
 		{
 			$data = $this->grid->dataProvider->data[$row];
 			$options = $this->htmlOptions;
@@ -45,20 +48,20 @@ class TbJsonDataColumn extends TbJsonGridColumn
 	 * This method evaluates {@link value} or {@link name} and renders the result.
 	 * @param integer $row the row number (zero-based)
 	 * @param mixed $data the data associated with the row
+	 * @return string|void
 	 */
 	public function renderDataCellContent($row, $data)
 	{
-		if($this->grid->json)
+		if ($this->grid->json)
 		{
 			if ($this->value !== null)
 				$value = $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
-			else if ($this->name !== null)
+			elseif ($this->name !== null)
 				$value = CHtml::value($data, $this->name);
-			$value = $value === null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value, $this->type);
+			$value = !isset($value) ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value, $this->type);
 
 			return $value;
 		}
 		parent::renderDataCellContent($row, $data);
 	}
-
 }
