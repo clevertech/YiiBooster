@@ -24,6 +24,12 @@ class TbAlert extends CWidget
 	 * @var array the alerts configurations.
 	 */
 	public $alerts;
+
+	/**
+	 * @var string classname for current user
+	 */
+	public $user;
+	
 	/**
 	 * @var string|boolean the close link text. If this is set false, no close link will be displayed.
 	 */
@@ -52,6 +58,10 @@ class TbAlert extends CWidget
 	 */
 	public function init()
 	{
+		//default user object
+		if (! $this->user )
+			$this->user = 'user';
+			
 		if (!isset($this->htmlOptions['id']))
 			$this->htmlOptions['id'] = $this->getId();
 
@@ -83,7 +93,7 @@ class TbAlert extends CWidget
 			if (isset($alert['visible']) && $alert['visible'] === false)
 				continue;
 
-			if (Yii::app()->user->hasFlash($type))
+			if (Yii::app()->{$this->user}->hasFlash($type))
 			{
 				$classes = array('alert in');
 
@@ -123,7 +133,7 @@ class TbAlert extends CWidget
 				if (isset($alert['closeText']) && $alert['closeText'] !== false)
 					echo '<a class="close" data-dismiss="alert">'.$alert['closeText'].'</a>';
 
-				echo Yii::app()->user->getFlash($type);
+				echo Yii::app()->{$this->user}->getFlash($type);
 
 				echo '</div>';
 			}
