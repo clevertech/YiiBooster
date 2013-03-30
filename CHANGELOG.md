@@ -46,6 +46,7 @@ Senior Web Developer
 - **(enh)** Updated daterangepicker plugin (magefad)
 - **(fix)** CSqlDataprovider support #356 (magefad)
 - **(fix)** TbTypeahead - Add attribute autocomplete="off" by default #285
+- **(enh)** Update Redactor to 8.2.3 #386 (magefad)
 
 
 ### YiiBooster version 1.0.5 
