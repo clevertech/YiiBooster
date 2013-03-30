@@ -12,6 +12,9 @@
  */
 class TbToggleColumn extends TbDataColumn
 {
+
+	public $value;
+
 	/**
 	 * @var string the attribute name of the data model. Used for column sorting, filtering and to render the corresponding
 	 * attribute value in each data cell. If {@link value} is specified it will be used to rendered the data cell instead of the attribute value.
@@ -215,7 +218,10 @@ function() {
 	 */
 	protected function renderDataCellContent($row, $data)
 	{
-		$checked = CHtml::value($data, $this->name);
+		$checked = ($this->value === null)
+			?  CHtml::value($data, $this->name)
+			:  $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
+
 		$button = $this->button;
 		$button['icon'] = $checked === null ? $this->emptyIcon : ($checked ? $this->checkedIcon : $this->uncheckedIcon);
 		$button['url'] = isset($button['url']) ? $this->evaluateExpression($button['url'], array('data' => $data, 'row' => $row)) : '#';
