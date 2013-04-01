@@ -1,12 +1,11 @@
 <?php
 /*## EditableColumn class file.
- * @see <https://github.com/vitalets/x-editable-yii>
  *
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
  * @package bootstrap.widgets
- * @version 1.0.0
+ * @version 1.1.0
 */
 
 Yii::import('bootstrap.widgets.TbEditableField');
@@ -74,7 +73,6 @@ class TbEditableColumn extends TbDataColumn
 
         //if editable not applied --> render original text
         if (!$widget->apply) {
-
            if (isset($text)) {
                echo $text;
            } else {
@@ -107,7 +105,7 @@ class TbEditableColumn extends TbDataColumn
    * Yii yet does not support custom js events in widgets.
    * So we need to invoke it manually to ensure update of editables on grid ajax update.
    *
-   * issue in Yii github: <https://github.com/yiisoft/yii/issues/1313>
+   * issue in Yii github: https://github.com/yiisoft/yii/issues/1313
    *
    */
     protected function attachAjaxUpdateEvent()
