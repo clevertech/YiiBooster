@@ -8,6 +8,9 @@ Antonio Ramirez
 Senior Web Developer
 [www.clevertech.biz](http://www.clevertech.biz)
 
+### YiiBooster version 1.0.7
+- **(fix)** Include specific FontAwesome CSS for IE7 #434 (kev360)
+
 ### YiiBooster version 1.0.6
 - **(fix)** Now it is possible to provide custom 'class' and 'style' htmlOptions for TbProgress #216 (hijarian)
 - **(fix)** Fix typo on TbCollapse (tonydspaniard)

@@ -182,6 +182,8 @@ class Bootstrap extends CApplicationComponent
 	public function registerFontAwesomeCss()
 	{
 		$this->registerAssetCss('font-awesome' . (!YII_DEBUG ? '.min' : '') . '.css');
+		if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7.0'))
+			$this->registerAssetCss('font-awesome-ie7.min.css');
 	}
 
 	/**
