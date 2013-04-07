@@ -14,3 +14,13 @@ then you'll be prompted for the value of it.
 
 Complete release will be placed into the `dist` subdirectory as a ZIP archive as a lowest common denominator
 and be signed with release version specified.
+
+## Generating a documentation
+
+### API-level documentation
+API is being documented by [phpDocumentor2](http://www.phpdoc.org/). You should install it yourself.
+
+To generate an API-level documentation, you should issue `phing api` from the root of codebase.
+
+Documentaion will be placed into the `doc/api` runtime folder in the codebase.
+You can point your browser to the `doc/api/index.html` file in it to start reading.

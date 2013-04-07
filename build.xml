@@ -10,7 +10,7 @@
     </fileset>
 
     <!-- Make an archive ready for distribution to end-users. -->
-    <target name="release" depends="prepare">
+    <target name="release" depends="prepare-release">
         <propertyprompt useExistingValue="true" propertyName="project.version" defaultValue="beta" promptText="What is the version of this release"/>
         <property name="build.distfilename" value="${path.dist}/yiibooster-${project.version}.zip" />
         <echo msg="Packing the sources to ${build.distfilename} ..." />
@@ -25,10 +25,32 @@
     </target>
 
     <!-- Prepare the destination folder for distribution archive. -->
-    <target name="prepare">
+    <target name="prepare-release">
         <echo msg="Recreating a distribution directory at ${path.dist}" />
         <delete dir="${path.dist}" includeemptydirs="true" failonerror="true" quiet="true" />
         <mkdir dir="${path.dist}" />
+    </target>
+
+    <!-- Make an API-level documentation -->
+    <target name="api" depends="prepare-docs-api">
+        <echo msg="Making an API-level documentation." />
+        <phpdoc2 title="${phing.project.name}"
+                 destdir="${path.docs}/api">
+            <fileset dir="${path.src}">
+                <exclude name="views**"/>
+                <!-- CKEditor currently has some PHP files in it's assets -->
+                <exclude name="assets**"/>
+                <!-- gii subfolder has some templates -->
+                <exclude name="templates**"/>
+            </fileset>
+        </phpdoc2>
+    </target>
+
+    <!-- Prepare folders for documentation -->
+    <target name="prepare-docs-api">
+        <echo msg="Recreating destination folder for API documentation at ${path.docs}/api" />
+        <delete dir="${path.docs}/api" includeemptydirs="true" failonerror="true" quiet="true" />
+        <mkdir dir="${path.docs}/api" />
     </target>
 
 </project>
