@@ -18,9 +18,43 @@ and be signed with release version specified.
 ## Generating a documentation
 
 ### API-level documentation
+
 API is being documented by [phpDocumentor2](http://www.phpdoc.org/). You should install it yourself.
 
 To generate an API-level documentation, you should issue `phing api` from the root of codebase.
 
 Documentaion will be placed into the `doc/api` runtime folder in the codebase.
 You can point your browser to the `doc/api/index.html` file in it to start reading.
+
+### Annotated source code documentation
+
+As an addition to the usual API docs, we have a means to make an annotated source code similar to [Docco](http://jashkenas.github.io/docco/).
+In fact, it uses the [Pinnocchio](https://github.com/ncuesta/pinocchio) documentation generator which is the port of Docco.
+
+To generate an annotated source code documentation, you should issue `phing annotated` from the root of codebase.
+Please note that this command will make a lot of actions when launched in a clean codebase.
+In short, before making use of Pinnocchio, it'll first check it's presence, and, if it's not available, then it'll be installed.
+
+To run Pinnocchio it needs to be installed, and by now it's only means of installing is by the [Composer](http://getcomposer.org/) distribution framework.
+So, `phing annotated` will first check the presence of already-downloaded Pinnocchio instance in the special runtime directory under the codebase.
+If Pinnocchio is not available, it'll check for already-downloaded Composer.
+If Composer is not available, too, it'll download it using CURL.
+After Composer will be available, build system will forge the required install configuration for Pinnocchio installation
+and invoke Composer to install it.
+
+Documentation will be placed into the `doc/annotated` runtime folder in the codebase.
+You can point your browser to the `doc/annotated/index.html` file in it to start reading.
+
+## Installing and removing Composer
+
+You can install Composer into not-so-invasive location of `./composer` by issuing `phing install-composer` from the root of codebase.
+For now, you don't need it for anything except Pinnocchio and Composer is being installed automatically when you run `phing annotated` anyway.
+
+You can purge Composer and everything it installed by issuing `phing purge-composer` from the root of codebase.
+It'll remove the Composer directory along with everything installed in it.
+
+## Cleaning the codebase
+
+You can clean all runtime directories which gets created by other build routines by issuing `phing clean` from the root of codebase.
+For now it'll remove the `composer`, `doc` and `dist` directories from the codebase.
+You can not bother creating them manually, build tasks create them themselves when needed.
