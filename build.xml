@@ -5,12 +5,23 @@
 
     <property file="build.properties" />
 
+    <fileset id="sources" dir="${path.src}">
+        <include name="**" />
+    </fileset>
+
     <!-- Make an archive ready for distribution to end-users. -->
     <target name="release" depends="prepare">
         <propertyprompt useExistingValue="true" propertyName="project.version" defaultValue="beta" promptText="What is the version of this release"/>
         <property name="build.distfilename" value="${path.dist}/yiibooster-${project.version}.zip" />
         <echo msg="Packing the sources to ${build.distfilename} ..." />
-        <zip basedir="${path.src}" destfile="${build.distfilename}" />
+        <zip destfile="${build.distfilename}">
+            <fileset refid="sources" />
+            <fileset dir=".">
+                <include name="README.md" />
+                <include name="INSTALL.md" />
+                <include name="CHANGELOG.md" />
+            </fileset>
+        </zip>
     </target>
 
     <!-- Prepare the destination folder for distribution archive. -->
