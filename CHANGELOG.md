@@ -1,12 +1,15 @@
 # ChangeLog
-## Special Thanks
+
+## Special Thanks from original author
 I would like to personally thank everyone of you that spend your valuable time helping improving this extension, by pointing out bugs and/or providing solutions that all of us can take advantage with.
 
 Thank you all
 
-Antonio Ramirez
-Senior Web Developer
-[www.clevertech.biz](http://www.clevertech.biz)
+Antonio Ramirez.
+
+### YiiBooster version 1.0.7
+- **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
+
 
 ### YiiBooster version 1.0.6
 - **(fix)** Now it is possible to provide custom 'class' and 'style' htmlOptions for TbProgress #216 (hijarian)
@@ -55,7 +58,6 @@ Senior Web Developer
 - **(enh)** Added CONTAINER_PREFIX constant for html div container id
 - **(fix)** Added class "hide" to modal div
 - **(fix)** Add support for non-link brand in TbNavbar
-- **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
 
 
 ### YiiBooster version 1.0.5
