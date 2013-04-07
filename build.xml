@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="YiiBooster" basedir="." default="release"
+         description="Widget toolkit for the Yii web framework">
+
+    <property file="build.properties" />
+
+    <!-- Make an archive ready for distribution to end-users. -->
+    <target name="release" depends="prepare">
+        <propertyprompt useExistingValue="true" propertyName="project.version" defaultValue="beta" promptText="What is the version of this release"/>
+        <property name="build.distfilename" value="${path.dist}/yiibooster-${project.version}.zip" />
+        <echo msg="Packing the sources to ${build.distfilename} ..." />
+        <zip basedir="${path.src}" destfile="${build.distfilename}" />
+    </target>
+
+    <!-- Prepare the destination folder for distribution archive. -->
+    <target name="prepare">
+        <echo msg="Recreating a distribution directory at ${path.dist}" />
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="true" quiet="true" />
+        <mkdir dir="${path.dist}" />
+    </target>
+
+</project>
