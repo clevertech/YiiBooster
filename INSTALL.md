@@ -9,11 +9,11 @@ Unzip the extension under `protected/extensions/bootstrap`, the structure of you
           └── bootstrap
               ├── assets
               │   ├── css
-              │	├── img
-              │	├── js
-              │	└── less
+              │   ├── img
+              │   ├── js
+              │   └── less
               ├── components
-              │		Bootstrap.php
+              │   Bootstrap.php
               └── widgets
                   └── input
 
