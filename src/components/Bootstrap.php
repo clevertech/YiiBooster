@@ -155,10 +155,10 @@ class Bootstrap extends CApplicationComponent
 		foreach ($this->packages as $name => $definition)
 			Yii::app()->getClientScript()->addPackage($name, $definition);
 
-        if ($this->coreCss !== false)
-            $this->registerAllCss();
-        if ($this->enableJS !== false)
-            $this->registerAllScripts();
+		if ($this->coreCss !== false)
+			$this->registerAllCss();
+		if ($this->enableJS !== false)
+			$this->registerAllScripts();
 
 		parent::init();
 	}

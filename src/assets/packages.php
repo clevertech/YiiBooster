@@ -20,6 +20,7 @@
      'responsive'    => array(
          'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/' : $this->_assetsUrl,
          'css'     => array(YII_DEBUG ? 'bootstrap-responsive.css' : 'bootstrap-responsive.min.css'),
+         'depends' => array('bootstrap')
      ),
      'font-awesome'  => array(
          'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/' : $this->_assetsUrl,
