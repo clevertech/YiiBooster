@@ -124,6 +124,7 @@ class Bootstrap extends CApplicationComponent
 	 * a set of CSS and/or JavaScript script files, and their dependent package names.
 	 * By calling {@link registerPackage}, one can register a whole package of client
 	 * scripts together with their dependent packages and render them in the HTML output.
+     * @since 1.0.7
 	 */
 	public $packages = array();
 
