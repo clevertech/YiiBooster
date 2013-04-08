@@ -1,12 +1,16 @@
 # ChangeLog
-## Special Thanks
+
+## Special Thanks from original author
 I would like to personally thank everyone of you that spend your valuable time helping improving this extension, by pointing out bugs and/or providing solutions that all of us can take advantage with.
 
 Thank you all
 
-Antonio Ramirez
-Senior Web Developer
-[www.clevertech.biz](http://www.clevertech.biz)
+Antonio Ramirez.
+
+### YiiBooster version 1.0.7
+- **(enh)** Added the possibility to render append/prepend without a span wrap #414 (Frostmaind)
+- **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
+
 
 ### YiiBooster version 1.0.6
 - **(fix)** Now it is possible to provide custom 'class' and 'style' htmlOptions for TbProgress #216 (hijarian)
