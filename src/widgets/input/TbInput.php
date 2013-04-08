@@ -401,7 +401,10 @@ abstract class TbInput extends CInputWidget
 			ob_start();
 			echo '<div class="' . $this->getAddonCssClass() . '">';
 			if (isset($this->prependText))
-				echo CHtml::tag('span', $htmlOptions, $this->prependText);
+				if (isset($htmlOptions['isRaw']) && $htmlOptions['isRaw'])
+					echo $this->prependText;
+				else
+					echo CHtml::tag('span', $htmlOptions, $this->prependText);
 
 			return ob_get_clean();
 		} else
@@ -428,7 +431,10 @@ abstract class TbInput extends CInputWidget
 
 			ob_start();
 			if (isset($this->appendText))
-				echo CHtml::tag('span', $htmlOptions, $this->appendText);
+				if (isset($htmlOptions['isRaw']) && $htmlOptions['isRaw'])
+					echo $this->appendText;
+				else
+					echo CHtml::tag('span', $htmlOptions, $this->appendText);
 
 			echo '</div>';
 			return ob_get_clean();
