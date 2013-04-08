@@ -2,6 +2,8 @@
 
 # Directory for distribution archives, gets recreated on each test run
 /dist
+/reports
+/doc
 
 ## Stuff from external utilities
 

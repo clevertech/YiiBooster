@@ -126,12 +126,37 @@
         <echo msg="Now everything related to Composed should be completely erased from your codebase" />
    </target>
 
-    <!-- purge all runtime directories -->
+    <!-- Purge all runtime directories -->
     <target name="clean">
         <echo msg="Purging all runtime directories" />
         <delete dir="${path.composer}" includeemptydirs="true" failonerror="false" quiet="false" />
         <delete dir="${path.docs}" includeemptydirs="true" failonerror="false" quiet="false" />
         <delete dir="${path.dist}" includeemptydirs="true" failonerror="false" quiet="false" />
+        <delete dir="${path.reports}" includeemptydirs="true" failonerror="false" quiet="false" />
         <echo msg="Now your codebase should be completely clean." />
     </target>
+
+    <!-- Run all tests -->
+    <target name="test">
+        <echo msg="Running all existing tests..." />
+        <!-- NO we will NOT use built-in "phpunit" task because it's pretty shitty compared to phpunit.xml -->
+        <exec executable="phpunit" passthru="true">
+            <arg value="--configuration" />
+            <arg path="${path.tests}/phpunit.xml" />
+
+            <!-- Logging setup -->
+            <arg value="--coverage-html" />
+            <arg path="${path.reports}/coverage" />
+            <arg value="--coverage-clover" />
+            <arg path="${path.reports}/clover-coverage.xml" />
+            <arg value="--testdox-text" />
+            <arg path="${path.reports}/testdox.txt" />
+            <arg value="--log-junit" />
+            <arg path="${path.reports}/junit-log.xml" />
+
+            <arg value="--testsuite" /> <!-- available only in PHPUnit 3.7.0+ -->
+            <arg value="Unit tests" />
+        </exec>
+    </target>
+
 </project>

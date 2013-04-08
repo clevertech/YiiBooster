@@ -61,3 +61,17 @@ It'll remove the Composer directory along with everything installed in it.
 You can clean all runtime directories which gets created by other build routines by issuing `phing clean` from the root of codebase.
 For now it'll remove the `composer`, `doc` and `dist` directories from the codebase.
 You can not bother creating them manually, build tasks create them themselves when needed.
+
+## Running tests
+
+We have a suite of automated unit tests now.
+It's currently quite rudimentary, but number of tests is expected to be growing.
+
+**WARNING: I SAID IT'S RUDIMENTARY, DO NOT RELY ON IT YET!**
+
+To run all tests currently present in the project, you should issue `phing test` from the root of codebase.
+It outputs test results to the console and generate a set of reports in the `./reports` runtime directory as well.
+
+Note that this build target generates a global code coverage report accessible from `./reports/coverage/index.html`,
+using which you can easily see which parts of codebase are uncovered.
+
