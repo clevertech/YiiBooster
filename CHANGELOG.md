@@ -9,6 +9,7 @@ Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
 - **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
+- **(enh)** Now use Yii clientScript packages functionality with ability to use custom assetsUrl, added option enableCdn (true if YII_DEBUG off, netdna.bootstrapcdn.com CDN used by default) (magefad)
 
 
 ### YiiBooster version 1.0.6
