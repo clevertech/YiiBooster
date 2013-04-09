@@ -1,3 +1,12 @@
+# Requirements summary
+
+You need the following on your system to run the build commands described later.
+
+1. [Phing](http://www.phing.info/)
+2. [PHPUnit](https://github.com/sebastianbergmann/phpunit/#readme)
+3. [phpDocumentor2](http://www.phpdoc.org/)
+4. [CURL](http://curl.haxx.se/) binaries (not a PHP extension, but a real one).
+
 # Building instructions
 
 Build is being made by [Phing](http://www.phing.info), which you should have installed in your machine.
