@@ -20,6 +20,7 @@
                 <include name="README.md" />
                 <include name="INSTALL.md" />
                 <include name="CHANGELOG.md" />
+                <include name="LICENSE" />
             </fileset>
         </zip>
     </target>
