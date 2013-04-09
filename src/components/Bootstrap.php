@@ -150,7 +150,7 @@ class Bootstrap extends CApplicationComponent
 			$this->enableCdn = !YII_DEBUG;
 
 		$this->packages = CMap::mergeArray(
-			require($this->getAssetsUrl() . DIRECTORY_SEPARATOR . 'packages.php'),
+			require(Yii::getPathOfAlias('bootstrap.assets') . DIRECTORY_SEPARATOR . 'packages.php'),
 			$this->packages
 		);
 		foreach ($this->packages as $name => $definition)
