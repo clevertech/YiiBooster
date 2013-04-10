@@ -12,6 +12,7 @@ Antonio Ramirez.
 - **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
 - **(enh)** Now use Yii clientScript packages functionality with ability to use custom assetsUrl, added option enableCdn (true if YII_DEBUG off, netdna.bootstrapcdn.com CDN used by default) (magefad)
 - **(enh)** Added Helpers: TbHtml, TbIcon for compatibility with yiistrap #443 (magefad)
+- **(cln)** Remove not bootstrap - jquery editable. Use stable **bootstrap** x-editable instead. (magefad)
 
 
 ### YiiBooster version 1.0.7
