@@ -49,6 +49,6 @@
      'notify'    => array(
          'baseUrl' => $this->getAssetsUrl(),
          'css'     => array('css/bootstrap-notify.css'),
-         'js'      => array('bootstrap.notify.js')
+         'js'      => array('js/bootstrap.notify.js')
      ),
  );
