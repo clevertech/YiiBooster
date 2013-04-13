@@ -116,10 +116,8 @@ class TbFileUpload extends CJuiInputWidget
 				$this->options['maxFileSize'] = $fileSize;
 		}
 
-		$htmlOptions = array();
-
 		if ($this->multiple)
-			$htmlOptions["multiple"] = true;
+			$this->htmlOptions["multiple"] = true;
 
 		$this->render($this->uploadView);
 		$this->render($this->downloadView);
