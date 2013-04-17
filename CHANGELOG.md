@@ -8,14 +8,13 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(enh)** Added the special properties to set `htmlOptions` on tab content and tabs themselves in `TbTabs` #452 (lloyd966, Antonio Ramirez)
 - **(enh)** Added the possibility to render append/prepend without a span wrap #414 (Frostmaind)
 - **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
 - **(enh)** Now use Yii clientScript packages functionality with ability to use custom assetsUrl, added option enableCdn (true if YII_DEBUG off, netdna.bootstrapcdn.com CDN used by default) (magefad)
 - **(enh)** Added Helpers: TbHtml, TbIcon for compatibility with yiistrap #443 (magefad)
 - **(cln)** Remove not bootstrap - jquery editable. Use stable **bootstrap** x-editable instead. (magefad)
-
-
-### YiiBooster version 1.0.7
+- **(cln)** Removed non-working TbJqRangeSlider (magefad)
 - **(fix)** Include specific FontAwesome CSS for IE7 #434 (kev360)
 
 ### YiiBooster version 1.0.6
