@@ -64,6 +64,16 @@ class TbTabs extends CWidget
 	public $htmlOptions = array();
 
 	/**
+	 * @var array the HTML attributes for the widget tab content container.
+	 */
+	public $tabContentHtmlOptions = array();
+
+	/**
+	 * @var array the HTML attributes for the widget tab content container.
+	 */
+	public $tabMenuHtmlOptions = array();
+
+	/**
 	 *### .init()
 	 *
 	 * Initializes the widget.
@@ -88,6 +98,11 @@ class TbTabs extends CWidget
 			else
 				$this->htmlOptions['class'] = $classes;
 		}
+
+		if (isset($this->tabContentHtmlOptions['class']))
+			$this->tabContentHtmlOptions['class'] .= ' tab-content';
+		else
+			$this->tabContentHtmlOptions['class'] = 'tab-content';
 	}
 
 	/**
@@ -106,19 +121,20 @@ class TbTabs extends CWidget
 			'stacked'=>$this->stacked,
 			'type'=>$this->type,
 			'encodeLabel'=>$this->encodeLabel,
+			'htmlOptions'=>$this->tabMenuHtmlOptions,
 			'items'=>$items,
 		));
 		$tabs = ob_get_clean();
 
 		ob_start();
-		echo '<div class="tab-content">';
+		echo CHtml::openTag('div', $this->tabContentHtmlOptions);
 		echo implode('', $content);
-		echo '</div>';
+		echo CHtml::closeTag('div');
 		$content = ob_get_clean();
 
 		echo CHtml::openTag('div', $this->htmlOptions);
 		echo $this->placement === self::PLACEMENT_BELOW ? $content.$tabs : $tabs.$content;
-		echo '</div>';
+		echo CHtml::closeTag('div');
 
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
