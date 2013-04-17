@@ -526,7 +526,7 @@ class TbEditableField extends CWidget
     public function registerAssets()
     {
         Yii::app()->bootstrap->registerAssetCss('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.css');
-        Yii::app()->bootstrap->registerAssetJs('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.js', CClientScript::POS_END);
+        Yii::app()->bootstrap->registerAssetJs('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.js', CClientScript::POS_HEAD);
 
         if ($this->type == 'date' || $this->type == 'combodate') {
             /** @var $widget TbDatePicker */
