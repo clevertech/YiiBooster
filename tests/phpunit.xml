@@ -1,0 +1,31 @@
+<phpunit
+        colors="false"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        processIsolation="false"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        strict="false"
+        verbose="false">
+
+    <testsuites>
+        <testsuite name="Unit tests">
+            <directory>unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <!-- Whitelist for code coverage reports -->
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../src/widgets</directory>
+            <directory suffix=".php">../src/widgets/input</directory>
+            <directory suffix=".php">../src/actions</directory>
+            <directory suffix=".php">../src/components</directory>
+            <directory suffix=".php">../src/filters</directory>
+        </whitelist>
+    </filter>
+
+</phpunit>

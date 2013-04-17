@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="YiiBooster" basedir="." default="dist"
+         description="Widget toolkit for the Yii web framework">
+
+    <property file="build.properties" />
+
+    <fileset id="sources" dir="${path.src}">
+        <include name="**" />
+    </fileset>
+
+    <!-- Make an archive ready for distribution to end-users. -->
+    <target name="dist" depends="prepare-dist">
+        <propertyprompt useExistingValue="true" propertyName="project.version" defaultValue="beta" promptText="What is the version of this release"/>
+        <property name="build.distfilename" value="${path.dist}/yiibooster-${project.version}.zip" />
+        <echo msg="Packing the sources to ${build.distfilename} ..." />
+        <zip destfile="${build.distfilename}">
+            <fileset refid="sources" />
+            <fileset dir=".">
+                <include name="README.md" />
+                <include name="INSTALL.md" />
+                <include name="CHANGELOG.md" />
+                <include name="LICENSE" />
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- Prepare the destination folder for distribution archive. -->
+    <target name="prepare-dist">
+        <echo msg="Recreating a distribution directory at ${path.dist}" />
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="true" quiet="true" />
+        <mkdir dir="${path.dist}" />
+    </target>
+
+    <!-- Make an API-level documentation -->
+    <target name="api" depends="prepare-docs-api">
+        <echo msg="Making an API-level documentation." />
+        <phpdoc2 title="${phing.project.name}"
+                 destdir="${path.docs}/api">
+            <fileset dir="${path.src}">
+                <exclude name="views**"/>
+                <!-- CKEditor currently has some PHP files in it's assets -->
+                <exclude name="assets**"/>
+                <!-- gii subfolder has some templates -->
+                <exclude name="templates**"/>
+            </fileset>
+        </phpdoc2>
+    </target>
+
+    <!-- Prepare folders for documentation -->
+    <target name="prepare-docs-api">
+        <echo msg="Recreating destination folder for API documentation at ${path.docs}/api" />
+        <delete dir="${path.docs}/api" includeemptydirs="true" failonerror="true" quiet="true" />
+        <mkdir dir="${path.docs}/api" />
+    </target>
+
+    <!-- Make an annotated source code documentation (using Pinnocchio) -->
+    <target name="annotated" depends="prepare-docs-annotated">
+        <echo msg="Running Pinnocchio over our source code base..." />
+        <if>
+            <not><available file="${path.composer.vendor}/ncuesta/pinnochio/bin/pinnocchio" /></not>
+            <then>
+                <echo msg="It seems we don't have Pinnocchio binaries installed yet, installing..." />
+                <echo msg="Note that I'll use only Pinnocchio instance installed by me myself." />
+                <phingcall target="install-pinnocchio" />
+            </then>
+        </if>
+        <exec command="${path.composer.vendor}/ncuesta/pinocchio/bin/pinocchio --source=${path.src}/widgets --output=${path.docs}/annotated"
+              passthru="true"
+              returnProperty="annotated.return" />
+        <if>
+            <not><equals arg1="${annotated.return}" arg2="0" /></not>
+            <then>
+                <echo msg="It seems you have a problem with your Pinnocchio setup." />
+                <fail message="Error when trying to launch Pinnocchio." />
+            </then>
+            <else>
+                <echo msg="Now you should be able to browse the annotated source code starting from ${path.docs}/annotated/index.html" />
+            </else>
+        </if>
+    </target>
+
+    <!-- Prepare folders for annotated source code documentation -->
+    <target name="prepare-docs-annotated">
+        <echo msg="Recreating destination folder for annotated source code documentation at ${path.docs}/annotated" />
+        <delete dir="${path.docs}/annotated" includeemptydirs="true" failonerror="true" quiet="true" />
+        <mkdir dir="${path.docs}/annotated" />
+    </target>
+
+    <!-- Install Pinnocchio -->
+    <target name="install-pinnocchio" depends="install-composer">
+        <echo msg="Installing Pinnocchio..." />
+        <echo msg="{ &quot;require-dev&quot;: { &quot;ncuesta/pinocchio&quot;: &quot;dev-master&quot; }, &quot;minimum-stability&quot;: &quot;dev&quot; }"
+              file="${path.composer}/composer.json" />
+        <exec dir="${path.composer}" command="php ./composer.phar install --dev" passthru="true" />
+        <echo msg="Now Pinnocchio should be installed under `${path.composer.vendor}/ncuesta/pinnocchio`." />
+    </target>
+
+    <!-- Install Composer -->
+    <target name="install-composer" depends="prepare-composer">
+        <if>
+            <not><available file="${path.composer}/composer.phar" /></not>
+            <then>
+                <echo msg="It seems you don't have Composer downloaded yet, downloading..." />
+                <echo msg="Note that you need CURL binaries installed in your system and PHP should be enabled to run PHAR archives!" />
+                <exec dir="${path.composer}" command="curl -sS https://getcomposer.org/installer | php" passthru="true" />
+                <echo msg="Now you should have Composer available under ${path.composer}/composer.phar" />
+            </then>
+        </if>
+    </target>
+
+    <!-- Prepare directories for Composer -->
+    <target name="prepare-composer">
+        <echo msg="Preparing directory for Composer" />
+        <if>
+            <not><available file="${path.composer}"/></not>
+            <then>
+                <mkdir dir="${path.composer}" />
+            </then>
+        </if>
+    </target>
+
+    <!-- Purge everything installed by Composer together with it out of the existence -->
+    <target name="purge-composer">
+        <echo msg="Purge everything installed by Composer together with it out of the existence" />
+        <delete dir="${path.composer}" includeemptydirs="true" failonerror="false" quiet="false" />
+        <echo msg="Now everything related to Composed should be completely erased from your codebase" />
+   </target>
+
+    <!-- Purge all runtime directories -->
+    <target name="clean">
+        <echo msg="Purging all runtime directories" />
+        <delete dir="${path.composer}" includeemptydirs="true" failonerror="false" quiet="false" />
+        <delete dir="${path.docs}" includeemptydirs="true" failonerror="false" quiet="false" />
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="false" quiet="false" />
+        <delete dir="${path.reports}" includeemptydirs="true" failonerror="false" quiet="false" />
+        <echo msg="Now your codebase should be completely clean." />
+    </target>
+
+    <!-- Run all tests -->
+    <target name="test">
+        <echo msg="Running all existing tests..." />
+        <!-- NO we will NOT use built-in "phpunit" task because it's pretty shitty compared to phpunit.xml -->
+        <exec executable="phpunit" passthru="true">
+            <arg value="--configuration" />
+            <arg path="${path.tests}/phpunit.xml" />
+
+            <!-- Logging setup -->
+            <arg value="--coverage-html" />
+            <arg path="${path.reports}/coverage" />
+            <arg value="--coverage-clover" />
+            <arg path="${path.reports}/clover-coverage.xml" />
+            <arg value="--testdox-text" />
+            <arg path="${path.reports}/testdox.txt" />
+            <arg value="--log-junit" />
+            <arg path="${path.reports}/junit-log.xml" />
+
+            <arg value="--testsuite" /> <!-- available only in PHPUnit 3.7.0+ -->
+            <arg value="Unit tests" />
+        </exec>
+    </target>
+
+</project>
