@@ -242,6 +242,7 @@ class TbButton extends CWidget
 				'encodeLabel'=>$this->encodeLabel,
 				'items'=>$this->items,
 				'htmlOptions'=>$this->dropdownOptions,
+				'id'=>isset($this->dropdownOptions['id']) ? $this->dropdownOptions['id'] : null,
 			));
 		}
 	}
