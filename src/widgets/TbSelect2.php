@@ -48,6 +48,8 @@ class TbSelect2 extends CInputWidget
   {
     if (empty($this->data) && $this->asDropDownList === true)
       throw new CException(Yii::t('zii', '"data" attribute cannot be blank'));
+
+	$this->setDefaultWidthIfEmpty();
   }
 
   /**
@@ -100,4 +102,13 @@ class TbSelect2 extends CInputWidget
 
     Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
   }
+
+	private function setDefaultWidthIfEmpty()
+	{
+		if (empty($this->options))
+			$this->options = array();
+
+		if (empty($this->options['width']))
+			$this->options['width'] = 'resolve';
+	}
 }
