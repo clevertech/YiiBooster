@@ -32,7 +32,7 @@
      ),
      'full.css'      => array(
          'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
-         'css'     => array(YII_DEBUG ? 'css/bootstrap-combined.no-icons.css' : 'css/bootstrap-combined.no-icons.min.css'),
+         'css'     => array('css/bootstrap-combined.no-icons.min.css'), // only minified version exists in our assets and CDN serves minified version anyway
      ),
      'bootstrap-yii' => array(
          'baseUrl' => $this->getAssetsUrl(),
