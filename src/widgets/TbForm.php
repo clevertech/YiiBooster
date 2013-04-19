@@ -131,14 +131,15 @@ class TbForm extends CForm
      * @param array $config
      * @param $parent
      * @param array $options
+     * @param CModel $model
      * @return mixed
      */
-    public static function createForm($config, $parent, $options = array())
+    public static function createForm($config, $parent, $options = array(), $model = null)
     {
         $class = __CLASS__;
         $options['class'] = 'TbActiveForm';
 
-        $form = new $class($config, null, $parent);
+        $form = new $class($config, $model, $parent);
         $form->activeForm = $options;
 
         return $form;
