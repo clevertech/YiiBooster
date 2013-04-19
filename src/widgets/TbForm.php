@@ -138,7 +138,7 @@ class TbForm extends CForm
         $class = __CLASS__;
         $options['class'] = 'TbActiveForm';
 
-        $form = new $class($config, $parent);
+        $form = new $class($config, null, $parent);
         $form->activeForm = $options;
 
         return $form;
