@@ -8,6 +8,7 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(fix)** Fixed use of negative numbers in TbSumOperation (speixoto)
 - **(enh)** Added the special properties to set `htmlOptions` on tab content and tabs themselves in `TbTabs` #452 (lloyd966, Antonio Ramirez)
 - **(enh)** Added ability to set the id of the dropdown menu #462 (speixoto)
 - **(enh)** Added the possibility to render append/prepend without a span wrap #414 (Frostmaind)
