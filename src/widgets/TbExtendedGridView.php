@@ -822,7 +822,7 @@ class TbSumOperation extends TbOperation
 	 */
 	protected function extractNumber($value)
 	{
-		preg_match_all('/([0-9]+[,\.]?)+/', $value, $matches);
+		preg_match_all('/([+-]?[0-9]+[,\.]?)+/', $value, $matches);
 		return !empty($matches[0]) && @$matches[0][0] ? $matches[0][0] : 0;
 	}
 
