@@ -367,8 +367,6 @@ class Bootstrap extends CApplicationComponent
 		if (!isset($options['selector']))
 		{
 			$options['selector'] = '[rel=popover]';
-			if (null === $selector)
-				$selector = 'body';
 		}
 		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options, $this->popoverSelector);
 	}
@@ -397,8 +395,6 @@ class Bootstrap extends CApplicationComponent
 		if (!isset($options['selector']))
 		{
 			$options['selector'] = '[rel=tooltip]';
-			if (null === $selector)
-				$selector = 'body';
 		}
 		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options, $this->tooltipSelector);
 	}
