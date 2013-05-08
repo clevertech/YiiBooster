@@ -43,7 +43,11 @@ class TbImageGallery extends CWidget
         Yii::app()->bootstrap->registerAssetJs('fileupload/load-image.min.js');
         Yii::app()->bootstrap->registerAssetJs('bootstrap-image-gallery' . (!YII_DEBUG ? '.min' : '') . '.js');
         if ($this->fullScreen) {
-            Yii::app()->clientScript->registerScript($this->id, 'jQuery("#' . $this->id . '").addClass("modal-fullscreen");', CClientScript::POS_READY);
+            Yii::app()->clientScript->registerScript(
+                $this->id,
+                'jQuery("#' . $this->id . '").addClass("modal-fullscreen");',
+                CClientScript::POS_READY
+            );
         }
         if (!$this->eventListener) {
             Yii::app()->clientScript->registerScript($this->id, '$(document.body).off(".modal-gallery.data-api");');

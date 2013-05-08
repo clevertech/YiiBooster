@@ -15,21 +15,22 @@ Yii::import('bootstrap.widgets.input.TbInputInline');
  */
 class TbInputSearch extends TbInputInline
 {
-	/**
-	 * Renders a text field.
-	 * @return string the rendered content
-	 */
-	protected function searchField()
-	{
-		if (isset($this->htmlOptions['class']))
-			$this->htmlOptions['class'] .= ' search-query';
-		else
-			$this->htmlOptions['class'] = 'search-query';
+    /**
+     * Renders a text field.
+     * @return string the rendered content
+     */
+    protected function searchField()
+    {
+        if (isset($this->htmlOptions['class'])) {
+            $this->htmlOptions['class'] .= ' search-query';
+        } else {
+            $this->htmlOptions['class'] = 'search-query';
+        }
 
-		$this->setPlaceholder();
-		echo $this->getPrepend();
-		echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
-		echo $this->getAppend();
-		echo $this->getError().$this->getHint();
-	}
+        $this->setPlaceholder();
+        echo $this->getPrepend();
+        echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
+        echo $this->getAppend();
+        echo $this->getError() . $this->getHint();
+    }
 }

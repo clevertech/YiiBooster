@@ -9,280 +9,280 @@
 */
 
 /**
-* EditableField widget makes editable single attribute of model.
-*
-* @package widgets
-*/
+ * EditableField widget makes editable single attribute of model.
+ *
+ * @package widgets
+ */
 class TbEditableField extends CWidget
 {
     //note: only most usefull options are on first level of config.
 
     // --- start of X-editable options ----
     /**
-    * @var CActiveRecord ActiveRecord to be updated.
-    */
+     * @var CActiveRecord ActiveRecord to be updated.
+     */
     public $model = null;
     /**
-    * @var string attribute name.
-    */
+     * @var string attribute name.
+     */
     public $attribute = null;
     /**
-    * @var string parent ID.
-    */
+     * @var string parent ID.
+     */
     public $parentid = null;
     /**
-    * @var string type of editable widget. Can be `text`, `textarea`, `select`, `date`, `checklist`, etc.
-    * @see x-editable
-    */
+     * @var string type of editable widget. Can be `text`, `textarea`, `select`, `date`, `checklist`, etc.
+     * @see x-editable
+     */
     public $type = null;
     /**
-    * @var string url to submit value. Can be string or array containing Yii route, e.g. `array('site/updateUser')`
-    * @see x-editable
-    */
+     * @var string url to submit value. Can be string or array containing Yii route, e.g. `array('site/updateUser')`
+     * @see x-editable
+     */
     public $url = null;
     /**
-    * @var array additional params to send on server
-    * @see x-editable
-    */
+     * @var array additional params to send on server
+     * @see x-editable
+     */
     public $params = null;
     /**
-    * @var string css class of input. If `null` - default X-editable value is used: `input-medium`
-    * @see x-editable
-    */
+     * @var string css class of input. If `null` - default X-editable value is used: `input-medium`
+     * @see x-editable
+     */
     public $inputclass = null;
     /**
-    * @var string mode of input: `inline` | `popup`. If not set - default X-editable value is used: `popup`.
-    * @see x-editable
-    */
+     * @var string mode of input: `inline` | `popup`. If not set - default X-editable value is used: `popup`.
+     * @see x-editable
+     */
     public $mode = 'popup';
     /**
-    * @var string text to be shown as element content
-    */
+     * @var string text to be shown as element content
+     */
     public $text = null;
     /**
-    * @var mixed initial value. If not set - will be taken from text
-    * @see x-editable
-    */
+     * @var mixed initial value. If not set - will be taken from text
+     * @see x-editable
+     */
     public $value = null;
     /**
-    * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`. If `null` - default X-editable value is used: `top`
-    * @see x-editable
-    */
+     * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`. If `null` - default X-editable value is used: `top`
+     * @see x-editable
+     */
     public $placement = null;
 
     /**
-    * @var string text shown on empty field. If `null` - default X-editable value is used: `Empty`
-    * @see x-editable
-    */
+     * @var string text shown on empty field. If `null` - default X-editable value is used: `Empty`
+     * @see x-editable
+     */
     public $emptytext = null;
 
     /**
-    * @var boolean will editable be initially disabled. It means editable plugin will be applied to element,
-    * but you should call `.editable('enable')` method to activate it.
-    * To totally disable applying 'editable' to element use **apply** option.
-    * @see x-editable
-    */
+     * @var boolean will editable be initially disabled. It means editable plugin will be applied to element,
+     * but you should call `.editable('enable')` method to activate it.
+     * To totally disable applying 'editable' to element use **apply** option.
+     * @see x-editable
+     */
     public $disabled = false;
 
     //list
     /**
-    * @var mixed source data for **select**, **checklist**. Can be string (url) or array in format: 
-    * array( array("value" => 1, "text" => "abc"), ...)
-    * @package list
-    * @see x-editable
-    */
+     * @var mixed source data for **select**, **checklist**. Can be string (url) or array in format:
+     * array( array("value" => 1, "text" => "abc"), ...)
+     * @package list
+     * @see x-editable
+     */
     public $source = null;
 
     //date
     /**
-    * @var string format to send date on server. If `null` - default X-editable value is used: `yyyy-mm-dd`.
-    * @package date
-    * @see x-editable
-    */
+     * @var string format to send date on server. If `null` - default X-editable value is used: `yyyy-mm-dd`.
+     * @package date
+     * @see x-editable
+     */
     public $format = null;
     /**
-    * @var string format to display date in element. If `null` - equals to **format** option.
-    * @package date
-    * @see x-editable
-    */
+     * @var string format to display date in element. If `null` - equals to **format** option.
+     * @package date
+     * @see x-editable
+     */
     public $viewformat = null;
     /**
-    * @var string template for **combodate** input. For details see http://vitalets.github.com/x-editable/docs.html#combodate.
-    * @package combodate
-    * @see x-editable
-    */
+     * @var string template for **combodate** input. For details see http://vitalets.github.com/x-editable/docs.html#combodate.
+     * @package combodate
+     * @see x-editable
+     */
     public $template = null;
     /**
-    * @var array full config for **combodate** input. For details see http://vitalets.github.com/combodate/#docs
-    * @package combodate
-    * @see x-editable
-    */
+     * @var array full config for **combodate** input. For details see http://vitalets.github.com/combodate/#docs
+     * @package combodate
+     * @see x-editable
+     */
     public $combodate = null;
     /**
-    * @var string separator used to display tags.
-    * @package select2
-    * @see x-editable
-    */
+     * @var string separator used to display tags.
+     * @package select2
+     * @see x-editable
+     */
     public $viewseparator = null;
     /**
-    * @var array full config for **select2** input. For details see http://ivaynberg.github.com/select2
-    * @package select2
-    * @see x-editable
-    */
+     * @var array full config for **select2** input. For details see http://ivaynberg.github.com/select2
+     * @package select2
+     * @see x-editable
+     */
     public $select2 = null;
-    
+
     //methods
     /**
-    * A javascript function that will be invoked to validate value.
-    * Example:
-    * <pre>
-    * 'validate' => 'js: function(value) {
-    *     if ($.trim(value) == "") return "This field is required";
-    * }'
-    * </pre>
-    *
-    * @var string
-    * @package callback
-    * @see x-editable
-    * @example
-    */
+     * A javascript function that will be invoked to validate value.
+     * Example:
+     * <pre>
+     * 'validate' => 'js: function(value) {
+     *     if ($.trim(value) == "") return "This field is required";
+     * }'
+     * </pre>
+     *
+     * @var string
+     * @package callback
+     * @see x-editable
+     * @example
+     */
     public $validate = null;
     /**
-    * A javascript function that will be invoked to process successful server response.
-    * Example:
-    * <pre>
-    * 'success' => 'js: function(response, newValue) {
-    *     if (!response.success) return response.msg;
-    * }'
-    * </pre>
-    *
-    * @var string
-    * @package callback
-    * @see x-editable
-    */
+     * A javascript function that will be invoked to process successful server response.
+     * Example:
+     * <pre>
+     * 'success' => 'js: function(response, newValue) {
+     *     if (!response.success) return response.msg;
+     * }'
+     * </pre>
+     *
+     * @var string
+     * @package callback
+     * @see x-editable
+     */
     public $success = null;
     /**
-    * A javascript function that will be invoked to custom display value.
-    * Example:
-    * <pre>
-    * 'display' => 'js: function(value, sourceData) {
-    *      var escapedValue = $("&lt;div&gt;").text(value).html();
-    *      $(this).html("&lt;b&gt;"+escapedValue+"&lt;/b&gt;");
-    * }'
-    * </pre>
-    *
-    * @var string
-    * @package callback
-    * @see x-editable
-    */
+     * A javascript function that will be invoked to custom display value.
+     * Example:
+     * <pre>
+     * 'display' => 'js: function(value, sourceData) {
+     *      var escapedValue = $("&lt;div&gt;").text(value).html();
+     *      $(this).html("&lt;b&gt;"+escapedValue+"&lt;/b&gt;");
+     * }'
+     * </pre>
+     *
+     * @var string
+     * @package callback
+     * @see x-editable
+     */
     public $display = null;
 
 
     // --- X-editable events ---
     /**
-    * A javascript function that will be invoked when editable element is initialized
-    * @var string
-    * @package event
-    * @see x-editable
-    */
+     * A javascript function that will be invoked when editable element is initialized
+     * @var string
+     * @package event
+     * @see x-editable
+     */
     public $onInit;
     /**
-    * A javascript function that will be invoked when editable form is shown
-    * Example:
-    * <pre>
-    * 'onShown' => 'js: function() {
-    *     var $tip = $(this).data("editableContainer").tip();
-    *     $tip.find("input").val("overwriting value of input.");
-    * }'
-    * </pre>
-    *
-    * @var string
-    * @package event
-    * @see x-editable
-    */
+     * A javascript function that will be invoked when editable form is shown
+     * Example:
+     * <pre>
+     * 'onShown' => 'js: function() {
+     *     var $tip = $(this).data("editableContainer").tip();
+     *     $tip.find("input").val("overwriting value of input.");
+     * }'
+     * </pre>
+     *
+     * @var string
+     * @package event
+     * @see x-editable
+     */
     public $onShown;
     /**
-    * A javascript function that will be invoked when new value is saved
-    * Example:
-    * <pre>
-    * 'onSave' => 'js: function(e, params) {
-    *     alert("Saved value: " + params.newValue);
-    * }'
-    * </pre>
-    *
-    * @var string
-    * @package event
-    * @see x-editable
-    */
+     * A javascript function that will be invoked when new value is saved
+     * Example:
+     * <pre>
+     * 'onSave' => 'js: function(e, params) {
+     *     alert("Saved value: " + params.newValue);
+     * }'
+     * </pre>
+     *
+     * @var string
+     * @package event
+     * @see x-editable
+     */
     public $onSave;
     /**
-    * A javascript function that will be invoked when editable form is hidden
-    * Example:
-    * <pre>
-    * 'onHidden' => 'js: function(e, reason) {
-    *    if (reason === "save" || reason === "cancel") {
-    *        //auto-open next editable
-    *        $(this).closest("tr").next().find(".editable").editable("show");
-    *    }
-    * }'
-    * </pre>
-    *
-    * @var string
-    * @package event
-    * @see x-editable
-    */
+     * A javascript function that will be invoked when editable form is hidden
+     * Example:
+     * <pre>
+     * 'onHidden' => 'js: function(e, reason) {
+     *    if (reason === "save" || reason === "cancel") {
+     *        //auto-open next editable
+     *        $(this).closest("tr").next().find(".editable").editable("show");
+     *    }
+     * }'
+     * </pre>
+     *
+     * @var string
+     * @package event
+     * @see x-editable
+     */
     public $onHidden;
 
     /**
-    * @var array all config options of x-editable. See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
-    */
+     * @var array all config options of x-editable. See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
+     */
     public $options = array();
 
     /**
-    * @var array HTML options of element
-    */
+     * @var array HTML options of element
+     */
     public $htmlOptions = array();
 
     /**
-    * @var boolean whether to HTML encode text on output
-    */
+     * @var boolean whether to HTML encode text on output
+     */
     public $encode = true;
 
     /**
-    * @var boolean whether to apply 'editable' js plugin to element. 
-    * Only **safe** attributes become editable.
-    */
+     * @var boolean whether to apply 'editable' js plugin to element.
+     * Only **safe** attributes become editable.
+     */
     public $apply = null;
 
     /**
-    * @var string title of popup. If `null` - will be generated automatically from attribute label.
-    * Can have token {label} inside that will be replaced with actual attribute label.
-    */
+     * @var string title of popup. If `null` - will be generated automatically from attribute label.
+     * Can have token {label} inside that will be replaced with actual attribute label.
+     */
     public $title = null;
 
     //themeUrl, theme and cssFile copied from CJuiWidget to allow include custom theme for jQuery UI
     /**
      * @var string for jQuery UI only. The root URL that contains JUI theme folders.
      * If not set, default Yii's theme will be used.
-    */
+     */
     public $themeUrl;
     /**
      * @var string for jQuery UI only. The JUI theme name.
      */
-    public $theme='base';
+    public $theme = 'base';
     /**
      * @var mixed for jQuery UI only. The theme CSS file name. By default Yii's jquery UI css used.
-    */
-    public $cssFile='jquery-ui.css';
+     */
+    public $cssFile = 'jquery-ui.css';
 
     private $_prepareToAutotext = false;
 
     /**
-   *### .init()
-   *
-    * initialization of widget
-    *
-    */
+     *### .init()
+     *
+     * initialization of widget
+     *
+     */
     public function init()
     {
         parent::init();
@@ -331,16 +331,20 @@ class TbEditableField extends CWidget
             $this->type = 'text';
             if (array_key_exists($this->attribute, $this->model->tableSchema->columns)) {
                 $dbType = $this->model->tableSchema->columns[$this->attribute]->dbType;
-                if ($dbType == 'date' || $dbType == 'datetime') $this->type = 'date';
-                if (stripos($dbType, 'text') !== false) $this->type = 'textarea';
+                if ($dbType == 'date' || $dbType == 'datetime') {
+                    $this->type = 'date';
+                }
+                if (stripos($dbType, 'text') !== false) {
+                    $this->type = 'textarea';
+                }
             }
         }
 
         /*
         If set this flag to true --> element content will stay empty and value will be rendered to data-value attribute to apply autotext.
         */
-        $this->_prepareToAutotext = (!isset($this->options['autotext']) || $this->options['autotext'] !== 'never') 
-         && in_array($this->type, array('select', 'checklist', 'date', 'dateui', 'combodate', 'select2'));
+        $this->_prepareToAutotext = (!isset($this->options['autotext']) || $this->options['autotext'] !== 'never')
+            && in_array($this->type, array('select', 'checklist', 'date', 'dateui', 'combodate', 'select2'));
 
         /*
          If text not defined, generate it from model attribute for types except lists ('select', 'checklist' etc)
@@ -355,20 +359,21 @@ class TbEditableField extends CWidget
         $this->registerAssets();
     }
 
-  /*
-   *### .buildHtmlOptions()
-   */
+    /*
+     *### .buildHtmlOptions()
+     */
     public function buildHtmlOptions()
     {
         //html options
         $htmlOptions = array(
-            'href'      => '#',
-            'rel'       => $this->getSelector(),
+            'href' => '#',
+            'rel' => $this->getSelector(),
         );
 
         //set data-pk only for existing records
-        if(!$this->model->isNewRecord) {
-           $htmlOptions['data-pk'] = is_array($this->model->primaryKey) ? CJSON::encode($this->model->primaryKey) : $this->model->primaryKey; 
+        if (!$this->model->isNewRecord) {
+            $htmlOptions['data-pk'] = is_array($this->model->primaryKey) ? CJSON::encode($this->model->primaryKey)
+                : $this->model->primaryKey;
         }
 
         //if input type assumes autotext (e.g. select) we define value directly in data-value 
@@ -386,8 +391,12 @@ class TbEditableField extends CWidget
                     */
                     $count = 0;
                     $format = str_replace('MM', 'MMMM', $this->format, $count);
-                    if (!$count) $format = str_replace('M', 'MMM', $format, $count);
-                    if (!$count) $format = str_replace('m', 'M', $format);
+                    if (!$count) {
+                        $format = str_replace('M', 'MMM', $format, $count);
+                    }
+                    if (!$count) {
+                        $format = str_replace('m', 'M', $format);
+                    }
 
                     $this->value = Yii::app()->dateFormatter->format($format, $this->value->getTimestamp());
                 }
@@ -410,13 +419,13 @@ class TbEditableField extends CWidget
         //generate title from attribute label
         if ($this->title === null) {
             $titles = array(
-              'Select' => array('select', 'date'),
-              'Check' => array('checklist')
+                'Select' => array('select', 'date'),
+                'Check' => array('checklist')
             );
             $title = Yii::t('TbEditableField.editable', 'Enter');
-            foreach($titles as $t => $types) {
+            foreach ($titles as $t => $types) {
                 if (in_array($this->type, $types)) {
-                   $title = Yii::t('TbEditableField.editable', $t);
+                    $title = Yii::t('TbEditableField.editable', $t);
                 }
             }
             $this->title = $title . ' ' . $this->model->getAttributeLabel($this->attribute);
@@ -425,16 +434,26 @@ class TbEditableField extends CWidget
         }
 
         $options = array(
-            'type'  => $this->type,
-            'url'   => $this->url,
-            'name'  => $this->attribute,
+            'type' => $this->type,
+            'url' => $this->url,
+            'name' => $this->attribute,
             'title' => CHtml::encode($this->title),
         );
 
         //simple options set directly from config
-        foreach(array('mode', 'placement', 'emptytext', 'params', 'inputclass', 'format', 'viewformat', 'template',
-                      'combodate', 'select2', 'viewseparator'
-               ) as $option) {
+        foreach (array(
+                     'mode',
+                     'placement',
+                     'emptytext',
+                     'params',
+                     'inputclass',
+                     'format',
+                     'viewformat',
+                     'template',
+                     'combodate',
+                     'select2',
+                     'viewseparator'
+                 ) as $option) {
             if ($this->$option) {
                 $options[$option] = $this->$option;
             }
@@ -443,13 +462,13 @@ class TbEditableField extends CWidget
         if ($this->source) {
             //if source is array --> convert it to x-editable format.
             //Since 1.1.0 source as array with one element is NOT treated as Yii route!
-            if(is_array($this->source)) {
+            if (is_array($this->source)) {
                 //if first elem is array assume it's normal x-editable format, so just pass it
                 if (isset($this->source[0]) && is_array($this->source[0])) {
                     $options['source'] = $this->source;
                 } else { //else convert to x-editable source format {value: 1, text: 'abc'}
                     $options['source'] = array();
-                    foreach($this->source as $value => $text) {
+                    foreach ($this->source as $value => $text) {
                         $options['source'][] = array('value' => $value, 'text' => $text);
                     }
                 }
@@ -475,9 +494,9 @@ class TbEditableField extends CWidget
         }
 
         //callbacks
-        foreach(array('validate', 'success', 'display') as $method) {
+        foreach (array('validate', 'success', 'display') as $method) {
             if (isset($this->$method)) {
-                $options[$method]=(strpos($this->$method, 'js:') !== 0 ? 'js:' : '') . $this->$method;
+                $options[$method] = (strpos($this->$method, 'js:') !== 0 ? 'js:' : '') . $this->$method;
             }
         }
 
@@ -485,25 +504,26 @@ class TbEditableField extends CWidget
         $this->options = CMap::mergeArray($this->options, $options);
     }
 
-  /*
-   *### .registerClientScript()
-   */
+    /*
+     *### .registerClientScript()
+     */
     public function registerClientScript()
     {
         // target the specific field if parent ID is specified
-        if ($this->parentid)
+        if ($this->parentid) {
             $script = "$('#{$this->parentid} a[rel={$this->htmlOptions['rel']}]')";
-        else
+        } else {
             $script = "$('a[rel={$this->htmlOptions['rel']}]')";
+        }
 
         //attach events
-        foreach(array('init', 'shown', 'save', 'hidden') as $event) {
-            $eventName = 'on'.ucfirst($event);
+        foreach (array('init', 'shown', 'save', 'hidden') as $event) {
+            $eventName = 'on' . ucfirst($event);
             if (isset($this->$eventName)) {
                 // CJavaScriptExpression appeared only in 1.1.11, will turn to it later
                 //$event = ($this->onInit instanceof CJavaScriptExpression) ? $this->onInit : new CJavaScriptExpression($this->onInit);
                 $eventJs = (strpos($this->$eventName, 'js:') !== 0 ? 'js:' : '') . $this->$eventName;
-                $script .= "\n.on('".$event."', ".CJavaScript::encode($eventJs).")";
+                $script .= "\n.on('" . $event . "', " . CJavaScript::encode($eventJs) . ")";
             }
         }
 
@@ -512,33 +532,43 @@ class TbEditableField extends CWidget
         $script .= ".editable($options);";
 
         // unique script ID depending on the parent
-        if ($this->parentid)
-            Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->parentid . '-' . $this->id, $script);
-        else
+        if ($this->parentid) {
+            Yii::app()->getClientScript()->registerScript(
+                __CLASS__ . '#' . $this->parentid . '-' . $this->id,
+                $script
+            );
+        } else {
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $script);
+        }
 
         return $script;
     }
 
-  /*
-   *### .registerAssets()
-   */
+    /*
+     *### .registerAssets()
+     */
     public function registerAssets()
     {
         Yii::app()->bootstrap->registerAssetCss('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.css');
-        Yii::app()->bootstrap->registerAssetJs('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.js', CClientScript::POS_HEAD);
+        Yii::app()->bootstrap->registerAssetJs(
+            'bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.js',
+            CClientScript::POS_HEAD
+        );
 
         if ($this->type == 'date' || $this->type == 'combodate') {
             /** @var $widget TbDatePicker */
-            $widget = Yii::app()->widgetFactory->createWidget($this->getOwner(), 'bootstrap.widgets.TbDatePicker', array('options' => $this->options['datepicker']));
+            $widget = Yii::app()->widgetFactory->createWidget(
+                $this->getOwner(),
+                'bootstrap.widgets.TbDatePicker',
+                array('options' => $this->options['datepicker'])
+            );
             $widget->registerLanguageScript();
         }
         //include moment.js if needed 
         if ($this->type == 'combodate') {
             Yii::app()->bootstrap->registerAssetJs('moment.min.js');
-        }
-        //include select2 if needed
-        elseif($this->type == 'select2') {
+        } //include select2 if needed
+        elseif ($this->type == 'select2') {
             Yii::app()->bootstrap->registerAssetJs('select' . (!YII_DEBUG ? '.min' : '') . '.js');
             Yii::app()->bootstrap->registerAssetCss('select.css');
         }
@@ -557,9 +587,9 @@ class TbEditableField extends CWidget
         }
     }
 
-  /*
-   *### .renderLink()
-   */
+    /*
+     *### .renderLink()
+     */
     public function renderLink()
     {
         echo CHtml::openTag('a', $this->htmlOptions);
@@ -567,34 +597,43 @@ class TbEditableField extends CWidget
         echo CHtml::closeTag('a');
     }
 
-  /*
-   *### .renderText()
-   */
+    /*
+     *### .renderText()
+     */
     public function renderText()
     {
         $encodedText = $this->encode ? CHtml::encode($this->text) : $this->text;
         if ($this->type == 'textarea') {
-             $encodedText = preg_replace('/\r?\n/', '<br>', $encodedText);
+            $encodedText = preg_replace('/\r?\n/', '<br>', $encodedText);
         }
         echo $encodedText;
     }
 
-  /*
-   *### .getSelector()
-   */
+    /*
+     *### .getSelector()
+     */
     public function getSelector()
     {
-        if($this->model->isNewRecord) {
+        if ($this->model->isNewRecord) {
             $pk = 'new';
         } else {
             $pk = $this->model->primaryKey;
             //support of composite keys: convert to string
-            if(is_array($pk)) {
-                $pk = join('_', array_map(function($k, $v) { return $k.'-'.$v; }, array_keys($pk), $pk));
-            }       
+            if (is_array($pk)) {
+                $pk = join(
+                    '_',
+                    array_map(
+                        function ($k, $v) {
+                            return $k . '-' . $v;
+                        },
+                        array_keys($pk),
+                        $pk
+                    )
+                );
+            }
         }
-         
-        return str_replace('\\', '_', get_class($this->model)).'_'.$this->attribute.'_'.$pk;
+
+        return str_replace('\\', '_', get_class($this->model)) . '_' . $this->attribute . '_' . $pk;
     }
 
 
@@ -610,7 +649,7 @@ class TbEditableField extends CWidget
     {
         $explode = explode('.', $attribute);
         if (count($explode) > 1) {
-            for($i = 0; $i < count($explode)-1; $i++) {
+            for ($i = 0; $i < count($explode) - 1; $i++) {
                 $name = $explode[$i];
                 if ($model->$name instanceof CActiveRecord) {
                     $model = $model->$name;
@@ -626,19 +665,19 @@ class TbEditableField extends CWidget
     }
 
     /**
-    *### .registerJQueryUI()
-    *
-    * method to register jQuery UI with build-in or custom theme
-    *
-    */
+     *### .registerJQueryUI()
+     *
+     * method to register jQuery UI with build-in or custom theme
+     *
+     */
     protected function registerJQueryUI()
     {
         /** @var $cs CClientScript */
-        $cs=Yii::app()->getClientScript();
-        if ($this->themeUrl===null) {
-            $this->themeUrl=$cs->getCoreScriptUrl().'/jui/css';
+        $cs = Yii::app()->getClientScript();
+        if ($this->themeUrl === null) {
+            $this->themeUrl = $cs->getCoreScriptUrl() . '/jui/css';
         }
-        $cs->registerCssFile($this->themeUrl.'/'.$this->theme.'/'.$this->cssFile);
+        $cs->registerCssFile($this->themeUrl . '/' . $this->theme . '/' . $this->cssFile);
         $cs->registerPackage('jquery.ui');
     }
 }
