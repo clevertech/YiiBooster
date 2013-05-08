@@ -8,6 +8,7 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(fix)** Fixed the multiple option in `TbFileUpload` #457 (mikspark)
 - **(fix)** Removed BOM from all files and converted line endings to Unix `\n` ones #486 #479 (hijarian)
 - **(fix)** Fixed use of negative numbers in TbSumOperation (speixoto)
 - **(enh)** Added the special properties to set `htmlOptions` on tab content and tabs themselves in `TbTabs` #452 (lloyd966, Antonio Ramirez)
