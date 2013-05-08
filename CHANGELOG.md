@@ -8,6 +8,7 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(enh)** Update yiistrap compatibility helpers #443 (magefad)
 - **(fix)** Fixed the multiple option in `TbFileUpload` #457 (mikspark)
 - **(fix)** Removed BOM from all files and converted line endings to Unix `\n` ones #486 #479 (hijarian)
 - **(fix)** Fixed use of negative numbers in TbSumOperation (speixoto)
