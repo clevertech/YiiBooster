@@ -121,10 +121,8 @@ class TbFileUpload extends CJuiInputWidget
             }
         }
 
-        $htmlOptions = array();
-
         if ($this->multiple) {
-            $htmlOptions["multiple"] = true;
+            $this->htmlOptions["multiple"] = true;
         }
 
         $this->render($this->uploadView);
