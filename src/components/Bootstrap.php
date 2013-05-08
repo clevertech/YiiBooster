@@ -276,12 +276,13 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap popover plugin.
-	 * @param string $selector the CSS selector
+     *
+     * @param string $selector the CSS selector. If it's null, then the value of `popoverSelector` will be used instead, which is 'body' by default.
 	 * @param array $options the plugin options
 	 * @see http://twitter.github.com/bootstrap/javascript.html#popover
 	 * @since 0.9.8
 	 */
-	public function registerPopover($selector = 'body', $options = array())
+	public function registerPopover($selector = null, $options = array())
 	{
 		$this->registerTooltip(); // Popover requires the tooltip plugin
 		if (!isset($options['selector']))
@@ -292,12 +293,13 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap tooltip plugin.
-	 * @param string $selector the CSS selector
+     *
+	 * @param string $selector the CSS selector. If it's null, then the value of `tooltipSelector` will be used instead, which is 'body' by default.
 	 * @param array $options the plugin options
 	 * @see http://twitter.github.com/bootstrap/javascript.html#tooltip
 	 * @since 0.9.8
 	 */
-	public function registerTooltip($selector = 'body', $options = array())
+	public function registerTooltip($selector = null, $options = array())
 	{
 		if (!isset($options['selector']))
 			$options['selector'] = '[rel=tooltip]';
