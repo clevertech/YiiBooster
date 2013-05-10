@@ -227,7 +227,7 @@ class TbInputHorizontal extends TbInput
 			$this->labelOptions = array('for' => $label_for);
 		}
 
-		$this->htmlOptions['class'] = 'pull-left';
+        isset($this->htmlOptions['class']) ? $this->htmlOptions['class'] .= ' pull-left': $this->htmlOptions['class'] = 'pull-left';
 
 		echo $this->getLabel();
 		echo '<div class="controls">';
