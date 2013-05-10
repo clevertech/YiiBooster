@@ -184,7 +184,7 @@ class TbInputVertical extends TbInput
 		}
 
 		echo $this->getLabel();
-		echo $this->form->radioButtonGroupsList($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->form->radioButtonGroupsList($this->model, $this->attribute, $this->data, $this->htmlOptions, $this->unCheck);
 		echo $this->getError().$this->getHint();
 	}
 

@@ -227,11 +227,11 @@ class TbInputHorizontal extends TbInput
 			$this->labelOptions = array('for' => $label_for);
 		}
 
-		$this->htmlOptions['class'] = 'pull-left';
+        isset($this->htmlOptions['class']) ? $this->htmlOptions['class'] .= ' pull-left': $this->htmlOptions['class'] = 'pull-left';
 
 		echo $this->getLabel();
 		echo '<div class="controls">';
-		echo $this->form->radioButtonGroupsList($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->form->radioButtonGroupsList($this->model, $this->attribute, $this->data, $this->htmlOptions, $this->unCheck);
 		echo $this->getError().$this->getHint();
 		echo '</div>';
 	}
