@@ -125,6 +125,11 @@ abstract class TbInput extends CInputWidget
 	 */
 	public $enableClientValidation = true;
 
+    /**
+     * @var bool radioButtonGroupsList attribute, allowing to cancel the selection (re-click on the selected option)
+     */
+    public $unCheck = false;
+
 	/**
 	 *### .init()
 	 *
@@ -232,6 +237,13 @@ abstract class TbInput extends CInputWidget
 			$this->captchaOptions = $this->htmlOptions['captchaOptions'];
 			unset($this->htmlOptions['captchaOptions']);
 		}
+
+        if (isset($this->htmlOptions['rbglUncheck']))
+        {
+            $this->unCheck = $this->htmlOptions['rbglUncheck'];
+            unset($this->htmlOptions['rbglUncheck']);
+        }
+
 	}
 
 	/**

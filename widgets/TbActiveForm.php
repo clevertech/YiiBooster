@@ -240,10 +240,15 @@ class TbActiveForm extends CActiveForm
 	 * @param string $attribute the attribute
 	 * @param array $data the list data
 	 * @param array $htmlOptions additional HTML attributes
+     * @param bool $unCheck opportunity to cancel the selection (re-click on the selected option)
 	 * @return string the generated row
 	 */
-	public function radioButtonGroupsListRow($model, $attribute, $data = array(), $htmlOptions = array())
+	public function radioButtonGroupsListRow($model, $attribute, $data = array(), $htmlOptions = array(), $unCheck = false)
 	{
+        if($unCheck === true)
+        {
+            $htmlOptions['rbglUncheck'] = true;
+        }
 		return $this->inputRow(TbInput::TYPE_RADIOBUTTONGROUPSLIST, $model, $attribute, $data, $htmlOptions);
 	}
 
@@ -618,11 +623,12 @@ class TbActiveForm extends CActiveForm
 	 * @param string $attribute the attribute
 	 * @param array $data value-label pairs used to generate the radio button list.
 	 * @param array $htmlOptions additional HTML options.
+     * @param bool $unCheck opportunity to cancel the selection (re-click on the selected option)
 	 * @return string the generated radio button list
 	 *
 	 * @since 0.9.5
 	 */
-	public function radioButtonGroupsList($model, $attribute, $data, $htmlOptions = array())
+	public function radioButtonGroupsList($model, $attribute, $data, $htmlOptions = array(), $unCheck = false)
 	{
 		$buttons = array();
 		$scripts = array();
@@ -643,10 +649,24 @@ class TbActiveForm extends CActiveForm
 			$buttons[] = $button;
 
 			// event as ordinary input
-			$scripts[] = "\$('#" . $btnId . "').click(function(){
-				\$('#" . $hiddenFieldId . "').val('" . $key . "').trigger('change');
-			});";
+            if($unCheck === false)
+            {
+                $scripts[] = "\$('#" . $btnId . "').click(function(){
+                    \$('#" . $hiddenFieldId . "').val('" . $key . "').trigger('change');
+                });";
+            }
 		}
+
+        if($unCheck)
+        {
+            $cs = Yii::app()->getClientScript();
+            $assetsUrl = Yii::app()->bootstrap->getAssetsUrl();
+            $cs->registerScriptFile($assetsUrl . '/js/jquery.radioButtonGroup.js', CClientScript::POS_END);
+
+            //"rbgluncheck" this is the class to which is attached a jQuery plugin
+            isset($htmlOptions['class']) ? $htmlOptions['class'] .= ' rbgluncheck' : $htmlOptions['class'] = 'rbgluncheck';
+            $htmlOptions['data-hfId'] = $hiddenFieldId;
+        }
 
 		Yii::app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttonType' => 'button',
