@@ -187,7 +187,7 @@ class Bootstrap extends CApplicationComponent
     public function registerAllCss()
     {
         if ($this->responsiveCss !== false) {
-            $this->registerPackage('full.css')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
+            $this->registerPackage('responsive')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
         } else {
             $this->registerCoreCss();
         }
