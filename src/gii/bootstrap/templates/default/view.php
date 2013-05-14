@@ -30,7 +30,7 @@ array('label'=>'Manage <?php echo $this->modelClass; ?>','url'=>array('admin')),
 'attributes'=>array(
 <?php
 foreach ($this->tableSchema->columns as $column) {
-    echo "\t\t'" . $column->name . "',\n";
+	echo "\t\t'" . $column->name . "',\n";
 }
 ?>
 ),
