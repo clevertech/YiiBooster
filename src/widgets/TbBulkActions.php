@@ -41,6 +41,16 @@ class TbBulkActions extends CComponent
      * @var array the checkbox column configuration
      */
     public $checkBoxColumnConfig = array();
+    
+    /**
+     * @var bool
+     */
+    public $selectableRows;
+	
+	/**
+	 * @var string
+	 */
+    public $noCheckedMessage = 'No items are checked';
 
     /**
      * @var string
@@ -210,7 +220,8 @@ class TbBulkActions extends CComponent
         foreach ($this->buttons as $actionButton) {
             $this->renderButton($actionButton);
         }
-        echo '<div style="position:absolute;top:0;left:0;height:100%;width:100%;display:block;" class="bulk-actions-blocker"></div>';
+        if(!$this->selectableRows)
+            echo '<div style="position:absolute;top:0;left:0;height:100%;width:100%;display:block;" class="bulk-actions-blocker"></div>';
         echo '</div>';
 
         $this->registerClientScript();
@@ -223,7 +234,11 @@ class TbBulkActions extends CComponent
      */
     public function registerClientScript()
     {
-        $js = <<<EOD
+       
+        $js = '';
+        if(!$this->selectableRows)
+        {
+        $js .= <<<EOD
 $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
 	var grid = $("#{$this->grid->id}");
 	if ($("input[name='{$this->columnName}']:checked", grid).length)
@@ -239,8 +254,16 @@ $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
 	}
 });
 EOD;
+}
         foreach ($this->events as $buttonId => $handler) {
-            $js .= "\n$(document).on('click','#{$buttonId}', function(){var checked = $('input[name=\"{$this->columnName}\"]:checked');\n
+            $js .= "\n$(document).on('click','#{$buttonId}', function(){
+            var grid = $(\"#{$this->grid->id}\");
+            if (!$(\"input[name='{$this->columnName}']:checked\", grid).length)
+            {
+                alert('".$this->noCheckedMessage."');
+                return false;
+            }
+            var checked = $('input[name=\"{$this->columnName}\"]:checked');\n
 			var fn = $handler; if ($.isFunction(fn)){fn(checked);}\nreturn false;});\n";
         }
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), $js);
@@ -256,13 +279,13 @@ EOD;
     protected function renderButton($actionButton)
     {
         // create widget and display
-        if (isset($actionButton['htmlOptions']['class'])) {
+        if (isset($actionButton['htmlOptions']['class']) && !$this->selectableRows)
             $actionButton['htmlOptions']['class'] .= ' disabled bulk-actions-btn';
-        } else {
+        elseif (isset($actionButton['htmlOptions']['class']) && $this->selectableRows)
+            $actionButton['htmlOptions']['class'] .= 'bulk-actions-btn';
+        else
             $actionButton['htmlOptions']['class'] = 'disabled bulk-actions-btn';
-        }
-
-        $action = null;
+            $action = null;
 
         if (isset($actionButton['click'])) {
             $action = CJavaScript::encode($actionButton['click']);
