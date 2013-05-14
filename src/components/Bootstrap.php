@@ -299,7 +299,6 @@ class Bootstrap extends CApplicationComponent
      */
     public function registerPopover($selector = null, $options = array())
     {
-        $this->registerTooltip(); // Popover requires the tooltip plugin
         if (!isset($options['selector'])) {
             $options['selector'] = '[rel=popover]';
         }
