@@ -113,7 +113,7 @@ class TbEditableDetailView extends TbDetailView
      */
     private function getEditableProperties() {
         if(!isset($this->_editableProperties)) {
-            $reflection = new ReflectionClass('EditableField');
+            $reflection = new ReflectionClass('TbEditableField');
             $this->_editableProperties = array_map(function($d){return $d->getName();},$reflection->getProperties());
         }
         return $this->_editableProperties;
