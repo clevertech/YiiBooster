@@ -14,43 +14,44 @@ Yii::import('zii.widgets.CListView');
  */
 class TbListView extends CListView
 {
-	/**
-	 * @var string the CSS class name for the pager container. Defaults to 'pagination'.
-	 */
-	public $pagerCssClass = 'pagination';
+    /**
+     * @var string the CSS class name for the pager container. Defaults to 'pagination'.
+     */
+    public $pagerCssClass = 'pagination';
 
-	/**
-	 * @var array the configuration for the pager.
-	 * Defaults to <code>array('class'=>'ext.bootstrap.widgets.TbPager')</code>.
-	 */
-	public $pager = array('class'=>'bootstrap.widgets.TbPager');
+    /**
+     * @var array the configuration for the pager.
+     * Defaults to <code>array('class'=>'ext.bootstrap.widgets.TbPager')</code>.
+     */
+    public $pager = array('class' => 'bootstrap.widgets.TbPager');
 
-	/**
-	 * @var string the URL of the CSS file used by this detail view.
-	 * Defaults to false, meaning that no CSS will be included.
-	 */
-	public $cssFile = false;
+    /**
+     * @var string the URL of the CSS file used by this detail view.
+     * Defaults to false, meaning that no CSS will be included.
+     */
+    public $cssFile = false;
 
-	/**
-	 *### .init()
-	 *
-	 * Initializes the widget.
-	 */
-	public function init()
-	{
-		parent::init();
+    /**
+     *### .init()
+     *
+     * Initializes the widget.
+     */
+    public function init()
+    {
+        parent::init();
 
-		$popover = Yii::app()->bootstrap->popoverSelector;
-		$tooltip = Yii::app()->bootstrap->tooltipSelector;
+        $popover = Yii::app()->bootstrap->popoverSelector;
+        $tooltip = Yii::app()->bootstrap->tooltipSelector;
 
-		$afterAjaxUpdate = "js:function() {
+        $afterAjaxUpdate = "js:function() {
 			jQuery('.popover').remove();
 			jQuery('{$popover}').popover();
 			jQuery('.tooltip').remove();
 			jQuery('{$tooltip}').tooltip();
 		}";
 
-		if (!isset($this->afterAjaxUpdate))
-			$this->afterAjaxUpdate = $afterAjaxUpdate;
-	}
+        if (!isset($this->afterAjaxUpdate)) {
+            $this->afterAjaxUpdate = $afterAjaxUpdate;
+        }
+    }
 }

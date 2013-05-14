@@ -12,35 +12,35 @@ Yii::import('bootstrap.widgets.TbEditableField');
 Yii::import('bootstrap.widgets.TbDetailView');
 
 /**
-* EditableDetailView widget makes editable CDetailView (several attributes of single model shown as name-value table).
-*
-* @package widgets
-*/
+ * EditableDetailView widget makes editable CDetailView (several attributes of single model shown as name-value table).
+ *
+ * @package widgets
+ */
 class TbEditableDetailView extends TbDetailView
 {
     /**
-    * @var string submit url for all editables in detailview
-    */
+     * @var string submit url for all editables in detailview
+     */
     /*
      commented due to using magic methods and setting any of default EditableField param 
      from top level config of EditableDetailView
-    */  
+    */
     //public $url = null;
 
     /**
-    * @var array additional params to send on server
-    */
+     * @var array additional params to send on server
+     */
     /*
      commented due to using magic methods and setting any of default EditableField param 
      from top level config of EditableDetailView
-    */     
+    */
     //public $params = null;
 
-  /**
-   *### .init()
-   *
-   * Widget initialization
-   */
+    /**
+     *### .init()
+     *
+     * Widget initialization
+     */
     public function init()
     {
         if (!$this->data instanceof CModel) {
@@ -48,16 +48,16 @@ class TbEditableDetailView extends TbDetailView
         }
 
         //set bootstrap css
-        $this->htmlOptions = array('class'=> 'table table-bordered table-striped table-hover');
+        $this->htmlOptions = array('class' => 'table table-bordered table-striped table-hover');
         //disable loading Yii's css for bootstrap
         $this->cssFile = false;
 
         parent::init();
     }
 
-  /**
-   *### .renderItem()
-   */
+    /**
+     *### .renderItem()
+     */
     protected function renderItem($options, $templateData)
     {
         //apply editable if not set 'editable' params or set and not false
@@ -65,14 +65,16 @@ class TbEditableDetailView extends TbDetailView
 
         if ($apply) {
             //ensure $options['editable'] is array
-            if (!isset($options['editable'])) $options['editable'] = array();
+            if (!isset($options['editable'])) {
+                $options['editable'] = array();
+            }
 
             //merge options with defaults: url, params, etc. 
             $options['editable'] = CMap::mergeArray($this->_data, $options['editable']);
 
             //options to be passed into EditableField (constructed from $options['editable'])
             $widgetOptions = array(
-                'model'     => $this->data,
+                'model' => $this->data,
                 'attribute' => $options['name']
             );
 
@@ -80,8 +82,8 @@ class TbEditableDetailView extends TbDetailView
             if (isset($options['value']) && $options['value'] !== null) {
                 $widgetOptions['text'] = $templateData['{value}'];
                 $widgetOptions['encode'] = false;
-            }            
-            
+            }
+
             $widgetOptions = CMap::mergeArray($widgetOptions, $options['editable']);
             /** @var $widget TbEditableField */
             $widget = $this->controller->createWidget('TbEditableField', $widgetOptions);
@@ -111,10 +113,16 @@ class TbEditableDetailView extends TbDetailView
      *
      * These properties can also be set for the {@link EditableDetailView} as default values.
      */
-    private function getEditableProperties() {
-        if(!isset($this->_editableProperties)) {
+    private function getEditableProperties()
+    {
+        if (!isset($this->_editableProperties)) {
             $reflection = new ReflectionClass('TbEditableField');
-            $this->_editableProperties = array_map(function($d){return $d->getName();},$reflection->getProperties());
+            $this->_editableProperties = array_map(
+                function ($d) {
+                    return $d->getName();
+                },
+                $reflection->getProperties()
+            );
         }
         return $this->_editableProperties;
     }
@@ -123,19 +131,21 @@ class TbEditableDetailView extends TbDetailView
      * (non-PHPdoc)
      * @see CComponent::__get()
      */
-    public function __get($key) {
-        return (array_key_exists($key,$this->_data) ? $this->_data[$key] : parent::__get($key));
+    public function __get($key)
+    {
+        return (array_key_exists($key, $this->_data) ? $this->_data[$key] : parent::__get($key));
     }
 
     /**
      * (non-PHPdoc)
      * @see CComponent::__set()
      */
-    public function __set($key, $value) {
-        if(in_array($key,$this->getEditableProperties())) {
+    public function __set($key, $value)
+    {
+        if (in_array($key, $this->getEditableProperties())) {
             $this->_data[$key] = $value;
         } else {
-            parent::__set($key,$value);
+            parent::__set($key, $value);
         }
     }
 
@@ -143,8 +153,9 @@ class TbEditableDetailView extends TbDetailView
      * (non-PHPdoc)
      * @see CComponent::__isset()
      */
-    public function __isset($name) {
-        return array_key_exists($name,$this->_data)||parent::__isset($name);
+    public function __isset($name)
+    {
+        return array_key_exists($name, $this->_data) || parent::__isset($name);
     }
 }
 

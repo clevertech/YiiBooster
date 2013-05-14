@@ -8,7 +8,12 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(enh)** Update yiistrap compatibility helpers #443 (magefad)
+- **(fix)** Fixed the multiple option in `TbFileUpload` #457 (mikspark)
+- **(fix)** Removed BOM from all files and converted line endings to Unix `\n` ones #486 #479 (hijarian)
+- **(fix)** Fixed use of negative numbers in TbSumOperation (speixoto)
 - **(enh)** Added the special properties to set `htmlOptions` on tab content and tabs themselves in `TbTabs` #452 (lloyd966, Antonio Ramirez)
+- **(enh)** Added ability to set the id of the dropdown menu #462 (speixoto)
 - **(enh)** Added the possibility to render append/prepend without a span wrap #414 (Frostmaind)
 - **(enh)** Update x-editable-yii from 1.3.0 to 1.4.0 #413 (magefad)
 - **(enh)** Now use Yii clientScript packages functionality with ability to use custom assetsUrl, added option enableCdn (true if YII_DEBUG off, netdna.bootstrapcdn.com CDN used by default) (magefad)
@@ -16,6 +21,7 @@ Antonio Ramirez.
 - **(cln)** Remove not bootstrap - jquery editable. Use stable **bootstrap** x-editable instead. (magefad)
 - **(cln)** Removed non-working TbJqRangeSlider (magefad)
 - **(fix)** Include specific FontAwesome CSS for IE7 #434 (kev360)
+- **(enh)** Changed structure of the project directory, now the sources are clearly separated from all other build artifacts like the documentation or tests #263 (hijarian)
 
 ### YiiBooster version 1.0.6
 - **(fix)** Now it is possible to provide custom 'class' and 'style' htmlOptions for TbProgress #216 (hijarian)
