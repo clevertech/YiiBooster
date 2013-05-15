@@ -15,17 +15,17 @@
 
 <?php
 foreach ($this->tableSchema->columns as $column) {
-    if ($column->autoIncrement) {
-        continue;
-    }
-    ?>
-    <?php echo "<?php echo " . $this->generateActiveRow($this->modelClass, $column) . "; ?>\n"; ?>
+	if ($column->autoIncrement) {
+		continue;
+	}
+	?>
+	<?php echo "<?php echo " . $this->generateActiveRow($this->modelClass, $column) . "; ?>\n"; ?>
 
 <?php
 }
 ?>
 <div class="form-actions">
-    <?php echo "<?php \$this->widget('bootstrap.widgets.TbButton', array(
+	<?php echo "<?php \$this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
 			'label'=>\$model->isNewRecord ? 'Create' : 'Save',
