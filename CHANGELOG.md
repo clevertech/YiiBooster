@@ -8,6 +8,7 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(fix)** Update to Bootstrap 2.3.2 - patch release to address a single bug (see bootstrap issue 7118) related to dropdowns and command/control clicking links in Firefox
 - **(enh)** Update bootstrap-datepicker from RC to 1.0.2 final (magefad)
 - **(enh)** Update yiistrap compatibility helpers #443 (magefad)
 - **(fix)** Fixed the multiple option in `TbFileUpload` #457 (mikspark)
