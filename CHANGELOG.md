@@ -8,6 +8,8 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(fix)** Fixed incorrect margin in accordion header #484 (hijarian)
+- **(enh)** Upgraded the jQuery UI / Bootstrap compatibility layer to v. 0.5 (hijarian)
 - **(enh)** Fixed the TbBulkAction to accommodate to `selectableRows` #490 (jamesmbowler)
 - **(enh)** Added the readme to contributing to GitHub repo, now it should be more visible for collaborators (hijarian)
 - **(fix)** Update to Bootstrap 2.3.2 - patch release to address a single bug (see bootstrap issue 7118) related to dropdowns and command/control clicking links in Firefox
