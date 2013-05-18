@@ -8,6 +8,7 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(enh)** Update bootstrap-datepicker from RC to 1.0.2 final (magefad)
 - **(enh)** Update yiistrap compatibility helpers #443 (magefad)
 - **(fix)** Fixed the multiple option in `TbFileUpload` #457 (mikspark)
 - **(fix)** Removed BOM from all files and converted line endings to Unix `\n` ones #486 #479 (hijarian)
