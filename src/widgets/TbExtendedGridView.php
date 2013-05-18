@@ -401,7 +401,6 @@ class TbExtendedGridView extends TbGridView
 			throw new CException(Yii::t('zii', '"chartOptions.series" is expected to be an array.'));
 		}
 
-		$chartId = 'exgvwChart' . $this->getId();
 
 		if (!isset($this->chartOptions['config'])) {
 			$this->chartOptions['config'] = array();
@@ -432,6 +431,8 @@ class TbExtendedGridView extends TbGridView
 		$buttons->init();
 		$buttons->run();
 		echo '</div>';
+
+		$chartId = preg_replace('[-\\ ?]', '_', 'exgvwChart' . $this->getId()); // cleaning out most possible characters invalid as javascript variable identifiers.
 
 		$this->componentsReadyScripts[] = '$(document).on("click",".' . $this->getId() . '-grid-control", function(){
 			if ($(this).hasClass("grid") && $("#' . $this->getId() . ' #' . $chartId . '").is(":visible"))
