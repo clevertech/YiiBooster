@@ -8,6 +8,8 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(enh)** Fixed the TbBulkAction to accommodate to `selectableRows` #490 (jamesmbowler)
+- **(enh)** Added the readme to contributing to GitHub repo, now it should be more visible for collaborators (hijarian)
 - **(fix)** Update to Bootstrap 2.3.2 - patch release to address a single bug (see bootstrap issue 7118) related to dropdowns and command/control clicking links in Firefox
 - **(enh)** Update bootstrap-datepicker from RC to 1.0.2 final (magefad)
 - **(enh)** Update yiistrap compatibility helpers #443 (magefad)
