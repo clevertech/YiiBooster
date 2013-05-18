@@ -81,7 +81,7 @@ class TbHighCharts extends CWidget
 			Yii::app()->bootstrap->registerAssetJs('highcharts/themes/' . $this->options['theme'] . '.js');
 		}
 
-		$options = CJavaScript::encode($this->options);
+		$options = CJavaScript::jsonEncode($this->options);
 
 		Yii::app()->getClientScript()->registerScript(
 			__CLASS__ . '#' . $this->getId(),

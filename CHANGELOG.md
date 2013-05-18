@@ -8,6 +8,7 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
 - **(enh)** Added datepicker and date.js to packages.php with enableCdn support (magefad)
 - **(fix)** Fixed incorrect margin in accordion header #484 (hijarian)
 - **(enh)** Upgraded the jQuery UI / Bootstrap compatibility layer to v. 0.5 (hijarian)
