@@ -53,4 +53,14 @@ return array(
 		'css' => array('css/bootstrap-notify.css'),
 		'js' => array('js/bootstrap.notify.js')
 	),
+	//widgets start
+	'datepicker' => array(
+		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.0.2/' : $this->getAssetsUrl(),
+		'css' => array(YII_DEBUG ? 'css/bootstrap-datepicker.css' : 'css/bootstrap-datepicker.min.css'),
+		'js' => array(YII_DEBUG ? 'js/bootstrap-datepicker.js' : 'js/bootstrap-datepicker.min.js')
+	),
+	'date' => array(
+		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl(),
+		'js' => array($this->enableCdn ? 'date.min.js' : 'js/date.min.js')
+	)
 );
