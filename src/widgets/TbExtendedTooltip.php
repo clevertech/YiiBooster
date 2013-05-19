@@ -90,15 +90,21 @@ class TbExtendedTooltip extends CWidget
 	 */
 	protected function renderContent()
 	{
-		echo CHtml::openTag(
+		echo CHtml::tag(
 			'span',
-			array('rel' => 'editable-tooltip', 'title' => $this->getTooltip($this->key), 'name' => $this->key)
+			array(
+				'rel' => 'editable-tooltip',
+				'title' => $this->getTooltip($this->key),
+				'name' => $this->key
+			),
+			CHtml::tag(
+				'i',
+				array(
+					'class' => 'icon-info-sign'
+				),
+				''
+			)
 		);
-		if (!$this->editable) {
-			echo '<i class="icon-info-sign"></i>';
-		}
-		// the bootstrap-editable-tooltip plugin, renders the icon automatically
-		echo '</span>';
 	}
 
 	/**
@@ -118,8 +124,8 @@ class TbExtendedTooltip extends CWidget
 		} // not editable, just make the tooltip
 		else {
 			// editable, make use of bootstrap-editable-tooltip plugin
-			Yii::app()->bootstrap->registerAssetCss('bootstrap-editable-tooltip.css');
-			Yii::app()->bootstrap->registerAssetJs('bootstrap-editable-tooltip.js');
+			Yii::app()->bootstrap->registerAssetCss('bootstrap-editable.css');
+			Yii::app()->bootstrap->registerAssetJs('bootstrap-editable.js');
 			$options = CJavaScript::encode(
 				array(
 					'send' => 'always',
@@ -128,7 +134,7 @@ class TbExtendedTooltip extends CWidget
 				)
 			);
 
-			$js = "$('span[name=\"{$this->key}\"]').editableTooltip($options);";
+			$js = "$('span[name=\"{$this->key}\"]').editable($options);";
 		}
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $this->getId(), $js);
 	}
