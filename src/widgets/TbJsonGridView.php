@@ -13,9 +13,6 @@
 Yii::import('bootstrap.widgets.TbGridView');
 Yii::import('bootstrap.widgets.TbJsonDataColumn');
 
-/**
- * @property TbJsonGridColumn[] $columns
- */
 class TbJsonGridView extends TbGridView
 {
 	/**
@@ -24,7 +21,7 @@ class TbJsonGridView extends TbGridView
 	public $json;
 
 	/**
-	 * @var string $template display pager on top by default, override to place two pagers as we expect lots of records
+	 * @var string $template Overridden standard template to add second pager on top.
 	 */
 	public $template = "{pager}\n{items}\n{summary}\n{pager}";
 
@@ -53,7 +50,7 @@ class TbJsonGridView extends TbGridView
 	public $pager = array('class' => 'bootstrap.widgets.TbJsonPager');
 
 	/**
-	 * Initializes $json property to find out whether ajax r
+	 * Initializes $json property to find out whether ajax request or not
 	 */
 	public function init()
 	{
