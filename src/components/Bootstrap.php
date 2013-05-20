@@ -139,27 +139,33 @@ class Bootstrap extends CApplicationComponent
 	public function init()
 	{
 		// Register the bootstrap path alias.
-		if (Yii::getPathOfAlias('bootstrap') === false)
+		if (Yii::getPathOfAlias('bootstrap') === false) {
 			Yii::setPathOfAlias('bootstrap', realpath(dirname(__FILE__) . '/..'));
+		}
 
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
-		if (Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli')
+		if (Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli') {
 			return;
+		}
 
-		if ($this->enableCdn === null)
+		if ($this->enableCdn === null) {
 			$this->enableCdn = !YII_DEBUG;
+		}
 
 		$this->packages = CMap::mergeArray(
 			require(Yii::getPathOfAlias('bootstrap.components') . DIRECTORY_SEPARATOR . 'packages.php'),
 			$this->packages
 		);
-		foreach ($this->packages as $name => $definition)
+		foreach ($this->packages as $name => $definition) {
 			Yii::app()->getClientScript()->addPackage($name, $definition);
+		}
 
-		if ($this->coreCss !== false)
+		if ($this->coreCss !== false) {
 			$this->registerAllCss();
-		if ($this->enableJS !== false)
+		}
+		if ($this->enableJS !== false) {
 			$this->registerAllScripts();
+		}
 
 		parent::init();
 	}
@@ -180,19 +186,23 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerAllCss()
 	{
-		if ($this->responsiveCss !== false)
+		if ($this->responsiveCss !== false) {
 			$this->registerPackage('full.css')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
-		else
+		} else {
 			$this->registerCoreCss();
+		}
 
-		if ($this->fontAwesomeCss !== false)
+		if ($this->fontAwesomeCss !== false) {
 			$this->registerFontAwesomeCss();
+		}
 
-		if ($this->yiiCss !== false)
+		if ($this->yiiCss !== false) {
 			$this->registerYiiCss();
+		}
 
-		if ($this->jqueryCss !== false)
+		if ($this->jqueryCss !== false) {
 			$this->registerJQueryCss();
+		}
 	}
 
 	/**
@@ -227,10 +237,11 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerFontAwesomeCss()
 	{
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7.0'))
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7.0')) {
 			$this->registerPackage('font-awesome')->registerPackage('font-awesome-ie7');
-		else
+		} else {
 			$this->registerPackage('font-awesome');
+		}
 	}
 
 	/**
@@ -247,7 +258,8 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerJQueryCss()
 	{
-		$this->registerPackage('jquery-css')->scriptMap['jquery-ui.css'] = $this->getAssetsUrl() . '/css/jquery-ui-bootstrap.css';
+		$this->registerPackage('jquery-css')->scriptMap['jquery-ui.css'] = $this->getAssetsUrl(
+		) . '/css/jquery-ui-bootstrap.css';
 	}
 
 	/**
@@ -257,11 +269,13 @@ class Bootstrap extends CApplicationComponent
 	public function registerCoreScripts()
 	{
 		$cs = $this->registerPackage('bootstrap.js');
-		if ($this->enableBootboxJS)
+		if ($this->enableBootboxJS) {
 			$cs->registerPackage('bootbox');
+		}
 
-		if ($this->enableNotifierJS)
+		if ($this->enableNotifierJS) {
 			$cs->registerPackage('notify');
+		}
 	}
 
 	/**
@@ -276,41 +290,46 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap popover plugin.
-     *
-     * @param string $selector the CSS selector. If it's null, then the value of `popoverSelector` will be used instead, which is 'body' by default.
+	 *
+	 * @param string $selector the CSS selector. If it's null, then the value of `popoverSelector` will be used instead, which is 'body' by default.
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#popover
 	 * @since 0.9.8
 	 */
 	public function registerPopover($selector = null, $options = array())
 	{
-		$this->registerTooltip(); // Popover requires the tooltip plugin
-		if (!isset($options['selector']))
+		if (!isset($options['selector'])) {
 			$options['selector'] = '[rel=popover]';
+		}
 
 		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options, $this->popoverSelector);
 	}
 
 	/**
 	 * Registers the Bootstrap tooltip plugin.
-     *
+	 *
 	 * @param string $selector the CSS selector. If it's null, then the value of `tooltipSelector` will be used instead, which is 'body' by default.
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#tooltip
 	 * @since 0.9.8
 	 */
 	public function registerTooltip($selector = null, $options = array())
 	{
-		if (!isset($options['selector']))
+		if (!isset($options['selector'])) {
 			$options['selector'] = '[rel=tooltip]';
+		}
 
 		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options, $this->tooltipSelector);
 	}
 
 	/**
 	 * Registers the Bootstrap alert plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#alerts
 	 * @since 0.9.8
 	 */
@@ -321,8 +340,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap buttons plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#buttons
 	 * @since 0.9.8
 	 */
@@ -333,8 +354,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap carousel plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#carousel
 	 * @since 0.9.8
 	 */
@@ -345,8 +368,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap collapse plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#collapse
 	 * @since 0.9.8
 	 */
@@ -357,8 +382,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap dropdowns plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#dropdowns
 	 * @since 0.9.8
 	 */
@@ -369,8 +396,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap modal plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#modal
 	 * @since 0.9.8
 	 */
@@ -381,8 +410,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Modal manager plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see https://github.com/jschr/bootstrap-modal/
 	 * @since 0.9.8
 	 */
@@ -393,8 +424,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap scrollspy plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#scrollspy
 	 * @since 0.9.8
 	 */
@@ -405,8 +438,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap tabs plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#tabs
 	 * @since 0.9.8
 	 */
@@ -417,8 +452,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap typeahead plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#typeahead
 	 * @since 0.9.8
 	 */
@@ -430,8 +467,10 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * Register the Bootstrap datepicker plugin.
 	 * IMPORTANT: if you register a selector via this method you wont be able to attach events to the plugin.
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
+	 *
 	 * @see http://www.eyecon.ro/bootstrap-datepicker/
 	 *
 	 */
@@ -442,6 +481,7 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the RedactorJS plugin.
+	 *
 	 * @param null $selector
 	 * @param array $options
 	 */
@@ -452,6 +492,7 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap-whysihtml5 plugin.
+	 *
 	 * @param null $selector
 	 * @param array $options
 	 */
@@ -462,6 +503,7 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap-colorpicker plugin.
+	 *
 	 * @param null $selector
 	 * @param array $options
 	 */
@@ -472,8 +514,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the affix plugin
+	 *
 	 * @param null $selector
 	 * @param array $options
+	 *
 	 * @see  http://twitter.github.com/bootstrap/javascript.html#affix
 	 */
 	public function registerAffix($selector = null, $options = array())
@@ -484,54 +528,68 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers the Bootstrap daterange plugin
+	 *
 	 * @param string $selector the CSS selector
 	 * @param array $options the plugin options
 	 * @param string $callback the javascript callback function
+	 *
 	 * @see  http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/
 	 * @since 1.1.0
 	 */
 	public function registerDateRangePlugin($selector, $options = array(), $callback = null)
 	{
-		Yii::app()->getClientScript()->registerScript($this->getUniqueScriptId(), '$("' . $selector . '").daterangepicker(' . CJavaScript::encode($options) . ($callback ? ', ' . CJavaScript::encode($callback) : '') . ');');
+		Yii::app()->getClientScript()->registerScript(
+			$this->getUniqueScriptId(),
+			'$("' . $selector . '").daterangepicker(' . CJavaScript::encode($options) . ($callback
+				? ', ' . CJavaScript::encode($callback) : '') . ');'
+		);
 	}
 
 
 	/**
 	 * Registers a Bootstrap plugin using the given selector and options.
+	 *
 	 * @param string $name the name of the plugin
 	 * @param string $selector the CSS selector
 	 * @param array $options the JavaScript options for the plugin.
 	 * @param string $defaultSelector the default CSS selector
+	 *
 	 * @since 0.9.8
 	 */
 	protected function registerPlugin($name, $selector = null, $options = array(), $defaultSelector = null)
 	{
-		if (!isset($selector) && empty($options))
-		{
+		if (!isset($selector) && empty($options)) {
 			// Initialization from extension configuration.
 			$config = isset($this->plugins[$name]) ? $this->plugins[$name] : array();
 
-			if (isset($config['selector']))
+			if (isset($config['selector'])) {
 				$selector = $config['selector'];
+			}
 
-			if (isset($config['options']))
+			if (isset($config['options'])) {
 				$options = $config['options'];
+			}
 
-			if (!isset($selector))
+			if (!isset($selector)) {
 				$selector = $defaultSelector;
+			}
 		}
 
-		if (isset($selector))
-		{
+		if (isset($selector)) {
 			$options = !empty($options) ? CJavaScript::encode($options) : '';
-			Yii::app()->getClientScript()->registerScript($this->getUniqueScriptId(), "jQuery('{$selector}').{$name}({$options});");
+			Yii::app()->getClientScript()->registerScript(
+				$this->getUniqueScriptId(),
+				"jQuery('{$selector}').{$name}({$options});"
+			);
 		}
 	}
 
 	/**
 	 * Registers a CSS file in the asset's css folder
+	 *
 	 * @param string $name the css file name to register
 	 * @param string $media media that the CSS file should be applied to. If empty, it means all media types.
+	 *
 	 * @see CClientScript::registerCssFile
 	 */
 	public function registerAssetCss($name, $media = '')
@@ -541,8 +599,10 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Register a javascript file in the asset's js folder
+	 *
 	 * @param string $name the js file name to register
 	 * @param int $position the position of the JavaScript code.
+	 *
 	 * @see CClientScript::registerScriptFile
 	 */
 	public function registerAssetJs($name, $position = CClientScript::POS_END)
@@ -552,7 +612,9 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * Registers a script package that is listed in {@link packages}.
+	 *
 	 * @param string $name the name of the script package.
+	 *
 	 * @return CClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
 	 * @see CClientScript::registerPackage
 	 * @since 1.0.7
@@ -568,10 +630,16 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function getAssetsUrl()
 	{
-		if (isset($this->_assetsUrl))
+		if (isset($this->_assetsUrl)) {
 			return $this->_assetsUrl;
-		else
-			return $this->_assetsUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('bootstrap.assets'), false, -1, $this->forceCopyAssets);
+		} else {
+			return $this->_assetsUrl = Yii::app()->getAssetManager()->publish(
+				Yii::getPathOfAlias('bootstrap.assets'),
+				false,
+				-1,
+				$this->forceCopyAssets
+			);
+		}
 	}
 
 	/**

@@ -8,6 +8,14 @@ Thank you all
 Antonio Ramirez.
 
 ### YiiBooster version 1.0.7
+- **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
+- **(enh)** Added datepicker and date.js to packages.php with enableCdn support (magefad)
+- **(fix)** Fixed incorrect margin in accordion header #484 (hijarian)
+- **(enh)** Upgraded the jQuery UI / Bootstrap compatibility layer to v. 0.5 (hijarian)
+- **(enh)** Fixed the TbBulkAction to accommodate to `selectableRows` #490 (jamesmbowler)
+- **(enh)** Added the readme to contributing to GitHub repo, now it should be more visible for collaborators (hijarian)
+- **(fix)** Update to Bootstrap 2.3.2 - patch release to address a single bug (see bootstrap issue 7118) related to dropdowns and command/control clicking links in Firefox
+- **(enh)** Update bootstrap-datepicker from RC to 1.0.2 final (magefad)
 - **(enh)** Update yiistrap compatibility helpers #443 (magefad)
 - **(fix)** Fixed the multiple option in `TbFileUpload` #457 (mikspark)
 - **(fix)** Removed BOM from all files and converted line endings to Unix `\n` ones #486 #479 (hijarian)

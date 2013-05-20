@@ -3691,9 +3691,9 @@ EOD;
 	{
 		$htmlOptions = self::addClassName('btn btn-navbar', $htmlOptions);
 		$htmlOptions = self::defaultOptions($htmlOptions, array(
-			'data-toggle' => 'collapse',
-			'data-target' => $target,
-		));
+				'data-toggle' => 'collapse',
+				'data-target' => $target,
+			));
 		ob_start();
 		echo self::openTag('a', $htmlOptions);
 		echo '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>';
