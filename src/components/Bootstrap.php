@@ -297,7 +297,7 @@ class Bootstrap extends CApplicationComponent
 	 * @see http://twitter.github.com/bootstrap/javascript.html#popover
 	 * @since 0.9.8
 	 */
-	public function registerPopover($selector = null, $options = array())
+	public function registerPopover($selector = 'body', $options = array())
 	{
 		if (!isset($options['selector'])) {
 			$options['selector'] = '[rel=popover]';
@@ -315,7 +315,7 @@ class Bootstrap extends CApplicationComponent
 	 * @see http://twitter.github.com/bootstrap/javascript.html#tooltip
 	 * @since 0.9.8
 	 */
-	public function registerTooltip($selector = null, $options = array())
+	public function registerTooltip($selector = 'body', $options = array())
 	{
 		if (!isset($options['selector'])) {
 			$options['selector'] = '[rel=tooltip]';
