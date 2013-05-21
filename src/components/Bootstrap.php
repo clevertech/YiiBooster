@@ -111,6 +111,18 @@ class Bootstrap extends CApplicationComponent
 	public $enableCdn = false;
 
 	/**
+	 * @var boolean to register Bootstrap CSS files in AJAX requests
+	 * Defaults to true.
+	 */
+    public $ajaxCssLoad = true;
+
+	/**
+	 * @var boolean to register the Bootstrap JavaScript files in AJAX requests
+	 * Defaults to true.
+	 */
+	public $ajaxJsLoad = true;
+
+	/**
 	 * @var bool|null Whether to republish assets on each request. Defaults to YII_DEBUG, resulting in a the republication of all YiiBooster-assets
 	 * on each request if the application is in debug mode. Passing null to this option restores
 	 * the default handling of CAssetManager of YiiBooster assets.
@@ -126,7 +138,7 @@ class Bootstrap extends CApplicationComponent
 	 * scripts together with their dependent packages and render them in the HTML output.
 	 * @since 1.0.7
 	 */
-	public $packages = array();
+    public $packages = array();
 
 	/**
 	 * @var string handles the assets folder path.
@@ -186,6 +198,10 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerAllCss()
 	{
+	    if (!$this->ajaxCssLoad && Yii::app()->request->isAjaxRequest) {
+	        return;
+	    }
+	    
 		if ($this->responsiveCss !== false) {
 			$this->registerPackage('full.css')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 		} else {
@@ -210,6 +226,10 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerAllScripts()
 	{
+	     if (!$this->ajaxJsLoad && Yii::app()->request->isAjaxRequest) {
+	        return;
+	    }
+	    
 		$this->registerCoreScripts();
 		$this->registerTooltipAndPopover();
 	}
