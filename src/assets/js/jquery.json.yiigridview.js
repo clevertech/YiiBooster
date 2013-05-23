@@ -258,7 +258,7 @@
                     settings = gridSettings[id];
                 $grid.addClass(settings.loadingClass);
 
-                options = $.extend({
+                var localOptions = $.extend({
                     type: 'GET',
                     url: $grid.yiiJsonGridView('getUrl'),
                     dataType: 'json',
@@ -339,31 +339,31 @@
                         }
                     }
                 }, options || {});
-                if (options.data !== undefined && options.type === 'GET') {
-                    options.url = $.param.querystring(options.url, options.data);
-                    options.data = {};
+                if (localOptions.data !== undefined && localOptions.type === 'GET') {
+                    localOptions.url = $.param.querystring(localOptions.url, localOptions.data);
+                    localOptions.data = {};
                 }
 
                 if (settings.ajaxUpdate !== false) {
-                    options.url = $.param.querystring(options.url, settings.ajaxVar + '=' + id);
+                    localOptions.url = $.param.querystring(localOptions.url, settings.ajaxVar + '=' + id);
                     if (settings.beforeAjaxUpdate !== undefined) {
-                        settings.beforeAjaxUpdate(id, options);
+                        settings.beforeAjaxUpdate(id, localOptions);
                     }
-                    $.ajax(options);
+                    $.ajax(localOptions);
                 } else {  // non-ajax mode
                     if (options.type === 'GET') {
-                        window.location.href = options.url;
+                        window.location.href = localOptions.url;
                     } else {  // POST mode
-                        $form = $('<form action="' + options.url + '" method="post"></form>').appendTo('body');
-                        if (options.data === undefined) {
-                            options.data = {};
+                        $form = $('<form action="' + localOptions.url + '" method="post"></form>').appendTo('body');
+                        if (localOptions.data === undefined) {
+                            localOptions.data = {};
                         }
 
-                        if (options.data.returnUrl === undefined) {
-                            options.data.returnUrl = window.location.href;
+                        if (localOptions.data.returnUrl === undefined) {
+                            localOptions.data.returnUrl = window.location.href;
                         }
 
-                        $.each(options.data, function (name, value) {
+                        $.each(localOptions.data, function (name, value) {
                             $form.append($('<input type="hidden" name="t" value="" />').attr('name', name).val(value));
                         });
                         $form.submit();
