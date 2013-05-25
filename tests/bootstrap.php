@@ -8,7 +8,8 @@
 
 // Included the Yii
 define('YII_PATH', '/home/hijarian/systems/yii/framework');
-require_once(YII_PATH.'/yii.php');
+require_once(YII_PATH.'/YiiBase.php');
+require_once(__DIR__.'/fakes/Yii.php');
 
 // Set up the shorthands for test app paths
 define('APP_ROOT', realpath(__DIR__.'/runtime'));
