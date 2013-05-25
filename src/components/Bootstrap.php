@@ -138,38 +138,25 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function init()
 	{
-		$this->setRootAliasIfUndefined();
-
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
 		if ($this->isInConsoleMode() && !$this->isInTests())
 			return;
+
+		$this->setRootAliasIfUndefined();
 
 		$this->setEnableCdn();
 
 		$this->appendUserSuppliedPackagesToOurs();
 
-		$this->registerOurPackagesInYii();
+		$this->addOurPackagesToYii();
 
-		if ($this->coreCss !== false) {
-			$this->registerAllCss();
-		}
+		$this->registerCssPackagesIfEnabled();
 
-		if ($this->enableJS !== false) {
-			$this->registerAllScripts();
-		}
+		$this->registerJsPackagesIfEnabled();
 
 		parent::init();
 	}
 
-	/**
-	 * Registers all assets.
-	 * @since 1.0.7
-	 */
-	public function register()
-	{
-		$this->registerAllCss();
-		$this->registerAllScripts();
-	}
 
 	/**
 	 * Registers all Bootstrap CSS files.
@@ -651,6 +638,8 @@ class Bootstrap extends CApplicationComponent
 		return '1.0.7';
 	}
 
+	//========================================================================
+
 	/** @return bool */
 	private function isInConsoleMode()
 	{
@@ -687,10 +676,36 @@ class Bootstrap extends CApplicationComponent
 		);
 	}
 
-	private function registerOurPackagesInYii()
+	private function addOurPackagesToYii()
 	{
 		foreach ($this->packages as $name => $definition) {
 			Yii::app()->getClientScript()->addPackage($name, $definition);
 		}
 	}
+
+	private function registerCssPackagesIfEnabled()
+	{
+		if ($this->coreCss !== false) {
+			$this->registerAllCss();
+		}
+	}
+
+	private function registerJsPackagesIfEnabled()
+	{
+		if ($this->enableJS !== false) {
+			$this->registerAllScripts();
+		}
+	}
+
+	/**
+	 * Registers all assets.
+	 * @since 1.0.7
+	 * @deprecated 2.0.0 Unused and not recommended to use as it does not respect the `enableCss` and `enableJs` directives
+	 */
+	public function register()
+	{
+		$this->registerAllCss();
+		$this->registerAllScripts();
+	}
+
 }
