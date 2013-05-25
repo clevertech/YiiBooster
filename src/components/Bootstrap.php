@@ -144,7 +144,7 @@ class Bootstrap extends CApplicationComponent
 		}
 
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
-		if (Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli') {
+		if ($this->isInConsoleMode() && !$this->isInTests()) {
 			return;
 		}
 
@@ -658,5 +658,18 @@ class Bootstrap extends CApplicationComponent
 	public function getVersion()
 	{
 		return '1.0.7';
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function isInConsoleMode()
+	{
+		return Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli';
+	}
+
+	private function isInTests()
+	{
+		return defined('IS_IN_TESTS') && IS_IN_TESTS;
 	}
 }

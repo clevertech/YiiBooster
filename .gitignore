@@ -5,6 +5,10 @@
 /reports
 /doc
 
+# Directories for temporary test runtime data
+/tests/runtime/assets/*
+/tests/runtime/runtime/*
+
 ## Stuff from external utilities
 
 # OS cache directories

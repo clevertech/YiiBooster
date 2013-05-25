@@ -13,4 +13,10 @@ class BootstrapTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Bootstrap', $component);
 	}
 
+	public function testInit()
+	{
+		$component = new Bootstrap();
+		$component->init();
+	}
+
 }
