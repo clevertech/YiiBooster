@@ -62,5 +62,21 @@ return array(
 	'date' => array(
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl(),
 		'js' => array($this->enableCdn ? 'date.min.js' : 'js/date.min.js')
+	),
+	'x-editable' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'css' => array(YII_DEBUG ? 'css/bootstrap-editable.css' : 'css/bootstrap-editable.min.css'),
+		'js' => array(YII_DEBUG ? 'js/bootstrap-editable.js' : 'js/bootstrap-editable.min.js'),
+		'depends' => array('jquery')
+	),
+	'moment' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'js' => 'moment.min.js',
+	),
+	'select2' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'js' => array(YII_DEBUG ? 'js/select.js' : 'js/select.min.js'),
+		'css' => array('css/select.css'),
+		'depends' => array('jquery'),
 	)
 );
