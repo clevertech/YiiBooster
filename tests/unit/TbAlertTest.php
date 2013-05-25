@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-require_once(__DIR__.'/../fakes/CWidget.php');
 require_once(__DIR__.'/../../src/widgets/TbAlert.php');
 
 class TbAlertTest extends PHPUnit_Framework_TestCase {
@@ -24,12 +23,9 @@ class TbAlertTest extends PHPUnit_Framework_TestCase {
 	{
 		$widget = $this->makeWidget();
 
-		$expected_id = 'I should be auto-generated';
-		CWidget::$fake_id = $expected_id;
-
 		$widget->init();
 
-		$this->assertEquals($expected_id, $widget->htmlOptions['id']);
+		$this->assertEquals('yw0', $widget->htmlOptions['id']);
 	}
 
 	/**
