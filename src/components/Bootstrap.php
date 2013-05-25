@@ -106,7 +106,7 @@ class Bootstrap extends CApplicationComponent
 	public $enableNotifierJS = true;
 
 	/**
-	 * @var boolean|null enable use cdn servers for assets. Defaults to true if not YII_DEBUG, else false
+	 * @var boolean|null enable use cdn servers for assets. If null then let YII_DEBUG decide it.
 	 */
 	public $enableCdn = false;
 
@@ -138,31 +138,22 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function init()
 	{
-		// Register the bootstrap path alias.
-		if (Yii::getPathOfAlias('bootstrap') === false) {
-			Yii::setPathOfAlias('bootstrap', realpath(dirname(__FILE__) . '/..'));
-		}
+		$this->setRootAliasIfUndefined();
 
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
-		if ($this->isInConsoleMode() && !$this->isInTests()) {
+		if ($this->isInConsoleMode() && !$this->isInTests())
 			return;
-		}
 
-		if ($this->enableCdn === null) {
-			$this->enableCdn = !YII_DEBUG;
-		}
+		$this->setEnableCdn();
 
-		$this->packages = CMap::mergeArray(
-			require(Yii::getPathOfAlias('bootstrap.components') . DIRECTORY_SEPARATOR . 'packages.php'),
-			$this->packages
-		);
-		foreach ($this->packages as $name => $definition) {
-			Yii::app()->getClientScript()->addPackage($name, $definition);
-		}
+		$this->appendUserSuppliedPackagesToOurs();
+
+		$this->registerOurPackagesInYii();
 
 		if ($this->coreCss !== false) {
 			$this->registerAllCss();
 		}
+
 		if ($this->enableJS !== false) {
 			$this->registerAllScripts();
 		}
@@ -660,16 +651,46 @@ class Bootstrap extends CApplicationComponent
 		return '1.0.7';
 	}
 
-	/**
-	 * @return bool
-	 */
+	/** @return bool */
 	private function isInConsoleMode()
 	{
 		return Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli';
 	}
 
+	/** @return bool */
 	private function isInTests()
 	{
 		return defined('IS_IN_TESTS') && IS_IN_TESTS;
+	}
+
+	private function setRootAliasIfUndefined()
+	{
+		if (Yii::getPathOfAlias('bootstrap') === false) {
+			Yii::setPathOfAlias('bootstrap', realpath(dirname(__FILE__) . '/..'));
+		}
+	}
+
+	private function setEnableCdn()
+	{
+		if ($this->enableCdn === null) {
+			// TODO: this is completely untestable as the YII_DEBUG constant gets defined by Yii initialization code
+			// and so we cannot re-define it in our tests.
+			$this->enableCdn = !YII_DEBUG;
+		}
+	}
+
+	private function appendUserSuppliedPackagesToOurs()
+	{
+		$this->packages = CMap::mergeArray(
+			require(Yii::getPathOfAlias('bootstrap.components') . '/packages.php'),
+			$this->packages
+		);
+	}
+
+	private function registerOurPackagesInYii()
+	{
+		foreach ($this->packages as $name => $definition) {
+			Yii::app()->getClientScript()->addPackage($name, $definition);
+		}
 	}
 }
