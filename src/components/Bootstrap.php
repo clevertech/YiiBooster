@@ -290,36 +290,38 @@ class Bootstrap extends CApplicationComponent
 	 * @param string $name the name of the plugin
 	 * @param string $selector the CSS selector
 	 * @param array $options the JavaScript options for the plugin.
-	 * @param string $defaultSelector the default CSS selector
+	 * @param string $defaultSelector The default CSS selector
+	 *
+	 * @throws InvalidArgumentException
 	 *
 	 * @since 0.9.8
 	 */
 	public function registerPlugin($name, $selector = null, $options = array(), $defaultSelector = null)
 	{
-		if (!isset($selector) && empty($options)) {
-			// Initialization from extension configuration.
-			$config = isset($this->plugins[$name]) ? $this->plugins[$name] : array();
+		if (empty($name))
+			throw new InvalidArgumentException('You cannot register a plugin without providing its name!');
 
-			if (isset($config['selector'])) {
-				$selector = $config['selector'];
-			}
+		if (empty($selector))
+			$selector = $this->tryGetSelectorForPlugin($name);
 
-			if (isset($config['options'])) {
-				$options = $config['options'];
-			}
+		// TODO: deprecate/remove this, $defaultSelector is totally unnecessary parameter.
+		if (empty($selector))
+			$selector = $defaultSelector;
 
-			if (!isset($selector)) {
-				$selector = $defaultSelector;
-			}
-		}
+		if (empty($selector))
+			return;
 
-		if (isset($selector)) {
-			$options = empty($options) ? '' : CJavaScript::encode($options);
-			$this->assetsRegistry->registerScript(
-				$this->getUniqueScriptId(),
-				"jQuery('{$selector}').{$name}({$options});"
-			);
-		}
+		if (empty($options))
+			$options = $this->tryGetOptionsForPlugin($name);
+
+		$options = empty($options)
+			? ''
+			: json_encode($options);
+
+		$this->assetsRegistry->registerScript(
+			$this->getUniqueScriptId(),
+			"jQuery('{$selector}').{$name}({$options});"
+		);
 	}
 
 	/**
@@ -330,6 +332,30 @@ class Bootstrap extends CApplicationComponent
 	public function getUniqueScriptId()
 	{
 		return uniqid(__CLASS__ . '#', true);
+	}
+
+	private function tryGetSelectorForPlugin($name)
+	{
+		return $this->tryGetInfoForPlugin($name, 'selector');
+	}
+
+	private function tryGetOptionsForPlugin($name)
+	{
+		return $this->tryGetInfoForPlugin($name, 'options');
+	}
+
+	/**
+	 * @param $name
+	 * @param $key
+	 *
+	 * @return mixed
+	 */
+	private function tryGetInfoForPlugin($name, $key)
+	{
+		if (array_key_exists($name, $this->plugins))
+			if (array_key_exists($key, $this->plugins[$name]))
+				return $this->plugins[$name][$key];
+		return null;
 	}
 
 	/**
@@ -796,7 +822,6 @@ class Bootstrap extends CApplicationComponent
 		$this->registerPopover();
 		$this->registerTooltip();
 	}
-
 
 
 }
