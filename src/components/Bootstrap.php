@@ -106,7 +106,7 @@ class Bootstrap extends CApplicationComponent
 	public $enableNotifierJS = true;
 
 	/**
-	 * @var boolean|null enable use cdn servers for assets. If null then let YII_DEBUG decide it.
+	 * @var boolean Use CDN server URLs for assets.
 	 */
 	public $enableCdn = false;
 
@@ -190,8 +190,6 @@ class Bootstrap extends CApplicationComponent
 
 	private function includeAssets()
 	{
-		$this->setEnableCdn();
-
 		$this->appendUserSuppliedPackagesToOurs();
 
 		$this->addOurPackagesToYii();
@@ -199,15 +197,6 @@ class Bootstrap extends CApplicationComponent
 		$this->registerCssPackagesIfEnabled();
 
 		$this->registerJsPackagesIfEnabled();
-	}
-
-	private function setEnableCdn()
-	{
-		if ($this->enableCdn === null) {
-			// TODO: this is completely untestable as the YII_DEBUG constant gets defined by Yii initialization code
-			// and so we cannot re-define it in our tests.
-			$this->enableCdn = !YII_DEBUG;
-		}
 	}
 
 	private function appendUserSuppliedPackagesToOurs()
