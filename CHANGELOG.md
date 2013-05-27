@@ -7,6 +7,9 @@ Thank you all
 
 Antonio Ramirez.
 
+### YiiBooster version 1.1.0
+- **(enh)** Added two parameters to Bootstrap component, `ajaxCssLoad` and `ajaxJsLoad`, to control loading CSS and JS assets in AJAX calls #514 (ianare)
+
 ### YiiBooster version 1.0.7
 - **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
 - **(enh)** Added datepicker and date.js to packages.php with enableCdn support (magefad)
