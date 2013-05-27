@@ -90,16 +90,27 @@ class Bootstrap extends CApplicationComponent
 	public $forceCopyAssets = false;
 
 	/**
-	 * @var string default popover CSS selector.
+	 * @var string default popover target CSS selector.
 	 * @since 0.10.0
+	 * @since 1.1.0 NOTE: this parameter changed its logic completely!
+	 * Previously it was the selector from which to start delegating the popovers.
+	 * Now the popovers are always being bound to specific elements.
+	 * According to the documentation: http://twitter.github.io/bootstrap/javascript.html#popovers
 	 */
-	public $popoverSelector = 'body';
+	public $popoverSelector = '[data-toggle=popover]';
 
 	/**
 	 * @var string default tooltip CSS selector.
 	 * @since 0.10.0
+	 * @since 1.1.0 NOTE: this parameter changed its logic completely!
+	 * Previously it was the selector from which to start delegating the tooltips.
+	 * Now the tooltips always start spreading from `body`, and this parameter controls
+	 * what elements will actually receive the tooltip behavior.
+	 * According to the documentation: http://twitter.github.io/bootstrap/javascript.html#tooltips
+	 * previously it was the direct selector to which to apply the `tooltip` plugin,
+	 * now it is the value for `selector` plugin option.
 	 */
-	public $tooltipSelector = 'body';
+	public $tooltipSelector = '[data-toggle=tooltip]';
 
 	/**
 	 * @var array plugin initial options (name=>options).
@@ -251,25 +262,28 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * Registers the Bootstrap popover plugin.
 	 *
-	 * @param string $selector the CSS selector. If it's null, then the value of `popoverSelector` will be used instead, which is 'body' by default.
+	 * @param string $selector The selector to which to apply the tooltips Bootstrap component.
 	 * @param array $options the plugin options
 	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#popover
 	 * @since 0.9.8
 	 */
-	public function registerPopover($selector = 'body', $options = array())
+	public function registerPopover($selector = null, $options = array())
 	{
-		if (!isset($options['selector'])) {
-			$options['selector'] = '[rel=popover]';
-		}
+		if (empty($selector))
+			$selector = $this->popoverSelector;
 
-		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options, $this->popoverSelector);
+		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options);
 	}
 
 	/**
 	 * Registers the Bootstrap tooltip plugin.
 	 *
-	 * @param string $selector the CSS selector. If it's null, then the value of `tooltipSelector` will be used instead, which is 'body' by default.
+	 * @param string $selector The selector to which to apply the popovers Bootstrap component.
+	 * Please note that it's not the selector which describes the elements which will receive popovers.
+	 * We are doing some optimization here: tooltip plugin is being initialized on body,
+	 * and it will delegate real tooltips to whatever selected by the selector passed in plugin options.
+	 * See the Bootstrap documentation about tooltip plugin option `selector`.
 	 * @param array $options the plugin options
 	 *
 	 * @see http://twitter.github.com/bootstrap/javascript.html#tooltip
@@ -277,11 +291,10 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerTooltip($selector = 'body', $options = array())
 	{
-		if (!isset($options['selector'])) {
-			$options['selector'] = '[rel=tooltip]';
-		}
+		if (empty($options['selector']))
+			$options['selector'] = $this->tooltipSelector;
 
-		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options, $this->tooltipSelector);
+		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options);
 	}
 
 	/**
@@ -290,23 +303,18 @@ class Bootstrap extends CApplicationComponent
 	 * @param string $name the name of the plugin
 	 * @param string $selector the CSS selector
 	 * @param array $options the JavaScript options for the plugin.
-	 * @param string $defaultSelector The default CSS selector
 	 *
 	 * @throws InvalidArgumentException
 	 *
 	 * @since 0.9.8
 	 */
-	public function registerPlugin($name, $selector = null, $options = array(), $defaultSelector = null)
+	public function registerPlugin($name, $selector = null, $options = array())
 	{
 		if (empty($name))
 			throw new InvalidArgumentException('You cannot register a plugin without providing its name!');
 
 		if (empty($selector))
 			$selector = $this->tryGetSelectorForPlugin($name);
-
-		// TODO: deprecate/remove this, $defaultSelector is totally unnecessary parameter.
-		if (empty($selector))
-			$selector = $defaultSelector;
 
 		if (empty($selector))
 			return;
@@ -566,9 +574,9 @@ class Bootstrap extends CApplicationComponent
 	 * @see http://twitter.github.com/bootstrap/javascript.html#collapse
 	 * @since 0.9.8
 	 */
-	public function registerCollapse($selector = null, $options = array())
+	public function registerCollapse($selector = '.collapse', $options = array())
 	{
-		$this->registerPlugin(self::PLUGIN_COLLAPSE, $selector, $options, '.collapse');
+		$this->registerPlugin(self::PLUGIN_COLLAPSE, $selector, $options);
 	}
 
 	/**
@@ -580,9 +588,9 @@ class Bootstrap extends CApplicationComponent
 	 * @see http://twitter.github.com/bootstrap/javascript.html#dropdowns
 	 * @since 0.9.8
 	 */
-	public function registerDropdown($selector = null, $options = array())
+	public function registerDropdown($selector = '.dropdown-toggle[data-dropdown="dropdown"]', $options = array())
 	{
-		$this->registerPlugin(self::PLUGIN_DROPDOWN, $selector, $options, '.dropdown-toggle[data-dropdown="dropdown"]');
+		$this->registerPlugin(self::PLUGIN_DROPDOWN, $selector, $options);
 	}
 
 	/**
