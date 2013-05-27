@@ -8,15 +8,12 @@
  * @author Ruslan Fadeev <fadeevr@gmail.com>
  */
 return array(
+
 	'bootstrap' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
 		'css' => array(YII_DEBUG ? 'css/bootstrap.css' : 'css/bootstrap.min.css'),
 	),
-	'bootstrap.js' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
-		'js' => array(YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'),
-		'depends' => array('jquery'),
-	),
+
 	'responsive' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
 		'css' => array(YII_DEBUG ? 'css/bootstrap-responsive.css' : 'css/bootstrap-responsive.min.css'),
@@ -36,6 +33,12 @@ return array(
 		'css' => array('css/bootstrap-combined.no-icons.min.css'),
 		// only minified version exists in our assets and CDN serves minified version anyway
 	),
+
+	'bootstrap.js' => array(
+		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
+		'js' => array(YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'),
+		'depends' => array('jquery'),
+	),
 	'bootstrap-yii' => array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'css' => array('css/bootstrap-yii.css'),
@@ -53,6 +56,7 @@ return array(
 		'css' => array('css/bootstrap-notify.css'),
 		'js' => array('js/bootstrap.notify.js')
 	),
+
 	//widgets start
 	'datepicker' => array(
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.0.2/' : $this->getAssetsUrl(),

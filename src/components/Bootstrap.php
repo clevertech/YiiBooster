@@ -16,27 +16,11 @@
  */
 class Bootstrap extends CApplicationComponent
 {
-	// Bootstrap plugins.
-	const PLUGIN_AFFIX = 'affix';
-	const PLUGIN_ALERT = 'alert';
-	const PLUGIN_BUTTON = 'button';
-	const PLUGIN_CAROUSEL = 'carousel';
-	const PLUGIN_COLLAPSE = 'collapse';
-	const PLUGIN_DROPDOWN = 'dropdown';
-	const PLUGIN_MODAL = 'modal';
-	const PLUGIN_MODALMANAGER = 'modalmanager';
-	const PLUGIN_POPOVER = 'popover';
-	const PLUGIN_SCROLLSPY = 'scrollspy';
-	const PLUGIN_TAB = 'tab';
-	const PLUGIN_TOOLTIP = 'tooltip';
-	const PLUGIN_TRANSITION = 'transition';
-	const PLUGIN_TYPEAHEAD = 'typeahead';
-	const PLUGIN_DATEPICKER = 'bdatepicker';
-	const PLUGIN_REDACTOR = 'redactor';
-	const PLUGIN_MARKDOWNEDITOR = 'markdowneditor';
-	const PLUGIN_DATERANGEPICKER = 'daterangepicker';
-	const PLUGIN_HTML5EDITOR = 'wysihtml5';
-	const PLUGIN_COLORPICKER = 'colorpicker';
+
+	/**
+	 * @var boolean Use CDN server URLs for assets.
+	 */
+	public $enableCdn = false;
 
 	/**
 	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
@@ -74,26 +58,6 @@ class Bootstrap extends CApplicationComponent
 	public $enableJS = true;
 
 	/**
-	 * @var array plugin initial options (name=>options).
-	 * Each array key-value pair represents the initial options for a single plugin class,
-	 * with the array key being the plugin name, and array value being the initial options array.
-	 * @since 0.9.8
-	 */
-	public $plugins = array();
-
-	/**
-	 * @var string default popover CSS selector.
-	 * @since 0.10.0
-	 */
-	public $popoverSelector = 'body';
-
-	/**
-	 * @var string default tooltip CSS selector.
-	 * @since 0.10.0
-	 */
-	public $tooltipSelector = 'body';
-
-	/**
 	 * @var bool whether to enable bootbox messages or not. Default value is true.
 	 * @since YiiBooster 1.0.5
 	 */
@@ -104,11 +68,6 @@ class Bootstrap extends CApplicationComponent
 	 * @see https://github.com/Nijikokun/bootstrap-notify
 	 */
 	public $enableNotifierJS = true;
-
-	/**
-	 * @var boolean Use CDN server URLs for assets.
-	 */
-	public $enableCdn = false;
 
 	/**
 	 * @var boolean to register Bootstrap CSS files in AJAX requests
@@ -131,6 +90,26 @@ class Bootstrap extends CApplicationComponent
 	public $forceCopyAssets = false;
 
 	/**
+	 * @var string default popover CSS selector.
+	 * @since 0.10.0
+	 */
+	public $popoverSelector = 'body';
+
+	/**
+	 * @var string default tooltip CSS selector.
+	 * @since 0.10.0
+	 */
+	public $tooltipSelector = 'body';
+
+	/**
+	 * @var array plugin initial options (name=>options).
+	 * Each array key-value pair represents the initial options for a single plugin class,
+	 * with the array key being the plugin name, and array value being the initial options array.
+	 * @since 0.9.8
+	 */
+	public $plugins = array();
+
+	/**
 	 * @var array list of script packages (name=>package spec).
 	 * This property keeps a list of named script packages, each of which can contain
 	 * a set of CSS and/or JavaScript script files, and their dependent package names.
@@ -141,15 +120,15 @@ class Bootstrap extends CApplicationComponent
 	public $packages = array();
 
 	/**
-	 * @var string handles the assets folder path.
-	 */
-	protected $_assetsUrl;
-
-	/**
 	 * @var mixed Something which can register assets for later inclusion on page.
 	 * For now it's just the `Yii::app()->clientScript`
 	 */
 	public $assetsRegistry;
+
+	/**
+	 * @var string handles the assets folder path.
+	 */
+	protected $_assetsUrl;
 
 	/**
 	 * Initializes the component.
@@ -231,8 +210,6 @@ class Bootstrap extends CApplicationComponent
 			$this->registerJQueryCss();
 	}
 
-
-
 	/**
 	 * Registers the Yii-specific CSS missing from Bootstrap.
 	 * @since 0.9.11
@@ -250,7 +227,6 @@ class Bootstrap extends CApplicationComponent
 		$this->registerPackage('jquery-css')->scriptMap['jquery-ui.css'] = $this->getAssetsUrl(
 		) . '/css/jquery-ui-bootstrap.css';
 	}
-
 
 	private function registerJsPackagesIfEnabled()
 	{
@@ -490,6 +466,28 @@ class Bootstrap extends CApplicationComponent
 
 	//========================================================================
 	// Methods for registering plugins below
+
+	// Bootstrap plugins.
+	const PLUGIN_AFFIX = 'affix';
+	const PLUGIN_ALERT = 'alert';
+	const PLUGIN_BUTTON = 'button';
+	const PLUGIN_CAROUSEL = 'carousel';
+	const PLUGIN_COLLAPSE = 'collapse';
+	const PLUGIN_DROPDOWN = 'dropdown';
+	const PLUGIN_MODAL = 'modal';
+	const PLUGIN_MODALMANAGER = 'modalmanager';
+	const PLUGIN_POPOVER = 'popover';
+	const PLUGIN_SCROLLSPY = 'scrollspy';
+	const PLUGIN_TAB = 'tab';
+	const PLUGIN_TOOLTIP = 'tooltip';
+	const PLUGIN_TRANSITION = 'transition';
+	const PLUGIN_TYPEAHEAD = 'typeahead';
+	const PLUGIN_DATEPICKER = 'bdatepicker';
+	const PLUGIN_REDACTOR = 'redactor';
+	const PLUGIN_MARKDOWNEDITOR = 'markdowneditor';
+	const PLUGIN_DATERANGEPICKER = 'daterangepicker';
+	const PLUGIN_HTML5EDITOR = 'wysihtml5';
+	const PLUGIN_COLORPICKER = 'colorpicker';
 
 	/**
 	 * Registers the Bootstrap alert plugin.
