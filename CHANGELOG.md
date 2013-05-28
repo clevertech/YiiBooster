@@ -9,6 +9,7 @@ Antonio Ramirez.
 
 ### YiiBooster version 1.1.0
 - **(enh)** Added two parameters to Bootstrap component, `ajaxCssLoad` and `ajaxJsLoad`, to control loading CSS and JS assets in AJAX calls #514 (ianare)
+- **(fix)** TbBox action buttons now display correcftly with icons (fleuryc)
 
 ### YiiBooster version 1.0.7
 - **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
