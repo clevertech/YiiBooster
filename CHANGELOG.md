@@ -1,4 +1,5 @@
 # ChangeLog
+Please update this document each time you close an issue by your commit.
 
 ## Special Thanks from original author
 I would like to personally thank everyone of you that spend your valuable time helping improving this extension, by pointing out bugs and/or providing solutions that all of us can take advantage with.
@@ -7,11 +8,15 @@ Thank you all
 
 Antonio Ramirez.
 
-### YiiBooster version 1.1.0
+
+## YiiBooster version 1.1.0
+- **(enh)** Following methods are deprecated now in main `Bootstrap` class: `register`, `registerAllCss`, `registerAllScripts`, `registerCoreScripts`, `registerTooltipAndPopover`, `registerCoreCss` and `registerResponsiveCss`. If you have been using them, stop as soon as possible, because most possibly you will end with broken styles in your application. (hijarian)
+- **(fix)** Removed LESS files from the codebase, as they are unused (hijarian)
+- **(fix)** Now the bootstrap CSS files are being included according to the combination of `enableCdn`, `minifyCss`, `responsiveCss` and `fontAwesomeCss` parameters. #528 #510 (hijarian)
 - **(enh)** Added two parameters to Bootstrap component, `ajaxCssLoad` and `ajaxJsLoad`, to control loading CSS and JS assets in AJAX calls #514 (ianare)
 - **(fix)** TbBox action buttons now display correcftly with icons (fleuryc)
 
-### YiiBooster version 1.0.7
+## YiiBooster version 1.0.7
 - **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
 - **(enh)** Added datepicker and date.js to packages.php with enableCdn support (magefad)
 - **(fix)** Fixed incorrect margin in accordion header #484 (hijarian)
@@ -35,7 +40,7 @@ Antonio Ramirez.
 - **(fix)** Include specific FontAwesome CSS for IE7 #434 (kev360)
 - **(enh)** Changed structure of the project directory, now the sources are clearly separated from all other build artifacts like the documentation or tests #263 (hijarian)
 
-### YiiBooster version 1.0.6
+## YiiBooster version 1.0.6
 - **(fix)** Now it is possible to provide custom 'class' and 'style' htmlOptions for TbProgress #216 (hijarian)
 - **(fix)** Fix typo on TbCollapse (tonydspaniard)
 - **(fix)** Dropdown in collapse not showing on first attempt (hijarian)
@@ -84,7 +89,7 @@ Antonio Ramirez.
 - **(fix)** Add support for non-link brand in TbNavbar
 
 
-### YiiBooster version 1.0.5
+## YiiBooster version 1.0.5
 
 - **(fix)** TbCarousel displayPrevAndNext set to false breaks the page (amosviedo)
 - **(enh)** Bootstrap upgrade to 2.2.1 (kazuo)
