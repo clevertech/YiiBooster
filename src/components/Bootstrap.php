@@ -41,6 +41,11 @@ class Bootstrap extends CApplicationComponent
 	public $fontAwesomeCss = false;
 
 	/**
+	 * @var bool Whether to use minified CSS files
+	 */
+	public $minifyCss = true;
+
+	/**
 	 * @var boolean whether to register the Yii-specific CSS missing from Bootstrap.
 	 * @since 0.9.12
 	 */
@@ -131,7 +136,7 @@ class Bootstrap extends CApplicationComponent
 	public $packages = array();
 
 	/**
-	 * @var mixed Something which can register assets for later inclusion on page.
+	 * @var CClientScript Something which can register assets for later inclusion on page.
 	 * For now it's just the `Yii::app()->clientScript`
 	 */
 	public $assetsRegistry;
@@ -139,7 +144,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * @var string handles the assets folder path.
 	 */
-	protected $_assetsUrl;
+	public $_assetsUrl;
 
 	/**
 	 * Initializes the component.
@@ -213,6 +218,12 @@ class Bootstrap extends CApplicationComponent
 			return;
 
 		$this->registerBootstrapCss();
+
+		if ($this->fontAwesomeCss)
+			$this->registerFontAwesomeCss();
+
+		if ($this->responsiveCss)
+			$this->registerMetadataForResponsive();
 
 		if ($this->yiiCss !== false)
 			$this->registerYiiCss();
@@ -439,38 +450,42 @@ class Bootstrap extends CApplicationComponent
 			$this->assetsRegistry = Yii::app()->getClientScript();
 	}
 
-	//----------------------------------------------------------------------------
-	// Bootstrap package variants
-
 	/**
 	 * We use the values of $this->responsiveCss, $this->fontAwesomeCss,
 	 * $this->minifyCss and $this->enableCdn to construct the proper package definition
 	 * and install and register it.
 	 */
-	private function registerBootstrapCss()
+	public function registerBootstrapCss()
 	{
-		if ($this->responsiveCss !== false) {
-			$this->registerResponsiveNoIconsCss();
-		} else {
-			$this->registerCoreCss();
-		}
-
-		if ($this->fontAwesomeCss !== false) {
-			$this->registerFontAwesomeCss();
-		}
+		$bootstrap = $this->makeBootstrapCssFilename();
+		$this->assetsRegistry->registerCssFile($bootstrap);
 	}
 
-	private function registerResponsiveNoIconsCss()
+	private function makeBootstrapCssFilename()
 	{
-		$this->registerPackage('full.css')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
+		$cdn_url = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2';
+		$local_url = $this->getAssetsUrl();
+
+		if ($this->enableCdn && $this->responsiveCss && $this->minifyCss)
+		{// CDN hosts only responsive minified versions
+			$filename = "{$cdn_url}/css/bootstrap-combined";
+		}
+		else
+		{
+			$filename = "{$local_url}/bootstrap/css/bootstrap";
+			if (!$this->responsiveCss)
+				$filename .= '.no-responsive';
+		}
+
+		$filename .= $this->fontAwesomeCss ? '.no-icons' : '';
+		$filename .= $this->minifyCss  ? '.min.css' : '.css';
+
+		return $filename;
 	}
 
-	/**
-	 * Registers the Bootstrap CSS.
-	 */
-	public function registerCoreCss()
+	private function registerMetadataForResponsive()
 	{
-		$this->registerPackage('bootstrap');
+		$this->assetsRegistry->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 	}
 
 	/**
@@ -485,18 +500,6 @@ class Bootstrap extends CApplicationComponent
 			$this->registerPackage('font-awesome');
 		}
 	}
-
-	/**
-	 * Registers the Bootstrap responsive CSS.
-	 * @since 0.9.8
-	 */
-	public function registerResponsiveCss()
-	{
-		$this->registerPackage('responsive')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
-	}
-
-	// Bootstrap package variants end
-	//----------------------------------------------------------------------------
 
 	//========================================================================
 	// Methods for registering plugins below
@@ -831,5 +834,24 @@ class Bootstrap extends CApplicationComponent
 		$this->registerTooltip();
 	}
 
+	/**
+	 * Registers the Bootstrap CSS.
+	 * @deprecated 1.1.0 DO NOT USE THIS METHOD SUSPECT FOR REMOVAL
+	 */
+	public function registerCoreCss()
+	{
+		$this->registerPackage('bootstrap');
+	}
+
+
+	/**
+	 * Registers the Bootstrap responsive CSS.
+	 * @since 0.9.8
+	 * @deprecated 1.1.0 DO NOT USE THIS METHOD SUSPECT FOR REMOVAL
+	 */
+	public function registerResponsiveCss()
+	{
+		$this->registerPackage('responsive')->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
+	}
 
 }

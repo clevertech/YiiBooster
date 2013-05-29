@@ -10,6 +10,8 @@ class FakeAssetsRegistry {
 
 	private $scripts = array();
 
+	/** @var SplStack */
+	private $css_files;
 
 	public function registerScript($id, $contents)
 	{
@@ -24,5 +26,18 @@ class FakeAssetsRegistry {
 	public function getAllScripts()
 	{
 		return $this->scripts;
+	}
+
+	public function registerCssFile($filename)
+	{
+		if (!isset($this->css_files))
+			$this->css_files = new SplStack();
+
+		$this->css_files->push($filename);
+	}
+
+	public function getLastRegisteredCssFile()
+	{
+		return $this->css_files->pop();
 	}
 }
