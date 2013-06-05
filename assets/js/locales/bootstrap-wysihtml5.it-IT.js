@@ -31,6 +31,4 @@
             edit: "Modifica HTML"
         }
     };
-    $.fn.wysihtml5.locale["it"] = $.fn.wysihtml5.locale["it-IT"];
-    $.fn.wysihtml5.locale["IT"] = $.fn.wysihtml5.locale["it-IT"];
 }(jQuery));
