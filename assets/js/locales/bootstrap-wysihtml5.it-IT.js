@@ -1,12 +1,13 @@
 /**
-* Italian  translation for bootstrap-wysihtml5 by Mirko Tebaldi
+* Italian translation for bootstrap-wysihtml5 by Mirko Tebaldi
 */
 (function($){
     $.fn.wysihtml5.locale["it-IT"] = {
         font_styles: {
               normal: "Normale",
               h1: "Títolo 1",
-              h2: "Títolo 2"
+              h2: "Títolo 2",
+              h3: "Titolo 3"
         },
         emphasis: {
               bold: "Grassetto",
@@ -29,6 +30,19 @@
         },
         html: {
             edit: "Modifica HTML"
+        },
+        colours: {
+            black: "Nero",
+            silver: "Argento",
+            gray: "Grigio",
+            maroon: "Marrone",
+            red: "Rosso",
+            purple: "Violetto",
+            green: "Verde",
+            olive: "Oliva",
+            navy: "Blu mare",
+            blue: "Blue",
+            orange: "Arancio"
         }
     };
 }(jQuery));
