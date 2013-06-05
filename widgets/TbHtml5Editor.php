@@ -15,7 +15,7 @@ class TbHtml5Editor extends CInputWidget
 {
 	/**
 	 * Editor language
-	 * Supports: de-DE, es-ES, fr-FR, pt-BR, sv-SE
+	 * Supports: de-DE, es-ES, fr-FR, pt-BR, sv-SE, it-IT
 	 */
 	public $lang = 'en';
 	/**
@@ -77,7 +77,7 @@ class TbHtml5Editor extends CInputWidget
 		{
 			Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-wysihtml5.'.$this->editorOptions['locale'].'.js');
 		}
-		elseif(in_array($this->lang, array('de-DE','es-ES','fr','fr-NL','pt-BR','sv-SE')))
+		elseif(in_array($this->lang, array('de-DE','es-ES','fr','fr-NL','pt-BR','sv-SE','it-IT')))
 		{
 			Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-wysihtml5.'.$this->lang.'.js');
 			$this->editorOptions['locale'] = $this->lang;
