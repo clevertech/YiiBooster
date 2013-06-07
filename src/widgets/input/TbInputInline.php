@@ -96,18 +96,10 @@ class TbInputInline extends TbInputVertical
 			$options = $this->htmlOptions['options'];
 			unset($this->htmlOptions['options']);
 		}
-
-
-
-
 		if (isset($this->htmlOptions['events'])) {
 			$events = $this->htmlOptions['events'];
 			unset($this->htmlOptions['events']);
 		}
-
-
-
-
 		echo $this->setPlaceholder();
 		echo $this->getPrepend();
 		$this->widget(
