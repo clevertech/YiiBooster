@@ -32,7 +32,7 @@ And don't be afraid to use Redactor, because Yii community bought an ORM license
 If you want, you can clone the [github repo](https://github.com/clevertech/YiiBooster) and get the full codebase
 to build the distributive or documentation or just to hack something.
 
-If you just want to _use_ YiiBooster, you need to [download the latest distributive archive](https://github.com/clevertech/YiiBooster/zipball/master).
+If you just want to _use_ YiiBooster, you need to [download the latest distributive archive](https://sourceforge.net/projects/yiibooster/files/latest/download?source=files).
 After that, consult the [YiiBooster documentation website][booster-docs] or the `INSTALL.md` file included in the package.
 
 ## Widgets end-user documentation
