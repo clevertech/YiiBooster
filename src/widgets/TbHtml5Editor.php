@@ -1,15 +1,14 @@
 <?php
 /**
- * TbHtml5Editor widget
+ *##TbHtml5Editor widget
  *
  * Implements the bootstrap-wysihtml5 editor
- *
  * @see https://github.com/jhollingworth/bootstrap-wysihtml5
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
+ * @package bootstrap.widgets.input.wysiwyg
  */
 class TbHtml5Editor extends CInputWidget
 {
