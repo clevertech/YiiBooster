@@ -13,7 +13,7 @@ return array(
 
 	'font-awesome' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.0.2/' : $this->getAssetsUrl(),
-		'css' => array(YII_DEBUG ? 'css/font-awesome.css' : 'css/font-awesome.min.css'),
+		'css' => array($this->minifyCss ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'font-awesome-ie7' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.0.2/' : $this->getAssetsUrl(),
@@ -22,7 +22,7 @@ return array(
 	),
 	'bootstrap.js' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
-		'js' => array(YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'),
+		'js' => array($this->minifyCss ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
 		'depends' => array('jquery'),
 	),
 	'bootstrap-yii' => array(
@@ -46,17 +46,17 @@ return array(
 	//widgets start
 	'datepicker' => array(
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.0.2/' : $this->getAssetsUrl(),
-		'css' => array(YII_DEBUG ? 'css/bootstrap-datepicker.css' : 'css/bootstrap-datepicker.min.css'),
-		'js' => array(YII_DEBUG ? 'js/bootstrap-datepicker.js' : 'js/bootstrap-datepicker.min.js')
+		'css' => array($this->minifyCss ? 'css/bootstrap-datepicker.min.css' : 'css/bootstrap-datepicker.css'),
+		'js' => array($this->minifyCss ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js')
 	),
 	'date' => array(
-		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl(),
-		'js' => array($this->enableCdn ? 'date.min.js' : 'js/date.min.js')
+		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl() . 'js/',
+		'js' => array('date.min.js')
 	),
 	'x-editable' => array(
 		'baseUrl' => $this->getAssetsUrl(),
-		'css' => array(YII_DEBUG ? 'css/bootstrap-editable.css' : 'css/bootstrap-editable.min.css'),
-		'js' => array(YII_DEBUG ? 'js/bootstrap-editable.js' : 'js/bootstrap-editable.min.js'),
+		'css' => array($this->minifyCss ? 'css/bootstrap-editable.min.css' : 'css/bootstrap-editable.css'),
+		'js' => array($this->minifyCss ? 'js/bootstrap-editable.min.js' : 'js/bootstrap-editable.js'),
 		'depends' => array('jquery')
 	),
 	'moment' => array(
@@ -65,7 +65,7 @@ return array(
 	),
 	'select2' => array(
 		'baseUrl' => $this->getAssetsUrl(),
-		'js' => array(YII_DEBUG ? 'js/select.js' : 'js/select.min.js'),
+		'js' => array($this->minifyCss ? 'js/select.min.js' : 'js/select.js'),
 		'css' => array('css/select.css'),
 		'depends' => array('jquery'),
 	)
