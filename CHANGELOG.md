@@ -15,6 +15,7 @@ Antonio Ramirez.
 - **(fix)** Now the bootstrap CSS files are being included according to the combination of `enableCdn`, `minifyCss`, `responsiveCss` and `fontAwesomeCss` parameters. #528 #510 (hijarian)
 - **(enh)** Added two parameters to Bootstrap component, `ajaxCssLoad` and `ajaxJsLoad`, to control loading CSS and JS assets in AJAX calls #514 (ianare)
 - **(fix)** TbBox action buttons now display correcftly with icons (fleuryc)
+- **(fix)** Check that $_SERVER['HTTP_USER_AGENT'] is set when loading MSIE font awesome (ianare)
 
 ## YiiBooster version 1.0.7
 - **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
