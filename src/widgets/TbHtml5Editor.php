@@ -87,7 +87,28 @@ class TbHtml5Editor extends CInputWidget
 
 		$options = CJSON::encode($this->editorOptions);
 
-		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "$('#{$id}').wysihtml5({$options});");
+		$script = array();
+		/**
+		 * The default stylesheet option is incompatible with yii paths so it is reset here.
+		 * The insertDefaultStylesheetIfColorsEnabled includes the correct stylesheet if needed.
+		 *
+		 * Any other changes to defaults should be made here.
+		 */
+		$script[] = "$.fn.wysihtml5.defaultOptions.stylesheets = [];";
+
+		/**
+		 * Check if we need a deep copy for the configuration.
+		 */
+		if (isset($this->editorOptions['deepExtend']) && $this->editorOptions['deepExtend'] === true)
+		{
+			$script[] = "$('#{$id}').wysihtml5('deepExtend', {$options});";
+		}
+		else
+		{
+			$script[] = "$('#{$id}').wysihtml5({$options});";
+		}
+
+		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, implode("\n", $script));
 	}
 
 	private function insertDefaultStylesheetIfColorsEnabled()
