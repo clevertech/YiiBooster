@@ -663,4 +663,19 @@ class TbInputHorizontal extends TbInput
 		echo '</div>';
 	}
 
+	/**
+	 * Renders a relation field.
+	 * @return string the rendered content
+	 */
+	protected function relationField()
+	{
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		echo $this->form->relationField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
 }

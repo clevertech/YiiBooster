@@ -530,6 +530,21 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 * Renders a relation field input row.
+	 *
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $widgetOptions
+	 * @param array $htmlOptions additional HTML attributes
+	 *
+	 * @return string the generated row
+	 */
+	public function relationRow($model, $attribute, $widgetOptions = array(), $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_RELATION, $model, $attribute, $widgetOptions, $htmlOptions);
+	}
+
+	/**
 	 *### .checkBoxList()
 	 *
 	 * Renders a checkbox list for a model attribute.
@@ -762,6 +777,31 @@ class TbActiveForm extends CActiveForm
 				'options' => $widgetOptions,
 				'htmlOptions' => $htmlOptions
 			),
+			true
+		);
+	}
+
+	/**
+	 * Renders a type relation field row
+	 *
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $widgetOptions relation options
+	 * @param array $htmlOptions additional HTML options.
+	 *
+	 * @throws CException
+	 * @return string the generated relation field
+	 * @since 1.1.0
+	 */
+	public function relationField($model, $attribute, $widgetOptions, $htmlOptions = array())
+	{
+		return Yii::app()->controller->widget(
+			'bootstrap.widgets.TbRelation',
+			array_merge(array(
+				'model' => $model,
+				'attribute' => $attribute,
+				'htmlOptions' => $htmlOptions
+			),$widgetOptions),
 			true
 		);
 	}

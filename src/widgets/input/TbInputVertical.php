@@ -582,4 +582,17 @@ class TbInputVertical extends TbInput
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 	}
+
+	/**
+	 * Renders a relation field
+	 * @return string the rendered content
+	 */
+	protected function relationField()
+	{
+		echo $this->getLabel();
+		echo $this->getPrepend();
+		echo $this->form->relationField($this->model, $this->attribute, $this->data, $this->htmlOptions);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+	}
 }

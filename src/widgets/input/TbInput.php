@@ -42,6 +42,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_SELECT2 = 'select2';
 	const TYPE_TYPEAHEAD = 'typeahead';
 	const TYPE_NUMBER = 'numberfield';
+	const TYPE_RELATION = 'relation';
 
 	/**
 	 * @var TbActiveForm the associated form widget.
@@ -349,6 +350,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_NUMBER:
 				$this->numberField();
+				break;
+
+			case self::TYPE_RELATION:
+				$this->relationField();
 				break;
 
 			default:
@@ -819,4 +824,14 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function numberField();
+
+	/**
+	 *### . relationField()
+	 *
+	 * Renders a relation field.
+	 *
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function relationField();
 }
