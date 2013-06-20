@@ -110,7 +110,7 @@ $this->widget('application.components.Relation', array(
 @since 1.1
 */
 
-class Relation extends CWidget
+class TbRelation extends CInputWidget
 {
     // this Variable holds an instance of the Object
     protected $_model;
@@ -476,13 +476,45 @@ class Relation extends CWidget
 
     public function renderBelongsToSelection()
     {
-        CWidget::render(strtolower($this->style),
-                        array(
-                             'id' => $this->relation . '_options',
-                             'model' => $this->_model,
-                             'field' => $this->field,
-                             'data' => $this->getRelatedData(),
-                             'htmlOptions' => $this->htmlOptions));
+
+        $id = $this->relation . '_options';
+        $model = $this->_model;
+        $field = $this->field;
+        $data = $this->getRelatedData();
+        $htmlOptions = $this->htmlOptions;
+
+        echo CHtml::openTag('div', array('id' => $id, 'class' => 'relation'));
+        switch(strtolower($this->style)) {
+                case "checkbox":
+                    echo CHtml::ActiveCheckBoxList(
+                            $model,
+                            $field,
+                            $data,
+                            $htmlOptions);
+                    break;
+                case "dropdownlist":
+                    echo CHtml::ActiveDropDownList(
+                            $model,
+                            $field,
+                            $data,
+                            $htmlOptions);
+                    break;
+                case "listbox":
+                    echo CHtml::ActiveListBox(
+                            $model,
+                            $field,
+                            $data,
+                            $htmlOptions);
+                    break;
+                case "radiobutton":
+                    echo CHtml::ActiveRadiobuttonList(
+                            $model,
+                            $field,
+                            $data,
+                            $htmlOptions);
+                    break;
+        }
+        echo CHtml::closeTag('div');
     }
 
     public function renderManyManySelection()
