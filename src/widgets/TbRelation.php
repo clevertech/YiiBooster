@@ -1,4 +1,13 @@
 <?php
+/*## TbRelation class file.
+ *
+ * @author Herbert Maschke <thyseus@gmail.com>
+ * @author Fredrik Wollsén <fredrik@neam.se>
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ * @package bootstrap.widgets
+ * @since 1.1.0-wip
+ */
+
 /*
 	 The Relation widget is used in forms, where the User can choose
 	 between a selection of model elements, that this models belongs to.
@@ -14,7 +23,7 @@
 	 to a Post:
 
 	 <pre>
-	 $this->widget('application.components.Relation', array(
+	 $this->widget('bootstrap.widgets.TbRelation', array(
 	 'model' => 'Post',
 	 'relation' => 'user'
 	 'fields' => 'username' // show the field "username" of the parent element
@@ -86,7 +95,7 @@ Selectbox/Listbox form element.
 
 Full Example:
 <pre>
-$this->widget('application.components.Relation', array(
+$this->widget('bootstrap.widgets.TbRelation', array(
 			'model' => 'Post',
 			'field' => 'Userid',
 			'style' => 'ListBox',
@@ -104,10 +113,6 @@ $this->widget('application.components.Relation', array(
 			));
 </pre>
 
-
-@author Herbert Maschke <thyseus@gmail.com>
-@version 0.97 (after 1.0rc5)
-@since 1.1
 */
 
 class TbRelation extends CInputWidget
