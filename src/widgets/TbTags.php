@@ -1,6 +1,9 @@
 <?php
 /*## TbTags class file.
  *
+ * Encapsulates the Bootstrap Tags plugin by Maxwells
+ * @see <https://github.com/maxwells/bootstrap-tags>
+ *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 

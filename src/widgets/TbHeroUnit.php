@@ -1,17 +1,15 @@
 <?php
-/*## TbHeroUnit class file.
+/**
+ *## TbHeroUnit class file.
+ * Modest bootstrap hero unit widget.
+ * Thanks to Christphe Boulain for suggesting content capturing.
+ * @see <http://twitter.github.com/bootstrap/components.html#typography>
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright  Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @package bootstrap.widgets.decoration
  * @since 0.9.10
- */
-
-/**
- * Modest bootstrap hero unit widget.
- * Thanks to Christphe Boulain for suggesting content capturing.
- * @see <http://twitter.github.com/bootstrap/components.html#typography>
  */
 class TbHeroUnit extends CWidget
 {
@@ -49,11 +47,11 @@ class TbHeroUnit extends CWidget
 			$this->htmlOptions['class'] = 'hero-unit';
 		}
 
+		echo CHtml::openTag('div', $this->htmlOptions);
+
 		if ($this->encodeHeading) {
 			$this->heading = CHtml::encode($this->heading);
 		}
-
-		echo CHtml::openTag('div', $this->htmlOptions);
 
 		if (isset($this->heading)) {
 			echo CHtml::tag('h1', $this->headingOptions, $this->heading);
@@ -67,6 +65,6 @@ class TbHeroUnit extends CWidget
 	 */
 	public function run()
 	{
-		echo '</div>';
+		echo CHtml::closeTag('div');
 	}
 }

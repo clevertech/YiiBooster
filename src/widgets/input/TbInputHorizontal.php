@@ -541,7 +541,7 @@ class TbInputHorizontal extends TbInput
 				'model' => $this->model,
 				'attribute' => $this->attribute,
 				'options' => isset($options) ? $options : array(),
-				'callback' => isset($callback) ? $callback : array(),
+				'callback' => isset($callback) ? $callback : '',
 				'htmlOptions' => $this->htmlOptions,
 			)
 		);
