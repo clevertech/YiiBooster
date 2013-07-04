@@ -23,10 +23,16 @@ class Bootstrap extends CApplicationComponent
 	public $enableCdn = false;
 
 	/**
-	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
+	 * @var boolean whether to register any CSS at all.
 	 * Defaults to true.
 	 */
 	public $coreCss = true;
+
+	/**
+	 * @var boolean whether to register the Bootstrap core CSS (bootstrap.min.css).
+	 * Defaults to true.
+	 */
+	public $bootstrapCss = true;
 
 	/**
 	 * @var boolean whether to register the Bootstrap responsive CSS (bootstrap-responsive.min.css).
@@ -217,7 +223,8 @@ class Bootstrap extends CApplicationComponent
 		if (!$this->ajaxCssLoad && Yii::app()->request->isAjaxRequest)
 			return;
 
-		$this->registerBootstrapCss();
+		if ($this->bootstrapCss)
+			$this->registerBootstrapCss();
 
 		if ($this->fontAwesomeCss)
 			$this->registerFontAwesomeCss();
