@@ -313,7 +313,7 @@ class TbExtendedGridView extends TbGridView
 	protected function getPrimaryKey($data)
 	{
 		if ($this->dataProvider instanceof CActiveDataProvider) {
-			$key = $this->dataProvider->keyAttribute === null ? $data->getPrimaryKey() : $data->{$this->keyAttribute};
+			$key = $this->dataProvider->keyAttribute === null ? $data->getPrimaryKey() : $data->{$this->dataProvider->keyAttribute};
 			return is_array($key) ? implode(',', $key) : $key;
 		}
 		if ($this->dataProvider instanceof CArrayDataProvider || $this->dataProvider instanceof CSqlDataProvider) {
