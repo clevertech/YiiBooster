@@ -20,6 +20,7 @@ Antonio Ramirez.
 - **(fix)** Check that $_SERVER['HTTP_USER_AGENT'] is set when loading MSIE font awesome (ianare)
 - **(fix)** Breadcrumbs not visible with default css (naduvko)
 - **(enh)** Inline datepicker (naduvko)
+- **(fix)** Localization of datepicker not working (naduvko)
 
 ## YiiBooster version 1.0.7
 - **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
