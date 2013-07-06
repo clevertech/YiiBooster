@@ -196,7 +196,7 @@ class TbJsonGridView extends TbGridView
 			return $this->renderTableBodyJSON($n);
 		}
 
-		echo "<tbody>\n";
+		echo CHtml::openTag('tbody');
 
 		if ($n > 0) {
 			for ($row = 0; $row < $n; ++$row) {
@@ -207,8 +207,8 @@ class TbJsonGridView extends TbGridView
 			$this->renderEmptyText();
 			echo "</td></tr>\n";
 		}
-		echo "</tbody>\n";
 
+		echo CHtml::closeTag('tbody');
 	}
 
 	/**
@@ -226,6 +226,7 @@ class TbJsonGridView extends TbGridView
 			'keys' => array()
 		);
 		foreach ($this->columns as $column) {
+			/** @var CGridColumn $column */
 			if (property_exists($column, 'json')) {
 				$column->json = $this->json;
 				$tbody['headers'][] = $column->renderHeaderCell();
@@ -278,6 +279,7 @@ class TbJsonGridView extends TbGridView
 			echo '<tr>';
 		}
 		foreach ($this->columns as $column) {
+			/** @var CGridColumn $column */
 			$column->renderDataCell($row);
 		}
 		echo "</tr>\n";
@@ -306,7 +308,6 @@ class TbJsonGridView extends TbGridView
 		}
 		foreach ($this->columns as $column) {
 			$json['cols'][] = $column->renderDataCell($row);
-
 		}
 
 		return $json;

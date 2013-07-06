@@ -130,7 +130,7 @@ class TbButton extends CWidget
 	public $dropdownOptions = array();
 
 	/**
-	 * @var whether the button is visible or not
+	 * @var bool whether the button is visible or not
 	 * @since 0.9.11
 	 */
 	public $visible = true;

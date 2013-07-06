@@ -184,9 +184,10 @@ class TbEditableSaver extends CComponent
 		if ($this->model->hasErrors()) {
 			$msg = array();
 			foreach ($this->model->getErrors() as $attribute => $errors) {
+				// TODO: make use of $attribute elements
 				$msg = array_merge($msg, $errors);
 			}
-			//todo: show several messages. should be checked in x-editable js
+			// TODO: show several messages. should be checked in x-editable js
 			//$this->error(join("\n", $msg));
 			$this->error($msg[0]);
 		}
@@ -240,7 +241,7 @@ class TbEditableSaver extends CComponent
 	 *
 	 * This event is raised after the update is performed.
 	 *
-	 * @param CEvent $event the event parameter
+	 * @param CModelEvent $event the event parameter
 	 */
 	public function onAfterUpdate($event)
 	{
@@ -255,7 +256,7 @@ class TbEditableSaver extends CComponent
 	 */
 	protected function beforeUpdate()
 	{
-		$this->onBeforeUpdate(new CEvent($this));
+		$this->onBeforeUpdate(new CModelEvent($this));
 	}
 
 	/**
@@ -266,6 +267,6 @@ class TbEditableSaver extends CComponent
 	 */
 	protected function afterUpdate()
 	{
-		$this->onAfterUpdate(new CEvent($this));
+		$this->onAfterUpdate(new CModelEvent($this));
 	}
 }

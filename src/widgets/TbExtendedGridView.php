@@ -555,7 +555,7 @@ class TbExtendedGridView extends TbGridView
 			}
 		}
 
-		echo CHtml::openTag('tr', $htmlOptions) . "\n";
+		echo CHtml::openTag('tr', $htmlOptions);
 		foreach ($this->columns as $column) {
 			echo $this->displayExtendedSummary && !empty($this->extendedSummary['columns']) ? $this->parseColumnValue(
 				$column,
@@ -563,7 +563,7 @@ class TbExtendedGridView extends TbGridView
 			) : $column->renderDataCell($row);
 		}
 
-		echo "</tr>\n";
+		echo CHtml::closeTag('tr');
 	}
 
 	/**

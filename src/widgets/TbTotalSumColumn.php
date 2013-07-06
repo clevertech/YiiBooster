@@ -46,7 +46,7 @@ class TbTotalSumColumn extends TbDataColumn
 	protected function renderFooterCellContent()
 	{
 		if (is_null($this->total)) {
-			return parent::renderFooterCellContent();
+			parent::renderFooterCellContent();
 		}
 
 		echo $this->totalValue ? $this->evaluateExpression($this->totalValue, array('total' => $this->total))
