@@ -29,12 +29,13 @@
     <target name="install-composer-libraries" depends="install-composer">
         <if>
             <not>
-                <or>
+                <and>
                     <available file="${path.composer.vendor}/bin/phploc" />
                     <available file="${path.composer.vendor}/bin/phpcpd" />
                     <available file="${path.composer.vendor}/bin/pinocchio" />
                     <available file="${path.composer.vendor}/bin/phpunit" />
-                </or>
+                    <available file="${path.composer.vendor}/bin/phpcs" />
+                </and>
             </not>
             <then>
                 <echo msg="It seems we don't have Composer-managed libraries installed yet, installing..."/>

@@ -110,7 +110,7 @@
         </exec>
     </target>
 
-    <!-- Counting lines of code using PHPLoc. Intended to be used manually in console mode -->
+    <!-- Counting lines of code using PHPLoc. Intended to be used manually in console mode. -->
     <target name="loc" depends="install-composer-libraries">
         <echo msg="Checking the Lines of Code statistics..." />
         <exec executable="${path.composer.vendor}/bin/phploc" passthru="true">
@@ -119,7 +119,39 @@
         </exec>
     </target>
 
+    <!-- Counting lumps of copypasted code using PHPCPD. Intended to be used manually in console mode. -->
+    <target name="cpd" depends="install-composer-libraries">
+        <echo msg="Searching for copypasted lines..." />
+        <exec executable="${path.composer.vendor}/bin/phpcpd" passthru="true">
+            <arg value="--progress"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <!-- Checking the coding style within project with CodeSniffer. Intended to be used manually in console mode. -->
+    <target name="cs" depends="install-composer-libraries,hack-yii-coding-standard">
+        <echo msg="Checking the code style..." />
+        <exec executable="${path.composer.vendor}/bin/phpcs" passthru="true">
+            <arg value="-p"/>
+            <arg value="--standard=${path.composer.vendor}/ardem/Yii/ruleset.xml"/>
+            <arg value="--ignore=assets"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <target name="hack-yii-coding-standard">
+        <if>
+            <available file="${path.composer.vendor}/ardem/yii-coding-standard"/>
+            <then>
+                <echo msg="Because of https://github.com/Ardem/yii-coding-standard/issues/8 we need to hack the Yii coding standard." />
+                <move file="${path.composer.vendor}/ardem/yii-coding-standard"
+                  tofile="${path.composer.vendor}/ardem/Yii" />
+            </then>
+            <else>
+                <echo msg="It seems the coding standard is named accordingly"/>
+            </else>
+        </if>
+    </target>
+
     <import file="${project.basedir}/installation.xml" />
-
-
 </project>

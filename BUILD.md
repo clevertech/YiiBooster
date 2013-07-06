@@ -90,3 +90,8 @@ not the systemwide one you can possibly have on your workstation.
 ## Getting static analysis of the codebase
 
 You can check the [PHPLOC](https://github.com/sebastianbergmann/phploc) statistics by issuing `phing loc` from the root of codebase.
+
+You can check the code style using [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer) by issuing `phing cs` from the root of codebase.
+Coding standard used for checking is [Yii](https://github.com/Ardem/yii-coding-standard) for now.
+
+You can probe the codebase for duplicated code using [PHP Copy-Paste Detector](https://github.com/sebastianbergmann/phpcpd) by issuing `phing cpd` from the root of codebase.
