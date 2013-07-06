@@ -94,6 +94,7 @@ class TbAlert extends CWidget
 		echo CHtml::openTag('div', $this->htmlOptions);
 
 		foreach ($this->alerts as $type => $alert) {
+
 			if (is_string($alert)) {
 				$type = $alert;
 				$alert = array();
@@ -103,66 +104,14 @@ class TbAlert extends CWidget
 				continue;
 			}
 
-			if (Yii::app()->getComponent($this->userComponentId)->hasFlash($type)) {
-				$classes = array('alert in');
+			/** @var CWebUser $userComponent */
+			$userComponent = Yii::app()->getComponent($this->userComponentId);
+			if (!$userComponent->hasFlash($type))
+				continue;
 
-				if (!isset($alert['block'])) {
-					$alert['block'] = $this->block;
-				}
+			$alertText = $userComponent->getFlash($type);
 
-				if ($alert['block'] === true) {
-					$classes[] = 'alert-block';
-				}
-
-				if (!isset($alert['fade'])) {
-					$alert['fade'] = $this->fade;
-				}
-
-				if ($alert['fade'] === true) {
-					$classes[] = 'fade';
-				}
-
-				$validTypes = array(
-					self::TYPE_SUCCESS,
-					self::TYPE_INFO,
-					self::TYPE_WARNING,
-					self::TYPE_ERROR,
-					self::TYPE_DANGER
-				);
-
-				if (in_array($type, $validTypes)) {
-					$classes[] = 'alert-' . $type;
-				}
-
-				if (!isset($alert['htmlOptions'])) {
-					$alert['htmlOptions'] = array();
-				}
-
-				$classes = implode(' ', $classes);
-				if (isset($alert['htmlOptions']['class'])) {
-					$alert['htmlOptions']['class'] .= ' ' . $classes;
-				} else {
-					$alert['htmlOptions']['class'] = $classes;
-				}
-
-				echo CHtml::openTag('div', $alert['htmlOptions']);
-
-				// Logic is this: if no type-specific `closeText` was defined, let's show `$this->closeText`.
-				// Else, show type-specific `closeText`. Treat 'false' differently.
-				if (!isset($alert['closeText'])) {
-					$alert['closeText'] = (isset($this->closeText) && $this->closeText !== false)
-						? $this->closeText
-						: false;
-				}
-
-				// If `closeText` which is in effect now is `false` then do not show button.
-				if ($alert['closeText'] !== false) {
-					echo '<a href="#" class="close" data-dismiss="alert">' . $alert['closeText'] . '</a>';
-				}
-
-				echo Yii::app()->getComponent($this->userComponentId)->getFlash($type);
-				echo CHtml::closeTag('div');
-			}
+			$this->renderSingleAlert($alert, $type, $alertText);
 		}
 
 		echo CHtml::closeTag('div');
@@ -181,5 +130,72 @@ class TbAlert extends CWidget
 				"jQuery('{$selector}').on('{$name}', {$handler});"
 			);
 		}
+	}
+
+	/**
+	 * @param $alert
+	 * @param $type
+	 * @param $alertText
+	 */
+	private function renderSingleAlert($alert, $type, $alertText)
+	{
+		$classes = array('alert in');
+
+		if (!isset($alert['block'])) {
+			$alert['block'] = $this->block;
+		}
+
+		if ($alert['block'] === true) {
+			$classes[] = 'alert-block';
+		}
+
+		if (!isset($alert['fade'])) {
+			$alert['fade'] = $this->fade;
+		}
+
+		if ($alert['fade'] === true) {
+			$classes[] = 'fade';
+		}
+
+		$validTypes = array(
+			self::TYPE_SUCCESS,
+			self::TYPE_INFO,
+			self::TYPE_WARNING,
+			self::TYPE_ERROR,
+			self::TYPE_DANGER
+		);
+
+		if (in_array($type, $validTypes)) {
+			$classes[] = 'alert-' . $type;
+		}
+
+		if (!isset($alert['htmlOptions'])) {
+			$alert['htmlOptions'] = array();
+		}
+
+		$classes = implode(' ', $classes);
+		if (isset($alert['htmlOptions']['class'])) {
+			$alert['htmlOptions']['class'] .= ' ' . $classes;
+		} else {
+			$alert['htmlOptions']['class'] = $classes;
+		}
+
+		echo CHtml::openTag('div', $alert['htmlOptions']);
+
+		// Logic is this: if no type-specific `closeText` was defined, let's show `$this->closeText`.
+		// Else, show type-specific `closeText`. Treat 'false' differently.
+		if (!isset($alert['closeText'])) {
+			$alert['closeText'] = (isset($this->closeText) && $this->closeText !== false)
+				? $this->closeText
+				: false;
+		}
+
+		// If `closeText` which is in effect now is `false` then do not show button.
+		if ($alert['closeText'] !== false) {
+			echo '<a href="#" class="close" data-dismiss="alert">' . $alert['closeText'] . '</a>';
+		}
+
+		echo $alertText;
+		echo CHtml::closeTag('div');
 	}
 }
