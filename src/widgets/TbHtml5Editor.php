@@ -1,15 +1,14 @@
 <?php
 /**
- * TbHtml5Editor widget
+ *##TbHtml5Editor widget
  *
  * Implements the bootstrap-wysihtml5 editor
- *
  * @see https://github.com/jhollingworth/bootstrap-wysihtml5
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
+ * @package bootstrap.widgets.input.wysiwyg
  */
 class TbHtml5Editor extends CInputWidget
 {
@@ -87,7 +86,28 @@ class TbHtml5Editor extends CInputWidget
 
 		$options = CJSON::encode($this->editorOptions);
 
-		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "$('#{$id}').wysihtml5({$options});");
+		$script = array();
+		/**
+		 * The default stylesheet option is incompatible with yii paths so it is reset here.
+		 * The insertDefaultStylesheetIfColorsEnabled includes the correct stylesheet if needed.
+		 *
+		 * Any other changes to defaults should be made here.
+		 */
+		$script[] = "$.fn.wysihtml5.defaultOptions.stylesheets = [];";
+
+		/**
+		 * Check if we need a deep copy for the configuration.
+		 */
+		if (isset($this->editorOptions['deepExtend']) && $this->editorOptions['deepExtend'] === true)
+		{
+			$script[] = "$('#{$id}').wysihtml5('deepExtend', {$options});";
+		}
+		else
+		{
+			$script[] = "$('#{$id}').wysihtml5({$options});";
+		}
+
+		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, implode("\n", $script));
 	}
 
 	private function insertDefaultStylesheetIfColorsEnabled()

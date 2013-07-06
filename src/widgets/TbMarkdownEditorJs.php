@@ -1,11 +1,13 @@
 <?php
 /**
- * TbMarkdownEditorJs class
+ *## TbMarkdownEditorJs class
+ * @see <https://code.google.com/p/pagedown/wiki/PageDown>
+ * @see <https://github.com/arhpreston/jquery-markdown>
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
+ * @package bootstrap.widgets.input.wysiwyg
  */
 class TbMarkdownEditorJS extends CInputWidget
 {

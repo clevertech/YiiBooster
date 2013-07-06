@@ -1,11 +1,13 @@
 <?php
 /**
- * TbRedactorJs class
+ *## TbRedactorJs class
+ * WYSIWYG editor based on Redactor library.
+ * @see <http://imperavi.com/redactor/docs/>
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
+ * @package bootstrap.widgets.input.wysiwyg
  */
 class TbRedactorJS extends CInputWidget
 {

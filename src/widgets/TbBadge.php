@@ -1,17 +1,15 @@
 <?php
-/*## Bootstrap badge widget.
+/**
+ *## Bootstrap badge widget.
  * @see <http://twitter.github.com/bootstrap/components.html#badges>
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright  Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @package bootstrap.widgets.decoration
  */
 class TbBadge extends CWidget
 {
-	/*
-	 * Valid badge types.
-	 */
 	const TYPE_SUCCESS = 'success';
 	const TYPE_WARNING = 'warning';
 	const TYPE_IMPORTANT = 'important';

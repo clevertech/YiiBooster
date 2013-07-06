@@ -1,20 +1,16 @@
 <?php
-/*## TbAlert class file.
+/**
+ *## TbAlert class file.
+ * Bootstrap alert widget.
+ * @see http://twitter.github.com/bootstrap/javascript.html#alerts
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright  Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
- * @package bootstrap.widgets
- */
-
-/**
- * Bootstrap alert widget.
- *
- * @see http://twitter.github.com/bootstrap/javascript.html#alerts
+ * @package bootstrap.widgets.decoration
  */
 class TbAlert extends CWidget
 {
-	// Alert types.
 	const TYPE_SUCCESS = 'success';
 	const TYPE_INFO = 'info';
 	const TYPE_WARNING = 'warning';
@@ -165,11 +161,11 @@ class TbAlert extends CWidget
 				}
 
 				echo Yii::app()->getComponent($this->userComponentId)->getFlash($type);
-				echo '</div>';
+				echo CHtml::closeTag('div');
 			}
 		}
 
-		echo '</div>';
+		echo CHtml::closeTag('div');
 
 		$selector = "#{$id} .alert";
 		$id .= '_' . self::$_containerId++;
