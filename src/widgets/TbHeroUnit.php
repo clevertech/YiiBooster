@@ -1,15 +1,21 @@
 <?php
 /**
  *## TbHeroUnit class file.
+ *
+ * @author Christoffer Niska <ChristofferNiska@gmail.com>
+ * @copyright  Copyright &copy; Christoffer Niska 2011-
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ * @since 0.9.10
+ */
+
+/**
+ *## Class TbHeroUnit
+ *
  * Modest bootstrap hero unit widget.
  * Thanks to Christphe Boulain for suggesting content capturing.
  * @see <http://twitter.github.com/bootstrap/components.html#typography>
  *
- * @author Christoffer Niska <ChristofferNiska@gmail.com>
- * @copyright  Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets.decoration
- * @since 0.9.10
+ * @package booster.widgets.decoration
  */
 class TbHeroUnit extends CWidget
 {
