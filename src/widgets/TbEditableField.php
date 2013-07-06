@@ -1,18 +1,18 @@
 <?php
-/*## EditableField class file.
+/**
+ *## EditableField class file.
  *
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
- * @package bootstrap.widgets
  * @version 1.1.0
-*/
+ */
 
 /**
- * EditableField widget makes editable single attribute of model.
+ *## EditableField widget makes editable single attribute of model.
  *
- * @package widgets
- */
+ * @package booster.widgets.editable
+*/
 class TbEditableField extends CWidget
 {
 	//note: only most usefull options are on first level of config.

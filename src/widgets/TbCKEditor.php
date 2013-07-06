@@ -2,13 +2,17 @@
 /**
  *## TbCKEditor class file.
  *
- * CKEditor 4 as a form input
- * @see <http://docs.ckeditor.com/>
- *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets.input.wysiwyg
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ */
+
+/**
+ *## CKEditor 4 as a form input
+ *
+ * @see <http://docs.ckeditor.com/>
+ *
+ * @package booster.widgets.forms.inputs.wysiwyg
  */
 class TbCKEditor extends CInputWidget
 {

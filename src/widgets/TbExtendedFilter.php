@@ -1,16 +1,22 @@
 <?php
-/*## TbExtendedFilter widget
+/**
+ *## TbExtendedFilter widget
+ *
+ * @author Antonio Ramirez <antonio@clevertech.biz>
+ * @copyright Copyright &copy; Clevertech 2012-
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ */
+
+Yii::import('bootstrap.components.JSONStorage', true);
+
+/**
+ *## Extended filter for grids.
  *
  * This widget displays an extra row to the grid is attached to and renders a visual feedback of the filter values used
  * plus an option to save them for later use.
  *
- * @author Antonio Ramirez <antonio@clevertech.biz>
- * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @package booster.widgets.supplementary
  */
-Yii::import('bootstrap.components.JSONStorage', true);
-
 class TbExtendedFilter extends CWidget
 {
 	/**

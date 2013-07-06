@@ -1,10 +1,17 @@
 <?php
-/*## TbDatePicker widget class
+/**
+ *## TbDatePicker widget class
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
- * @package YiiBooster bootstrap.widgets
+ */
+
+/**
+ * Bootstrap DatePicker widget
+ * @see http://www.eyecon.ro/bootstrap-datepicker/
+ *
+ * @package booster.widgets.forms.inputs
  */
 class TbDatePicker extends CInputWidget
 {

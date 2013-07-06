@@ -1,15 +1,16 @@
 <?php
-/*## TbExtendedGridView class file
+/**
+ * ## TbExtendedGridView class file
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
  */
+
 Yii::import('bootstrap.widgets.TbGridView');
 
 /**
- * TbExtendedGridView is an extended version of TbGridView.
+ *## TbExtendedGridView is an extended version of TbGridView.
  *
  * Features are:
  *  - Display an extended summary of the records shown. The extended summary can be configured to any of the
@@ -20,6 +21,8 @@ Yii::import('bootstrap.widgets.TbGridView');
  *
  * @property CActiveDataProvider $dataProvider the data provider for the view.
  * @property TbDataColumn[] $columns
+ *
+ * @package booster.widgets.grids
  */
 class TbExtendedGridView extends TbGridView
 {

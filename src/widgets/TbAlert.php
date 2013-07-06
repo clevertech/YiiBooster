@@ -1,13 +1,18 @@
 <?php
 /**
  *## TbAlert class file.
- * Bootstrap alert widget.
- * @see http://twitter.github.com/bootstrap/javascript.html#alerts
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
- * @copyright  Copyright &copy; Christoffer Niska 2011-
+ * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
- * @package bootstrap.widgets.decoration
+ */
+
+/**
+ *## Bootstrap alert widget.
+ *
+ * @see http://twitter.github.com/bootstrap/javascript.html#alerts
+ *
+ * @package booster.widgets.decoration
  */
 class TbAlert extends CWidget
 {

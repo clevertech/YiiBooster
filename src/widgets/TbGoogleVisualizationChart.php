@@ -1,15 +1,20 @@
 <?php
 /**
- * TbGoogleVisualizationChart widget
+ *## TbGoogleVisualizationChart class file
+ *
+ * @author: antonio ramirez <antonio@clevertech.biz>
+ * @copyright Copyright &copy; Clevertech 2012-
+ * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+
+/**
+ *## TbGoogleVisualizationChart widget
  *
  * Makes use of the Google Visualization service to render charts
  *
  * @see https://developers.google.com/chart/interactive/docs/gallery
  *
- * @author: antonio ramirez <antonio@clevertech.biz>
- * @copyright Copyright &copy; Clevertech 2012-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
+ * @package booster.widgets.charts
  */
 class TbGoogleVisualizationChart extends CWidget
 {

@@ -1,18 +1,24 @@
 <?php
-/*##  TbCheckBoxColumn class file.
+/**
+ *## TbBulkActions class file
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
+
 Yii::import('zii.widgets.grid.CCheckBoxColumn');
 Yii::import('bootstrap.widgets.TbButton');
 
+/**
+ * Bulk actions widget.
+ *
+ * @package booster.widgets.grids.columns
+ */
 class TbBulkActions extends CComponent
 {
     /**
-     * @var TbGridView the grid view object that owns this column.
+     * @var TbGridView The grid view object that owns this column.
      */
     public $grid;
 
@@ -203,6 +209,7 @@ class TbBulkActions extends CComponent
         echo CHtml::closeTag('div');
 
         $this->registerClientScript();
+	    return true;
     }
 
     /**

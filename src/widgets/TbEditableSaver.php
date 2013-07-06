@@ -1,18 +1,18 @@
 <?php
-/*## EditableSaver class file.
+/**
+ *## EditableSaver class file.
  *
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
- * @package bootstrap.widgets
  * @version 1.1.0
-*/
+ */
 
 /**
  * EditableSaver helps to update model by editable widget submit request.
  *
- * @package saver
- */
+ * @package booster.widgets.supplementary
+*/
 class TbEditableSaver extends CComponent
 {
 	/**
