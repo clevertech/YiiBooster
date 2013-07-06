@@ -37,15 +37,9 @@ class TbSortableAction extends CAction
 			));
 		}
 
-		$query = "UPDATE {$model->tableName()} SET {$sortableAttribute} = CASE ";
-		$ids = array();
-		foreach ($_POST['sortOrder'] as $id => $sort_order) {
-			$id = intval($id);
-			$sort_order = intval($sort_order);
-			$query .= "WHEN {$model->tableSchema->primaryKey}={$id} THEN {$sort_order} ";
-			$ids[] = $id;
-		}
-		$query .= "END WHERE {$model->tableSchema->primaryKey} IN (" . implode(',', $ids) . ');';
+		$sortOrderData = $_POST['sortOrder'];
+
+		$query = $this->makeUpdateQuery($model, $sortableAttribute, $sortOrderData);
 		Yii::app()->db->createCommand($query)->execute();
 
 	}
@@ -55,5 +49,26 @@ class TbSortableAction extends CAction
 		return Yii::app()->request->isPostRequest
 			&& Yii::app()->request->isAjaxRequest
 			&& isset($_POST['sortOrder']);
+	}
+
+	/**
+	 * @param $model
+	 * @param $sortableAttribute
+	 * @param $sortOrderData
+	 *
+	 * @return string
+	 */
+	private function makeUpdateQuery($model, $sortableAttribute, $sortOrderData)
+	{
+		$query = "UPDATE {$model->tableName()} SET {$sortableAttribute} = CASE ";
+		$ids = array();
+		foreach ($sortOrderData as $id => $sort_order) {
+			$id = intval($id);
+			$sort_order = intval($sort_order);
+			$query .= "WHEN {$model->tableSchema->primaryKey}={$id} THEN {$sort_order} ";
+			$ids[] = $id;
+		}
+		$query .= "END WHERE {$model->tableSchema->primaryKey} IN (" . implode(',', $ids) . ');';
+		return $query;
 	}
 }
