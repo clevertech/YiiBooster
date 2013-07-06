@@ -89,10 +89,8 @@ class TbToggleAction extends CAction
 	 */
 	protected function loadModel($id)
 	{
-		if (empty($this->additionalCriteriaOnLoadModel)) {
-			$model = CActiveRecord::model($this->modelName)->findByPk($id);
-		} else {
-			$finder = CActiveRecord::model($this->modelName);
+		$finder = CActiveRecord::model($this->modelName);
+		if ($this->additionalCriteriaOnLoadModel) {
 			$c = new CDbCriteria($this->additionalCriteriaOnLoadModel);
 			$c->mergeWith(
 				array(
@@ -101,12 +99,13 @@ class TbToggleAction extends CAction
 				)
 			);
 			$model = $finder->find($c);
+		} else {
+			$model = $finder->findByPk($id);
 		}
-		if (isset($model)) {
-			return $model;
-		}
-		if ($this->additionalCriteriaOnLoadModel) {
+
+		if (!$model)
 			throw new CHttpException(404, 'Unable to find the requested object.');
-		}
+
+		return $model;
 	}
 }
