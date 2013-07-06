@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 1.1.0
+- **(enh)** Added composer file #566 (gureedo)
 - **(enh)** Following methods are deprecated now in main `Bootstrap` class: `register`, `registerAllCss`, `registerAllScripts`, `registerCoreScripts`, `registerTooltipAndPopover`, `registerCoreCss` and `registerResponsiveCss`. If you have been using them, stop as soon as possible, because most possibly you will end with broken styles in your application. (hijarian)
 - **(fix)** Removed LESS files from the codebase, as they are unused (hijarian)
 - **(fix)** Now the bootstrap CSS files are being included according to the combination of `enableCdn`, `minifyCss`, `responsiveCss` and `fontAwesomeCss` parameters. #528 #510 (hijarian)
@@ -17,6 +18,7 @@ Antonio Ramirez.
 - **(fix)** TbBox action buttons now display correcftly with icons (fleuryc)
 - **(fix)** Check that $_SERVER['HTTP_USER_AGENT'] is set when loading MSIE font awesome (ianare)
 - **(fix)** Breadcrumbs not visible with default css (naduvko)
+- **(enh)** Inline datepicker (naduvko)
 
 ## YiiBooster version 1.0.7
 - **(fix)** HighCharts now accept data with zero values normally #345 (dheering)
