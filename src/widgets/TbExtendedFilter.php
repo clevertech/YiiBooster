@@ -116,22 +116,23 @@ class TbExtendedFilter extends CWidget
 	 */
 	protected function checkRequestFilters()
 	{
-		if ($filterName = Yii::app()->getRequest()->getParam($this->saveFilterVar)) {
-			if (!count($this->filteredBy)) {
-				return false;
-			}
-			$key = $this->generateRegistryItemKey();
+		$filterName = Yii::app()->getRequest()->getParam($this->saveFilterVar);
+		if (!$filterName)
+			return false;
 
-			if ($this->jsonStorage->getData($key, $this->registry)) {
-				return false;
-			}
+		if (!count($this->filteredBy))
+			return false;
 
-			$data = array('name' => $filterName);
-			$data['options'] = array(get_class($this->model) => $this->filteredBy);
-			$this->jsonStorage->setData($key, $data, $this->registry);
+		$key = $this->generateRegistryItemKey();
+		if ($this->jsonStorage->getData($key, $this->registry))
+			return false;
 
-			Yii::app()->getController()->redirect($this->redirectRoute);
-		}
+		$data = array('name' => $filterName);
+		$data['options'] = array(get_class($this->model) => $this->filteredBy);
+		$this->jsonStorage->setData($key, $data, $this->registry);
+
+		Yii::app()->getController()->redirect($this->redirectRoute);
+		return true;
 	}
 
 	/**
@@ -226,20 +227,21 @@ EOD
 	 * Displays the save filter button
 	 *
 	 * @param string $registryKey
-	 *
-	 * @return bool
 	 */
 	protected function displaySaveButton($registryKey)
 	{
-		if (null == $registryKey || $this->jsonStorage->getData($registryKey, $this->registry)) {
-			return false;
-		}
+		if (null == $registryKey || $this->jsonStorage->getData($registryKey, $this->registry))
+			return;
 
-		echo '<p>' . CHtml::link(
+		echo CHtml::openTag('p');
+
+		echo CHtml::link(
 			'save filter',
 			'#',
 			array('class' => 'btn btn-success btn-extended-filter-save')
-		) . '</p>';
+		);
+
+		echo CHtml::closeTag('p');
 	}
 
 	/**
