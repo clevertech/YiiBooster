@@ -1,18 +1,23 @@
 <?php
 /**
- * TbJsonGridView class file
- *
- * Converts TbGridView into a Json Javascript grid when using AJAX updates calls. This grid makes use of localStorage or
- * a custom in memory plugin to avoid repetitive ajax requests/responses and speed up data visualization.
+ *## TbJsonGridView class file
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package YiiBooster bootstrap.widgets
  */
+
 Yii::import('bootstrap.widgets.TbGridView');
 Yii::import('bootstrap.widgets.TbJsonDataColumn');
 
+/**
+ *## Class TbJsonGridView
+ *
+ * Converts TbGridView into a Json Javascript grid when using AJAX updates calls. This grid makes use of localStorage or
+ * a custom in memory plugin to avoid repetitive ajax requests/responses and speed up data visualization.
+ *
+ * @package booster.widgets.grids
+ */
 class TbJsonGridView extends TbGridView
 {
 	/**

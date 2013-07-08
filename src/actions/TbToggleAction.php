@@ -1,13 +1,17 @@
 <?php
 /**
- * TbToggleAction CAction Component
+ *## TbToggleAction class file
+ *
+ * @author antonio ramirez <antonio@clevertech.biz>
+ */
+
+/**
+ *## TbToggleAction CAction Component
  *
  * It is a component that works in conjunction of TbToggleColumn widget. Just attach to the controller you wish to
  * make the calls to.
  *
- * @author: antonio ramirez <antonio@clevertech.biz>
- * Date: 10/16/12
- * Time: 5:40 PM
+ * @package booster.actions
  */
 class TbToggleAction extends CAction
 {

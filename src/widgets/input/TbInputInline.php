@@ -1,17 +1,21 @@
 <?php
 /**
- * TbInputInline class file.
+ *## TbInputInline class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package bootstrap.widgets.input
  */
 
 Yii::import('bootstrap.widgets.input.TbInputVertical');
 
 /**
+ *## TbInputInline class
+ *
  * Bootstrap vertical form input widget.
+ *
  * @since 0.9.8
+ * @package booster.widgets.forms.inputs
  */
 class TbInputInline extends TbInputVertical
 {

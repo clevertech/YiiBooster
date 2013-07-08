@@ -1,13 +1,19 @@
 <?php
 /**
  *## TbLabel class file.
- * Bootstrap label widget.
- * @see <http://twitter.github.com/bootstrap/components.html#labels>
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright  Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
- * @package bootstrap.widgets.decoration
+ */
+
+/**
+ *## Class TbLabel
+ *
+ * Bootstrap label widget.
+ * @see <http://twitter.github.com/bootstrap/components.html#labels>
+ *
+ * @package booster.widgets.decoration
  */
 class TbLabel extends CWidget
 {

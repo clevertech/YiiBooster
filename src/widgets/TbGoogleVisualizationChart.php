@@ -11,7 +11,6 @@
  *## TbGoogleVisualizationChart widget
  *
  * Makes use of the Google Visualization service to render charts
- *
  * @see https://developers.google.com/chart/interactive/docs/gallery
  *
  * @package booster.widgets.charts

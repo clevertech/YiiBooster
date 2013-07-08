@@ -1,6 +1,7 @@
 <?php
 /**
- * Bootstrap class file.
+ *## Bootstrap class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-2012
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
@@ -12,7 +13,9 @@
  */
 
 /**
- * Bootstrap application component.
+ *## Bootstrap application component.
+ *
+ * @package booster.components
  */
 class Bootstrap extends CApplicationComponent
 {
@@ -182,6 +185,9 @@ class Bootstrap extends CApplicationComponent
 		return defined('IS_IN_TESTS') && IS_IN_TESTS;
 	}
 
+	/**
+	 *
+	 */
 	private function setRootAliasIfUndefined()
 	{
 		if (Yii::getPathOfAlias('bootstrap') === false) {
@@ -189,6 +195,9 @@ class Bootstrap extends CApplicationComponent
 		}
 	}
 
+	/**
+	 *
+	 */
 	private function includeAssets()
 	{
 		$this->appendUserSuppliedPackagesToOurs();
@@ -200,6 +209,9 @@ class Bootstrap extends CApplicationComponent
 		$this->registerJsPackagesIfEnabled();
 	}
 
+	/**
+	 *
+	 */
 	private function appendUserSuppliedPackagesToOurs()
 	{
 		$this->packages = CMap::mergeArray(
@@ -208,6 +220,9 @@ class Bootstrap extends CApplicationComponent
 		);
 	}
 
+	/**
+	 *
+	 */
 	private function addOurPackagesToYii()
 	{
 		foreach ($this->packages as $name => $definition) {
@@ -215,6 +230,9 @@ class Bootstrap extends CApplicationComponent
 		}
 	}
 
+	/**
+	 *
+	 */
 	private function registerCssPackagesIfEnabled()
 	{
 		if (!$this->coreCss)
@@ -257,6 +275,9 @@ class Bootstrap extends CApplicationComponent
 		) . '/css/jquery-ui-bootstrap.css';
 	}
 
+	/**
+	 *
+	 */
 	private function registerJsPackagesIfEnabled()
 	{
 		if (!$this->enableJS)
@@ -360,12 +381,19 @@ class Bootstrap extends CApplicationComponent
 		return uniqid(__CLASS__ . '#', true);
 	}
 
-	private function tryGetSelectorForPlugin($name)
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */private function tryGetSelectorForPlugin($name)
 	{
 		return $this->tryGetInfoForPlugin($name, 'selector');
 	}
 
-	private function tryGetOptionsForPlugin($name)
+	/**
+	 * @param $name
+	 * @return mixed
+	 */private function tryGetOptionsForPlugin($name)
 	{
 		return $this->tryGetInfoForPlugin($name, 'options');
 	}
@@ -451,7 +479,9 @@ class Bootstrap extends CApplicationComponent
 		}
 	}
 
-	private function setAssetsRegistryIfNotDefined()
+	/**
+	 *
+	 */private function setAssetsRegistryIfNotDefined()
 	{
 		if (!$this->assetsRegistry)
 			$this->assetsRegistry = Yii::app()->getClientScript();
@@ -468,7 +498,9 @@ class Bootstrap extends CApplicationComponent
 		$this->assetsRegistry->registerCssFile($bootstrap);
 	}
 
-	private function makeBootstrapCssFilename()
+	/**
+	 * @return string
+	 */private function makeBootstrapCssFilename()
 	{
 		$cdn_url = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2';
 		$local_url = $this->getAssetsUrl();
@@ -490,7 +522,9 @@ class Bootstrap extends CApplicationComponent
 		return $filename;
 	}
 
-	private function registerMetadataForResponsive()
+	/**
+	 *
+	 */private function registerMetadataForResponsive()
 	{
 		$this->assetsRegistry->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 	}

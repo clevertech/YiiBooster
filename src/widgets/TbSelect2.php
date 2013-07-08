@@ -1,10 +1,18 @@
 <?php
-/*##  TbSelect2 class file.
+/**
+ *##  TbSelect2 class file.
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets.input
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ */
+
+/**
+ *## Select2 wrapper widget
+ *
+ * @see http://ivaynberg.github.io/select2/
+ *
+ * @package booster.widgets.forms.inputs
  */
 class TbSelect2 extends CInputWidget
 {

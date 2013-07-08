@@ -1,13 +1,17 @@
 <?php
 /**
- * TbSortableAction CAction Component
+ *## TbSortableAction class file
+ *
+ * @author ruslan fadeev <fadeevr@gmail.com>
+ */
+
+/**
+ *## TbSortableAction CAction Component
  *
  * It is a component that works in conjunction of TbExtendedGridView widget with sortableRows true. Just attach to the controller you wish to
  * make the calls to.
  *
- * @author: ruslan fadeev <fadeevr@gmail.com>
- * Date: 10/23/12
- * Time: 4:02 PM
+ * @package booster.actions
  */
 class TbSortableAction extends CAction
 {

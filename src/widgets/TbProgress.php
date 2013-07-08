@@ -1,13 +1,18 @@
 <?php
 /**
  *## TbProgress class file.
- * Bootstrap progress bar widget.
- * @see <http://twitter.github.com/bootstrap/components.html#progress>
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets.decoration
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ */
+
+/**
+ *## Bootstrap progress bar widget.
+ *
+ * @see <http://twitter.github.com/bootstrap/components.html#progress>
+ *
+ * @package booster.widgets.decoration
  * @since 0.9.10
  */
 class TbProgress extends CWidget

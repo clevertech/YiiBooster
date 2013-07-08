@@ -1,12 +1,15 @@
 <?php
 /**
- * TbTimePicker class file.
- * @since 1.0.3
- * @see http://jdewit.github.com/bootstrap-timepicker/
+ *## TbTimePicker class file.
  */
 
 /**
- * TbTimePicker widget.
+ *## TbTimePicker widget.
+ *
+ * @see http://jdewit.github.com/bootstrap-timepicker/
+ *
+ * @since 1.0.3
+ * @package booster.widgets.forms.inputs
  */
 class TbTimePicker extends CInputWidget
 {

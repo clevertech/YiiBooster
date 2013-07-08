@@ -11,9 +11,10 @@ Yii::import('bootstrap.widgets.TbButtonColumn');
 
 /**
  *## Enhanced bootstrap button column widget.
+ *
  * Renders the buttons as a button group
  *
- * @package booster.widgets.forms.buttons
+ * @package booster.widgets.grids.columns
  */
 class TbButtonGroupColumn extends TbButtonColumn
 {

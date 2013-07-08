@@ -1,13 +1,19 @@
 <?php
 /**
- * TbRelationalColumn class
+ *## TbRelationalColumn class file
+ *
+ * @author: antonio ramirez <antonio@clevertech.biz>
+ * @copyright Copyright &copy; Clevertech 2012-
+ * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+
+/**
+ *## TbRelationalColumn class
  *
  * Displays a clickable column that will make an ajax request and display its resulting data
  * into a new row.
  *
- * @author: antonio ramirez <antonio@clevertech.biz>
- * Date: 9/25/12
- * Time: 10:05 PM
+ * @package booster.widgets.grids.columns
  */
 class TbRelationalColumn extends TbDataColumn
 {

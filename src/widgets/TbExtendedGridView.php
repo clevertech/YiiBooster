@@ -801,9 +801,11 @@ class TbExtendedGridView extends TbGridView
 }
 
 /**
- * TbOperation class
+ *## TbOperation class
  *
  * Abstract class where all types of operations extend from
+ *
+ * @package booster.widgets.grids.operations
  */
 abstract class TbOperation extends CWidget
 {
@@ -872,6 +874,7 @@ abstract class TbOperation extends CWidget
  *
  * Displays a total of specified column name.
  *
+ * @package booster.widgets.grids.operations
  */
 class TbSumOperation extends TbOperation
 {
@@ -952,6 +955,8 @@ class TbSumOperation extends TbOperation
  *
  * Renders a summary based on the count of specified types. For example, if a value has a type 'blue', this class will
  * count the number of times the value 'blue' has on that column.
+ *
+ * @package booster.widgets.grids.operations
  */
 class TbCountOfTypeOperation extends TbOperation
 {
@@ -1043,9 +1048,12 @@ class TbCountOfTypeOperation extends TbOperation
 }
 
 /**
- * TbPercentOfTypeOperation class
+ *## TbPercentOfTypeOperation class
+ *
  * Renders a summary based on the percent count of specified types. For example, if a value has a type 'blue', this class will
  * count the percentage number of times the value 'blue' has on that column.
+ *
+ * @package booster.widgets.grids.operations
  */
 class TbPercentOfTypeOperation extends TbCountOfTypeOperation
 {
@@ -1103,9 +1111,11 @@ class TbPercentOfTypeOperation extends TbCountOfTypeOperation
 }
 
 /**
- * TbPercentOfTypeGooglePieOperation class
+ *## TbPercentOfTypeGooglePieOperation class
  *
  * Displays a Google visualization  pie chart based on the percentage count of type.
+ *
+ * @package booster.widgets.grids.operations
  */
 class TbPercentOfTypeGooglePieOperation extends TbPercentOfTypeOperation
 {
@@ -1184,9 +1194,11 @@ class TbPercentOfTypeGooglePieOperation extends TbPercentOfTypeOperation
 }
 
 /**
- * TbPercentOfTypeEasyPieOperation class
+ *## TbPercentOfTypeEasyPieOperation class
  *
  * Displays an chart based on jquery.easy.pie plugin
+ *
+ * @package booster.widgets.grids.operations
  */
 class TbPercentOfTypeEasyPieOperation extends TbPercentOfTypeOperation
 {
