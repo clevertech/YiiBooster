@@ -19,7 +19,6 @@ Overall, the following is included in YiiBooster:
 * [jQueryUI/Bootstrap](http://addyosmani.github.io/jquery-ui-bootstrap/) integration.
 * [Select2](http://ivaynberg.github.io/select2/) widget for fancy selectors.
 * [X-Editable](http://vitalets.github.io/x-editable/) plugin for in-place editing of table cells values.
-* [jQRangeSlider](http://ghusse.github.io/jQRangeSlider/) widget for additional awesomeness.
 * Absolutely crazy custom grid views called [TbExtendedGridView](http://yii-booster.clevertech.biz/extended-grid.html)
 and [TbJsonGridView](http://yii-booster.clevertech.biz/json-grid.html), packed with features to the brim.
 * *Four* different WYSIWYG editors for you to choose: [wysihtml5](https://github.com/xing/wysihtml5) [with Bootstrap integration](https://github.com/jhollingworth/bootstrap-wysihtml5),
