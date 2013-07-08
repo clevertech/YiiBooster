@@ -1,18 +1,18 @@
 <?php
-/*## EditableField class file.
+/**
+ *## EditableField class file.
  *
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
- * @package bootstrap.widgets
  * @version 1.1.0
-*/
+ */
 
 /**
- * EditableField widget makes editable single attribute of model.
+ *## EditableField widget makes editable single attribute of model.
  *
- * @package widgets
- */
+ * @package booster.widgets.editable
+*/
 class TbEditableField extends CWidget
 {
 	//note: only most usefull options are on first level of config.
@@ -275,6 +275,14 @@ class TbEditableField extends CWidget
 	 */
 	public $cssFile = 'jquery-ui.css';
 
+	/**
+	 * Ideally, this is just some class which is able to register asset packages by name.
+	 * For now it's the whole Bootstrap, set in `init()` method.
+	 *
+	 * @var Bootstrap
+	 */
+	public $packageRegistry;
+
 	private $_prepareToAutotext = false;
 
 	/**
@@ -286,6 +294,8 @@ class TbEditableField extends CWidget
 	public function init()
 	{
 		parent::init();
+
+		$this->packageRegistry = Yii::app()->bootstrap;
 
 		if (!$this->model) {
 			throw new CException('Parameter "model" should be provided for EditableField');
@@ -549,11 +559,7 @@ class TbEditableField extends CWidget
 	 */
 	public function registerAssets()
 	{
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.css');
-		Yii::app()->bootstrap->registerAssetJs(
-			'bootstrap-editable' . (!YII_DEBUG ? '.min' : '') . '.js',
-			CClientScript::POS_HEAD
-		);
+		$this->packageRegistry->registerPackage('x-editable');
 
 		if ($this->type == 'date' || $this->type == 'combodate') {
 			/** @var $widget TbDatePicker */
@@ -566,11 +572,10 @@ class TbEditableField extends CWidget
 		}
 		//include moment.js if needed
 		if ($this->type == 'combodate') {
-			Yii::app()->bootstrap->registerAssetJs('moment.min.js');
+			$this->packageRegistry->registerPackage('moment');
 		} //include select2 if needed
 		elseif ($this->type == 'select2') {
-			Yii::app()->bootstrap->registerAssetJs('select' . (!YII_DEBUG ? '.min' : '') . '.js');
-			Yii::app()->bootstrap->registerAssetCss('select.css');
+			$this->packageRegistry->registerPackage('select2');
 		}
 	}
 

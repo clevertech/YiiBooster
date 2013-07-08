@@ -1,18 +1,21 @@
 <?php
-/*##  TbWizard class file.
+/**
+ *##  TbWizard class file.
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @copyright Copyright &copy; Vincent Gabriel 2012
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
- * @package bootstrap.widgets
  */
 
 Yii::import('bootstrap.widgets.TbMenu');
 
 /**
- * Bootstrap Javascript tabs widget.
+ *## Bootstrap Javascript tabs widget.
+ *
  * @see <http://twitter.github.com/bootstrap/javascript.html#tabs>
+ *
+ * @package booster.widgets.grouping
  */
 class TbWizard extends CWidget
 {

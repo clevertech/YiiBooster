@@ -1,15 +1,18 @@
 <?php
-/*## TbInput class file.
+/**
+ *## TbInput class file.
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets.input
  */
 
 /**
- * Bootstrap input widget.
+ *## Bootstrap input widget.
+ *
  * Used for rendering inputs according to Bootstrap standards.
+ *
+ * @package booster.widgets.forms.inputs
  */
 abstract class TbInput extends CInputWidget
 {

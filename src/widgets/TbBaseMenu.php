@@ -1,14 +1,19 @@
 <?php
-/*##  TbBaseMenu class file.
+/**
+ *## TbBaseMenu class file.
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('zii.widgets.CMenu');
 
+/**
+ *## Base class for menu in Booster
+ *
+ * @package booster.widgets.navigation
+ */
 abstract class TbBaseMenu extends CMenu
 {
 	/**

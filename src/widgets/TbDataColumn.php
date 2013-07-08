@@ -1,17 +1,20 @@
 <?php
-/*## TbDataColumn class file.
+/**
+ *## TbDataColumn class file.
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('zii.widgets.grid.CDataColumn');
 
 /**
- * Bootstrap grid data column.
+ *## Bootstrap grid data column.
+ *
  * @property TbGridView|TbExtendedGridView $grid the grid view object that owns this column.
+ *
+ * @package booster.widgets.grids.columns
  */
 class TbDataColumn extends CDataColumn
 {

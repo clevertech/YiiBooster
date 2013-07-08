@@ -1,18 +1,22 @@
 <?php
 /**
- * TbInputVertical class file.
+ *## TbInputVertical class file.
+ *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @package bootstrap.widgets.input
  * @since 11/25/12 10:49 AM  updated by Antonio Ramirez <antonio@clevertech.biz>
  */
 
 Yii::import('bootstrap.widgets.input.TbInput');
 
 /**
- * Bootstrap vertical form input widget.
+ *## TbInputVertical class
+ *
+ * Bootstrap vertical form input widget
+ *
  * @since 0.9.8
+ * @package booster.widgets.forms.inputs
  */
 class TbInputVertical extends TbInput
 {
@@ -468,7 +472,7 @@ class TbInputVertical extends TbInput
 				'model' => $this->model,
 				'attribute' => $this->attribute,
 				'options' => isset($options) ? $options : array(),
-				'callback' => isset($callback) ? $callback : array(),
+				'callback' => isset($callback) ? $callback : '',
 				'htmlOptions' => $this->htmlOptions,
 			)
 		);

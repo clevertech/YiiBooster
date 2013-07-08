@@ -1,10 +1,18 @@
 <?php
-/*## TbExtendedTooltip class
+/**
+ * ## TbExtendedTooltip class
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
+ */
+
+/**
+ *## Extended tooltip, with editable contents.
+ *
+ * @fixme This widget is broken after update to X-Editable set of plugins
+ *
+ * @package booster.widgets.editable
  */
 class TbExtendedTooltip extends CWidget
 {

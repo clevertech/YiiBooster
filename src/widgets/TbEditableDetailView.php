@@ -1,12 +1,12 @@
 <?php
-/*## EditableDetailView class file.
+/**
+ *## EditableDetailView class file.
  *
  * @author Vitaliy Potapov <noginsk@rambler.ru>
  * @link https://github.com/vitalets/x-editable-yii
  * @copyright Copyright &copy; Vitaliy Potapov 2012
- * @package bootstrap.widgets
  * @version 1.1.0
-*/
+ */
 
 Yii::import('bootstrap.widgets.TbEditableField');
 Yii::import('bootstrap.widgets.TbDetailView');
@@ -14,8 +14,8 @@ Yii::import('bootstrap.widgets.TbDetailView');
 /**
  * EditableDetailView widget makes editable CDetailView (several attributes of single model shown as name-value table).
  *
- * @package widgets
- */
+ * @package booster.widgets.editable
+*/
 class TbEditableDetailView extends TbDetailView
 {
 	/**
@@ -119,6 +119,7 @@ class TbEditableDetailView extends TbDetailView
 			$reflection = new ReflectionClass('TbEditableField');
 			$this->_editableProperties = array_map(
 				function ($d) {
+					/** @var ReflectionProperty $d */
 					return $d->getName();
 				},
 				$reflection->getProperties()

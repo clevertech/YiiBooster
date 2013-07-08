@@ -1,17 +1,20 @@
 <?php
-/*##  TbCrumb class file.
+/**
+ *##  TbBreadcrumbs class file.
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
- * @package bootstrap.widgets
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('zii.widgets.CBreadcrumbs');
 
 /**
  * Bootstrap breadcrumb widget.
+ *
  * @see <http://twitter.github.com/bootstrap/components.html#breadcrumbs>
+ *
+ * @package booster.widgets.navigation
  */
 class TbBreadcrumbs extends CBreadcrumbs
 {

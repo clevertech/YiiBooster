@@ -1,16 +1,22 @@
 <?php
 /**
- * TbPickerColumn
+ *## TbPickerColumn class file
+ *
+ * @author: antonio ramirez <antonio@clevertech.biz>
+ * @copyright Copyright &copy; Clevertech 2012-
+ * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+
+Yii::import('bootstrap.widgets.TbDataColumn');
+
+/**
+ *## Class TbPickerColumn
  *
  * The TbPickerColumn works with TbJsonGridView and allows you to create a column that will display a picker element
  * The picker is a special plugin that renders a dropdown on click, which contents can be dynamically updated.
  *
- * @author: antonio ramirez <antonio@clevertech.biz>
- * Date: 9/12/12
- * Time: 3:47 PM
+ * @package booster.widgets.grids.columns
  */
-Yii::import('bootstrap.widgets.TbDataColumn');
-
 class TbPickerColumn extends TbDataColumn
 {
 	/**

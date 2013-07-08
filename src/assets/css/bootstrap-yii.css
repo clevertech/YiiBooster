@@ -130,6 +130,12 @@ span.required { color:#ff0000; }
 table th { font-weight: bold; }
 table td, table th { padding: 9px 10px; text-align: left; }
 
+/* Breadcrumbs */
+.breadcrumb {
+	margin: 60px 0 20px!important;
+}
+
+
 /* Mobile */
 @media only screen and (max-width: 767px) {
 
@@ -147,4 +153,10 @@ table td, table th { padding: 9px 10px; text-align: left; }
     table.responsive td, table.responsive th { position: relative; white-space: nowrap; overflow: hidden; }
     table.responsive th:first-child, table.responsive td:first-child, table.responsive td:first-child, table.responsive.pinned td { display: none; }
 
+}
+
+/* Gii */
+.form.gii .tooltip {
+    opacity: 1;
+    font-size: 1em;
 }
