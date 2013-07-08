@@ -541,6 +541,12 @@ class TbInputVertical extends TbInput
 			$asDropDownList = $this->htmlOptions['asDropDownList'];
 			unset($this->htmlOptions['asDropDownList']);
 		}
+		
+		if (isset($this->htmlOptions['val']))
+		{
+			$val = $this->htmlOptions['val'];
+			unset($this->htmlOptions['val']);
+		}
 
 		echo $this->getLabel();
 		echo $this->getPrepend();
@@ -553,6 +559,7 @@ class TbInputVertical extends TbInput
 				'events' => isset($events) ? $events : array(),
 				'data' => isset($data) ? $data : array(),
 				'asDropDownList' => isset($asDropDownList) ? $asDropDownList : true,
+				'val' => isset($val) ? $val : null,
 				'htmlOptions' => $this->htmlOptions,
 				'form' => $this->form
 			)
