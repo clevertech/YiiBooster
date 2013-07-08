@@ -21,7 +21,7 @@ return array(
 		// only minified version exists in our assets and CDN serves minified version anyway
 	),
 	'bootstrap.js' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/' : $this->getAssetsUrl(),
+		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
 		'js' => array($this->minifyCss ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
 		'depends' => array('jquery'),
 	),
