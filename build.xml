@@ -40,13 +40,22 @@
         <echo msg="Making an API-level documentation."/>
         <phpdoc2 title="${phing.project.name}"
                  destdir="${path.docs}/api">
+
             <fileset dir="${path.src}">
-                <exclude name="views**"/>
+                <include name="**/*.php"/>
+
+                <exclude name="**/views/**"/>
+
                 <!-- CKEditor currently has some PHP files in it's assets -->
-                <exclude name="assets**"/>
+                <exclude name="**/assets/**"/>
+
                 <!-- gii subfolder has some templates -->
-                <exclude name="templates**"/>
+                <exclude name="**/templates/**"/>
+
+                <!-- we don't need to make API docs for TbHtml.php -->
+                <exclude name="helpers"/>
             </fileset>
+
         </phpdoc2>
     </target>
 
