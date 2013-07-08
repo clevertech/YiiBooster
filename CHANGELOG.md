@@ -13,6 +13,7 @@ Antonio Ramirez.
 - **(enh)** Added Italian translation for `TbHtml5Editor` #544 (realtebo)
 - **(enh)** Rearranged build script to accommodate Composer installed libraries better. (hijarian)
 - **(enh)** Added composer file #566 (gureedo)
+- **(enh)** Updated version of Boostrap Datepicker library #585 (soee)
 - **(enh)** Following methods are deprecated now in main `Bootstrap` class: `register`, `registerAllCss`, `registerAllScripts`, `registerCoreScripts`, `registerTooltipAndPopover`, `registerCoreCss` and `registerResponsiveCss`. If you have been using them, stop as soon as possible, because most possibly you will end with broken styles in your application. (hijarian)
 - **(fix)** Removed LESS files from the codebase, as they are unused (hijarian)
 - **(fix)** Now the bootstrap CSS files are being included according to the combination of `enableCdn`, `minifyCss`, `responsiveCss` and `fontAwesomeCss` parameters. #528 #510 (hijarian)
