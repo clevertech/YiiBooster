@@ -35,10 +35,12 @@
                     <available file="${path.composer.vendor}/bin/pinocchio" />
                     <available file="${path.composer.vendor}/bin/phpunit" />
                     <available file="${path.composer.vendor}/bin/phpcs" />
+                    <available file="${path.composer.vendor}/bin/phpcb" />
                 </and>
             </not>
             <then>
                 <echo msg="It seems we don't have Composer-managed libraries installed yet, installing..."/>
+                <exec command="php ./composer.phar update --dev" passthru="true"/>
                 <exec command="php ./composer.phar install --dev" passthru="true"/>
 
                 <echo msg="Now all Composer-managed libraries should have been installed to ${path.composer.vendor}" />

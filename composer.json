@@ -35,7 +35,8 @@
         "phploc/phploc": "*",
         "sebastian/phpcpd": "*",
         "squizlabs/php_codesniffer": "1.*",
-        "ardem/yii-coding-standard": "dev-master"
+        "ardem/yii-coding-standard": "dev-master",
+        "mayflower/php-codebrowser": "1.0.*@dev"
     },
     "minimum-stability": "dev"
 }

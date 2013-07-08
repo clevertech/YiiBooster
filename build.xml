@@ -153,5 +153,32 @@
         </if>
     </target>
 
+    <!-- Generating the highlighted sources with the marks from Code Sniffer and Mess Detector (and code coverage, too) -->
+    <target name="cb" depends="install-composer-libraries,prepare-codebrowser">
+        <echo msg="Generating the browsable codebase..." />
+        <exec executable="${path.composer.vendor}/bin/phpcb" passthru="true">
+            <arg value="--log"/>
+            <arg path="${path.reports}"/>
+            <arg value="--output"/>
+            <arg path="${path.reports}/codebrowser/"/>
+            <arg value="--source"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <!-- Prepare the destination folder for Codebrowser report. -->
+    <target name="prepare-codebrowser">
+        <echo msg="Recreating a directory for codebrowser at  ${path.reports}/codebrowser/"/>
+        <delete dir="${path.reports}/codebrowser/" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.reports}/codebrowser/"/>
+    </target>
+
+    <!-- Prepare the destination folder for distribution archive. -->
+    <target name="prepare-dist">
+        <echo msg="Recreating a distribution directory at ${path.dist}"/>
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.dist}"/>
+    </target>
+
     <import file="${project.basedir}/installation.xml" />
 </project>
