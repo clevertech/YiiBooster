@@ -7,7 +7,7 @@
               normal: "Normale",
               h1: "Títolo 1",
               h2: "Títolo 2",
-              h3: "Titolo 3"
+              h3: "Títolo 3"
         },
         emphasis: {
               bold: "Grassetto",
