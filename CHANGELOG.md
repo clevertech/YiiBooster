@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 1.1.0
+- **(enh)** Added Italian translation for `TbHtml5Editor` #544 (realtebo)
 - **(enh)** Rearranged build script to accommodate Composer installed libraries better. (hijarian)
 - **(enh)** Added composer file #566 (gureedo)
 - **(enh)** Following methods are deprecated now in main `Bootstrap` class: `register`, `registerAllCss`, `registerAllScripts`, `registerCoreScripts`, `registerTooltipAndPopover`, `registerCoreCss` and `registerResponsiveCss`. If you have been using them, stop as soon as possible, because most possibly you will end with broken styles in your application. (hijarian)
