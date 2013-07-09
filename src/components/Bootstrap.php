@@ -214,8 +214,11 @@ class Bootstrap extends CApplicationComponent
 	 */
 	private function appendUserSuppliedPackagesToOurs()
 	{
+		$bootstrapPackages = require(Yii::getPathOfAlias('bootstrap.components') . '/packages.php');
+		$bootstrapPackages += $this->makeBootstrapCssPackage();
+
 		$this->packages = CMap::mergeArray(
-			require(Yii::getPathOfAlias('bootstrap.components') . '/packages.php'),
+			$bootstrapPackages,
 			$this->packages
 		);
 	}
@@ -487,31 +490,29 @@ class Bootstrap extends CApplicationComponent
 			$this->assetsRegistry = Yii::app()->getClientScript();
 	}
 
+
+	public function registerBootstrapCss()
+	{
+		$this->assetsRegistry->registerPackage('bootstrap.css');
+	}
+
 	/**
 	 * We use the values of $this->responsiveCss, $this->fontAwesomeCss,
 	 * $this->minifyCss and $this->enableCdn to construct the proper package definition
 	 * and install and register it.
+	 * @return array
 	 */
-	public function registerBootstrapCss()
+	private function makeBootstrapCssPackage()
 	{
-		$bootstrap = $this->makeBootstrapCssFilename();
-		$this->assetsRegistry->registerCssFile($bootstrap);
-	}
-
-	/**
-	 * @return string
-	 */private function makeBootstrapCssFilename()
-	{
-		$cdn_url = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2';
-		$local_url = $this->getAssetsUrl();
-
 		if ($this->enableCdn && $this->responsiveCss && $this->minifyCss)
 		{// CDN hosts only responsive minified versions
-			$filename = "{$cdn_url}/css/bootstrap-combined";
+			$baseUrl = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/';
+			$filename = "css/bootstrap-combined";
 		}
 		else
 		{
-			$filename = "{$local_url}/bootstrap/css/bootstrap";
+			$baseUrl = $this->getAssetsUrl() . '/bootstrap/';
+			$filename = "css/bootstrap";
 			if (!$this->responsiveCss)
 				$filename .= '.no-responsive';
 		}
@@ -519,7 +520,10 @@ class Bootstrap extends CApplicationComponent
 		$filename .= $this->fontAwesomeCss ? '.no-icons' : '';
 		$filename .= $this->minifyCss  ? '.min.css' : '.css';
 
-		return $filename;
+		return array('bootstrap.css' => array(
+			'baseUrl' => $baseUrl,
+			'css' => array($filename),
+		));
 	}
 
 	/**
