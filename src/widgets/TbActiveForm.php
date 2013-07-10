@@ -548,7 +548,7 @@ class TbActiveForm extends CActiveForm
 	{
 		$htmlOptions = array();
 		$htmlOptions['input'] = $input;
-		return $this->inputRow(TbInput::TYPE_CUSTOM, $model, $attribute, $htmlOptions);
+		return $this->inputRow(TbInput::TYPE_CUSTOM, $model, $attribute, null, $htmlOptions);
 	}
 
 	/**
