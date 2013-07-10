@@ -593,4 +593,17 @@ class TbInputVertical extends TbInput
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 	}
+
+	/**
+	 * Renders a pre-rendered custom field
+	 * @return string the rendered content
+	 */
+	protected function customField()
+	{
+		echo $this->getLabel();
+		echo $this->getPrepend();
+		echo $this->htmlOptions['input'];
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+	}
 }
