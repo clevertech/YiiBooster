@@ -216,6 +216,7 @@ class Bootstrap extends CApplicationComponent
 	{
 		$bootstrapPackages = require(Yii::getPathOfAlias('bootstrap.components') . '/packages.php');
 		$bootstrapPackages += $this->makeBootstrapCssPackage();
+		$bootstrapPackages += $this->makeSelect2Package();
 
 		$this->packages = CMap::mergeArray(
 			$bootstrapPackages,
@@ -523,6 +524,34 @@ class Bootstrap extends CApplicationComponent
 		return array('bootstrap.css' => array(
 			'baseUrl' => $baseUrl,
 			'css' => array($filename),
+		));
+	}
+
+	/**
+	 * Make select2 package definition
+	 * @return array
+	 */
+	private function makeSelect2Package()
+	{
+		$jsFiles = array($this->minifyCss ? 'select2.min.js' : 'select2.js');
+
+		if (strpos(Yii::app()->language, 'en') !== 0) {
+			$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2). '.js';
+			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
+				$jsFiles[] = $locale;
+			} else {
+				$locale = 'select2_locale_'. Yii::app()->language . '.js';
+				if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
+					$jsFiles[] = $locale;
+				}
+			}
+		}
+
+		return array('select2' => array(
+			'baseUrl' => $this->getAssetsUrl() . '/select2/',
+			'js' => $jsFiles,
+			'css' => array('select2.css'),
+			'depends' => array('jquery'),
 		));
 	}
 

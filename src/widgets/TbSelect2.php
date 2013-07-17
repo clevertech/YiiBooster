@@ -104,8 +104,7 @@ class TbSelect2 extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetCss('select2.css');
-		Yii::app()->bootstrap->registerAssetJs('select2.js');
+		Yii::app()->bootstrap->registerPackage('select2');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 

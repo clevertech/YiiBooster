@@ -64,10 +64,4 @@ return array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'js' => 'moment.min.js',
 	),
-	'select2' => array(
-		'baseUrl' => $this->getAssetsUrl(),
-		'js' => array($this->minifyCss ? 'js/select.min.js' : 'js/select.js'),
-		'css' => array('css/select.css'),
-		'depends' => array('jquery'),
-	)
 );
