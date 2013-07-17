@@ -66,8 +66,8 @@ return array(
 	),
 	'select2' => array(
 		'baseUrl' => $this->getAssetsUrl(),
-		'js' => array($this->minifyCss ? 'js/select.min.js' : 'js/select.js'),
-		'css' => array('css/select.css'),
+		'js' => array($this->minifyCss ? 'js/select2.min.js' : 'js/select2.js'),
+		'css' => array('css/select2.css'),
 		'depends' => array('jquery'),
 	)
 );
