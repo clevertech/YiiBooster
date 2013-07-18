@@ -667,4 +667,19 @@ class TbInputHorizontal extends TbInput
 		echo '</div>';
 	}
 
+	/**
+	 * Renders a pre-rendered custom field.
+	 * @return string the rendered content
+	 */
+	protected function customField()
+	{
+		echo $this->getLabel();
+		echo '<div class="controls">';
+		echo $this->getPrepend();
+		echo $this->htmlOptions['input'];
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+		echo '</div>';
+	}
+
 }
