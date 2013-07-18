@@ -23,9 +23,9 @@ class TbAlert extends CWidget
 	const TYPE_DANGER = 'danger'; // same as error
 
 	/**
-	 * @var array the alerts configurations.
+	 * @var array The alerts configurations.
 	 */
-	public $alerts;
+	public $alerts = array();
 
 	/**
 	 * @var string|boolean the close link text.
@@ -121,8 +121,8 @@ class TbAlert extends CWidget
 
 		echo CHtml::closeTag('div');
 
-		$selector = "#{$id} .alert";
 		$id .= '_' . self::$_containerId++;
+		$selector = "#{$id} .alert";
 
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
