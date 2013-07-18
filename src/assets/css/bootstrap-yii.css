@@ -33,7 +33,7 @@
 }
 .grid-view table.items th a.asc .caret { display:block; }
 .grid-view table.items th a.desc .caret {
-    border-bottom:4px solid #000000;
+    border-bottom:8px solid #000000;
     border-top:none;
     display:block;
 }
