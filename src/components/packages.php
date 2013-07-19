@@ -51,7 +51,7 @@ return array(
 		'js' => array($this->minifyCss ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js')
 	),
 	'date' => array(
-		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl() . 'js/',
+		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl() . '/js/',
 		'js' => array('date.min.js')
 	),
 	'x-editable' => array(
