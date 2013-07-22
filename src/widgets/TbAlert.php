@@ -10,6 +10,8 @@
 /**
  *## Bootstrap alert widget.
  *
+ * Alert widget displays the messages set via CWebUser.setFlash() using the Twitter Bootstrap Alert widget.
+ *
  * @see http://twitter.github.com/bootstrap/javascript.html#alerts
  *
  * @package booster.widgets.decoration
@@ -23,38 +25,70 @@ class TbAlert extends CWidget
 	const TYPE_DANGER = 'danger'; // same as error
 
 	/**
-	 * @var array The alerts configurations.
+	 * @var array The configuration for individual types of alerts.
+	 *
+	 * Here's the allowed array elements:
+	 *
+	 * 'visible' (= null) If set to false, this type of alerts will not be rendered.
+	 * 'block' (= widget value) The same as a global block property.
+	 *   If set, size of alert block will be larger.
+	 *   It defaults to the widget-level block property value.
+	 * 'fade' (= widget value) The same as a global fade property.
+	 *   If set, alert will close itself fading away.
+	 *   It defaults to the widget-level fade property value.
+	 * 'htmlOptions' (= array()) Attributes for the individual alert panels.
+	 *   Widget-level htmlOptions was for wrapper element around them.
+	 *   Note that the class attribute will be appended with classes required for alert to be Twitter Bootstrap alert.
+	 * 'closeText' (= widget value) The same as a global closeText property.
+	 *   If set to false, close button will be removed from this type of alert.
+	 *   It defaults to the widget-level closeText property value.
+	 *
+	 * @note Instead of full arrays you can use just the names of alert types as a values of the alerts property.
+	 * You can even mix the array configuration and plain names.
+	 * It was shown in the example, by the way.
+	 *
+	 * Default is the array of all alert types defined as TYPE_* constants.
 	 */
 	public $alerts = array();
 
 	/**
-	 * @var string|boolean the close link text.
-	 * If this is set false, no close link will be displayed.
+	 * @var string|boolean What to render as a button to close the alert panel.
+	 *
+	 * Default is to render a diagonal cross symbol.
+	 * If set to false, no close button will be rendered, making user unable to close the alert.
 	 */
 	public $closeText = '&times;';
 
 	/**
-	 * @var boolean indicates whether the alert should be an alert block. Defaults to 'true'.
+	 * @var boolean When set, alert has a larger block size. Defaults to 'true'
 	 */
 	public $block = true;
 
 	/**
-	 * @var boolean indicates whether alerts should use transitions. Defaults to 'true'.
+	 * @var boolean When set, alert will fade out using transitions when closed. Defaults to 'true'
 	 */
 	public $fade = true;
 
 	/**
-	 * @var string[] the Javascript event handlers.
+	 * @var string[] The Javascript event handlers attached to all alert elements being rendered.
+	 *
+	 * It should be an array with elements being a javascript string containing event handler function definition (along with declaration) and indexed with the names of events.
+	 * This will be fed to jQuery.on verbatim.
+	 *
+	 * @volatile
 	 */
 	public $events = array();
 
 	/**
-	 * @var array the HTML attributes for the widget container.
+	 * @var array Traditional property to set attributes to the element wrapping all of alerts.
 	 */
 	public $htmlOptions = array();
 
 	/**
-	 * @var string User-component for getting flash messages.
+	 * @var string Name of the component which will be used to get alert messages.
+	 *
+	 * It should implement getFlash() method which returns alert message by its type.
+	 * Default is 'user'.
 	 */
 	public $userComponentId = 'user';
 
