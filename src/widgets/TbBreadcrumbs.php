@@ -1,6 +1,6 @@
 <?php
 /**
- * TbBreadcrumbs class file.
+ *##  TbBreadcrumbs class file.
  *
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
@@ -41,6 +41,8 @@ class TbBreadcrumbs extends CBreadcrumbs
 	public $separator = '/';
 
 	/**
+	 *### .init()
+	 *
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -49,7 +51,9 @@ class TbBreadcrumbs extends CBreadcrumbs
 	}
 
 	/**
-	 * Renders the content of the portlet.
+	 *### .run()
+	 *
+	 * Renders the content of the widget.
 	 */
 	public function run()
 	{
