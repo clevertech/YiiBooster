@@ -55,8 +55,8 @@ return array(
 		'js' => array('date.min.js')
 	),
 	'x-editable' => array(
-		'baseUrl' => $this->getAssetsUrl(),
-		'css' => array($this->minifyCss ? 'css/bootstrap-editable.min.css' : 'css/bootstrap-editable.css'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-editable/',
+		'css' => array('css/bootstrap-editable.css'),
 		'js' => array($this->minifyCss ? 'js/bootstrap-editable.min.js' : 'js/bootstrap-editable.js'),
 		'depends' => array('jquery')
 	),
