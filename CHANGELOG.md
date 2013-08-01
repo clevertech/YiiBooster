@@ -9,6 +9,9 @@ Thank you all
 Antonio Ramirez.
 
 
+## YiiBooster version 2.0.0
+- **(enh)** Bootstrap DatePicker updated to 1.1.3 including CDN #631 (Hrumpa)
+
 ## YiiBooster version 1.1.0
 - **(enh)** Added Italian translation for `TbHtml5Editor` #544 (realtebo)
 - **(enh)** Rearranged build script to accommodate Composer installed libraries better. (hijarian)
@@ -120,4 +123,4 @@ Antonio Ramirez.
 - **(fix)** Divider symbols in breadcrumbs changed to HTML entities (wkii)
 - **(fix)** Divider in active items in breadcrumbs was outside of the `li` tag (wkii)
 
-Enh #999: Bootstrap DatePicker updated to 1.1.3 including CDN (Hrumpa)
+
