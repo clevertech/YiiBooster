@@ -65,16 +65,18 @@ class TbEditableField extends CWidget
 	 */
 	public $value = null;
 	/**
-	 * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`. If `null` - default X-editable value is used: `top`
+	 * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`.
+     * If `null` - default X-editable value is used: `top`
 	 * @see x-editable
 	 */
-	public $placement = null;
+	public $placement = 'top';
 
 	/**
-	 * @var string text shown on empty field. If `null` - default X-editable value is used: `Empty`
+	 * @var string text shown on empty field.
+     * If `null` - default X-editable value is used: `Empty`
 	 * @see x-editable
 	 */
-	public $emptytext = null;
+	public $emptytext = 'Empty';
 
 	/**
 	 * @var boolean will editable be initially disabled. It means editable plugin will be applied to element,
@@ -234,7 +236,8 @@ class TbEditableField extends CWidget
 	public $onHidden;
 
 	/**
-	 * @var array all config options of x-editable. See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
+	 * @var array all config options of x-editable.
+     * See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
 	 */
 	public $options = array();
 
@@ -281,7 +284,7 @@ class TbEditableField extends CWidget
 	 *
 	 * @var Bootstrap
 	 */
-	public $packageRegistry;
+	private $packageRegistry;
 
 	private $_prepareToAutotext = false;
 
@@ -685,4 +688,26 @@ class TbEditableField extends CWidget
 		$cs->registerCssFile($this->themeUrl . '/' . $this->theme . '/' . $this->cssFile);
 		$cs->registerPackage('jquery.ui');
 	}
+
+    /**
+     * @param $format
+     * @return mixed
+     */
+    private function fixDatePickerFormat($format)
+    {
+        /*
+                            * unfortunatly datepicker's format does not match Yii locale dateFormat,
+                            * we need replacements below to convert date correctly
+                            */
+        $count = 0;
+        $format = str_replace('MM', 'MMMM', $format, $count);
+        if (!$count) {
+            $format = str_replace('M', 'MMM', $format, $count);
+        }
+        if (!$count) {
+            $format = str_replace('m', 'M', $format);
+            return $format;
+        }
+        return $format;
+    }
 }
