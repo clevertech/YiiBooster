@@ -53,6 +53,7 @@
                 ajaxUpdate: [],
                 ajaxVar: 'ajax',
                 pagerClass: 'pager',
+                summaryClass: 'summary',
                 loadingClass: 'loading',
                 filterClass: 'filters',
                 tableClass: 'items',
@@ -80,7 +81,8 @@
                     colTemplate :  $.jqotec("#" +  id + "-col-template"),
                     rowTemplate: $.jqotec("#" + id + "-row-template"),
                     keysTemplate: $.jqotec("#" + id + "-keys-template"),
-                    pagerTemplate: $.jqotec("#" + id + "-pager-template")
+                    pagerTemplate: $.jqotec("#" + id + "-pager-template"),
+                    summaryTemplate: $.jqotec('#' + id + '-summary-template')
                 });
 
                 settings.updateSelector = settings.updateSelector
@@ -113,12 +115,12 @@
                         if( event.keyCode !== 13) {
                             return; // only react to enter key
                         } else {
-                            eventType = 'keydown'; 
+                            event.type = 'keydown';
                         }
                     } else {
                         // prevent processing for both keydown and change events
-                        if (eventType === 'keydown') {
-                            eventType = '';
+                        if (event.type === 'keydown') {
+                            event.type = '';
                             return;
                         }
                     }
@@ -270,6 +272,14 @@
                         $grid.removeClass(settings.loadingClass);
                         $grid.find('tbody').jqotesub(settings.rowTemplate, data.rows);
                         $grid.find('.keys').jqotesub(settings.keysTemplate, data.keys);
+
+                        if (data.summary !== null) {
+                            console.log(1);
+                            $( '.' + settings.summaryClass, $grid ).jqotesub(settings.summaryTemplate, data.summary);
+                            $( '.' + settings.summaryClass, $grid ).show();
+                        } else {
+                            $( '.' + settings.summaryClass, $grid ).hide();
+                        }
 
                         if (data.pager.length ) {
                             $( '.' + settings.pagerClass + ' ul', $grid ).jqotesub(settings.pagerTemplate, data.pager);
