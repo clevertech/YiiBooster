@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<project name="YiiBooster" basedir="." default="dist"
+         description="Widget toolkit for the Yii web framework">
+
+    <!-- Changeable properties for this project are placed into the build.properties -->
+    <property file="build.properties"/>
+
+    <!-- Main fileset containing files to be packaged for end-users. -->
+    <fileset id="sources" dir="${path.src}">
+        <include name="**"/>
+    </fileset>
+
+    <!-- Make an archive ready for distribution to end-users. -->
+    <target name="dist" depends="prepare-dist">
+        <propertyprompt useExistingValue="true" propertyName="project.version" defaultValue="beta"
+                        promptText="What is the version of this release"/>
+        <property name="build.distfilename" value="${path.dist}/yiibooster-${project.version}.zip"/>
+        <echo msg="Packing the sources to ${build.distfilename} ..."/>
+        <zip destfile="${build.distfilename}">
+            <fileset refid="sources"/>
+            <fileset dir=".">
+                <include name="README.md"/>
+                <include name="INSTALL.md"/>
+                <include name="CHANGELOG.md"/>
+                <include name="LICENSE"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- Prepare the destination folder for distribution archive. -->
+    <target name="prepare-dist">
+        <echo msg="Recreating a distribution directory at ${path.dist}"/>
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.dist}"/>
+    </target>
+
+    <!-- Make an API-level documentation -->
+    <target name="api" depends="prepare-docs-api">
+        <echo msg="Making an API-level documentation."/>
+        <phpdoc2 title="${phing.project.name}"
+                 destdir="${path.docs}/api">
+
+            <fileset dir="${path.src}">
+                <include name="**/*.php"/>
+
+                <exclude name="**/views/**"/>
+
+                <!-- CKEditor currently has some PHP files in it's assets -->
+                <exclude name="**/assets/**"/>
+
+                <!-- gii subfolder has some templates -->
+                <exclude name="**/templates/**"/>
+
+                <!-- we don't need to make API docs for TbHtml.php -->
+                <exclude name="helpers"/>
+            </fileset>
+
+        </phpdoc2>
+    </target>
+
+    <!-- Prepare folders for documentation -->
+    <target name="prepare-docs-api">
+        <echo msg="Recreating destination folder for API documentation at ${path.docs}/api"/>
+        <delete dir="${path.docs}/api" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.docs}/api"/>
+    </target>
+
+    <!-- Make an annotated source code documentation (using Pinnocchio) -->
+    <target name="annotated" depends="prepare-docs-annotated,install-composer-libraries">
+        <echo msg="Running Pinnocchio over our source code base..."/>
+        <exec command="${path.composer.vendor}/ncuesta/pinocchio/bin/pinocchio --source=${path.src}/widgets --output=${path.docs}/annotated"
+              passthru="true"
+              returnProperty="annotated.return"/>
+        <if>
+            <not>
+                <equals arg1="${annotated.return}" arg2="0"/>
+            </not>
+            <then>
+                <echo msg="It seems you have a problem with your Pinnocchio setup."/>
+                <fail message="Error when trying to launch Pinnocchio."/>
+            </then>
+            <else>
+                <echo msg="Now you should be able to browse the annotated source code starting from ${path.docs}/annotated/index.html"/>
+            </else>
+        </if>
+    </target>
+
+    <!-- Prepare folders for annotated source code documentation -->
+    <target name="prepare-docs-annotated">
+        <echo msg="Recreating destination folder for annotated source code documentation at ${path.docs}/annotated"/>
+        <delete dir="${path.docs}/annotated" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.docs}/annotated"/>
+    </target>
+
+    <!-- Run all tests -->
+    <target name="test" depends="install-composer-libraries">
+        <echo msg="Running all existing tests..."/>
+        <!-- NO we will NOT use built-in "phpunit" task because it's pretty shitty compared to phpunit.xml -->
+        <exec executable="${path.composer.vendor}/bin/phpunit" passthru="true">
+            <arg value="--configuration"/>
+            <arg path="${path.tests}/phpunit.xml"/>
+            <arg value="--bootstrap"/>
+            <arg path="${path.tests}/bootstrap.php"/>
+
+            <!-- Logging setup -->
+            <arg value="--coverage-html"/>
+            <arg path="${path.reports}/coverage"/>
+            <arg value="--coverage-clover"/>
+            <arg path="${path.reports}/clover-coverage.xml"/>
+            <arg value="--testdox-text"/>
+            <arg path="${path.reports}/testdox.txt"/>
+            <arg value="--log-junit"/>
+            <arg path="${path.reports}/junit-log.xml"/>
+
+            <arg value="--testsuite"/>
+            <!-- available only in PHPUnit 3.7.0+ -->
+            <arg value="Unit tests"/>
+        </exec>
+    </target>
+
+    <!-- Counting lines of code using PHPLoc. Intended to be used manually in console mode. -->
+    <target name="loc" depends="install-composer-libraries">
+        <echo msg="Checking the Lines of Code statistics..." />
+        <exec executable="${path.composer.vendor}/bin/phploc" passthru="true">
+            <arg value="--progress"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <!-- Counting lumps of copypasted code using PHPCPD. Intended to be used manually in console mode. -->
+    <target name="cpd" depends="install-composer-libraries">
+        <echo msg="Searching for copypasted lines..." />
+        <exec executable="${path.composer.vendor}/bin/phpcpd" passthru="true">
+            <arg value="--progress"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <!-- Checking the coding style within project with CodeSniffer. Intended to be used manually in console mode. -->
+    <target name="cs" depends="install-composer-libraries,hack-yii-coding-standard">
+        <echo msg="Checking the code style..." />
+        <exec executable="${path.composer.vendor}/bin/phpcs" passthru="true">
+            <arg value="-p"/>
+            <arg value="--standard=${path.composer.vendor}/ardem/Yii/ruleset.xml"/>
+            <arg value="--ignore=assets"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <target name="hack-yii-coding-standard">
+        <if>
+            <available file="${path.composer.vendor}/ardem/yii-coding-standard"/>
+            <then>
+                <echo msg="Because of https://github.com/Ardem/yii-coding-standard/issues/8 we need to hack the Yii coding standard." />
+                <move file="${path.composer.vendor}/ardem/yii-coding-standard"
+                  tofile="${path.composer.vendor}/ardem/Yii" />
+            </then>
+            <else>
+                <echo msg="It seems the coding standard is named accordingly"/>
+            </else>
+        </if>
+    </target>
+
+    <!-- Generating the highlighted sources with the marks from Code Sniffer and Mess Detector (and code coverage, too) -->
+    <target name="cb" depends="install-composer-libraries,prepare-codebrowser">
+        <echo msg="Generating the browsable codebase..." />
+        <exec executable="${path.composer.vendor}/bin/phpcb" passthru="true">
+            <arg value="--log"/>
+            <arg path="${path.reports}"/>
+            <arg value="--output"/>
+            <arg path="${path.reports}/codebrowser/"/>
+            <arg value="--source"/>
+            <arg path="${path.src}"/>
+        </exec>
+    </target>
+
+    <!-- Prepare the destination folder for Codebrowser report. -->
+    <target name="prepare-codebrowser">
+        <echo msg="Recreating a directory for codebrowser at  ${path.reports}/codebrowser/"/>
+        <delete dir="${path.reports}/codebrowser/" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.reports}/codebrowser/"/>
+    </target>
+
+    <!-- Prepare the destination folder for distribution archive. -->
+    <target name="prepare-dist">
+        <echo msg="Recreating a distribution directory at ${path.dist}"/>
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="true" quiet="true"/>
+        <mkdir dir="${path.dist}"/>
+    </target>
+
+    <import file="${project.basedir}/installation.xml" />
+</project>

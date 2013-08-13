@@ -1,0 +1,42 @@
+{
+    "name": "clevertech/yii-booster",
+    "description": "Widget toolkit for Yii framework",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["yii", "bootstrap"],
+    "homepage": "http://yiibooster.clevertech.biz/",
+    "authors": [
+        {
+            "name": "Antonio Ramirez Cobos",
+            "email": "amigo.cobos@gmail.com",
+            "homepage": "http://www.ramirezcobos.com"
+        },
+        {
+            "name": "Saphronov Mark",
+            "email": "hijarian@gmail.com",
+            "homepage": "http://about.me/hijarian"
+        },
+        {
+            "name": "Ruslan Fadeev"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/clevertech/YiiBooster/issues",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "https://github.com/clevertech/YiiBooster/wiki",
+        "source": "https://github.com/clevertech/YiiBooster"
+    },
+    "require": {
+        "php":">=5.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "ncuesta/pinocchio": "dev-master",
+        "phploc/phploc": "*",
+        "sebastian/phpcpd": "*",
+        "squizlabs/php_codesniffer": "1.*",
+        "ardem/yii-coding-standard": "dev-master",
+        "mayflower/php-codebrowser": "1.0.*@dev"
+    },
+    "minimum-stability": "dev"
+}
