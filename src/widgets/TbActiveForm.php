@@ -691,6 +691,7 @@ class TbActiveForm extends CActiveForm
 
 		$hiddenFieldId = CHtml::getIdByName(get_class($model) . '[' . $attribute . ']');
 		$buttonType = isset($htmlOptions['type']) ? $htmlOptions['type'] : null;
+		$stacked = isset($htmlOptions['stacked']) ? $htmlOptions['stacked'] : false;
 
 		foreach ($data as $key => $value) {
 			$btnId = CHtml::getIdByName(get_class($model) . '[' . $attribute . '][' . $key . ']');
@@ -700,7 +701,7 @@ class TbActiveForm extends CActiveForm
 			$button['htmlOptions'] = array(
 				'value' => $key,
 				'id' => $btnId,
-				'class' => (isset($model->$attribute) && $model->$attribute == $key ? 'active' : ''),
+				'class' => CHtml::resolveValue($model, $attribute) == $key ? 'active': '',
 			);
 			$buttons[] = $button;
 
@@ -718,6 +719,7 @@ class TbActiveForm extends CActiveForm
 				'htmlOptions' => $htmlOptions,
 				'buttons' => $buttons,
 				'type' => $buttonType,
+				'stacked' => $stacked
 			)
 		);
 
