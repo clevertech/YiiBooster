@@ -110,18 +110,18 @@ class TbEditableField extends CWidget
 	 */
 	public $title = null;
 
-	//list
 	/**
 	 * @var mixed source data for **select**, **checklist**. Can be string (url) or array in format:
 	 * array( array("value" => 1, "text" => "abc"), ...)
+     *
 	 * @package list
 	 * @see x-editable
 	 */
 	public $source = null;
 
-	//date
 	/**
 	 * @var string format to send date on server. If `null` - default X-editable value is used: `yyyy-mm-dd`.
+     *
 	 * @package date
 	 * @see x-editable
 	 */
@@ -129,6 +129,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string format to display date in element. If `null` - equals to **format** option.
+     *
 	 * @package date
 	 * @see x-editable
 	 */
@@ -136,6 +137,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string template for **combodate** input. For details see http://vitalets.github.com/x-editable/docs.html#combodate.
+     *
 	 * @package combodate
 	 * @see x-editable
 	 */
@@ -143,6 +145,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var array full config for **combodate** input. For details see http://vitalets.github.com/combodate/#docs
+     *
 	 * @package combodate
 	 * @see x-editable
 	 */
@@ -150,6 +153,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string separator used to display tags.
+     *
 	 * @package select2
 	 * @see x-editable
 	 */
@@ -157,13 +161,18 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var array full config for **select2** input. For details see http://ivaynberg.github.com/select2
+     *
 	 * @package select2
 	 * @see x-editable
 	 */
 	public $select2 = null;
 
 	/**
-	 * @var string parent ID.
+	 * @var string HTML ID of the parent element, to restrict application of the plugin
+     *
+     * @deprecated 3.0.0 Why it is even exists? This widget is to make a singular editable field anyway,
+     * we should generate direct ID selectors, not a[rel=:rel] ones! This property will be removed
+     * from the next backwards-incompatible release.
 	 */
 	public $parentid = null;
 
@@ -171,7 +180,7 @@ class TbEditableField extends CWidget
 	 * @var string css class of input. If `null` - default X-editable value is used: `input-medium`
 	 * @see x-editable
 	 */
-	public $inputclass = null;
+	public $inputclass = 'input-medium';
 
 	//methods
 	/**
@@ -223,12 +232,14 @@ class TbEditableField extends CWidget
 
 	// --- X-editable events ---
 	/**
-	 * A javascript function that will be invoked when editable element is initialized
+	 * A javascript function that will be invoked when editable element is initialized.
+     *
 	 * @var string
 	 * @package event
 	 * @see x-editable
 	 */
 	public $onInit;
+
 	/**
 	 * A javascript function that will be invoked when editable form is shown
 	 * Example:
@@ -244,6 +255,7 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $onShown;
+
 	/**
 	 * A javascript function that will be invoked when new value is saved
 	 * Example:
@@ -258,6 +270,7 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $onSave;
+
 	/**
 	 * A javascript function that will be invoked when editable form is hidden
 	 * Example:
@@ -275,7 +288,6 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $onHidden;
-
 
 	/**
 	 * Ideally, this is just some class which is able to register asset packages by name.
@@ -469,7 +481,7 @@ class TbEditableField extends CWidget
 					}
 				}
 			} else { //source is url
-				$options['source'] = CHtml::normalizeUrl($this->source);
+				$options['source'] = $this->source;
 			}
 		}
 
