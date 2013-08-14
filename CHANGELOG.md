@@ -12,7 +12,7 @@ Antonio Ramirez.
 ## YiiBooster version 2.0.0
 - **(fix)** TbEditableColumn updated to support namespaced models #636 (xapon)
 - **(enh)** Bootstrap DatePicker updated to 1.1.3 including CDN #631 (Hrumpa)
-- **(enh)** Font Awesome updated to 3.2.1 including CDN #639 (miramir)
+- **(enh)** Font Awesome updated to 3.2.1 including CDN (miramir)
 
 ## YiiBooster version 1.1.0
 - **(enh)** Added Italian translation for `TbHtml5Editor` #544 (realtebo)
