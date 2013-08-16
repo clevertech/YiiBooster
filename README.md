@@ -1,4 +1,4 @@
-YiiBooster v2.0.0
+YiiBooster v1.1.0
 ==========
 
 YiiBooster is a widget toolkit for [Yii web framework](http://www.yiiframework.com).
