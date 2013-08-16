@@ -756,6 +756,21 @@ class Bootstrap extends CApplicationComponent
 	}
 
 	/**
+	 * Register the Bootstrap datetimepicker plugin.
+	 * IMPORTANT: if you register a selector via this method you wont be able to attach events to the plugin.
+	 *
+	 * @param string $selector the CSS selector
+	 * @param array $options the plugin options
+	 *
+	 * @see http://www.malot.fr/bootstrap-datetimepicker/
+	 *
+	 */
+	public function registerDateTimePicker($selector = null, $options = array())
+	{
+		$this->registerPlugin(self::PLUGIN_DATETIMEPICKER, $selector, $options);
+	}
+
+	/**
 	 * Registers the RedactorJS plugin.
 	 *
 	 * @param null $selector

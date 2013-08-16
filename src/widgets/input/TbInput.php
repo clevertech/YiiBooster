@@ -4,7 +4,7 @@
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 /**
@@ -34,6 +34,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_CAPTCHA = 'captcha';
 	const TYPE_UNEDITABLE = 'uneditable';
 	const TYPE_DATEPICKER = 'datepicker';
+	const TYPE_DATETIMEPICKER = 'datetimepicker';
 	const TYPE_REDACTOR = 'redactor';
 	const TYPE_MARKDOWNEDITOR = 'markdowneditor';
 	const TYPE_HTML5EDITOR = 'wysihtml5';
@@ -304,6 +305,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_DATEPICKER:
 				$this->datepickerField();
+				break;
+
+			case self::TYPE_DATETIMEPICKER:
+				$this->datetimepickerField();
 				break;
 
 			case self::TYPE_REDACTOR:
@@ -727,6 +732,16 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function datepickerField();
+
+	/**
+	 *### .datetimepicketField()
+	 *
+	 * Renders a datetimepicker field.
+	 *
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function datetimepickerField();
 
 	/**
 	 *### .redactorJs()

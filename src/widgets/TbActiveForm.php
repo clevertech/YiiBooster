@@ -437,6 +437,25 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 *### .datetimepickerRow()
+	 *
+	 * Renders a datetimepicker field row.
+	 *
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes. 'events' and 'options' key specify the events
+	 * and configuration options of datepicker respectively.
+	 *
+	 * @return string the generated row
+	 *
+	 * @since 2.0.0 Booster
+	 */
+	public function datetimepickerRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_DATETIMEPICKER, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
 	 *### .colorpickerRow()
 	 *
 	 * Renders a colorpicker field row.
