@@ -19,8 +19,9 @@ return array(
 	),
 	'font-awesome-ie7' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl(),
-		'css' => array(($this->enableCdn?'font-awesome/':'').'css/font-awesome-ie7.min.css'),
-		// only minified version exists in our assets and CDN serves minified version anyway
+		'css' => array($this->minifyCss 
+						? ($this->enableCdn?'font-awesome/':'').'css/font-awesome-ie7.min.css' 
+						: ($this->enableCdn?'font-awesome/':'').'css/font-awesome-ie7.css'),
 	),
 	'bootstrap.js' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
