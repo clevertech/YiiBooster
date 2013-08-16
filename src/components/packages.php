@@ -13,11 +13,13 @@ return array(
 
 	'font-awesome' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl(),
-		'css' => array($this->minifyCss ? 'font-awesome/css/font-awesome.min.css' : 'font-awesome/css/font-awesome.css'),
+		'css' => array($this->minifyCss 
+						? ($this->enableCdn?'font-awesome/':'').'css/font-awesome.min.css' 
+						: ($this->enableCdn?'font-awesome/':'').'css/font-awesome.css'),
 	),
 	'font-awesome-ie7' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl(),
-		'css' => array('font-awesome/css/font-awesome-ie7.min.css'),
+		'css' => array(($this->enableCdn?'font-awesome/':'').'css/font-awesome-ie7.min.css'),
 		// only minified version exists in our assets and CDN serves minified version anyway
 	),
 	'bootstrap.js' => array(
