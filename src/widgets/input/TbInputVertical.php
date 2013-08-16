@@ -288,6 +288,39 @@ class TbInputVertical extends TbInput
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 	}
+	
+	/**
+	 * Renders a datetimepicker field.
+	 * @return string the rendered content
+	 * @author Hrumpa
+	 */
+	protected function datetimepickerField()
+	{
+		if (isset($this->htmlOptions['options'])) {
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+
+		if (isset($this->htmlOptions['events'])) {
+			$events = $this->htmlOptions['events'];
+			unset($this->htmlOptions['events']);
+		}
+
+		echo $this->getLabel();
+		echo $this->getPrepend();
+		$this->widget(
+			'bootstrap.widgets.TbDateTimePicker',
+			array(
+				'model' => $this->model,
+				'attribute' => $this->attribute,
+				'options' => isset($options) ? $options : array(),
+				'events' => isset($events) ? $events : array(),
+				'htmlOptions' => $this->htmlOptions,
+			)
+		);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+	}
 
 	/**
 	 * Renders a colorpicker field.
@@ -541,7 +574,7 @@ class TbInputVertical extends TbInput
 			$asDropDownList = $this->htmlOptions['asDropDownList'];
 			unset($this->htmlOptions['asDropDownList']);
 		}
-		
+
 		if (isset($this->htmlOptions['val']))
 		{
 			$val = $this->htmlOptions['val'];

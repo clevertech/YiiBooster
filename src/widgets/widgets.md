@@ -88,6 +88,7 @@
  Tags
  TimePicker
  FormInputElement
+ DateTimePicker
 
 ### WYSIWYG Editors
 
