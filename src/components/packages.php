@@ -50,6 +50,12 @@ return array(
 		'css' => array($this->minifyCss ? 'css/bootstrap-datepicker.min.css' : 'css/bootstrap-datepicker.css'),
 		'js' => array($this->minifyCss ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js')
 	),
+	'datetimepicker' => array(
+		'depends' => array('jquery'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-datetimepicker/', // Not in CDN yet
+		'css' => array($this->minifyCss ? 'css/bootstrap-datetimepicker.css' : 'css/bootstrap-datetimepicker.css'),
+		'js' => array($this->minifyCss ? 'js/bootstrap-datetimepicker.min.js' : 'js/bootstrap-datetimepicker.js')
+	),
 	'date' => array(
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl() . '/js/',
 		'js' => array('date.min.js')

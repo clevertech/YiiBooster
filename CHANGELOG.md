@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(enh)** Bootstrap DateTimePicker by S.Malot widget added rev #91 (Hrumpa)
 - **(fix)** TbEditableColumn updated to support namespaced models #636 (xapon)
 - **(enh)** Bootstrap DatePicker updated to 1.1.3 including CDN #631 (Hrumpa)
 
