@@ -12,16 +12,12 @@
 return array(
 
 	'font-awesome' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl(),
-		'css' => array($this->minifyCss 
-						? ($this->enableCdn?'font-awesome/':'').'css/font-awesome.min.css' 
-						: ($this->enableCdn?'font-awesome/':'').'css/font-awesome.css'),
+		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl().'/font-awesome/',
+		'css' => array($this->minifyCss ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'font-awesome-ie7' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl(),
-		'css' => array($this->minifyCss 
-						? ($this->enableCdn?'font-awesome/':'').'css/font-awesome-ie7.min.css' 
-						: ($this->enableCdn?'font-awesome/':'').'css/font-awesome-ie7.css'),
+		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/3.2.1/' : $this->getAssetsUrl().'/font-awesome/',
+		'css' => array($this->minifyCss ? 'css/font-awesome-ie7.min.css' : 'css/font-awesome-ie7.css'),
 	),
 	'bootstrap.js' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
