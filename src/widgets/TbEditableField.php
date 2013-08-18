@@ -15,68 +15,46 @@
 */
 class TbEditableField extends CWidget
 {
-	//note: only most usefull options are on first level of config.
-
-	// --- start of X-editable options ----
 	/**
 	 * @var CActiveRecord ActiveRecord to be updated.
 	 */
 	public $model = null;
+
 	/**
-	 * @var string attribute name.
+	 * @var string Attribute name.
 	 */
 	public $attribute = null;
-	/**
-	 * @var string parent ID.
-	 */
-	public $parentid = null;
+
 	/**
 	 * @var string type of editable widget. Can be `text`, `textarea`, `select`, `date`, `checklist`, etc.
 	 * @see x-editable
 	 */
 	public $type = null;
+
 	/**
 	 * @var string url to submit value. Can be string or array containing Yii route, e.g. `array('site/updateUser')`
 	 * @see x-editable
 	 */
 	public $url = null;
+
 	/**
 	 * @var array additional params to send on server
 	 * @see x-editable
 	 */
 	public $params = null;
-	/**
-	 * @var string css class of input. If `null` - default X-editable value is used: `input-medium`
-	 * @see x-editable
-	 */
-	public $inputclass = null;
+
 	/**
 	 * @var string mode of input: `inline` | `popup`. If not set - default X-editable value is used: `popup`.
 	 * @see x-editable
 	 */
 	public $mode = 'popup';
-	/**
-	 * @var string text to be shown as element content
-	 */
-	public $text = null;
-	/**
-	 * @var mixed initial value. If not set - will be taken from text
-	 * @see x-editable
-	 */
-	public $value = null;
+
 	/**
 	 * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`.
      * If `null` - default X-editable value is used: `top`
 	 * @see x-editable
 	 */
 	public $placement = 'top';
-
-	/**
-	 * @var string text shown on empty field.
-     * If `null` - default X-editable value is used: `Empty`
-	 * @see x-editable
-	 */
-	public $emptytext = 'Empty';
 
 	/**
 	 * @var boolean will editable be initially disabled. It means editable plugin will be applied to element,
@@ -86,52 +64,123 @@ class TbEditableField extends CWidget
 	 */
 	public $disabled = false;
 
-	//list
+	/**
+	 * @var boolean whether to apply 'editable' js plugin to element.
+	 * Only **safe** attributes become editable.
+	 */
+	public $apply = true;
+
+	/**
+	 * @var string text shown on empty field.
+     * If `null` - default X-editable value is used: `Empty`
+	 * @see x-editable
+	 */
+	public $emptytext = 'Empty';
+
+	/**
+	 * @var string text to be shown as element content
+	 */
+	public $text = null;
+
+	/**
+	 * @var mixed initial value. If not set - will be taken from text
+	 * @see x-editable
+	 */
+	public $value = null;
+
+	/**
+	 * @var array HTML options of element
+	 */
+	public $htmlOptions = array();
+
+	/**
+	 * @var array all config options of x-editable.
+     * See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
+	 */
+	public $options = array();
+
+	/**
+	 * @var boolean whether to HTML encode text on output
+	 */
+	public $encode = true;
+
+	/**
+	 * @var string title of popup. If `null` - will be generated automatically from attribute label.
+	 * Can have token {label} inside that will be replaced with actual attribute label.
+	 */
+	public $title = null;
+
 	/**
 	 * @var mixed source data for **select**, **checklist**. Can be string (url) or array in format:
 	 * array( array("value" => 1, "text" => "abc"), ...)
+     *
 	 * @package list
 	 * @see x-editable
 	 */
 	public $source = null;
 
-	//date
 	/**
 	 * @var string format to send date on server. If `null` - default X-editable value is used: `yyyy-mm-dd`.
+     *
 	 * @package date
 	 * @see x-editable
 	 */
 	public $format = null;
+
 	/**
 	 * @var string format to display date in element. If `null` - equals to **format** option.
+     *
 	 * @package date
 	 * @see x-editable
 	 */
 	public $viewformat = null;
+
 	/**
 	 * @var string template for **combodate** input. For details see http://vitalets.github.com/x-editable/docs.html#combodate.
+     *
 	 * @package combodate
 	 * @see x-editable
 	 */
 	public $template = null;
+
 	/**
 	 * @var array full config for **combodate** input. For details see http://vitalets.github.com/combodate/#docs
+     *
 	 * @package combodate
 	 * @see x-editable
 	 */
 	public $combodate = null;
+
 	/**
 	 * @var string separator used to display tags.
+     *
 	 * @package select2
 	 * @see x-editable
 	 */
 	public $viewseparator = null;
+
 	/**
 	 * @var array full config for **select2** input. For details see http://ivaynberg.github.com/select2
+     *
 	 * @package select2
 	 * @see x-editable
 	 */
 	public $select2 = null;
+
+	/**
+	 * @var string HTML ID of the parent element, to restrict application of the plugin
+     *
+     * @deprecated 3.0.0 Why it is even exists? This widget is to make a singular editable field anyway,
+     * we should generate direct ID selectors, not a[rel=:rel] ones! This property will be removed
+     * from the next backwards-incompatible release.
+	 */
+	public $parentid = null;
+
+	/**
+	 * @var string css class of input. If `null` - default X-editable value is used: `input-medium`
+	 * @see x-editable
+	 */
+	public $inputclass = 'input-medium';
 
 	//methods
 	/**
@@ -149,6 +198,7 @@ class TbEditableField extends CWidget
 	 * @example
 	 */
 	public $validate = null;
+
 	/**
 	 * A javascript function that will be invoked to process successful server response.
 	 * Example:
@@ -163,6 +213,7 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $success = null;
+
 	/**
 	 * A javascript function that will be invoked to custom display value.
 	 * Example:
@@ -179,15 +230,16 @@ class TbEditableField extends CWidget
 	 */
 	public $display = null;
 
-
 	// --- X-editable events ---
 	/**
-	 * A javascript function that will be invoked when editable element is initialized
+	 * A javascript function that will be invoked when editable element is initialized.
+     *
 	 * @var string
 	 * @package event
 	 * @see x-editable
 	 */
 	public $onInit;
+
 	/**
 	 * A javascript function that will be invoked when editable form is shown
 	 * Example:
@@ -203,6 +255,7 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $onShown;
+
 	/**
 	 * A javascript function that will be invoked when new value is saved
 	 * Example:
@@ -217,6 +270,7 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $onSave;
+
 	/**
 	 * A javascript function that will be invoked when editable form is hidden
 	 * Example:
@@ -234,49 +288,6 @@ class TbEditableField extends CWidget
 	 * @see x-editable
 	 */
 	public $onHidden;
-
-	/**
-	 * @var array all config options of x-editable.
-     * See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
-	 */
-	public $options = array();
-
-	/**
-	 * @var array HTML options of element
-	 */
-	public $htmlOptions = array();
-
-	/**
-	 * @var boolean whether to HTML encode text on output
-	 */
-	public $encode = true;
-
-	/**
-	 * @var boolean whether to apply 'editable' js plugin to element.
-	 * Only **safe** attributes become editable.
-	 */
-	public $apply = null;
-
-	/**
-	 * @var string title of popup. If `null` - will be generated automatically from attribute label.
-	 * Can have token {label} inside that will be replaced with actual attribute label.
-	 */
-	public $title = null;
-
-	//themeUrl, theme and cssFile copied from CJuiWidget to allow include custom theme for jQuery UI
-	/**
-	 * @var string for jQuery UI only. The root URL that contains JUI theme folders.
-	 * If not set, default Yii's theme will be used.
-	 */
-	public $themeUrl;
-	/**
-	 * @var string for jQuery UI only. The JUI theme name.
-	 */
-	public $theme = 'base';
-	/**
-	 * @var mixed for jQuery UI only. The theme CSS file name. By default Yii's jquery UI css used.
-	 */
-	public $cssFile = 'jquery-ui.css';
 
 	/**
 	 * Ideally, this is just some class which is able to register asset packages by name.
@@ -426,25 +437,9 @@ class TbEditableField extends CWidget
 
 	public function buildJsOptions()
 	{
-		//normalize url from array
 		$this->url = CHtml::normalizeUrl($this->url);
 
-		//generate title from attribute label
-		if ($this->title === null) {
-			$titles = array(
-				'Select' => array('select', 'date'),
-				'Check' => array('checklist')
-			);
-			$title = Yii::t('TbEditableField.editable', 'Enter');
-			foreach ($titles as $t => $types) {
-				if (in_array($this->type, $types)) {
-					$title = Yii::t('TbEditableField.editable', $t);
-				}
-			}
-			$this->title = $title . ' ' . $this->model->getAttributeLabel($this->attribute);
-		} else {
-			$this->title = strtr($this->title, array('{label}' => $this->model->getAttributeLabel($this->attribute)));
-		}
+		$this->generateTitle();
 
 		$options = array(
 			'type' => $this->type,
@@ -486,7 +481,7 @@ class TbEditableField extends CWidget
 					}
 				}
 			} else { //source is url
-				$options['source'] = CHtml::normalizeUrl($this->source);
+				$options['source'] = $this->source;
 			}
 		}
 
@@ -587,11 +582,11 @@ class TbEditableField extends CWidget
 	 */
 	public function run()
 	{
-		if ($this->apply !== false) {
+		if ($this->apply === false) {
+			$this->renderText();
+		} else {
 			$this->registerClientScript();
 			$this->renderLink();
-		} else {
-			$this->renderText();
 		}
 	}
 
@@ -644,7 +639,6 @@ class TbEditableField extends CWidget
 		return str_replace('\\', '_', get_class($this->model)) . '_' . $this->attribute . '_' . $pk;
 	}
 
-
 	/*
 	 *### .resolveModel()
 	 *
@@ -672,42 +666,23 @@ class TbEditableField extends CWidget
 		return array($model, $attribute);
 	}
 
-	/**
-	 *### .registerJQueryUI()
-	 *
-	 * method to register jQuery UI with build-in or custom theme
-	 *
-	 */
-	protected function registerJQueryUI()
+	private function generateTitle()
 	{
-		/** @var $cs CClientScript */
-		$cs = Yii::app()->getClientScript();
-		if ($this->themeUrl === null) {
-			$this->themeUrl = $cs->getCoreScriptUrl() . '/jui/css';
+		if ($this->title === null) {
+			$titles = array(
+				'Select' => array('select', 'date'),
+				'Check' => array('checklist')
+			);
+			$title = Yii::t('TbEditableField.editable', 'Enter');
+			foreach ($titles as $t => $types) {
+				if (in_array($this->type, $types)) {
+					$title = Yii::t('TbEditableField.editable', $t);
+				}
+			}
+			$this->title = $title . ' ' . $this->model->getAttributeLabel($this->attribute);
+		} else {
+			$this->title = strtr($this->title, array('{label}' => $this->model->getAttributeLabel($this->attribute)));
 		}
-		$cs->registerCssFile($this->themeUrl . '/' . $this->theme . '/' . $this->cssFile);
-		$cs->registerPackage('jquery.ui');
 	}
 
-    /**
-     * @param $format
-     * @return mixed
-     */
-    private function fixDatePickerFormat($format)
-    {
-        /*
-                            * unfortunatly datepicker's format does not match Yii locale dateFormat,
-                            * we need replacements below to convert date correctly
-                            */
-        $count = 0;
-        $format = str_replace('MM', 'MMMM', $format, $count);
-        if (!$count) {
-            $format = str_replace('M', 'MMM', $format, $count);
-        }
-        if (!$count) {
-            $format = str_replace('m', 'M', $format);
-            return $format;
-        }
-        return $format;
-    }
 }

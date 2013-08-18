@@ -1,5 +1,13 @@
-YiiBooster v2.0.0
+YiiBooster 
 ==========
+
+---
+
+**This is the master branch, containing work in progress on the next release. 
+Do not think that it's a production ready version which you can safely clone into your project.
+If you want the latest point release, check out the `1.1.0` branch**
+
+---
 
 YiiBooster is a widget toolkit for [Yii web framework](http://www.yiiframework.com).
 Its main purpose is to ease building UI in Yii-based web applications utilizing the beauty of [Twitter Bootstrap][twitter-bootstrap]
@@ -51,11 +59,11 @@ If you find any bugs, please create an issue at [issue tracker for project Githu
 ## License
 This work as a whole is licensed under a BSD license. Full text is included in the `LICENSE` file in the root of codebase.
 
-[![Clevertech](http://clevertech.biz/images/slir/w54-h36-c54:36/images/site/index/home/clevertech-logo.png)](http://www.clevertech.biz)
-
-Well-built beautifully designed web applications.
-
-[www.clevertech.biz](http://www.clevertech.biz)
+> [![Clevertech](http://clevertech.biz/images/slir/w54-h36-c54:36/images/site/index/home/clevertech-logo.png)](http://www.clevertech.biz)
+>
+> Well-built beautifully designed web applications.
+>
+> [www.clevertech.biz](http://www.clevertech.biz)
 
 [twitter-bootstrap]: http://twitter.github.com/bootstrap/
 [booster-docs]: http://yii-booster.clevertech.biz/

@@ -111,6 +111,7 @@
                 }
 
                 $(document).on('change.yiiJsonGridView keydown.yiiJsonGridView', inputSelector, function (event) {
+                    var eventType;
                     if (event.type === 'keydown') {
                         if( event.keyCode !== 13) {
                             return; // only react to enter key
