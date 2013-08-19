@@ -275,7 +275,6 @@
                         $grid.find('.keys').jqotesub(settings.keysTemplate, data.keys);
 
                         if (data.summary !== null) {
-                            console.log(1);
                             $( '.' + settings.summaryClass, $grid ).jqotesub(settings.summaryTemplate, data.summary);
                             $( '.' + settings.summaryClass, $grid ).show();
                         } else {
@@ -310,7 +309,6 @@
                             selectCheckedRows(id);
                         }
                         var end = new Date();
-                        console.log( end - start );
                     },
                     error: function (XHR, textStatus, errorThrown) {
                         var ret, err;
