@@ -54,7 +54,10 @@ class TbJsonGridView extends TbGridView
 	 */
 	public $pager = array('class' => 'bootstrap.widgets.TbJsonPager');
 
-	public $enableSummary = true;
+	/**
+	 * @var bool true when there is an AJAX request and having in template summary
+	 */
+	protected $_showSummary;
 
 	/**
 	 * Initializes $json property to find out whether ajax request or not
@@ -64,6 +67,7 @@ class TbJsonGridView extends TbGridView
 		// parse request to find out whether is an ajax request or not, if so, then return $dataProvider JSON formatted
 		$this->json = Yii::app()->getRequest()->getIsAjaxRequest();
 		if ($this->json) {
+			$this->_showSummary = (strpos($this->template, '{summary}')) ? true : false;
 			$this->template = '{items}';
 		} // going to render only items!
 
@@ -161,21 +165,25 @@ class TbJsonGridView extends TbGridView
 
 	public function renderSummary()
 	{
-		if (!$this->enableSummary)
+		if (!$this->json)
 		{
-			return;
-		}
-		if ($this->json)
-		{
-			ob_start();
 			parent::renderSummary();
-			$summary = ob_get_clean();
-			return array(
-				'class' => $this->summaryCssClass,
-				'text' => $summary
-			);
+			return true;
 		}
+
+		if (!$this->_showSummary)
+		{
+			return null;
+		}
+
+		ob_start();
 		parent::renderSummary();
+		$summary = ob_get_clean();
+		return array(
+			'class' => $this->summaryCssClass,
+			'text' => $summary
+		);
+
 	}
 	/**
 	 * Renders the required templates for the client engine (jqote2 used)
