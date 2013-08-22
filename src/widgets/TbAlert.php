@@ -110,7 +110,7 @@ class TbAlert extends CWidget
 		}
 
 		// Display all alert types by default.
-		if (!isset($this->alerts)) {
+		if (!isset($this->alerts) || empty($this->alerts)) {
 			$this->alerts = array(
 				self::TYPE_SUCCESS,
 				self::TYPE_INFO,
