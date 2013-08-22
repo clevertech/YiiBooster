@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(fix)** TbExtendedGridView sortable rows updated to work with CSRF token #333 (zvonicek)
 - **(fix)** TbJsonGridView when enablePagination set to false JavaScript does not throw error "Error: Empty or undefined template passed to $.jqotec" #635 (ZhandosKz)
 - **(enh)** TbJsonGridView summary data updated after ajax request #635 (ZhandosKz)
 - **(enh)** Bootstrap DateTimePicker by S.Malot widget added rev #91 (Hrumpa)
