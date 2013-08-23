@@ -2,12 +2,10 @@
 /**
  * This is temporary harness to support current code which is tightly coupled to Yii application object.
  * It should be called once before each test, and instantiates our minimal CApplication object.
- *
- * PLEASE NOTE that you need to supply the real path to your Yii framework installation here for any tests to even run.
 */
 
 // Included the Yii
-define('YII_PATH', '/home/hijarian/systems/yii/framework');
+define('YII_PATH', realpath(__DIR__.'/../vendor/yiisoft/yii/framework'));
 require_once(YII_PATH.'/YiiBase.php');
 require_once(__DIR__.'/fakes/Yii.php');
 
