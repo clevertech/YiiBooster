@@ -68,6 +68,7 @@ class TbJsonPickerColumn extends TbJsonDataColumn
 			return $value;
 		}
 		echo $value;
+		return;
 	}
 
 	/**
@@ -75,24 +76,36 @@ class TbJsonPickerColumn extends TbJsonDataColumn
 	 */
 	public function registerClientScript()
 	{
-		$class = preg_replace('/\s+/', '.', $this->class);
 		/** @var $cs CClientScript */
 		$cs = Yii::app()->getClientScript();
-		$assetsUrl = Yii::app()->bootstrap->getAssetsUrl();
 
-		$cs->registerCssFile($assetsUrl . '/css/bootstrap-picker.css');
-		$cs->registerScriptFile($assetsUrl . '/js/bootstrap.picker.js');
+		$cs->registerPackage('picker');
+
+		$pickerOptions = CJavaScript::encode($this->pickerOptions);
+		$gridId = $this->grid->id;
+		$class = preg_replace('/\s+/', '.', $this->class);
+
+		// Registering script to properly open *only* the picker for which corresponding toggler was clicked,
+		// and close all other pickers.
 		$cs->registerScript(
 			__CLASS__ . '#' . $this->id,
-			"$(document).on('click','#{$this->grid->id} a.{$class}', function(){
-			if ($(this).hasClass('pickeron'))
-			{
-				$(this).removeClass('pickeron').picker('toggle');
-				return;
-			}
-			$('#{$this->grid->id} a.pickeron').removeClass('pickeron').picker('toggle');
-			$(this).picker(" . CJavaScript::encode($this->pickerOptions) . ").picker('toggle').addClass('pickeron'); return false;
-		})"
+			<<<ENDL
+$(document).on('click','#{$gridId} a.{$class}', function() {
+	if ($(this).hasClass('pickeron')) {
+		$(this).removeClass('pickeron').picker('toggle');
+		return;
+	}
+	$('#{$gridId} a.pickeron')
+		.removeClass('pickeron')
+		.each(function (i, elem) {
+			$(elem).picker('toggle');
+		});
+	$(this)
+		.picker({$pickerOptions})
+		.picker('toggle').addClass('pickeron'); return false;
+});
+ENDL
 		);
 	}
+
 }
