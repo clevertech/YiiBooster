@@ -74,4 +74,10 @@ return array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'js' => 'moment.min.js',
 	),
+	'picker' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/picker',
+		'js' => array('bootstrap.picker.js'),
+		'css' => array('bootstrap.picker.css'),
+		'depends' => array('bootstrap.js')
+	),
 );
