@@ -22,7 +22,7 @@ return array(
 	'bootstrap.js' => array(
 		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
 		'js' => array($this->minifyCss ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
-		'depends' => array('jquery'),
+		'depends' => array('jquery', 'jqui-tb-noconflict'),
 	),
 	'bootstrap-yii' => array(
 		'baseUrl' => $this->getAssetsUrl(),
@@ -40,6 +40,11 @@ return array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'css' => array('css/bootstrap-notify.css'),
 		'js' => array('js/bootstrap.notify.js')
+	),
+	'jqui-tb-noconflict' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'js' => array('js/jqui-tb-noconflict.js'),
+		'depends' => array('jquery', 'jquery.ui') // we don't have any other choice to reliably prevent conflicts with jQueryUI than to forcefully include it before Bootstrap and the script preventing conflicts
 	),
 
 	//widgets start
