@@ -45,11 +45,11 @@ class TbAlert extends CWidget
 	 *
 	 * @note Instead of full arrays you can use just the names of alert types as a values of the alerts property.
 	 * You can even mix the array configuration and plain names.
-	 * It was shown in the example, by the way.
 	 *
 	 * Default is the array of all alert types defined as TYPE_* constants.
+	 * If you want no alerts to be displayed, set this property to empty array, not `null` value.
 	 */
-	public $alerts = array();
+	public $alerts;
 
 	/**
 	 * @var string|boolean What to render as a button to close the alert panel.
