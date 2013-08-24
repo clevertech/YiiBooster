@@ -54,23 +54,25 @@
 
 ## Columns
 
- JsonButtonColumn
  DataColumn
  RelationalColumn
  GroupButtonColumn
  ImageColumn
- JsonGridColumn
- JsonCheckBoxColumn
  ButtonColumn
- JsonDataColumn
  EditableColumn
- JsonPickerColumn
  ToggleColumn
  TotalSumColumn
  ButtonGroupColumn
  PickerColumn
  BulkActions
 
+### Json
+
+ JsonGridColumn
+ JsonDataColumn
+ JsonButtonColumn
+ JsonCheckBoxColumn
+ JsonPickerColumn
 
 # Forms
 

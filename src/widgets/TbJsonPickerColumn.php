@@ -13,7 +13,7 @@
  * The TbJsonPickerColumn works with TbJsonGridView and allows you to create a column that will display a picker element
  * The picker is a special plugin that renders a dropdown on click, which contents can be dynamically updated.
  *
- * @package booster.widgets.grids.columns
+ * @package booster.widgets.grids.columns.json
  */
 class TbJsonPickerColumn extends TbJsonDataColumn
 {

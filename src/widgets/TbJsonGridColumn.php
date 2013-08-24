@@ -17,7 +17,7 @@ Yii::import('bootstrap.widgets.TbDataColumn');
  *
  * @property TbJsonGridView $grid
  *
- * @package booster.widgets.grids.columns
+ * @package booster.widgets.grids.columns.json
  */
 class TbJsonGridColumn extends TbDataColumn
 {
