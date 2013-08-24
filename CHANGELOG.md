@@ -10,11 +10,13 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(fix)** Now `TbPickerColumn` works again. (hijarian)
+- **(fix)** Rather radically fixed the issue with jQuery UI tooltips overriding Twitter Bootstrap tooltips. (hijarian)
 - **(fix)** TbExtendedGridView sortable rows updated to work with CSRF token #333 (zvonicek)
 - **(fix)** TbJsonGridView when enablePagination set to false JavaScript does not throw error "Error: Empty or undefined template passed to $.jqotec" #635 (ZhandosKz)
 - **(enh)** TbJsonGridView summary data updated after ajax request #635 (ZhandosKz)
 - **(enh)** Bootstrap DateTimePicker by S.Malot widget added rev #91 (Hrumpa)
-- **(fix)** TbEditableColumn updated to support namespaced models #636 (xapon)
+- **(fix)** `TbEditableColumn` updated to support namespaced models #636 (xapon)
 - **(enh)** Bootstrap DatePicker updated to 1.1.3 including CDN #631 (Hrumpa)
 - **(enh)** Font Awesome updated to 3.2.1 including CDN (miramir)
 
@@ -28,7 +30,7 @@ Antonio Ramirez.
 - **(fix)** Now the bootstrap CSS files are being included according to the combination of `enableCdn`, `minifyCss`, `responsiveCss` and `fontAwesomeCss` parameters. #528 #510 (hijarian)
 - **(enh)** Added two parameters to Bootstrap component, `ajaxCssLoad` and `ajaxJsLoad`, to control loading CSS and JS assets in AJAX calls #514 (ianare)
 - **(fix)** TbBox action buttons now display correcftly with icons (fleuryc)
-- **(fix)** Check that $_SERVER['HTTP_USER_AGENT'] is set when loading MSIE font awesome (ianare)
+- **(fix)** Check that `$_SERVER['HTTP_USER_AGENT']` is set when loading MSIE font awesome (ianare)
 - **(fix)** Breadcrumbs not visible with default css (naduvko)
 - **(enh)** Inline datepicker (naduvko)
 - **(fix)** Localization of datepicker not working (naduvko)
