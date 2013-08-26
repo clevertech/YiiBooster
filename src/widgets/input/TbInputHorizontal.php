@@ -201,10 +201,10 @@ class TbInputHorizontal extends TbInput
 	protected function radioButtonList()
 	{
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo '<div class="controls"><span id="' . $this->getAttributeId($this->attribute) . '">';
 		echo $this->form->radioButtonList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo '</span></div>';
 	}
 
 	/**
@@ -337,41 +337,6 @@ class TbInputHorizontal extends TbInput
 		echo $this->getPrepend();
 		$this->widget(
 			'bootstrap.widgets.TbDatePicker',
-			array(
-				'model' => $this->model,
-				'attribute' => $this->attribute,
-				'options' => isset($options) ? $options : array(),
-				'events' => isset($events) ? $events : array(),
-				'htmlOptions' => $this->htmlOptions,
-			)
-		);
-		echo $this->getAppend();
-		echo $this->getError() . $this->getHint();
-		echo '</div>';
-	}
-
-	/**
-	 * Renders a datetimepicker field.
-	 * @return string the rendered content
-	 * @author Hrumpa
-	 */
-	protected function datetimepickerField()
-	{
-		if (isset($this->htmlOptions['options'])) {
-			$options = $this->htmlOptions['options'];
-			unset($this->htmlOptions['options']);
-		}
-
-		if (isset($this->htmlOptions['events'])) {
-			$events = $this->htmlOptions['events'];
-			unset($this->htmlOptions['events']);
-		}
-
-		echo $this->getLabel();
-		echo '<div class="controls">';
-		echo $this->getPrepend();
-		$this->widget(
-			'bootstrap.widgets.TbDateTimePicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -697,21 +662,6 @@ class TbInputHorizontal extends TbInput
 		echo '<div class="controls">';
 		echo $this->getPrepend();
 		echo $this->form->numberField($this->model, $this->attribute, $this->htmlOptions);
-		echo $this->getAppend();
-		echo $this->getError() . $this->getHint();
-		echo '</div>';
-	}
-
-	/**
-	 * Renders a pre-rendered custom field.
-	 * @return string the rendered content
-	 */
-	protected function customField()
-	{
-		echo $this->getLabel();
-		echo '<div class="controls">';
-		echo $this->getPrepend();
-		echo $this->htmlOptions['input'];
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
 		echo '</div>';
