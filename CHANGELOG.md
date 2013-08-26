@@ -132,3 +132,4 @@ Antonio Ramirez.
 - **(fix)** Divider in active items in breadcrumbs was outside of the `li` tag (wkii)
 
 
+Bug #652 TbActiveForm->radioButtonListRow validation fixed by adding <span> expected by jquery.yiiactiveform.js (timothynott)
