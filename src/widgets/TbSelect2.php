@@ -22,30 +22,11 @@ class TbSelect2 extends CInputWidget
 	 * @see TbActionForm->inputRow
 	 */
 	public $form;
-	/**
-	 * @var array @param data for generating the list options (value=>display)
-	 */
-	public $data = array();
 
 	/**
-	 * @var string[] the JavaScript event handlers.
+	 * @var array widget options
 	 */
-	public $events = array();
-
-	/**
-	 * @var bool whether to display a dropdown select box or use it for tagging
-	 */
-	public $asDropDownList = true;
-
-	/**
-	 * @var string the default value.
-	 */
-	public $val;
-
-	/**
-	 * @var
-	 */
-	public $options;
+	public $widgetOptions= array();
 
 	/**
 	 *### .init()
@@ -54,7 +35,12 @@ class TbSelect2 extends CInputWidget
 	 */
 	public function init()
 	{
-		if (empty($this->data) && $this->asDropDownList === true) {
+		$this->widgetOptions['asDropDownList']= isset($this->widgetOptions['asDropDownList']) ? $this->widgetOptions['asDropDownList'] : true;		
+		$this->widgetOptions['data']= isset($this->widgetOptions['data']) ? $this->widgetOptions['data'] : array();
+		$this->widgetOptions['options']= isset($this->widgetOptions['options']) ? $this->widgetOptions['options'] : array();				
+		$this->widgetOptions['events']= isset($this->widgetOptions['events']) ? $this->widgetOptions['events'] : array();
+
+		if (empty($this->widgetOptions['data']) && $this->widgetOptions['asDropDownList'] === true) {
 			throw new CException(Yii::t('zii', '"data" attribute cannot be blank'));
 		}
 
@@ -72,23 +58,23 @@ class TbSelect2 extends CInputWidget
 
 		if ($this->hasModel()) {
 			if ($this->form) {
-				echo $this->asDropDownList
+				echo $this->widgetOptions['asDropDownList']
 					?
-					$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions)
+					$this->form->dropDownList($this->model, $this->attribute, $this->widgetOptions['data'], $this->htmlOptions)
 					:
 					$this->form->hiddenField($this->model, $this->attribute, $this->htmlOptions);
 			} else {
-				echo $this->asDropDownList
+				echo $this->widgetOptions['asDropDownList']
 					?
-					CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions)
+					CHtml::activeDropDownList($this->model, $this->attribute, $this->widgetOptions['data'], $this->htmlOptions)
 					:
 					CHtml::activeHiddenField($this->model, $this->attribute, $this->htmlOptions);
 			}
 
 		} else {
-			echo $this->asDropDownList
+			echo $this->widgetOptions['asDropDownList']
 				?
-				CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions)
+				CHtml::dropDownList($name, $this->value, $this->widgetOptions['data'], $this->htmlOptions)
 				:
 				CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 		}
@@ -104,15 +90,16 @@ class TbSelect2 extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerPackage('select2');
+		Yii::app()->bootstrap->registerAssetCss('select2.css');
+		Yii::app()->bootstrap->registerAssetJs('select2.js');
 
-		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
+		$options = !empty($this->widgetOptions['options']) ? CJavaScript::encode($this->widgetOptions['options']) : '';
 
-		$defValue = !empty($this->val) ? ".select2('val', '$this->val')" : '';
+		$defValue = !empty($this->widgetOptions['val']) ? ".select2('val', '$this->widgetOptions['val']')" : '';
 
 		ob_start();
 		echo "jQuery('#{$id}').select2({$options})$defValue";
-		foreach ($this->events as $event => $handler) {
+		foreach ($this->widgetOptions['events'] as $event => $handler) {
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 		}
 
@@ -121,12 +108,12 @@ class TbSelect2 extends CInputWidget
 
 	private function setDefaultWidthIfEmpty()
 	{
-		if (empty($this->options)) {
+		if (!is_array($this->widgetOptions['options'])) {
 			$this->options = array();
 		}
 
-		if (empty($this->options['width'])) {
-			$this->options['width'] = 'resolve';
+		if (empty($this->widgetOptions['options']['width'])) {
+			$this->widgetOptions['options']['width'] = 'resolve';
 		}
 	}
 }

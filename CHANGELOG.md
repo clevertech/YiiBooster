@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(enh)** Introduce widgetOptions attribute (soee)
 - **(fix)** Now `TbPickerColumn` works again. (hijarian)
 - **(fix)** Rather radically fixed the issue with jQuery UI tooltips overriding Twitter Bootstrap tooltips. (hijarian)
 - **(fix)** TbExtendedGridView sortable rows updated to work with CSRF token #333 (zvonicek)

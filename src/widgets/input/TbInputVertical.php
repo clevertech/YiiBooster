@@ -555,32 +555,6 @@ class TbInputVertical extends TbInput
 	 */
 	protected function select2Field()
 	{
-		if (isset($this->htmlOptions['options'])) {
-			$options = $this->htmlOptions['options'];
-			unset($this->htmlOptions['options']);
-		}
-
-		if (isset($this->htmlOptions['events'])) {
-			$events = $this->htmlOptions['events'];
-			unset($this->htmlOptions['events']);
-		}
-
-		if (isset($this->htmlOptions['data'])) {
-			$data = $this->htmlOptions['data'];
-			unset($this->htmlOptions['data']);
-		}
-
-		if (isset($this->htmlOptions['asDropDownList'])) {
-			$asDropDownList = $this->htmlOptions['asDropDownList'];
-			unset($this->htmlOptions['asDropDownList']);
-		}
-
-		if (isset($this->htmlOptions['val']))
-		{
-			$val = $this->htmlOptions['val'];
-			unset($this->htmlOptions['val']);
-		}
-
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
@@ -588,11 +562,7 @@ class TbInputVertical extends TbInput
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
-				'options' => isset($options) ? $options : array(),
-				'events' => isset($events) ? $events : array(),
-				'data' => isset($data) ? $data : array(),
-				'asDropDownList' => isset($asDropDownList) ? $asDropDownList : true,
-				'val' => isset($val) ? $val : null,
+				'widgetOptions' => $this->data,
 				'htmlOptions' => $this->htmlOptions,
 				'form' => $this->form
 			)
