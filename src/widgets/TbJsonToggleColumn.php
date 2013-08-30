@@ -5,23 +5,22 @@
  * @copyright  Copyright &copy; Konstantin Popov 2013-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @package bootstrap.widgets
- * @since 0.9.8
  */
 
 Yii::import('bootstrap.widgets.TbToggleColumn');
 
 /**
- * Bootstrap button column widget.
+ * Bootstrap toggle button column widget.
  * Used to set buttons to use Glyphicons instead of the defaults images.
  */
 class TbJsonToggleColumn extends TbToggleColumn
 {
 	
 	/**
-	 * Renders|returns the data cell
+	 * Renders the data cell content.
+	 * This method renders the view, update and toggle buttons in the data cell.
 	 *
-	 * @param int $row
-	 *
+	 * @param integer $row the row number (zero-based)
 	 * @return array|void
 	 */
 	public function renderDataCell($row)
@@ -34,16 +33,15 @@ class TbJsonToggleColumn extends TbToggleColumn
 			$col['content'] = ob_get_contents();
 			ob_end_clean();
 			$col['attrs'] = '';
-		//	print_r($col);
 			return $col;
-			//parent::renderDataCell($row);
+
 		}
 
 		parent::renderDataCell($row);
 	}
 
 	/**
-	 * Initializes the default buttons (view, update and delete).
+	 * Initializes the default toggle button.
 	 */
 	protected function initButton()
 	{
