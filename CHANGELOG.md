@@ -131,4 +131,4 @@ Antonio Ramirez.
 - **(fix)** Divider symbols in breadcrumbs changed to HTML entities (wkii)
 - **(fix)** Divider in active items in breadcrumbs was outside of the `li` tag (wkii)
 
-Enh : Added new widjet TbJsonToggleColumn (tamvodopad)
+- **(enh)** Added new widget TbJsonToggleColumn #660 (tamvodopad)
