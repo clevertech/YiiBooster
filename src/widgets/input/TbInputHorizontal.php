@@ -26,7 +26,7 @@ class TbInputHorizontal extends TbInput
 	{
 		echo CHtml::openTag('div', array('class' => 'control-group ' . $this->getContainerCssClass()));
 		parent::run();
-		echo '</div>';
+		echo CHtml::closeTag('div');
 	}
 
 	/**
@@ -201,10 +201,10 @@ class TbInputHorizontal extends TbInput
 	protected function radioButtonList()
 	{
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo '<div class="controls"><span id="' . $this->getAttributeId($this->attribute) . '">';
 		echo $this->form->radioButtonList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo '</span></div>';
 	}
 
 	/**

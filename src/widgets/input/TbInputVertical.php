@@ -157,8 +157,10 @@ class TbInputVertical extends TbInput
 	protected function radioButtonList()
 	{
 		echo $this->getLabel();
+		echo '<span id="' . $this->getAttributeId($this->attribute) . '">';
 		echo $this->form->radioButtonList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getError() . $this->getHint();
+		echo '</span>';
 	}
 
 	/**
