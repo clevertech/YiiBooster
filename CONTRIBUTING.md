@@ -27,9 +27,9 @@ Common work process is as follows:
       Easiest way is to run `git branch` before commit and look if the asterisk is before the name of your desired branch.
 
 6.    After you've done with the feature under question, **open the `CHANGELOG.md` and append the line to it in the following format:**
-      `Bug #999: a description of the bug fix (Your Name)`
+      `- **(fix)** a description of the bug fix #issue_number (username)`
       or
-      `Enh #999: a description of the enhancement (Your Name)`
+      `- **(enh)** a description of the enhancement #issue_number (username)`
 
       Commit this change to `CHANGELOG.md` normally. It'll be included in your PR on next step and it's good.
       This step is proposed first in [#167](https://github.com/clevertech/YiiBooster/issues/167) and it's definitive. Please, do it.
