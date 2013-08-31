@@ -92,7 +92,7 @@ class TbAlert extends CWidget
 	 */
 	public $userComponentId = 'user';
 
-	private static $_containerId = 0;
+	protected static $_containerId = 0;
 
 	/**
 	 *### .init()
@@ -176,7 +176,7 @@ class TbAlert extends CWidget
 	 * @param $type
 	 * @param $alertText
 	 */
-	private function renderSingleAlert($alert, $type, $alertText)
+	protected function renderSingleAlert($alert, $type, $alertText)
 	{
 		$classes = array('alert in');
 
