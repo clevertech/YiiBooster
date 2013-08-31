@@ -11,9 +11,10 @@
 Yii::import('bootstrap.widgets.TbMenu');
 
 /**
- *## Bootstrap Javascript tabs widget.
+ *## Twitter Bootstrap Wizard widget
  *
- * @see <http://twitter.github.com/bootstrap/javascript.html#tabs>
+ * @see <https://github.com/VinceG/twitter-bootstrap-wizard>
+ * @see <http://vadimg.com/twitter-bootstrap-wizard-example/>
  *
  * @package booster.widgets.grouping
  */
@@ -160,7 +161,9 @@ class TbWizard extends CWidget
 
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
-		Yii::app()->bootstrap->registerAssetJs('jquery.bootstrap.wizard.js');
+
+		$cs->registerPackage('bootstrap.wizard');
+
 		// Override options
 		if ($this->type && !isset($this->options['class'])) {
 			$this->options['class'] = $this->type;

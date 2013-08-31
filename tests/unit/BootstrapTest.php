@@ -73,7 +73,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase
 		$component->enableCdn = $cdn;
 		$component->responsiveCss = $responsive;
 		$component->fontAwesomeCss = $fontawesome;
-		$component->minifyCss = $mincss;
+		$component->minify = $mincss;
 
 		$component->registerBootstrapCss();
 

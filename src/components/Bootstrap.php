@@ -50,9 +50,9 @@ class Bootstrap extends CApplicationComponent
 	public $fontAwesomeCss = false;
 
 	/**
-	 * @var bool Whether to use minified CSS files
+	 * @var bool Whether to use minified CSS and Javascript files
 	 */
-	public $minifyCss = true;
+	public $minify = true;
 
 	/**
 	 * @var boolean whether to register the Yii-specific CSS missing from Bootstrap.
@@ -499,13 +499,13 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * We use the values of $this->responsiveCss, $this->fontAwesomeCss,
-	 * $this->minifyCss and $this->enableCdn to construct the proper package definition
+	 * $this->minify and $this->enableCdn to construct the proper package definition
 	 * and install and register it.
 	 * @return array
 	 */
 	private function makeBootstrapCssPackage()
 	{
-		if ($this->enableCdn && $this->responsiveCss && $this->minifyCss)
+		if ($this->enableCdn && $this->responsiveCss && $this->minify)
 		{// CDN hosts only responsive minified versions
 			$baseUrl = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/';
 			$filename = "css/bootstrap-combined";
@@ -519,7 +519,7 @@ class Bootstrap extends CApplicationComponent
 		}
 
 		$filename .= $this->fontAwesomeCss ? '.no-icons' : '';
-		$filename .= $this->minifyCss  ? '.min.css' : '.css';
+		$filename .= $this->minify  ? '.min.css' : '.css';
 
 		return array('bootstrap.css' => array(
 			'baseUrl' => $baseUrl,
@@ -533,7 +533,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	private function makeSelect2Package()
 	{
-		$jsFiles = array($this->minifyCss ? 'select2.min.js' : 'select2.js');
+		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
 			$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2). '.js';
