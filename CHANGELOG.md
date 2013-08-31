@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(enh)** Now there's no "minifyCss" option. Use the new "minify" option, which does the same thing but means what it really does: whether to minify ALL assets, both CSS and Javascript. (hijarian)
 - **(enh)** Updated `TbWizard` assets to newest version #645 (hijarian)
 - **(fix)** Now we really can use `CActiveDataProvider.keyAttribute` attribute in `TbRelationalColumn` #659 (coupej)
 - **(fix)** `TbActiveForm.radioButtonListRow` validation fixed by adding with id expected by jquery.yiiactiveform.js #652 #653 (timothynott)
