@@ -54,9 +54,11 @@ class TbSelect2 extends CInputWidget
 	 */
 	public function init()
 	{
-		if (empty($this->data) && $this->asDropDownList === true) {
-			throw new CException(Yii::t('zii', '"data" attribute cannot be blank'));
-		}
+		$this->normalizeData();
+
+		$this->normalizeOptions();
+
+		$this->addEmptyItemIfPlaceholderDefined();
 
 		$this->setDefaultWidthIfEmpty();
 	}
@@ -121,12 +123,35 @@ class TbSelect2 extends CInputWidget
 
 	private function setDefaultWidthIfEmpty()
 	{
-		if (empty($this->options)) {
-			$this->options = array();
-		}
-
 		if (empty($this->options['width'])) {
 			$this->options['width'] = 'resolve';
 		}
+	}
+
+	private function normalizeData()
+	{
+		if (!$this->data)
+			$this->data = array();
+	}
+
+	private function addEmptyItemIfPlaceholderDefined()
+	{
+		if (!empty($this->htmlOptions['placeholder']))
+			$this->options['placeholder'] = $this->htmlOptions['placeholder'];
+
+		if (!empty($this->options['placeholder']))
+			$this->prependDataWithEmptyItem();
+	}
+
+	private function normalizeOptions()
+	{
+		if (empty($this->options)) {
+			$this->options = array();
+		}
+	}
+
+	private function prependDataWithEmptyItem()
+	{
+		$this->data[''] = '';
 	}
 }
