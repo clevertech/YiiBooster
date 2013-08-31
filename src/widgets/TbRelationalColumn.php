@@ -69,9 +69,8 @@ class TbRelationalColumn extends TbDataColumn
 	{
 		parent::init();
 
-		if (empty($this->url)) {
+		if (empty($this->url))
 			$this->url = Yii::app()->getRequest()->requestUri;
-		}
 
 		$this->registerClientScript();
 	}
@@ -87,6 +86,7 @@ class TbRelationalColumn extends TbDataColumn
 	{
 		$data = $this->grid->dataProvider->data[$row];
 		$options = $this->htmlOptions;
+
 		if ($this->cssClassExpression !== null) {
 			$class = $this->evaluateExpression($this->cssClassExpression, array('row' => $row, 'data' => $data));
 			if (isset($options['class'])) {
@@ -95,16 +95,17 @@ class TbRelationalColumn extends TbDataColumn
 				$options['class'] = $class;
 			}
 		}
+
 		echo CHtml::openTag('td', $options);
 		echo CHtml::openTag('span', array('class' => $this->cssClass, 'data-rowid' => $this->getPrimaryKey($data)));
 		$this->renderDataCellContent($row, $data);
-		echo '</span>';
-		echo '</td>';
+		echo CHtml::closeTag('span');
+		echo CHtml::closeTag('td');
 	}
 
 	/**
 	 * Helper function to return the primary key of the $data
-	 *  * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by comma
+	 *  * IMPORTANT: composite keys on CActiveDataProviders will return the keys joined by two dashes: `--`
 	 *
 	 * @param CActiveRecord $data
 	 *
@@ -114,9 +115,10 @@ class TbRelationalColumn extends TbDataColumn
 	{
 		if ($this->grid->dataProvider instanceof CActiveDataProvider) {
 			$key = $this->grid->dataProvider->keyAttribute === null ? $data->getPrimaryKey()
-				: $data->{$this->keyAttribute};
+				: $data->{$this->grid->dataProvider->keyAttribute};
 			return is_array($key) ? implode('--', $key) : $key;
 		}
+
 		if ($this->grid->dataProvider instanceof CArrayDataProvider || $this->grid->dataProvider instanceof CSqlDataProvider) {
 			return is_object($data) ? $data->{$this->grid->dataProvider->keyField}
 				: $data[$this->grid->dataProvider->keyField];
@@ -131,13 +133,12 @@ class TbRelationalColumn extends TbDataColumn
 	public function registerClientScript()
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-relational.css');
+
 		/** @var $cs CClientScript */
 		$cs = Yii::app()->getClientScript();
 		if ($this->afterAjaxUpdate !== null) {
-			if ((!$this->afterAjaxUpdate instanceof CJavaScriptExpression) && strpos(
-				$this->afterAjaxUpdate,
-				'js:'
-			) !== 0
+			if ((!$this->afterAjaxUpdate instanceof CJavaScriptExpression)
+				&& (strpos($this->afterAjaxUpdate,'js:') !== 0)
 			) {
 				$this->afterAjaxUpdate = new CJavaScriptExpression($this->afterAjaxUpdate);
 			}
