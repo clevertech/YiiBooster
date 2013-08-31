@@ -83,5 +83,20 @@ return array(
 	'bootstrap.wizard' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-wizard',
 		'js' => array($this->minify ? 'jquery.bootstrap.wizard.min.js' : 'jquery.bootstrap.wizard.js')
+	),
+
+	'ajax-cache' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/ajax-cache',
+		'js' => array('jquery.ajax.cache.js'),
+	),
+	'jqote2' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/jqote2',
+		'js' => array('jquery.jqote2.min.js'),
+	),
+	'json-grid-view' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/json-grid-view',
+		'js' => array('jquery.json.yiigridview.js'),
+		'depends' => array('jquery', 'jqote2', 'ajax-cache')
 	)
+
 );

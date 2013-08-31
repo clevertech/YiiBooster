@@ -437,17 +437,9 @@ class TbJsonGridView extends TbGridView
 		if ($this->enableHistory) {
 			$cs->registerCoreScript('history');
 		}
-		$assetsUrl = Yii::app()->bootstrap->getAssetsUrl();
 
-		$cs->registerScriptFile(
-			$assetsUrl . '/js/jquery.jqote2.min.js',
-			CClientScript::POS_END
-		); // jqote2 template engine
-		$cs->registerScriptFile($assetsUrl . '/js/jquery.ajax.cache.js', CClientScript::POS_END); // ajax cache
-		$cs->registerScriptFile(
-			$assetsUrl . '/js/jquery.json.yiigridview.js',
-			CClientScript::POS_END
-		); // custom yiiGridView
+		$cs->registerPackage('json-grid-view');
+
 		$cs->registerScript(__CLASS__ . '#' . $id, "jQuery('#$id').yiiJsonGridView($options);");
 	}
 }
