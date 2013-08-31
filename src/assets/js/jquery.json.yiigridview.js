@@ -6,6 +6,9 @@
  * @copyright Copyright &copy; 2008-2010 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  * @version $Id$
+ *
+ * Modified to make it compatible for TbJsonGridView
+ * @author Antonio Ramirez <https://github.com/tonydspaniard>
  */
 
 (function ($) {
@@ -111,9 +114,8 @@
                 }
 
                 $(document).on('change.yiiJsonGridView keydown.yiiJsonGridView', inputSelector, function (event) {
-                    var eventType;
                     if (event.type === 'keydown') {
-                        if( event.keyCode !== 13) {
+                        if (event.keyCode !== 13) {
                             return; // only react to enter key
                         } else {
                             event.type = 'keydown';
