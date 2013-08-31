@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(enh)** Now you can properly extend/modify the rendering of individual alerts in `TbAlert` #619 (hijarian)
 - **(enh)** Updated Redactor to version 9 #583 (hijarian)
 - **(fix)** Now you can create `TbSelect2` widget without any data and placeholder is being handled correctly for empty dropdowns. #247 (hijarian)
 - **(enh)** Now there's no "minifyCss" option. Use the new "minify" option, which does the same thing but means what it really does: whether to minify ALL assets, both CSS and Javascript. (hijarian)
