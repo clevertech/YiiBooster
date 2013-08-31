@@ -263,7 +263,7 @@ class TbGroupGridView extends TbGridView
 						if ($isChangedColumn) {
 							$options = $column->htmlOptions;
 							$column->htmlOptions['rowspan'] = $change['columns'][$column->name]['count'];
-							$column->htmlOptions['class'] = 'merge';
+							$column->htmlOptions['class'] = isset($column->htmlOptions['class']) ? $column->htmlOptions['class'] . ' merge' : 'merge';
 							$style = isset($column->htmlOptions['style']) ? $column->htmlOptions['style'] : '';
 							$column->htmlOptions['style'] = $style . ';' . $this->mergeCellCss;
 							$column->renderDataCell($row);
