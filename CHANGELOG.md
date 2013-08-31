@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(enh)** Added new widget TbJsonToggleColumn #660 (tamvodopad)
 - **(fix)** Now `TbPickerColumn` works again. (hijarian)
 - **(fix)** Rather radically fixed the issue with jQuery UI tooltips overriding Twitter Bootstrap tooltips. (hijarian)
 - **(fix)** TbExtendedGridView sortable rows updated to work with CSRF token #333 (zvonicek)
@@ -131,4 +132,3 @@ Antonio Ramirez.
 - **(fix)** Divider symbols in breadcrumbs changed to HTML entities (wkii)
 - **(fix)** Divider in active items in breadcrumbs was outside of the `li` tag (wkii)
 
-- **(enh)** Added new widget TbJsonToggleColumn #660 (tamvodopad)
