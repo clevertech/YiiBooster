@@ -847,4 +847,43 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function customField();
+
+	/**
+	 * Obtain separately hidden and visible field
+	 * @see TbInputVertical::checkBox
+	 * @see TbInputHorizontal::checkBox
+	 * @see TbInputVertical::radioButton
+	 * @see TbInputHorizontal::radioButton
+	 * @throws CException
+	 * @return array
+	 */
+	protected function getSeparatedSelectableInput()
+	{
+		switch ($this->type)
+		{
+			case self::TYPE_CHECKBOX:
+				$method = 'checkBox';
+				break;
+			case self::TYPE_RADIO:
+				$method = 'radioButton';
+				break;
+			default:
+				throw new CException('This method can be used with only selectable control', E_USER_ERROR);
+		}
+
+		$control = $this->form->{$method}($this->model, $this->attribute, $this->htmlOptions);
+		$hidden  = '';
+
+		$hasHiddenField = (array_key_exists('uncheckValue', $this->htmlOptions) && $this->htmlOptions['uncheckValue'] === null)
+			? false
+			: true;
+
+		if ($hasHiddenField && preg_match('/\<input .*?type="hidden".*?\/\>/', $control, $matches))
+		{
+			$hidden = $matches[0];
+			$control = str_replace($hidden, '', $control);
+		}
+
+		return array($hidden, $control);
+	}
 }
