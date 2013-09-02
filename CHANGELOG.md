@@ -10,7 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
-- **(fix)** Checkboxes, selects and radiobuttons in form rows do not generate invalid HTML markup anymore #644 #626 (ZhandosKz)
+- **(fix)** Checkboxes, selects and radiobuttons in form rows do not generate invalid HTML markup anymore #664 #626 (ZhandosKz)
 - **(enh)** Now you can properly extend/modify the rendering of individual alerts in `TbAlert` #619 (hijarian)
 - **(enh)** Updated Redactor to version 9 #583 (hijarian)
 - **(fix)** Now you can create `TbSelect2` widget without any data and placeholder is being handled correctly for empty dropdowns. #247 (hijarian)
