@@ -13,7 +13,7 @@ require_once(__DIR__.'/fakes/Yii.php');
 define('APP_ROOT', realpath(__DIR__.'/runtime'));
 define('APP_RUNTIME', realpath(APP_ROOT.'/runtime'));
 define('APP_ASSETS', realpath(APP_ROOT.'/assets'));
-
+Yii::setPathOfAlias('bootstrap', __DIR__.'/../src');
 // Instantiated the test app
 require_once(__DIR__.'/fakes/MinimalApplication.php');
 Yii::createApplication(

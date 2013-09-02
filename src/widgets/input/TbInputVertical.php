@@ -27,8 +27,11 @@ class TbInputVertical extends TbInput
 	protected function checkBox()
 	{
 		$attribute = $this->attribute;
+		list($hidden, $checkbox) = $this->getSeparatedSelectableInput();
+
+		echo ($hidden) ? $hidden . PHP_EOL : '';
 		echo '<label class="checkbox" for="' . $this->getAttributeId($attribute) . '">';
-		echo $this->form->checkBox($this->model, $this->attribute, $this->htmlOptions) . PHP_EOL;
+		echo $checkbox . PHP_EOL;
 		echo $this->model->getAttributeLabel($attribute);
 		echo $this->getError() . $this->getHint();
 		echo '</label>';
@@ -143,8 +146,12 @@ class TbInputVertical extends TbInput
 	protected function radioButton()
 	{
 		$attribute = $this->attribute;
+		list($hidden, $radioButton) = $this->getSeparatedSelectableInput();
+
+		echo ($hidden) ? $hidden . PHP_EOL : '';
 		echo '<label class="radio" for="' . $this->getAttributeId($attribute) . '">';
-		echo $this->form->radioButton($this->model, $this->attribute, $this->htmlOptions) . PHP_EOL;
+		echo $radioButton . PHP_EOL;
+		//echo $this->form->radioButton($this->model, $this->attribute, $this->htmlOptions) . PHP_EOL;
 		echo $this->model->getAttributeLabel($attribute);
 		echo $this->getError() . $this->getHint();
 		echo '</label>';
