@@ -196,13 +196,13 @@ class Bootstrap extends CApplicationComponent
 	}
 
 	/** @return bool */
-	private function isInConsoleMode()
+	protected function isInConsoleMode()
 	{
 		return Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli';
 	}
 
 	/** @return bool */
-	private function isInTests()
+	protected function isInTests()
 	{
 		return defined('IS_IN_TESTS') && IS_IN_TESTS;
 	}
@@ -210,7 +210,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 *
 	 */
-	private function setRootAliasIfUndefined()
+	protected function setRootAliasIfUndefined()
 	{
 		if (Yii::getPathOfAlias('bootstrap') === false) {
 			Yii::setPathOfAlias('bootstrap', realpath(dirname(__FILE__) . '/..'));
@@ -220,7 +220,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 *
 	 */
-	private function includeAssets()
+	protected function includeAssets()
 	{
 		$this->appendUserSuppliedPackagesToOurs();
 
@@ -234,7 +234,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 *
 	 */
-	private function appendUserSuppliedPackagesToOurs()
+	protected function appendUserSuppliedPackagesToOurs()
 	{
 		$bootstrapPackages = require(Yii::getPathOfAlias('bootstrap.components') . '/packages.php');
 		$bootstrapPackages += $this->makeBootstrapCssPackage();
@@ -249,7 +249,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 *
 	 */
-	private function addOurPackagesToYii()
+	protected function addOurPackagesToYii()
 	{
 		foreach ($this->packages as $name => $definition) {
 			$this->assetsRegistry->addPackage($name, $definition);
@@ -259,7 +259,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * If we did not disabled registering CSS packages, register them.
 	 */
-	private function registerCssPackagesIfEnabled()
+	protected function registerCssPackagesIfEnabled()
 	{
 		if (!$this->coreCss)
 			return;
@@ -305,7 +305,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * If `enableJS` is not `false`, register our Javascript packages
 	 */
-	private function registerJsPackagesIfEnabled()
+	protected function registerJsPackagesIfEnabled()
 	{
 		if (!$this->enableJS)
 			return;
@@ -396,7 +396,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 *
 	 */
-	private function setAssetsRegistryIfNotDefined()
+	protected function setAssetsRegistryIfNotDefined()
 	{
 		if (!$this->assetsRegistry)
 			$this->assetsRegistry = Yii::app()->getClientScript();
@@ -414,7 +414,7 @@ class Bootstrap extends CApplicationComponent
 	 * and install and register it.
 	 * @return array
 	 */
-	private function makeBootstrapCssPackage()
+	protected function makeBootstrapCssPackage()
 	{
 		if ($this->enableCdn && $this->responsiveCss && $this->minify)
 		{// CDN hosts only responsive minified versions
@@ -442,7 +442,7 @@ class Bootstrap extends CApplicationComponent
 	 * Make select2 package definition
 	 * @return array
 	 */
-	private function makeSelect2Package()
+	protected function makeSelect2Package()
 	{
 		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
 
@@ -469,7 +469,7 @@ class Bootstrap extends CApplicationComponent
 	/**
 	 * Required metadata for responsive CSS to work.
 	 */
-	private function registerMetadataForResponsive()
+	protected function registerMetadataForResponsive()
 	{
 		$this->assetsRegistry->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 	}
@@ -878,7 +878,7 @@ class Bootstrap extends CApplicationComponent
 	 *
 	 * @return mixed
 	 */
-	private function tryGetSelectorForPlugin($name)
+	protected function tryGetSelectorForPlugin($name)
 	{
 		return $this->tryGetInfoForPlugin($name, 'selector');
 	}
@@ -887,7 +887,7 @@ class Bootstrap extends CApplicationComponent
 	 * @param $name
 	 * @return mixed
 	 */
-	private function tryGetOptionsForPlugin($name)
+	protected function tryGetOptionsForPlugin($name)
 	{
 		return $this->tryGetInfoForPlugin($name, 'options');
 	}
@@ -898,7 +898,7 @@ class Bootstrap extends CApplicationComponent
 	 *
 	 * @return mixed
 	 */
-	private function tryGetInfoForPlugin($name, $key)
+	protected function tryGetInfoForPlugin($name, $key)
 	{
 		if (array_key_exists($name, $this->plugins))
 			if (array_key_exists($key, $this->plugins[$name]))
