@@ -202,6 +202,22 @@ class TbActiveForm extends CActiveForm
 	}
 
 	/**
+	 *### .passfieldFieldRow()
+	 *
+	 * Renders a Pass*Field field input row.
+	 *
+	 * @param CModel $model the data model
+	 * @param string $attribute the attribute
+	 * @param array $htmlOptions additional HTML attributes
+	 *
+	 * @return string the generated row
+	 */
+	public function passfieldFieldRow($model, $attribute, $htmlOptions = array())
+	{
+		return $this->inputRow(TbInput::TYPE_PASSFIELD, $model, $attribute, null, $htmlOptions);
+	}
+
+	/**
 	 *### .radioButtonRow()
 	 *
 	 * Renders a radio button input row.
