@@ -24,6 +24,7 @@ abstract class TbInput extends CInputWidget
 	const TYPE_DROPDOWN = 'dropdownlist';
 	const TYPE_FILE = 'filefield';
 	const TYPE_PASSWORD = 'password';
+	const TYPE_PASSFIELD = 'passfield';
 	const TYPE_RADIO = 'radiobutton';
 	const TYPE_RADIOLIST = 'radiobuttonlist';
 	const TYPE_RADIOLIST_INLINE = 'radiobuttonlist_inline';
@@ -264,6 +265,10 @@ abstract class TbInput extends CInputWidget
 
 			case self::TYPE_PASSWORD:
 				$this->passwordField();
+				break;
+
+			case self::TYPE_PASSFIELD:
+				$this->passfieldField();
 				break;
 
 			case self::TYPE_RADIO:
@@ -632,6 +637,16 @@ abstract class TbInput extends CInputWidget
 	 * @abstract
 	 */
 	abstract protected function passwordField();
+
+	/**
+	 *### .passfieldField()
+	 *
+	 * Renders a Pass*Field field.
+	 *
+	 * @return string the rendered content
+	 * @abstract
+	 */
+	abstract protected function passfieldField();
 
 	/**
 	 *### .radioButton()
