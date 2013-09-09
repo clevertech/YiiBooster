@@ -104,6 +104,13 @@ return array(
 		'js' => array($this->minify ? 'redactor.min.js' : 'redactor.js'),
 		'css' => array('redactor.css'),
 		'depends' => array('jquery')
-	)
+	),
+
+	'timepicker' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-timepicker',
+		'js' => array($this->minify ? 'js/bootstrap-timepicker.min.js' : 'js/bootstrap-timepicker.js'),
+		'css' => array($this->minify ? 'css/bootstrap-timepicker.min.css' : 'css/bootstrap-timepicker.css'),
+		'depends' => array('bootstrap.js')
+	),
 
 );
