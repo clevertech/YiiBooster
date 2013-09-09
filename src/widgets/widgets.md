@@ -2,8 +2,8 @@ Legend: `+` sign means availability of end-user documentation page.
 
 # Decoration
 
- HeroUnit
- Badge
+ + HeroUnit
+ + Badge
  Progress
  Label
  + Alert
