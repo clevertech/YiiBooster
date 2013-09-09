@@ -1,10 +1,12 @@
+Legend: `+` sign means availability of end-user documentation page.
+
 # Decoration
+
  HeroUnit
  Badge
  Progress
  Label
- Alert
-
+ + Alert
 
 # Content Grouping
 
@@ -88,7 +90,7 @@
  Select2
  FileUpload
  Tags
- TimePicker
+ + TimePicker
  FormInputElement
  DateTimePicker
 
@@ -107,7 +109,7 @@
  FormButtonElement
 
 
-# Support shit
+# Support stuff
 
  JsonPager
  EditableSaver
