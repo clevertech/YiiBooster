@@ -614,7 +614,7 @@ class TbInputHorizontal extends TbInput
 		}
 
 		echo $this->getLabel();
-		echo '<div class="controls bootstrap-timepicker">';
+		echo '<div class="controls">';
 		echo $this->getPrepend();
 		$this->widget(
 			'bootstrap.widgets.TbTimePicker',

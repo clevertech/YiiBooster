@@ -56,9 +56,15 @@ class TbTimePicker extends CInputWidget
 	public $events = array();
 
 	/**
-	 * @var array The HTML attributes for the input tag
+	 * @var array HTML attributes for the wrapper "div" tag.
 	 */
-	public $htmlOptions = array();
+	public $wrapperHtmlOptions = array();
+
+	/**
+	 * @var boolean Whether to not append the time icon at end of input.
+	 * NOTE that the timepicker is opening after click on this icon if it's present!
+	 */
+	public $noAppend = false;
 
 	/**
 	 * Runs the widget.
@@ -77,6 +83,14 @@ class TbTimePicker extends CInputWidget
 			$this->htmlOptions['id'] = $this->getId(true) . '-' . $id;
 		}
 
+		// Adding essential class for timepicker to work.
+		$this->wrapperHtmlOptions = $this->injectClass($this->wrapperHtmlOptions, 'bootstrap-timepicker');
+
+		if (!$this->noAppend)
+			$this->wrapperHtmlOptions = $this->injectClass($this->wrapperHtmlOptions, 'input-append');
+
+
+		echo CHtml::openTag('div', $this->wrapperHtmlOptions);
 		if ($this->hasModel()) {
 			if ($this->form) {
 				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
@@ -86,6 +100,9 @@ class TbTimePicker extends CInputWidget
 		} else {
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
+		if (!$this->noAppend)
+			$this->echoAppend();
+		echo CHtml::closeTag('div');
 
 		$this->registerClientScript($this->htmlOptions['id']);
 	}
@@ -109,5 +126,36 @@ class TbTimePicker extends CInputWidget
 		}
 
 		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, ob_get_clean() . ';');
+	}
+
+	/**
+	 * @param array $valueset
+	 * @param string $className
+	 *
+	 * @return array
+	 */
+	private function injectClass($valueset, $className)
+	{
+		if (array_key_exists('class', $valueset) and is_string($valueset['class'])) {
+			$valueset['class'] = implode(
+				' ',
+				array_merge(
+					explode(
+						' ',
+						$valueset['class']
+					),
+					array($className)
+				)
+			);
+		} else {
+			$valueset['class'] = $className;
+		}
+
+		return $valueset;
+	}
+
+	private function echoAppend()
+	{
+		echo CHtml::tag('span', array('class' => 'add-on'), CHtml::tag('i', array('class' => 'icon-time'), ''));
 	}
 }
