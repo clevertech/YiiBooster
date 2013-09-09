@@ -7,6 +7,7 @@
  *## TbTimePicker widget.
  *
  * @see http://jdewit.github.com/bootstrap-timepicker/
+ * @see https://github.com/jdewit/bootstrap-timepicker
  *
  * @since 1.0.3
  * @package booster.widgets.forms.inputs
@@ -14,12 +15,14 @@
 class TbTimePicker extends CInputWidget
 {
 	/**
-	 * @var TbActiveForm
+	 * @var TbActiveForm If we're called from the form, here lies the reference to it.
 	 */
 	public $form;
 
 	/**
-	 * @var array the options for the Bootstrap JavaScript plugin.
+	 * @var array The options for the "bootstrap-timepicker" plugin.
+	 * @see http://jdewit.github.com/bootstrap-timepicker/
+	 *
 	 * Available options:
 	 * template    string
 	 *      'dropdown' (default), Show picker in a dropdown
@@ -46,11 +49,14 @@ class TbTimePicker extends CInputWidget
 
 	/**
 	 * @var string[] the JavaScript event handlers.
+	 * @deprecated 2.0.0 You have the ability to set unique ID and/or class to this element.
+	 * Define Javascript handlers inside Javascript files, not here.
+	 * You can generate the Javascript files from PHP, too, there's no need in hand-crafted snippets of Javascript polluting view files.
 	 */
 	public $events = array();
 
 	/**
-	 * @var array the HTML attributes for the widget container.
+	 * @var array The HTML attributes for the input tag
 	 */
 	public $htmlOptions = array();
 
@@ -66,6 +72,11 @@ class TbTimePicker extends CInputWidget
 			? 'no-user-select'
 			: 'no-user-select ' . $this->htmlOptions['class'];
 
+		// We are overriding the result of $this->resolveNameID() here, because $id which it emits is not unique through the page.
+		if (empty($this->htmlOptions['id'])) {
+			$this->htmlOptions['id'] = $this->getId(true) . '-' . $id;
+		}
+
 		if ($this->hasModel()) {
 			if ($this->form) {
 				echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
@@ -76,8 +87,7 @@ class TbTimePicker extends CInputWidget
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
 
-		$this->registerClientScript($id);
-
+		$this->registerClientScript($this->htmlOptions['id']);
 	}
 
 	/**
@@ -87,8 +97,7 @@ class TbTimePicker extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-timepicker.css');
-		Yii::app()->bootstrap->registerAssetJs('bootstrap.timepicker.js');
+		Yii::app()->bootstrap->assetsRegistry->registerPackage('timepicker');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
