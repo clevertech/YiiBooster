@@ -106,6 +106,13 @@ return array(
 		'depends' => array('jquery')
 	),
 
+	'passfield' => array(
+		'depends' => array('jquery'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-passfield/', // Not in CDN yet
+		'css' => array($this->minify ? 'css/passfield.min.css' : 'css/passfield.min.css'),
+		'js' => array($this->minify ? 'js/passfield.min.js' : 'js/passfield.min.js')
+	),
+
 	'timepicker' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-timepicker',
 		'js' => array($this->minify ? 'js/bootstrap-timepicker.min.js' : 'js/bootstrap-timepicker.js'),
