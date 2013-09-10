@@ -55,7 +55,7 @@ class Bootstrap extends CApplicationComponent
 	 * @var boolean whether to register the Bootstrap responsive CSS (bootstrap-responsive.min.css).
 	 * Defaults to false.
 	 */
-	public $responsiveCss = false;
+	public $responsiveCss = true;
 
 	/**
 	 * @var boolean Whether to register the Font Awesome CSS (font-awesome.min.css).
