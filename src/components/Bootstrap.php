@@ -153,6 +153,8 @@ class Bootstrap extends CApplicationComponent
 	 * Each array key-value pair represents the initial options for a single plugin class,
 	 * with the array key being the plugin name, and array value being the initial options array.
 	 * @since 0.9.8
+	 *
+	 * @deprecated 2.0.0 Along with `registerPackage` this option will be refactored out in 3.0.0 release.
 	 */
 	public $plugins = array();
 
