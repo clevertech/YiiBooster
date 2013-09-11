@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 2.0.0
+- **(enh)** No assets are loaded in AJAX calls now. (hijarian)
 - **(enh)** Responsive CSS are default now. #556 (hijarian)
 - **(enh)** Pass*Field by Antelle (v 1.1.7) widget added #667 (Hrumpa)
 - **(cln)** Removed long-broken `TbExtendedTooltip` from codebase #511 (hijarian)
