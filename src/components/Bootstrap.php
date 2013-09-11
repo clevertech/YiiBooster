@@ -105,15 +105,15 @@ class Bootstrap extends CApplicationComponent
 
 	/**
 	 * @var boolean to register Bootstrap CSS files in AJAX requests
-	 * Defaults to true.
+	 * Defaults to false and you probably have no reason to set it to true.
 	 */
-	public $ajaxCssLoad = true;
+	public $ajaxCssLoad = false;
 
 	/**
 	 * @var boolean to register the Bootstrap JavaScript files in AJAX requests
-	 * Defaults to true.
+	 * Defaults to false and you probably have no reason to set it to true.
 	 */
-	public $ajaxJsLoad = true;
+	public $ajaxJsLoad = false;
 
 	/**
 	 * @var bool|null Whether to republish assets on each request.
