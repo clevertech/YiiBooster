@@ -8,8 +8,9 @@ Thank you all
 
 Antonio Ramirez.
 
-
 ## YiiBooster version 2.0.0
+- **(enh)** Replaced notifier library with Notify.js (see http://notify.js) (hijarian).
+- **(enh)** Upgraded BootBox.js library to 3.3.0 version (hijarian)
 - **(enh)** No assets are loaded in AJAX calls now. (hijarian)
 - **(enh)** Responsive CSS are default now. #556 (hijarian)
 - **(enh)** Pass*Field by Antelle (v 1.1.7) widget added #667 (Hrumpa)
