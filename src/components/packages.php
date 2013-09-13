@@ -33,8 +33,8 @@ return array(
 		'css' => array('css/jquery-ui-bootstrap.css'),
 	),
 	'bootbox' => array(
-		'baseUrl' => $this->getAssetsUrl(),
-		'js' => array('js/bootstrap.bootbox.min.js'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootbox/',
+		'js' => array($this->minify ? 'bootbox.min.js' : 'bootbox.js'),
 	),
 	'notify' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/notify/',
