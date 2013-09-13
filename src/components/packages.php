@@ -37,9 +37,8 @@ return array(
 		'js' => array('js/bootstrap.bootbox.min.js'),
 	),
 	'notify' => array(
-		'baseUrl' => $this->getAssetsUrl(),
-		'css' => array('css/bootstrap-notify.css'),
-		'js' => array('js/bootstrap.notify.js')
+		'baseUrl' => $this->getAssetsUrl() . '/notify/',
+		'js' => array($this->minify ? 'notify.min.js' : 'notify.js')
 	),
 	'jqui-tb-noconflict' => array(
 		'baseUrl' => $this->getAssetsUrl(),
