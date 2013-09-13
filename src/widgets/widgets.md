@@ -46,7 +46,6 @@ Legend: `+` sign means availability of end-user documentation page.
  EditableField
  EditableDetailView
 
-
 # Grids
 
  JsonGridView
