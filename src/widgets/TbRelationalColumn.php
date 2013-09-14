@@ -153,9 +153,9 @@ class TbRelationalColumn extends TbDataColumn
 		$cache = $this->cacheData ? 'true' : 'false';
 		$data = !empty($this->submitData) && is_array($this->submitData) ? $this->submitData : 'js:{}';
 		$data = CJavascript::encode($data);
-
+		list($parentId) = explode('_',$this->id);
 		$js = <<<EOD
-$(document).on('click','.{$this->cssClass}', function(){
+$(document).on('click','#{$parentId} .{$this->cssClass}', function(){
 	var span = $span;
 	var that = $(this);
 	var status = that.data('status');

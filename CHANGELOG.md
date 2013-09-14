@@ -33,6 +33,7 @@ Antonio Ramirez.
 - **(fix)** `TbEditableColumn` updated to support namespaced models #636 (xapon)
 - **(enh)** Bootstrap DatePicker updated to 1.1.3 including CDN #631 (Hrumpa)
 - **(enh)** Font Awesome updated to 3.2.1 including CDN (miramir)
+- **(fix)** Added ID to click action in TbRelationalColumn to avoid conflicts on pages with mulitple TbExtendedGridViews #670 (timothynott)
 
 ## YiiBooster version 1.1.0
 - **(enh)** Added Italian translation for `TbHtml5Editor` #544 (realtebo)
