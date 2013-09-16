@@ -71,7 +71,7 @@ return array(
 	),
 	'moment' => array(
 		'baseUrl' => $this->getAssetsUrl(),
-		'js' => 'moment.min.js',
+		'js' => array('js/moment.min.js'),
 	),
 	'picker' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/picker',
