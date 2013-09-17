@@ -8,9 +8,8 @@
  */
 
 /**
- *## Class TbLabel
+ *## Bootstrap label widget.
  *
- * Bootstrap label widget.
  * @see <http://twitter.github.com/bootstrap/components.html#labels>
  *
  * @package booster.widgets.decoration
@@ -26,7 +25,7 @@ class TbLabel extends CWidget
 	/**
 	 * @var string the label type.
 	 *
-	 * Valid types are 'success', 'warning', 'important', 'info' and 'inverse'.
+     * See `TYPE_*` constants for list of allowed types.
 	 */
 	public $type;
 
@@ -48,7 +47,7 @@ class TbLabel extends CWidget
 	/**
 	 *### .init()
 	 *
-	 * Initializes the widget.
+     * At the start of widget we collect the attributes for badge tag.
 	 */
 	public function init()
 	{
@@ -83,7 +82,7 @@ class TbLabel extends CWidget
 	/**
 	 *### .run()
 	 *
-	 * Runs the widget.
+     * Upon completing the badge we write the span tag with collected attributes to document.
 	 */
 	public function run()
 	{
