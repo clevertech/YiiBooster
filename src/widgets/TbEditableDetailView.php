@@ -18,23 +18,6 @@ Yii::import('bootstrap.widgets.TbDetailView');
 */
 class TbEditableDetailView extends TbDetailView
 {
-	/**
-	 * @var string submit url for all editables in detailview
-	 */
-	/*
-	 commented due to using magic methods and setting any of default EditableField param
-	 from top level config of EditableDetailView
-	*/
-	//public $url = null;
-
-	/**
-	 * @var array additional params to send on server
-	 */
-	/*
-	 commented due to using magic methods and setting any of default EditableField param
-	 from top level config of EditableDetailView
-	*/
-	//public $params = null;
 
 	/**
 	 *### .init()
@@ -43,9 +26,8 @@ class TbEditableDetailView extends TbDetailView
 	 */
 	public function init()
 	{
-		if (!$this->data instanceof CModel) {
+		if (!$this->data instanceof CModel)
 			throw new CException('Property "data" should be of CModel class.');
-		}
 
 		//set bootstrap css
 		$this->htmlOptions = array('class' => 'table table-bordered table-striped table-hover');
