@@ -4,8 +4,8 @@ Legend: `+` sign means availability of end-user documentation page.
 
  + HeroUnit
  + Badge
- Progress
- Label
+ + Progress
+ + Label
  + Alert
 
 # Content Grouping
@@ -43,7 +43,7 @@ Legend: `+` sign means availability of end-user documentation page.
 
 # Editable
 
- EditableField
+ + EditableField
  EditableDetailView
 
 # Grids
