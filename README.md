@@ -1,13 +1,5 @@
-YiiBooster 
-==========
-
----
-
-**This is the master branch, containing work in progress on the next release. 
-Do not think that it's a production ready version which you can safely clone into your project.
-If you want the latest point release, check out the `1.1.0` branch**
-
----
+YiiBooster 2.0.0
+================
 
 YiiBooster is a widget toolkit for [Yii web framework](http://www.yiiframework.com).
 Its main purpose is to ease building UI in Yii-based web applications utilizing the beauty of [Twitter Bootstrap][twitter-bootstrap]
