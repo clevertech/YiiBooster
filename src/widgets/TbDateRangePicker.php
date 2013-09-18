@@ -128,6 +128,6 @@ class TbDateRangePicker extends CInputWidget
 	{
 		Yii::app()->bootstrap->registerAssetCss('bootstrap-daterangepicker.css');
 		Yii::app()->bootstrap->registerAssetJs('bootstrap.daterangepicker.js');
-		Yii::app()->bootstrap->registerPackage('date');
+		Yii::app()->bootstrap->registerPackage('moment');
 	}
 }
