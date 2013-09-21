@@ -568,6 +568,17 @@ class TbEditableField extends CWidget
 			);
 			$widget->registerLanguageScript();
 		}
+		elseif ($this->type == 'datetime') {
+			$this->packageRegistry->registerPackage('datetimepicker');
+			
+			/** @var $widget TbDateTimePicker */
+			$widget = Yii::app()->widgetFactory->createWidget(
+				$this->getOwner(),
+				'bootstrap.widgets.TbDateTimePicker',
+				array('options' => $this->options['datetimepicker'])
+			);
+			$widget->registerLanguageScript();
+		}
 		//include moment.js if needed
 		if ($this->type == 'combodate') {
 			$this->packageRegistry->registerPackage('moment');
