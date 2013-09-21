@@ -96,13 +96,13 @@ class TbDateTimePicker extends CInputWidget
 	public function registerLanguageScript()
 	{
 		if (isset($this->options['language']) && $this->options['language'] != 'en') {
-			$file = 'locales/bootstrap-datepicker.' . $this->options['language'] . '.js';
+			$file = 'locales/bootstrap-datetimepicker.' . $this->options['language'] . '.js';
 			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.bootstrap-datetimepicker') . '/js/' . $file)) {
 				if (Yii::app()->bootstrap->enableCdn) {
 					// Not in CDN yet
-					Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datetimepicker.' . $this->options['language'] . '.js');
+					Yii::app()->bootstrap->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
 				} else {
-					Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datetimepicker.' . $this->options['language'] . '.js');
+					Yii::app()->bootstrap->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
 				}
 			}
 		}
