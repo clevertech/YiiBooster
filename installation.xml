@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<project name="YiiBooster libraries installation" basedir="." default="install-composer-libraries"
+         description="Installation of various libraries for development of YiiBooster">
+
+    <!-- Changeable properties for this project are placed into the build.properties -->
+    <property file="build.properties"/>
+
+    <!-- Install Composer -->
+    <target name="install-composer">
+        <if>
+            <not>
+                <available file="${project.basedir}/composer.phar"/>
+            </not>
+            <then>
+                <echo msg="It seems you don't have Composer downloaded yet, downloading..."/>
+                <echo msg="Note that you need CURL binaries installed in your system and PHP should be enabled to run PHAR archives!"/>
+                <exec dir="${project.basedir}" command="curl -sS https://getcomposer.org/installer | php"
+                      passthru="true"/>
+                <echo msg="Now you should have Composer available under ${project.basedir}/composer.phar"/>
+            </then>
+            <else>
+                <echo msg="Composer is available"/>
+            </else>
+        </if>
+    </target>
+
+    <!-- Install Composer-manager libraries -->
+    <target name="install-composer-libraries" depends="install-composer">
+        <if>
+            <not>
+                <and>
+                    <available file="${path.composer.vendor}/bin/phploc" />
+                    <available file="${path.composer.vendor}/bin/phpcpd" />
+                    <available file="${path.composer.vendor}/bin/pinocchio" />
+                    <available file="${path.composer.vendor}/bin/phpunit" />
+                    <available file="${path.composer.vendor}/bin/phpcs" />
+                    <available file="${path.composer.vendor}/bin/phpcb" />
+                </and>
+            </not>
+            <then>
+                <echo msg="It seems we don't have Composer-managed libraries installed yet, installing..."/>
+                <exec command="php ./composer.phar update --dev" passthru="true"/>
+                <exec command="php ./composer.phar install --dev" passthru="true"/>
+
+                <echo msg="Now all Composer-managed libraries should have been installed to ${path.composer.vendor}" />
+            </then>
+            <else>
+                <echo msg="Composer managed libraries are available" />
+            </else>
+        </if>
+
+    </target>
+
+    <!-- Purge everything installed by Composer together with it out of the existence -->
+    <target name="purge-composer">
+        <echo msg="Purge everything installed by Composer together with it out of the existence"/>
+        <delete dir="${path.composer.vendor}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <delete file="composer.phar" quiet="false"/>
+        <echo msg="Now everything related to Composed should be completely erased from your codebase"/>
+    </target>
+
+
+    <!-- Purge all runtime directories -->
+    <target name="clean">
+        <echo msg="Purging all runtime directories"/>
+        <delete dir="${path.composer.vendor}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <delete dir="${path.docs}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <delete dir="${path.reports}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <echo msg="Now your codebase should be completely clean."/>
+    </target>
+</project>
