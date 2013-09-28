@@ -1,89 +1,63 @@
 <?php
 /**
- *## TbFormButtonElement class file.
- *
- * @author Joe Blocher <yii@myticket.at>
- * @copyright Copyright &copy; Joe Blocher 2012
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * TbActiveForm class file.
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 /**
- *## The buttonElementClass for TbForm
- *
- * Support for Yii formbuilder
- *
- * @package booster.widgets.forms.buttons
+ * For available attributes and values read {@link TbButton} documentation.
+ * @see TbButton
  */
 class TbFormButtonElement extends CFormElement
 {
 	/**
-	 * @var string the button layout: set as TbButton->type in function render()
-	 * Valid values are 'primary', 'info', 'success', 'warning', 'danger' and 'inverse'.
+	 * Name of this button.
+	 * @var string
 	 */
-	public $layoutType;
+	public $name;
+
+	private $_on;
 
 	/**
-	 * @var array Core button types (alias=>CHtml method name)
+	 * Returns a value indicating under which scenarios this button is visible.
+	 * If the value is empty, it means the button is visible under all scenarios.
+	 * Otherwise, only when the model is in the scenario whose name can be found in
+	 * this value, will the button be visible. See {@link CModel::scenario} for more
+	 * information about model scenarios.
+	 * @return string scenario names separated by commas. Defaults to null.
 	 */
-	public static $TbButtonTypes = array(
-		'htmlButton' => 'button',
-		'htmlSubmit' => 'submit',
-		'htmlReset' => 'reset',
-		'button' => 'button',
-		'submit' => 'submit',
-		'reset' => 'reset',
-		//'image'=>'imageButton', not supported
-		'link' => 'link',
-		//new YiiBooster types
-		'ajaxLink' => 'ajaxLink',
-		'ajaxButton' => 'ajaxButton',
-		'ajaxSubmit' => 'ajaxSubmit',
-	);
-
-	/**
-	 * Prepare the options before running the TbButton widget
-	 *
-	 * Map Yii formBuilder compatible:
-	 * $this->type => TbButton->buttonType
-	 * $this->layoutType => TbButton->type
-	 *
-	 * @param array $options
-	 *
-	 * @return mixed
-	 */
-	protected function prepareWidgetOptions($options)
+	public function getOn()
 	{
-		//map $this->type to attribute buttonType of TbButton
-		$options['buttonType'] = self::$TbButtonTypes[$this->type];
-		unset($options['type']);
-
-		//map layoutType to attribute type of TbButton
-		if (isset($this->layoutType)) {
-			$options['type'] = $this->layoutType;
-		}
-
-		//move $options['name'] to htmlOptions
-		$options['htmlOptions']['name'] = $this->name;
-		unset($options['name']);
-
-		return $options;
+		return $this->_on;
 	}
 
 	/**
-	 * Run TbButton widget
-	 *
-	 * @return string the rendering result
+	 * @param string $value scenario names separated by commas.
+	 */
+	public function setOn($value)
+	{
+		$this->_on = preg_split('/[\s,]+/', $value, -1, PREG_SPLIT_NO_EMPTY);
+	}
+
+	/**
+	 * @return string The rendered button.
 	 */
 	public function render()
 	{
-		if (!empty(self::$TbButtonTypes[$this->type])) {
-			$attributes = $this->prepareWidgetOptions($this->attributes);
+		$attributes = $this->attributes;
+		$attributes['htmlOptions']['name'] = $this->name;
 
-			ob_start();
-			Yii::app()->controller->widget('TbButton', $attributes);
-			return ob_get_clean();
-		}
+		return $this->getParent()->getOwner()->widget('TbButton', $attributes, true);
+	}
 
-		return parent::render();
+	/**
+	 * Evaluates the visibility of this element.
+	 * This method will check the {@link on} property to see if
+	 * the model is in a scenario that should have this string displayed.
+	 * @return boolean whether this element is visible.
+	 */
+	protected function evaluateVisible()
+	{
+		return empty($this->_on) || in_array($this->getParent()->getModel()->getScenario(), $this->_on);
 	}
 }

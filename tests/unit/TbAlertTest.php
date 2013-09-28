@@ -25,7 +25,7 @@ class TbAlertTest extends PHPUnit_Framework_TestCase {
 
 		$widget->init();
 
-		$this->assertEquals('yw0', $widget->htmlOptions['id']);
+		$this->assertRegExp('/yw\d+/', $widget->htmlOptions['id']);
 	}
 
 	/**
