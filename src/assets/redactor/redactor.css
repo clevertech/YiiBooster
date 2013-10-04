@@ -28,6 +28,29 @@ body .redactor_box_fullscreen {
 	padding: 0;
 }
 
+.redactor-link-tooltip {
+	position: absolute;
+	z-index: 3000;
+	padding: 10px;
+	line-height: 1;
+	display: inline-block;
+	background-color: #000;
+	color: #555 !important;
+}
+.redactor-link-tooltip,
+.redactor-link-tooltip a {
+	font-size: 12px;
+	font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;
+}
+.redactor-link-tooltip a {
+	color: #ccc;
+	margin: 0 5px;
+	text-decoration: none;
+}
+.redactor-link-tooltip a:hover {
+	color: #fff;
+}
+
 .redactor_box textarea, .redactor_box textarea:focus {
 	position: relative;
 	z-index: 1004;
@@ -494,9 +517,8 @@ body .redactor_toolbar li a.redactor_btn_pre		 		{ background-position: -875px; 
 	z-index: 2004;
 	padding: 10px;
 	width: 200px;
-	border: 1px solid #ccc;
 	background-color: #fff;
-	box-shadow: 0 2px 4px #ccc;
+	box-shadow: 0 1px 5px #bbb;
 	font-size: 13px;
 	font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
 	line-height: 21px;
