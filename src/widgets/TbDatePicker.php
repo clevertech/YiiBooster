@@ -93,15 +93,29 @@ class TbDatePicker extends CInputWidget
 		Yii::app()->bootstrap->registerPackage('datepicker');
 	}
 
+	/**
+	 * FIXME: this method delves too deeply into the internals of Bootstrap component
+	 */
 	public function registerLanguageScript()
 	{
-		if (isset($this->options['language']) && $this->options['language'] != 'en') {
-			$file = 'locales/bootstrap-datepicker.' . $this->options['language'] . '.js';
-			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets') . '/js/' . $file)) {
-				if (Yii::app()->bootstrap->enableCdn) {
-					Yii::app()->clientScript->registerScriptFile('//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.1.3/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js', CClientScript::POS_END);
-				} else {
-					Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-datepicker.' . $this->options['language'] . '.js');
+		$booster = Yii::app()->bootstrap;
+
+		if (isset($this->options['language']) && $this->options['language'] != 'en')
+		{
+			$filename = '/bootstrap-datepicker/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js';
+
+			if (file_exists(Yii::getPathOfAlias('bootstrap.assets') . $filename))
+			{
+				if ($booster->enableCdn)
+				{
+					Yii::app()->clientScript->registerScriptFile(
+						'//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js',
+						CClientScript::POS_HEAD
+					);
+				}
+				else
+				{
+					$booster->assetsRegistry->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
 				}
 			}
 		}
