@@ -5,7 +5,7 @@ YiiBooster
 
 **This is the master branch, containing work in progress on the next release. 
 Do not think that it's a production ready version which you can safely clone into your project.
-If you want the latest point release, check out the `1.1.0` branch**
+If you want the latest point release, check out the `2.0.0` branch**
 
 ---
 
