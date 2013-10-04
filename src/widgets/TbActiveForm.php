@@ -66,7 +66,7 @@
  * </code>
  *
  * @see http://getbootstrap.com/2.3.2/base-css.html#forms
- * @see CAtiveForm
+ * @see CActiveForm
  */
 class TbActiveForm extends CActiveForm
 {
