@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** Updated redactor js to version 9.1.5 (kullar84)
 - **(enh)** Updated X-Editable assets to version 1.5.0 (hijarian)
 - **(enh)** Updated Bootstrap Datepicker assets to version 1.2.0 (hijarian)
 - **(fix)** Fixed `TbDatePicker` so it loads locale files from package folder. #688 (hijarian)
