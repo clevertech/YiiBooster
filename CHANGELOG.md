@@ -9,10 +9,9 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
-...
+- **(fix)** Fix TbDateTimePicker, so it loads locale files from the package folder, fix TbEditableField to load required scripts for 'datetime' field type (adeg)
 
 ## YiiBooster version 2.0.0
-- **(fix)** Fix TbDateTimePicker, so it loads locale files from the package folder, fix TbEditableField to load required scripts for 'datetime' field type (adeg)
 - **(enh)** Bootstrap DateRangePicker updated to 1.2, moment.js updated to 2.2.1 (Hrumpa)
 - **(fix)** Fixed incorrect spec for `moment.js` library package. #673 #672 (fleuryc)
 - **(enh)** Replaced notifier library with Notify.js (see http://notify.js) (hijarian).
