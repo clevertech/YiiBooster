@@ -8,6 +8,9 @@ Thank you all
 
 Antonio Ramirez.
 
+## YiiBooster latest development alpha
+...
+
 ## YiiBooster version 2.0.0
 - **(enh)** Bootstrap DateRangePicker updated to 1.2, moment.js updated to 2.2.1 (Hrumpa)
 - **(fix)** Fixed incorrect spec for `moment.js` library package. #673 #672 (fleuryc)
