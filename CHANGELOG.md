@@ -9,7 +9,10 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
-- **(fix)** Fix TbDateTimePicker, so it loads locale files from the package folder, fix TbEditableField to load required scripts for 'datetime' field type (adeg)
+- **(enh)** Updated X-Editable assets to version 1.5.0 (hijarian)
+- **(enh)** Updated Bootstrap Datepicker assets to version 1.2.0 (hijarian)
+- **(fix)** Fixed `TbDatePicker` so it loads locale files from package folder. #688 (hijarian)
+- **(fix)** Fix `TbDateTimePicker`, so it loads locale files from the package folder, fix `TbEditableField` to load required scripts for 'datetime' field type (adeg)
 
 ## YiiBooster version 2.0.0
 - **(enh)** Bootstrap DateRangePicker updated to 1.2, moment.js updated to 2.2.1 (Hrumpa)
