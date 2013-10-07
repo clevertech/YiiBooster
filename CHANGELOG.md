@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** Updated CKEditor library to version 4.2.1 (hijarian)
 - **(enh)** Updated redactor js to version 9.1.5 (kullar84)
 - **(enh)** Updated X-Editable assets to version 1.5.0 (hijarian)
 - **(enh)** Updated Bootstrap Datepicker assets to version 1.2.0 (hijarian)
