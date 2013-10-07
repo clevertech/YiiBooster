@@ -119,4 +119,9 @@ return array(
 		'depends' => array('bootstrap.js')
 	),
 
+	'ckeditor' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/ckeditor/',
+		'js' => array('ckeditor.js')
+	)
+
 );
