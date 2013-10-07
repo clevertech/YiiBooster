@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<documentation for="TbCKEditor"
+        punchline="THE best WYSIWYG editor with instant integration">
+
+    <section named="Description">
+        <p>This is the wrapper around the <a href="http://ckeditor.com/">CKEditor</a>.</p>
+
+        <p>Basic example of usage is this:</p>
+        <example name="basic" />
+
+        <p label="note">
+            We included the most feature-packed variant of <ln>CKEditor</ln>.
+            If you want a simpler version, you have to trim it, removing unnecessary plugins on widget invocation.
+        </p>
+
+    </section>
+
+    <section named="Widget Configuration">
+        <p>Here's all configuration properties which you can set for <wn>TbCKEditor</wn>.</p>
+        <p>Most of them are common to all form input widgets.</p>
+
+        <properties>
+            <property name="model" type="CModel" default="null">
+                <p>
+                    The data model associated with this widget.
+                    See <yiidoc>CInputWidget.model</yiidoc>.
+                    Either this property along with <pn>attribute</pn> should be defined, or the <pn>name</pn>.
+                </p>
+            </property>
+            <property name="attribute" type="string" default="null">
+                <p>
+                    If you set the <pn>model</pn> attribute,
+                    here you have to specify the name of the model property which you want to change with this widget.
+                    See <yiidoc>CInputWidget.attribute</yiidoc>.
+                    Either this property along with <pn>model</pn> should be defined, or the <pn>name</pn>.
+                </p>
+            </property>
+            <property name="name" type="string" default="null">
+                <p>
+                    The value of <pn>name</pn> HTML attribute of the input element.
+                    It must be set if you did not provide value for <pn>model</pn>.
+                    See <yiidoc>CInputWidget.name</yiidoc>.
+                    Either this property should be defined, or the <pn>model</pn> together with <pn>attribute</pn>.
+                </p>
+            </property>
+            <property name="value" type="string" default="null">
+                <p>
+                    Here you can force the initial value of the input.
+                    If <pn>model</pn> is provided, by default model's value is used.
+                    See <yiidoc>CInputWidget.value</yiidoc>.
+                </p>
+            </property>
+            <property name="htmlOptions" type="array" default="array()">
+                <p>
+                    HTML attributes of the input tag itself.
+                    Please note that it is <em>not</em> the attributes of a wrapper tag around the input.
+                    See <yiidoc>CInputWidget.htmlOptions</yiidoc>.
+                </p>
+            </property>
+
+            <property name="editorOptions" type="array" default="array()">
+                <p>
+                    Options for the original library.
+                    This value will be JSON-encoded and fed to <ln>CKEditor</ln>.
+                    See the <a href="http://docs.ckeditor.com/">library documentation</a> for list of all possible options.
+                </p>
+            </property>
+
+        </properties>
+    </section>
+
+    <section named="Examples of Usage">
+        <subheader>Basic buttons only </subheader>
+        <example name="trimmed" />
+    </section>
+
+</documentation>
