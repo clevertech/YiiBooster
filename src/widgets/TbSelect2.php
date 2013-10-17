@@ -112,14 +112,7 @@ class TbSelect2 extends CInputWidget
 
 		if(! empty($this->val)) {
 			if(is_array($this->val)) {
-				$data = "[";
-				foreach ($this->val as $key => $value) {
-					if(mb_strlen($data) > 1)
-						$data .= ",'{$value}'";
-					else
-						$data .= "'{$value}'";
-				}
-				$data .= "]";
+				$data = CJSON::encode($this->val);
 			} else {
 				$data = $this->val;
 			}
