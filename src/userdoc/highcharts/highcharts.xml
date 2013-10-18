@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<documentation for="TbHighCharts"
+        punchline="The definitive charting library with easy integration">
+
+    <section named="Description">
+        <p>
+            This is the wrapper around the <a href="http://www.highcharts.com/">HighCharts</a>.
+        </p>
+
+        <p>Basic example of usage is this:</p>
+        <example name="basic" />
+    </section>
+
+    <section named="Widget Configuration">
+        <p>Here's all configuration properties which you can set for <wn>TbHighCharts</wn>.</p>
+
+        <properties>
+            <property name="options" type="array" default="array()">
+                <p>
+                    This is the array of properties to be passed to the <ln>highcharts</ln> library.
+                    See <a href="http://www.highcharts.com/docs">HighCharts library documentation</a> for list of all configuration settings which can be set.
+                </p>
+            </property>
+            <property name="htmlOptions" type="array" default="array()">
+                <p>
+                    Traditional Yii property to set HTML attributes to the container tag for the chart.
+                    It will be plain &lt;div&gt; element which HighCharts will be attached to.
+                </p>
+                <p label="info">Please note that the HTML ID attribute will be generated automatically, so don't set it using <pn>htmlOptions</pn>.</p>
+            </property>
+        </properties>
+    </section>
+
+    <section named="Examples of Usage">
+
+        <subheader>Zeros in data</subheader>
+        <p label="info">This is the test for <github-issue id="345" /></p>
+        <example name="zeros_in_data" />
+
+        <subheader>Javascript callback in options</subheader>
+        <p label="info">This is the test for <github-issue id="696" /></p>
+        <example name="function_in_options" />
+
+        <subheader>Official demo</subheader>
+        <p>Here is the demo from the <a href="http://www.highcharts.com/demo/">demo page on the Highchart website</a>:</p>
+        <example name="official_demo" />
+
+    </section>
+</documentation>

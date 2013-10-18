@@ -38,7 +38,7 @@ Legend: `+` sign means availability of end-user documentation page.
 # Charts
 
  GoogleVisualizationChart
- HighCharts
+ + HighCharts
 
 
 # Editable
