@@ -18,7 +18,10 @@
           substring($word, 2),
           ' '[not(last())])" />
     </xsl:function>
-
+    <xsl:function name="ctboost:yiidoc">
+        <xsl:param name="link" />
+        <xsl:value-of select="replace(replace($link, '::|\.', '.'), '\.([a-zA-Z0-9]+)$', '#$1-detail')" />
+    </xsl:function>
     <xsl:variable name="widgetname" select="documentation/@for" />
     <xsl:variable name="widgetcode" select="ctboost:makeWidgetCode($widgetname)" />
 
@@ -112,6 +115,20 @@ $this->menu = array(</xsl:text>
 
     <xsl:template match="pn">
         <code><xsl:value-of select="." /></code>
+    </xsl:template>
+
+    <xsl:template match="subheader">
+        <h2><xsl:apply-templates /></h2>
+    </xsl:template>
+
+    <xsl:template match="yiidoc">
+        <a>
+            <xsl:attribute name="href">
+                <xsl:text>http://www.yiiframework.com/doc/api/</xsl:text>
+                <xsl:value-of select="ctboost:yiidoc(.)" />
+            </xsl:attribute>
+            <xsl:value-of select="." />
+        </a>
     </xsl:template>
 
 </xsl:stylesheet>
