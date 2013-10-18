@@ -107,7 +107,7 @@ return array(
 
 	'passfield' => array(
 		'depends' => array('jquery'),
-		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-passfield/', // Not in CDN yet
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-passfield', // Not in CDN yet
 		'css' => array($this->minify ? 'css/passfield.min.css' : 'css/passfield.min.css'),
 		'js' => array($this->minify ? 'js/passfield.min.js' : 'js/passfield.min.js')
 	),
@@ -120,12 +120,12 @@ return array(
 	),
 
 	'ckeditor' => array(
-		'baseUrl' => $this->getAssetsUrl() . '/ckeditor/',
+		'baseUrl' => $this->getAssetsUrl() . '/ckeditor',
 		'js' => array('ckeditor.js')
 	),
 
 	'highcharts' => array(
-		'baseUrl' => $this->getAssetsUrl() . '/highcharts/',
+		'baseUrl' => $this->enableCdn ? '//code.highcharts.com' : $this->getAssetsUrl() . '/highcharts',
 		'js' => array($this->minify ? 'highcharts.js' : 'highcharts.src.js')
 	)
 
