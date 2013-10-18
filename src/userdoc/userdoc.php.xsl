@@ -25,6 +25,7 @@
     <xsl:variable name="widgetname" select="documentation/@for" />
     <xsl:variable name="widgetcode" select="ctboost:makeWidgetCode($widgetname)" />
 
+
     <xsl:template match="/">
         <xsl:processing-instruction name="php">
             <xsl:text>
@@ -107,6 +108,7 @@ $this->menu = array(</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="ctboost:ucfirst(@label)" />
             </span>
+            <xsl:text> </xsl:text>
             <xsl:apply-templates />
         </p>
     </xsl:template>
@@ -178,5 +180,17 @@ $this->menu = array(</xsl:text>
         <em>
             <xsl:value-of select="." />
         </em>
+    </xsl:template>
+
+    <xsl:template match="github-issue">
+        <a>
+            <xsl:attribute name="href">
+                <xsl:text>https://github.com/clevertech/YiiBooster/issues/</xsl:text>
+                <xsl:value-of select="@id"/>
+            </xsl:attribute>
+            <xsl:text>issue #</xsl:text>
+            <xsl:value-of select="@id" />
+            <xsl:text> at GitHub</xsl:text>
+        </a>
     </xsl:template>
 </xsl:stylesheet>
