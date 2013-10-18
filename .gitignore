@@ -36,3 +36,6 @@ switch
 # Composer stuff
 /composer*
 /vendor*
+
+# Generated documentation PHP scripts
+/src/userdoc/*/*.php
