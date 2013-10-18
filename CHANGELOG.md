@@ -9,6 +9,8 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** Now we can use Javascript function definitions in `TbHighCharts` options. #696 (hijarian)
+- **(enh)** Now the source distribution will hold the user-level documentation for widgets in universal XML format, along with the examples in PHP. #692 (hijarian)
 - **(enh)** Updated CKEditor library to version 4.2.1 (hijarian)
 - **(enh)** Updated redactor js to version 9.1.5 (kullar84)
 - **(enh)** Updated X-Editable assets to version 1.5.0 (hijarian)
