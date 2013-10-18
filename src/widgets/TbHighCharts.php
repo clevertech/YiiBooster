@@ -86,7 +86,6 @@ class TbHighCharts extends CWidget
 		}
 
 		$options = CJavaScript::encode($this->options);
-		var_dump($options);
 
 		Yii::app()->getClientScript()->registerScript(
 			__CLASS__ . '#' . $this->getId(),
