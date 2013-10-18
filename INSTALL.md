@@ -24,7 +24,7 @@ Lazy way is to preload YiiBooster at every request. Write the following inside y
 
     'preload' => array(
         ... possibly other components to be preloaded ...
-        'booster'
+        'bootstrap'
     ),
 
 As with `components` section above, do not create another `preload` section if you already have one.

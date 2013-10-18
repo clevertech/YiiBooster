@@ -70,7 +70,6 @@ class TbInputInline extends TbInputVertical
 	protected function maskedTextField()
 	{
 		$this->setPlaceholder();
-		$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
 		echo $this->getPrepend();
 		echo $this->form->maskedTextField($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getAppend();
@@ -83,7 +82,6 @@ class TbInputInline extends TbInputVertical
 	protected function typeAheadField()
 	{
 		$this->setPlaceholder();
-		$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
 		echo $this->getPrepend();
 		echo $this->form->typeAheadField($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getAppend();
@@ -157,7 +155,7 @@ class TbInputInline extends TbInputVertical
 
 	protected function setPlaceholder()
 	{
-		if (empty($this->htmlOptions['placeholder'])) {
+		if (!isset($this->htmlOptions['placeholder'])) {
 			$this->htmlOptions['placeholder'] = $this->model->getAttributeLabel($this->attribute);
 		}
 	}

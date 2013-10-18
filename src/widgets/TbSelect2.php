@@ -110,7 +110,17 @@ class TbSelect2 extends CInputWidget
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
-		$defValue = !empty($this->val) ? ".select2('val', '$this->val')" : '';
+		if(! empty($this->val)) {
+			if(is_array($this->val)) {
+				$data = CJSON::encode($this->val);
+			} else {
+				$data = $this->val;
+			}
+
+			$defValue = ".select2('val', $data)";
+		}
+		else
+			$defValue = '';
 
 		ob_start();
 		echo "jQuery('#{$id}').select2({$options})$defValue";
