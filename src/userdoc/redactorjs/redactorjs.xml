@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<documentation for="TbRedactorJs"
+        punchline="Powerful and famous WYSIWYG editor at no cost for Yii developers">
+
+    <section named="Description">
+        <p>This is the wrapper around the <a href="http://imperavi.com/redactor/">Redactor</a>.</p>
+        <p label="important">
+            This library is <em>NOT</em> free to use. Community license for it was generously bought by the Yii community
+            and so you can use this widget legally in Yii-based projects ONLY.
+        </p>
+
+        <p>Basic example of usage is this:</p>
+        <example name="basic" />
+
+        <p label="important">
+            Please note that the <pn>name</pn> is set to "content", which is required for Redactor plugin to fetch the original data from input
+            and paste it into its editor view.
+            If you do not set "name" or set it to any other value, the value of <pn>value</pn> property of this widget
+            will be completely ignored!
+        </p>
+
+        <p label="important">
+            In addition to previous note, if you have several Redactor instances on the same page, you must use the <pn>htmlOptions</pn>
+            property to set the HTML ID of each Redactor instance to different values.
+        </p>
+
+    </section>
+
+    <section named="Widget Configuration">
+        <p>Here's all configuration properties which you can set for <wn>TbCKEditor</wn>.</p>
+        <p>Most of them are common to all form input widgets.</p>
+
+        <properties>
+            <property name="model" type="CModel" default="null">
+                <p>
+                    The data model associated with this widget.
+                    See <yiidoc>CInputWidget.model</yiidoc>.
+                    Either this property along with <pn>attribute</pn> should be defined, or the <pn>name</pn>.
+                </p>
+            </property>
+            <property name="attribute" type="string" default="null">
+                <p>
+                    If you set the <pn>model</pn> attribute,
+                    here you have to specify the name of the model property which you want to change with this widget.
+                    See <yiidoc>CInputWidget.attribute</yiidoc>.
+                    Either this property along with <pn>model</pn> should be defined, or the <pn>name</pn>.
+                </p>
+            </property>
+            <property name="name" type="string" default="null">
+                <p>
+                    The value of <pn>name</pn> HTML attribute of the input element.
+                    It must be set if you did not provide value for <pn>model</pn>.
+                    See <yiidoc>CInputWidget.name</yiidoc>.
+                    Either this property should be defined, or the <pn>model</pn> together with <pn>attribute</pn>.
+                </p>
+            </property>
+            <property name="value" type="string" default="null">
+                <p>
+                    Here you can force the initial value of the input.
+                    If <pn>model</pn> is provided, by default model's value is used.
+                    See <yiidoc>CInputWidget.value</yiidoc>.
+                </p>
+            </property>
+            <property name="htmlOptions" type="array" default="array()">
+                <p>
+                    HTML attributes of the input tag itself.
+                    Please note that it is <em>not</em> the attributes of a wrapper tag around the input.
+                    See <yiidoc>CInputWidget.htmlOptions</yiidoc>.
+                </p>
+            </property>
+
+            <property name="editorOptions" type="array" default="array()">
+                <p>
+                    Options for the original library.
+                    This value will be JSON-encoded and fed to <ln>CKEditor</ln>.
+                    See the <a href="http://docs.ckeditor.com/">library documentation</a> for list of all possible options.
+                </p>
+            </property>
+
+        </properties>
+    </section>
+
+    <section named="Examples of Usage">
+        <subheader>With language and plugins set</subheader>
+        <example name="with_lang_and_plugins" />
+
+        <subheader>How to pass callbacks to Redactor</subheader>
+        <example name="callbacks_passing" />
+    </section>
+
+</documentation>
