@@ -1,3 +1,5 @@
+# This will convert all XML documentation to PHP views which can be pasted to documentation website.
+# This file is my (hijarian) system-bounded, so you need to change path to Saxon jar file yourself.
 for path in ./*
 do
     dir=`basename $path`
