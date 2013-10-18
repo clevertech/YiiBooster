@@ -122,6 +122,11 @@ return array(
 	'ckeditor' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/ckeditor/',
 		'js' => array('ckeditor.js')
+	),
+
+	'highcharts' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/highcharts/',
+		'js' => array($this->minify ? 'highcharts.js' : 'highcharts.src.js')
 	)
 
 );

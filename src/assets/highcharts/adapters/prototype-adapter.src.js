@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v2.2.5 (2012-06-08)
+ * @license Highcharts JS v3.0.6 (2013-10-04)
  * Prototype adapter
  *
  * @author Michael Nelson, Torstein Hønsi.
@@ -83,7 +83,10 @@ return {
 					}
 
 					if (element.attr) { // SVGElement
-						element.attr(this.options.attribute, position);
+						
+						if (element.element) { // If not, it has been destroyed (#1405)
+							element.attr(this.options.attribute, position);
+						}
 					
 					} else { // HTML, #409
 						obj = {};
@@ -95,7 +98,9 @@ return {
 				finish: function () {
 					// Delete the property that holds this animation now that it is finished.
 					// Both canceled animations and complete ones gets a 'finish' call.
-					delete this.element._highchart_animation[this.key];
+					if (this.element && this.element._highchart_animation) { // #1405
+						delete this.element._highchart_animation[this.key];
+					}
 				}
 			});
 		}
@@ -200,6 +205,10 @@ return {
 	each: function (arr, fn) {
 		$A(arr).each(fn);
 	},
+	
+	inArray: function (item, arr, from) {
+		return arr ? arr.indexOf(item, from) : -1;
+	},
 
 	/**
 	 * Get the cumulative offset relative to the top left of the page. This method, unlike its
@@ -257,82 +266,6 @@ return {
 		return arr.map(fn);
 	},
 
-	// deep merge. merge({a : 'a', b : {b1 : 'b1', b2 : 'b2'}}, {b : {b2 : 'b2_prime'}, c : 'c'}) => {a : 'a', b : {b1 : 'b1', b2 : 'b2_prime'}, c : 'c'}
-	/*merge: function(){
-		function doCopy(copy, original) {
-			var value,
-				key,
-				undef,
-				nil,
-				same,
-				obj,
-				arr,
-				node;
-
-			for (key in original) {
-				value = original[key];
-				undef = typeof(value) === 'undefined';
-				nil = value === null;
-				same = original === copy[key];
-
-				if (undef || nil || same) {
-					continue;
-				}
-
-				obj = typeof(value) === 'object';
-				arr = value && obj && value.constructor == Array;
-				node = !!value.nodeType;
-
-				if (obj && !arr && !node) {
-					copy[key] = doCopy(typeof copy[key] == 'object' ? copy[key] : {}, value);
-				}
-				else {
-					copy[key] = original[key];
-				}
-			}
-			return copy;
-		}
-
-		var args = arguments, retVal = {};
-
-		for (var i = 0; i < args.length; i++) {
-			retVal = doCopy(retVal, args[i]);
-		}
-
-		return retVal;
-	},*/
-	merge: function () { // the built-in prototype merge function doesn't do deep copy
-		function doCopy(copy, original) {
-			var value, key;
-
-			for (key in original) {
-				value = original[key];
-				if (value && typeof value === 'object' && value.constructor !== Array &&
-						typeof value.nodeType !== 'number') {
-					copy[key] = doCopy(copy[key] || {}, value); // copy
-
-				} else {
-					copy[key] = original[key];
-				}
-			}
-			return copy;
-		}
-
-		function merge() {
-			var args = arguments,
-				i,
-				retVal = {};
-
-			for (i = 0; i < args.length; i++) {
-				retVal = doCopy(retVal, args[i]);
-
-			}
-			return retVal;
-		}
-
-		return merge.apply(this, arguments);
-	},
-
 	// extend an object to handle highchart events (highchart objects, not svg elements).
 	// this is a very simple way of handling events but whatever, it works (i think)
 	_extend: function (object) {
@@ -356,6 +289,7 @@ return {
 					}
 				},
 				_highcharts_fire: function (name, args) {
+					var target = this;
 					(this._highchart_events[name] || []).each(function (fn) {
 						// args is never null here
 						if (args.stopped) {
@@ -366,6 +300,7 @@ return {
 						args.preventDefault = function () {
 							args.defaultPrevented = true;
 						};
+						args.target = target;
 
 						// If the event handler return false, prevent the default handler from executing
 						if (fn.bind(this)(args) === false) {

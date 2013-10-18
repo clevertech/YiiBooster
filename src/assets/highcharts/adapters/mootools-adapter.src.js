@@ -1,8 +1,8 @@
 /**
- * @license Highcharts JS v2.2.5 (2012-06-08)
+ * @license Highcharts JS v3.0.6 (2013-10-04)
  * MooTools adapter
  *
- * (c) 2010-2011 Torstein Hønsi
+ * (c) 2010-2013 Torstein Hønsi
  *
  * License: www.highcharts.com/license
  */
@@ -78,8 +78,9 @@ win.HighchartsAdapter = {
 		
 		// This currently works for getting inner width and height. If adding
 		// more methods later, we need a conditional implementation for each.
-		return $(el).getStyle(method).toInt();
-		
+		if (method === 'width' || method === 'height') {
+			return parseInt($(el).getStyle(method), 10);
+		}
 	},
 
 	/**
@@ -115,7 +116,7 @@ win.HighchartsAdapter = {
 			el.getStyle = el.attr;
 			el.setStyle = function () { // property value is given as array in Moo - break it down
 				var args = arguments;
-				el.attr.call(el, args[0], args[1][0]);
+				this.attr.call(this, args[0], args[1][0]);
 			};
 			// dirty hack to trick Moo into handling el as an element wrapper
 			el.$family = function () { return true; };
@@ -181,37 +182,19 @@ win.HighchartsAdapter = {
 	grep: function (arr, fn) {
 		return arr.filter(fn);
 	},
-
+	
 	/**
-	 * Deep merge two objects and return a third
+	 * Return the index of an item in an array, or -1 if not matched
 	 */
-	merge: function () {
-		var args = arguments,
-			args13 = [{}], // MooTools 1.3+
-			i = args.length,
-			ret;
-
-		if (legacy) {
-			ret = $merge.apply(null, args);
-		} else {
-			while (i--) {
-				// Boolean argumens should not be merged.
-				// JQuery explicitly skips this, so we do it here as well.
-				if (typeof args[i] !== 'boolean') {
-					args13[i + 1] = args[i];
-				}
-			}
-			ret = Object.merge.apply(Object, args13);
-		}
-
-		return ret;
+	inArray: function (item, arr, from) {
+		return arr ? arr.indexOf(item, from) : -1;
 	},
 
 	/**
 	 * Get the offset of an element relative to the top left corner of the web page
 	 */
 	offset: function (el) {
-		var offsets = $(el).getOffsets();
+		var offsets = el.getPosition(); // #1496
 		return {
 			left: offsets.x,
 			top: offsets.y
@@ -258,19 +241,20 @@ win.HighchartsAdapter = {
 			return;
 		}
 		
-		win.HighchartsAdapter.extendWithEvents(el);
-		if (type) {
-			if (type === 'unload') { // Moo self destructs before custom unload events
-				type = 'beforeunload';
+		if (el.addEvent) { // If el doesn't have an addEvent method, there are no events to remove
+			if (type) {
+				if (type === 'unload') { // Moo self destructs before custom unload events
+					type = 'beforeunload';
+				}
+	
+				if (fn) {
+					el.removeEvent(type, fn);
+				} else if (el.removeEvents) { // #958
+					el.removeEvents(type);
+				}
+			} else {
+				el.removeEvents();
 			}
-
-			if (fn) {
-				el.removeEvent(type, fn);
-			} else if (el.removeEvents) { // #958
-				el.removeEvents(type);
-			}
-		} else {
-			el.removeEvents();
 		}
 	},
 
@@ -282,6 +266,12 @@ win.HighchartsAdapter = {
 		// create an event object that keeps all functions
 		event = legacyEvent ? new Event(eventArgs) : new DOMEvent(eventArgs);
 		event = $extend(event, eventArguments);
+
+		// When running an event on the Chart.prototype, MooTools nests the target in event.event
+		if (!event.target && event.event) {
+			event.target = event.event.target;
+		}
+
 		// override the preventDefault function to be able to use
 		// this for custom events
 		event.preventDefault = function () {
@@ -300,11 +290,13 @@ win.HighchartsAdapter = {
 	},
 	
 	/**
-	 * Set back e.pageX and e.pageY that MooTools has abstracted away
+	 * Set back e.pageX and e.pageY that MooTools has abstracted away. #1165, #1346.
 	 */
 	washMouseEvent: function (e) {
-		e.pageX = e.page.x;
-		e.pageY = e.page.y;
+		if (e.page) {
+			e.pageX = e.page.x;
+			e.pageY = e.page.y;
+		}
 		return e;
 	},
 

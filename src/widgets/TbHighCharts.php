@@ -74,20 +74,24 @@ class TbHighCharts extends CWidget
 	 */
 	protected function registerClientScript()
 	{
-		Yii::app()->bootstrap->registerAssetJs('highcharts/highcharts.js');
+		$assets = Yii::app()->bootstrap->assetsRegistry;
+
+		$assets->registerPackage('highcharts');
+
+		$baseUrl = $assets->packages['highcharts']['baseUrl'];
 
 		$this->options = CMap::mergeArray(array('exporting' => array('enabled' => true)), $this->options);
 
 		if (isset($this->options['exporting']) && @$this->options['exporting']['enabled']) {
-			Yii::app()->bootstrap->registerAssetJs('highcharts/modules/exporting.js');
+			$assets->registerScriptFile($baseUrl . '/modules/exporting.js');
 		}
 		if (isset($this->options['theme'])) {
-			Yii::app()->bootstrap->registerAssetJs('highcharts/themes/' . $this->options['theme'] . '.js');
+			$assets->registerScriptFile($baseUrl . '/themes/' . $this->options['theme'] . '.js');
 		}
 
 		$options = CJavaScript::encode($this->options);
 
-		Yii::app()->getClientScript()->registerScript(
+		$assets->registerScript(
 			__CLASS__ . '#' . $this->getId(),
 			"var highchart{$this->getId()} = new Highcharts.Chart({$options});"
 		);
