@@ -19,6 +19,7 @@ Antonio Ramirez.
 - **(fix)** Fixed `TbDatePicker` so it loads locale files from package folder. #688 (hijarian)
 - **(fix)** Fix `TbDateTimePicker`, so it loads locale files from the package folder, fix `TbEditableField` to load required scripts for 'datetime' field type (adeg)
 - **(fix)** Fix for placeholder overwriting in TbInputInline::maskedTextField and TbInputInline::typeAheadField. #694 (hightman)
+- **(enh)** `TbActiveForm::customRow` now accept widget configuration as input parameter. #601 (hightman)
 
 ## YiiBooster version 2.0.0
 - **(enh)** Bootstrap DateRangePicker updated to 1.2, moment.js updated to 2.2.1 (Hrumpa)

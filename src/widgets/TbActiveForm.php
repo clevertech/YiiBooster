@@ -575,12 +575,28 @@ class TbActiveForm extends CActiveForm
 	 *
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
-     * @param string $input the rendered input.
+     * @param mixed $input the rendered input html or an array of widget configuration.
 	 *
 	 * @return string the generated row
 	 */
 	public function customRow($model, $attribute, $input)
 	{
+		if (is_array($input)) {
+			if (!isset($input['class'])) {
+				throw new CException(__CLASS__ . ': customized widget configuration must be an array containing a "class" element.');
+			}
+			$class = $input['class'];
+			unset($input['class']);
+			if (!isset($input['name'])) {
+				if (!isset($input['model'])) {
+					$input['model'] = $model;
+				}
+				if (!isset($input['attribute'])) {
+					$input['attribute'] = $attribute;
+				}
+			}
+			$input = $this->widget($class, $input, true);
+		}
 		$htmlOptions = array();
 		$htmlOptions['input'] = $input;
 		return $this->inputRow(TbInput::TYPE_CUSTOM, $model, $attribute, null, $htmlOptions);
