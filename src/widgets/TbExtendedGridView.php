@@ -250,7 +250,7 @@ class TbExtendedGridView extends TbGridView
 	{
 		$data = $this->dataProvider->getData();
 		
-		if (!$this->sortableRows || (isset($data[0]) && !$this->getAttribute($data[0], (string)$this->sortableAttribute))) {
+		if (!$this->sortableRows || (isset($data[0]) && !isset($data[0]->attributes[(string)$this->sortableAttribute]))) {
 			parent::renderKeys();
 		}
 
