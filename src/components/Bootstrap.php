@@ -456,6 +456,11 @@ class Bootstrap extends CApplicationComponent
 				$locale = 'select2_locale_'. Yii::app()->language . '.js';
 				if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 					$jsFiles[] = $locale;
+				}else{
+					$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
+					if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
+						$jsFiles[] = $locale;
+					}
 				}
 			}
 		}
