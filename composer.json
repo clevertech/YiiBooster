@@ -30,7 +30,7 @@
         "php":">=5.1.0"
     },
     "require-dev": {
-        "yiisoft/yii": "1.1.14-rc",
+        "yiisoft/yii": "1.1.14",
         "phpunit/phpunit": "3.7.*",
         "ncuesta/pinocchio": "dev-master",
         "phploc/phploc": "*",

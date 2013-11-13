@@ -1,18 +1,72 @@
 <?php
 /**
- *## TbActiveForm class file.
- *
- * @author Christoffer Niska <ChristofferNiska@gmail.com>
- * @copyright Copyright &copy; Christoffer Niska 2011-
+ * YiiBooster project.
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-Yii::import('bootstrap.widgets.input.TbInput');
-
 /**
- *## ActiveForm supporting cool inputs from Bootstrap
+ * This class is extended version of {@link CActiveForm}, that allows you fully take advantage of bootstrap forms.
+ * Basically form consists of rows with label, field, error info, hint text and other useful stuff.
+ * TbActiveForm brings together all of these things to quickly build custom forms even with non-standard fields.
  *
- * @package booster.widgets.forms
+ * Each field method has $rowOptions for customizing rendering appearance.
+ * <ul>
+ * <li>'label' - Custom label text</li>
+ * <li>'labelOptions' - HTML options for label tag or passed to {@link CActiveForm::labelEx} call if 'label' is not set</li>
+ * <li>'errorOptions' - HTML options for {@link CActiveForm::error} call</li>
+ * <li>'prepend' - Custom text/HTML-code rendered before field</li>
+ * <li>'prependOptions' - HTML options for prepend wrapper tag</li>
+ * <li>'append' - Custom text/HTML-code rendered after field</li>
+ * <li>'appendOptions' - HTML options for append wrapper tag</li>
+ * <li>'hint' - Hint text rendered below the field</li>
+ * <li>'hintOptions' - HTML options for hint wrapper tag</li>
+ * <li>'enableAjaxValidation' - passed to {@link CActiveForm::error} call</li>
+ * <li>'enableClientValidation' - passed to {@link CActiveForm::error} call</li>
+ * </ul>
+ *
+ * Here's simple example how to build login form using this class:
+ * <pre>
+ * <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+ *     'type' => 'horizontal',
+ *     'htmlOptions' => array('class' => 'well'),
+ * )); ?>
+ *
+ * <?php echo $form->errorSummary($model); ?>
+ *
+ * <?php echo $form->textFieldRow($model, 'username'); ?>
+ * <?php echo $form->passwordFieldRow($model, 'password', array(), array(
+ *     'hint' => 'Check keyboard layout'
+ * )); ?>
+ * <?php echo $form->checkBoxRow($model, 'rememberMe'); ?>
+
+ * <div class="form-actions">
+ *     <?php echo CHtml::submitButton('Login', array('class'=>'btn')); ?>
+ * </div>
+ *
+ * <?php $this->endWidget(); ?>
+ * </pre>
+ *
+ * Additionally this class provides two additional ways to render custom widget or field or even everything you want
+ * with {@link TbActiveForm::widgetRow} and {@link TbActiveForm::customFieldRow}.
+ * Examples are simply clear:
+ * <code>
+ * $form->widgetRow(
+ *     'my.super.cool.widget',
+ *     array('model' => $model, 'attribute' => $attribute, 'data' => $mydata),
+ *     array('hint' => 'Hint text here!')
+ * );
+ *
+ * // suppose that field is rendered via SomeClass::someMethod($model, $attribute) call.
+ * $form->customFieldRow(
+ *     array(array('SomeClass', 'someMethod'), array($model, $attribute)),
+ *     $mode,
+ *     $attribute,
+ *     array(...)
+ * );
+ * </code>
+ *
+ * @see http://getbootstrap.com/2.3.2/base-css.html#forms
+ * @see CActiveForm
  */
 class TbActiveForm extends CActiveForm
 {
@@ -22,1166 +76,1252 @@ class TbActiveForm extends CActiveForm
 	const TYPE_HORIZONTAL = 'horizontal';
 	const TYPE_SEARCH = 'search';
 
-	// Input classes.
-	const INPUT_HORIZONTAL = 'bootstrap.widgets.input.TbInputHorizontal';
-	const INPUT_INLINE = 'bootstrap.widgets.input.TbInputInline';
-	const INPUT_SEARCH = 'bootstrap.widgets.input.TbInputSearch';
-	const INPUT_VERTICAL = 'bootstrap.widgets.input.TbInputVertical';
-
 	/**
-	 * @var string the form type. Allowed types are in `TYPE_*` constants
+	 * The form type. Allowed types are in `TYPE_*` constants.
+	 * @var string
 	 */
 	public $type = self::TYPE_VERTICAL;
 
 	/**
-	 * @var string input class.
-	 */
-	public $input;
-
-	/**
-	 * @var boolean flag that indicates if the errors should be displayed as blocks.
+	 * Whether to render errors inline.
+	 * @var bool
 	 */
 	public $inlineErrors;
 
 	/**
-	 *### .init()
+	 * Prepend wrapper CSS class.
+	 * @var string
+	 */
+	public $prependCssClass = 'input-prepend';
+
+	/**
+	 * Append wrapper CSS class.
+	 * @var string
+	 */
+	public $appendCssClass = 'input-append';
+
+	/**
+	 * Add-on CSS class.
+	 * @var string
+	 */
+	public $addOnCssClass = 'add-on';
+
+	/**
+	 * Add-on wrapper tag.
+	 * @var string
+	 */
+	public $addOnTag = 'span';
+
+	/**
+	 * Tag for wrapping field with prepended and/or appended data.
+	 * @var string
+	 */
+	public $addOnWrapperTag = 'div';
+
+	/**
+	 * Hint CSS class.
+	 * @var string
+	 */
+	public $hintCssClass = 'help-block';
+
+	/**
+	 * Hint wrapper tag.
+	 * @var string
+	 */
+	public $hintTag = 'p';
+
+	/**
+	 * Whether to render field error after input. Only for vertical and horizontal types.
+	 * @var bool
+	 */
+	public $showErrors = true;
+
+	/**
 	 * Initializes the widget.
 	 * This renders the form open tag.
 	 */
 	public function init()
 	{
-		if (!isset($this->htmlOptions['class'])) {
-			$this->htmlOptions['class'] = 'form-' . $this->type;
-		} else {
-			$this->htmlOptions['class'] .= ' form-' . $this->type;
-		}
+		self::addCssClass($this->htmlOptions, 'form-' . $this->type);
 
 		if (!isset($this->inlineErrors)) {
 			$this->inlineErrors = $this->type === self::TYPE_HORIZONTAL;
 		}
 
-		if ($this->inlineErrors) {
-			$this->errorMessageCssClass = 'help-inline error';
-		} else {
-			$this->errorMessageCssClass = 'help-block error';
+		if (!isset($this->errorMessageCssClass)) {
+			if ($this->inlineErrors) {
+				$this->errorMessageCssClass = 'help-inline error';
+			} else {
+				$this->errorMessageCssClass = 'help-block error';
+			}
 		}
+
+		if ($this->type == self::TYPE_HORIZONTAL && !isset($this->clientOptions['inputContainer']))
+			$this->clientOptions['inputContainer'] = 'div.control-group';
 
 		parent::init();
 	}
 
 	/**
-	 *### .checkBoxRow()
-	 *
-	 * Renders a checkbox input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function checkBoxRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_CHECKBOX, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .toggleButtonRow()
-	 *
-	 * Renders a toggle input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes (options key sets the options for the toggle component)
-	 *
-	 * @return string the generated row
-	 */
-	public function toggleButtonRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_TOGGLEBUTTON, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .checkBoxListRow()
-	 *
-	 * Renders a checkbox list input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function checkBoxListRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_CHECKBOXLIST, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .checkBoxListInlineRow()
-	 *
-	 * Renders a checkbox list inline input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function checkBoxListInlineRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_CHECKBOXLIST_INLINE, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .checkBoxGroupsListRow()
-	 *
-	 * Renders a checkbox list input row using Button Groups.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function checkBoxGroupsListRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_CHECKBOXGROUPSLIST, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### dropDownListRow()
-	 *
-	 * Renders a drop-down list input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function dropDownListRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_DROPDOWN, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .fileFieldRow()
-	 *
-	 * Renders a file field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function fileFieldRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_FILE, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .passwordFieldRow()
-	 *
-	 * Renders a password field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function passwordFieldRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_PASSWORD, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .passfieldFieldRow()
-	 *
-	 * Renders a Pass*Field field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function passfieldFieldRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_PASSFIELD, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .radioButtonRow()
-	 *
-	 * Renders a radio button input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function radioButtonRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_RADIO, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .radioButtonListRow()
-	 *
-	 * Renders a radio button list input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function radioButtonListRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_RADIOLIST, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .radioButtonListInlineRow()
-	 *
-	 * Renders a radio button list inline input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function radioButtonListInlineRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_RADIOLIST_INLINE, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .radioButtonGroupsListRow()
-	 *
-	 * Renders a radio button list input row using Button Groups.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the list data
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function radioButtonGroupsListRow($model, $attribute, $data = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_RADIOBUTTONGROUPSLIST, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .textFieldRow()
-	 *
-	 * Renders a text field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function textFieldRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_TEXT, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .maskedTextFieldRow()
-	 *
-	 * Renders a masked text field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function maskedTextFieldRow($model, $attribute, $mask, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_MASKEDTEXT, $model, $attribute, $mask, $htmlOptions);
-	}
-
-	/**
-	 *### .textAreaRow()
-	 *
-	 * Renders a text area input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function textAreaRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_TEXTAREA, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .redactorRow()
-	 *
-	 * Renders a WYSIWYG redactor editor
-	 *
-	 * @param CModel $model
-	 * @param string $attribute
-	 * @param array $htmlOptions
-	 *
-	 * @return string
-	 */
-	public function redactorRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_REDACTOR, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .markdownEditorRow()
-	 *
-	 * Renders a WYSIWYG Markdown editor
-	 *
-	 * @param CModel $model
-	 * @param string $attribute
-	 * @param array $htmlOptions
-	 *
-	 * @return string
-	 */
-	public function markdownEditorRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_MARKDOWNEDITOR, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .html5EditorRow()
-	 *
-	 * Renders a WYSIWYG bootstrap editor
-	 *
-	 * @param CModel $model
-	 * @param string $attribute
-	 * @param array $htmlOptions
-	 *
-	 * @return string
-	 */
-	public function html5EditorRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_HTML5EDITOR, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .ckEditorRow()
-	 *
-	 * Renders a WYSIWYG  ckeditor
-	 *
-	 * @param CModel $model
-	 * @param string $attribute
-	 * @param array $htmlOptions
-	 *
-	 * @return string
-	 */
-	public function ckEditorRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_CKEDITOR, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .captchaRow()
-	 *
-	 * Renders a captcha row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 *
-	 * @since 0.9.3
-	 */
-	public function captchaRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_CAPTCHA, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .uneditableRow()
-	 *
-	 * Renders an uneditable text field row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 *
-	 * @since 0.9.5
-	 */
-	public function uneditableRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_UNEDITABLE, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .datepickerRow()
-	 *
-	 * Renders a datepicker field row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes. 'events' and 'options' key specify the events
-	 * and configuration options of datepicker respectively.
-	 *
-	 * @return string the generated row
-	 *
-	 * @since 1.0.2 Booster
-	 */
-	public function datepickerRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_DATEPICKER, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .datetimepickerRow()
-	 *
-	 * Renders a datetimepicker field row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes. 'events' and 'options' key specify the events
-	 * and configuration options of datepicker respectively.
-	 *
-	 * @return string the generated row
-	 *
-	 * @since 2.0.0 Booster
-	 */
-	public function datetimepickerRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_DATETIMEPICKER, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .colorpickerRow()
-	 *
-	 * Renders a colorpicker field row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes. 'events' and 'options' key specify the events
-	 * and configuration options of colorpicker respectively.
-	 *
-	 * @return string the generated row
-	 *
-	 * @since 1.0.3 Booster
-	 */
-	public function colorpickerRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_COLORPICKER, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .dateRangeRow()
-	 *
-	 * @param CModel $model
-	 * @param string $attribute
-	 * @param array $htmlOptions addition HTML attributes. In order to pass initialization parameters to dateRange, you
-	 * need to set the HTML 'options' key with an array of configuration options.
-	 *
-	 * @return string
-	 */
-	public function dateRangeRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_DATERANGEPICKER, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .timepickerRow()
-	 *
-	 * Renders a timepicker field row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 *
-	 * @since 0.10.0
-	 */
-	public function timepickerRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_TIMEPICKER, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .select2Row()
-	 *
-	 * TODO: WTF is a input of type `Select2`? Rename it to something more meaningful!
-	 *
-	 * Renders a select2 field row
-	 *
-	 * @param CModel $model
-	 * @param string $attribute
-	 * @param array $htmlOptions
-	 *
-	 * @return string
-	 */
-	public function select2Row($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_SELECT2, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 * Renders a typeAhead input row
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $widgetOptions
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_TYPEAHEAD, $model, $attribute, $widgetOptions, $htmlOptions);
-	}
-
-	/**
-	 * Renders a number field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
-	 */
-	public function numberFieldRow($model, $attribute, $htmlOptions = array())
-	{
-		return $this->inputRow(TbInput::TYPE_NUMBER, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 * Renders a pre-rendered custom field input row.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-     * @param string $input the rendered input.
-	 *
-	 * @return string the generated row
-	 */
-	public function customRow($model, $attribute, $input)
-	{
-		$htmlOptions = array();
-		$htmlOptions['input'] = $input;
-		return $this->inputRow(TbInput::TYPE_CUSTOM, $model, $attribute, null, $htmlOptions);
-	}
-
-	/**
-	 *### .checkBoxList()
-	 *
-	 * Renders a checkbox list for a model attribute.
-	 *
-	 * This method is a wrapper of {@link CHtml::activeCheckBoxList}.
-	 * Please check {@link CHtml::activeCheckBoxList} for detailed information
-	 * about the parameters for this method.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data value-label pairs used to generate the check box list.
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @return string the generated check box list
-	 *
-	 * @since 0.9.5
-	 */
-	public function checkBoxList($model, $attribute, $data, $htmlOptions = array())
-	{
-		return $this->inputsList(true, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .checkBoxGroupsList()
-	 *
-	 * Renders a checkbox list for a model attribute using Button Groups.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data value-label pairs used to generate the checkbox list.
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @return string the generated checkbox list
-	 *
-	 * @since 0.9.5
-	 */
-	public function checkBoxGroupsList($model, $attribute, $data, $htmlOptions = array())
-	{
-		$buttons = array();
-		$scripts = array();
-
-		$buttonType = isset($htmlOptions['type']) ? $htmlOptions['type'] : null;
-
-		$values = CHtml::value($model, $attribute);
-		if ($values == null) {
-			$values = array();
-		}
-
-		foreach ($data as $key => $value) {
-			$btnId = CHtml::getIdByName(get_class($model) . '[' . $attribute . '][' . $key . ']');
-
-			$active = in_array($key, $values);
-
-			$button = array();
-			$button['label'] = $value;
-			$button['active'] = $active;
-			$button['htmlOptions'] = array('value' => $key, 'id' => $btnId,);
-			$buttons[] = $button;
-
-			// event as ordinary input
-			$hiddenFieldName = get_class($model) . '[' . $attribute . '][]';
-			$hiddenFieldId = CHtml::getIdByName(get_class($model) . '[' . $attribute . '][' . $key . '][hidden]');
-			$scripts[] = "\$('#" . $btnId . "').click(function(){
-				if (\$('#" . $hiddenFieldId . "').length > 0)
-				{
-					\$('#" . $hiddenFieldId . "').remove();
-				}
-				else
-				{
-					var hidden = \$('<input type=\"hidden\">')
-						.attr('id', '" . $hiddenFieldId . "')
-						.attr('name', '" . $hiddenFieldName . "')
-						.val('" . $key . "');
-					hidden.appendTo(\$('#" . $btnId . "'));
-				}
-			});";
-			if ($active) {
-				echo CHtml::hiddenField($hiddenFieldName, $key, array('id' => $hiddenFieldId));
-			}
-		}
-
-		Yii::app()->controller->widget(
-			'bootstrap.widgets.TbButtonGroup',
-			array(
-				'buttonType' => 'button',
-				'toggle' => 'checkbox',
-				'htmlOptions' => $htmlOptions,
-				'buttons' => $buttons,
-				'type' => $buttonType,
-			)
-		);
-
-		Yii::app()->clientScript->registerScript('checkboxgrouplist-' . $attribute, implode("\n", $scripts));
-	}
-
-	/**
-	 *### .radioButtonList()
-	 *
-	 * Renders a radio button list for a model attribute.
-	 *
-	 * This method is a wrapper of {@link CHtml::activeRadioButtonList}.
-	 * Please check {@link CHtml::activeRadioButtonList} for detailed information
-	 * about the parameters for this method.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data value-label pairs used to generate the radio button list.
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @return string the generated radio button list
-	 *
-	 * @since 0.9.5
-	 */
-	public function radioButtonList($model, $attribute, $data, $htmlOptions = array())
-	{
-		return $this->inputsList(false, $model, $attribute, $data, $htmlOptions);
-	}
-
-	/**
-	 *### .radioButtonGroupsList()
-	 *
-	 * Renders a radio button list for a model attribute using Button Groups.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data value-label pairs used to generate the radio button list.
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @return string the generated radio button list
-	 *
-	 * @since 0.9.5
-	 */
-	public function radioButtonGroupsList($model, $attribute, $data, $htmlOptions = array())
-	{
-		$buttons = array();
-		$scripts = array();
-
-		$hiddenFieldId = CHtml::getIdByName(get_class($model) . '[' . $attribute . ']');
-		$buttonType = isset($htmlOptions['type']) ? $htmlOptions['type'] : null;
-
-		foreach ($data as $key => $value) {
-			$btnId = CHtml::getIdByName(get_class($model) . '[' . $attribute . '][' . $key . ']');
-
-			$button = array();
-			$button['label'] = $value;
-			$button['htmlOptions'] = array(
-				'value' => $key,
-				'id' => $btnId,
-				'class' => (isset($model->$attribute) && $model->$attribute == $key ? 'active' : ''),
-			);
-			$buttons[] = $button;
-
-			// event as ordinary input
-			$scripts[] = "\$('#" . $btnId . "').click(function(){
-				\$('#" . $hiddenFieldId . "').val('" . $key . "').trigger('change');
-			});";
-		}
-
-		Yii::app()->controller->widget(
-			'bootstrap.widgets.TbButtonGroup',
-			array(
-				'buttonType' => 'button',
-				'toggle' => 'radio',
-				'htmlOptions' => $htmlOptions,
-				'buttons' => $buttons,
-				'type' => $buttonType,
-			)
-		);
-
-		echo $this->hiddenField($model, $attribute);
-
-		Yii::app()->clientScript->registerScript('radiobuttongrouplist-' . $attribute, implode("\n", $scripts));
-	}
-
-	/**
-	 * Renders a masked text field row
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $mask the mask (see {@link http://digitalbush.com/projects/masked-input-plugin})
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @return string the generated masked text field
-	 * @since 0.9.5
-	 */
-	public function maskedTextField($model, $attribute, $mask, $htmlOptions = array())
-	{
-		return Yii::app()->controller->widget(
-			'CMaskedTextField',
-			array(
-				'model' => $model,
-				'attribute' => $attribute,
-				'mask' => $mask,
-				'htmlOptions' => $htmlOptions
-			),
-			true
-		);
-	}
-
-	/**
-	 * Renders a type ahead field row
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $widgetOptions typeAhead options (see {@link http://twitter.github.com/bootstrap/javascript.html#typeahead})
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @throws CException
-	 * @return string the generated typeahead field
-	 * @since 1.0.6
-	 */
-	public function typeAheadField($model, $attribute, $widgetOptions, $htmlOptions = array())
-	{
-		if (!isset($widgetOptions['source'])) {
-			throw new CException(__CLASS__ . ': \'source\' parameter must be defined. ');
-		}
-
-		$widgetOptions += array(
-			'items' => 4,
-			'matcher' => 'js:function(item) {
-								return ~item.toLowerCase().indexOf(this.query.toLowerCase());
-							}'
-		);
-
-		return Yii::app()->controller->widget(
-			'bootstrap.widgets.TbTypeahead',
-			array(
-				'model' => $model,
-				'attribute' => $attribute,
-				'options' => $widgetOptions,
-				'htmlOptions' => $htmlOptions
-			),
-			true
-		);
-	}
-
-	/**
-	 * Renders an input list.
-	 *
-	 * @param boolean $checkbox flag that indicates if the list is a checkbox-list.
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data value-label pairs used to generate the input list.
-	 * @param array $htmlOptions additional HTML options.
-	 *
-	 * @return string the generated input list.
-	 *
-	 * @since 0.9.5
-	 */
-	protected function inputsList($checkbox, $model, $attribute, $data, $htmlOptions = array())
-	{
-		CHtml::resolveNameID($model, $attribute, $htmlOptions);
-		$select = CHtml::resolveValue($model, $attribute);
-
-		if ($model->hasErrors($attribute)) {
-			if (isset($htmlOptions['class'])) {
-				$htmlOptions['class'] .= ' ' . CHtml::$errorCss;
-			} else {
-				$htmlOptions['class'] = CHtml::$errorCss;
-			}
-		}
-
-		$name = $htmlOptions['name'];
-		unset($htmlOptions['name']);
-
-		if (array_key_exists('uncheckValue', $htmlOptions)) {
-			$uncheck = $htmlOptions['uncheckValue'];
-			unset($htmlOptions['uncheckValue']);
-		} else {
-			$uncheck = '';
-		}
-
-		$hiddenOptions = isset($htmlOptions['id']) ? array('id' => CHtml::ID_PREFIX . $htmlOptions['id'])
-			: array('id' => false);
-		$hidden = $uncheck !== null ? CHtml::hiddenField($name, $uncheck, $hiddenOptions) : '';
-
-		$template = isset($htmlOptions['template']) ? $htmlOptions['template']
-			: '<label class="{labelCssClass}">{input}{label}</label>';
-		$container = isset($htmlOptions['container']) ? $htmlOptions['container'] : '';
-		unset($htmlOptions['template'], $htmlOptions['separator'], $htmlOptions['hint']);
-
-		if ($checkbox && substr($name, -2) !== '[]') {
-			$name .= '[]';
-		}
-
-		$checkAllLast = '';
-		if (isset($htmlOptions['checkAll'])) {
-			$checkAllLabel = $htmlOptions['checkAll'];
-			$checkAllLast = isset($htmlOptions['checkAllLast']) && $htmlOptions['checkAllLast'];
-		}
-		unset($htmlOptions['checkAll'], $htmlOptions['checkAllLast']);
-
-		$labelOptions = isset($htmlOptions['labelOptions']) ? $htmlOptions['labelOptions'] : array();
-		unset($htmlOptions['labelOptions']);
-
-		$items = array();
-		$baseID = isset($htmlOptions['baseID']) ? $htmlOptions['baseID'] : CHtml::getIdByName($name);
-		unset($htmlOptions['baseID']);
-		$id = 0;
-		$checkAll = true;
-		$method = $checkbox ? 'checkBox' : 'radioButton';
-		$labelCssClass = $checkbox ? 'checkbox' : 'radio';
-
-		if (isset($htmlOptions['inline'])) {
-			$labelCssClass .= ' inline';
-			unset($htmlOptions['inline']);
-		}
-
-		foreach ($data as $value => $label) {
-			$checked = !is_array($select) && !strcmp($value, $select) || is_array($select) && in_array($value, $select);
-			$checkAll = $checkAll && $checked;
-			$htmlOptions['value'] = $value;
-			$htmlOptions['id'] = $baseID . '_' . $id++;
-			$option = CHtml::$method($name, $checked, $htmlOptions);
-			$label = CHtml::label($label, $htmlOptions['id'], $labelOptions);
-			$items[] = strtr(
-				$template,
-				array(
-					'{labelCssClass}' => $labelCssClass,
-					'{input}' => $option,
-					'{label}' => $label,
-				)
-			);
-		}
-
-		if (isset($checkAllLabel)) {
-			$htmlOptions['value'] = 1;
-			$htmlOptions['id'] = $id = $baseID . '_all';
-			$option = CHtml::$method($id, $checkAll, $htmlOptions);
-			$label = CHtml::label($checkAllLabel, $id, $labelOptions);
-			$item = strtr(
-				$template,
-				array(
-					'{labelCssClass}' => $labelCssClass,
-					'{input}' => $option,
-					'{label}' => $label,
-				)
-			);
-			if ($checkAllLast) {
-				$items[] = $item;
-			} else {
-				array_unshift($items, $item);
-			}
-			$name = strtr($name, array('[' => '\\[', ']' => '\\]'));
-			$js = <<<EOD
-jQuery('#$id').click(function() {
-	$("input[name='$name']").prop('checked', this.checked);
-});
-jQuery("input[name='$name']").click(function() {
-	$('#$id').prop('checked', !jQuery("input[name='$name']:not(:checked)").length);
-});
-jQuery('#$id').prop('checked', !jQuery("input[name='$name']:not(:checked)").length);
-EOD;
-			/** @var $cs CClientScript */
-			$cs = Yii::app()->getClientScript();
-			$cs->registerCoreScript('jquery');
-			$cs->registerScript($id, $js);
-		}
-
-		if (empty($container)) {
-			return $hidden . implode('', $items);
-		} else {
-			return $hidden . CHtml::tag($container, array('id' => $baseID), implode('', $items));
-		}
-	}
-
-	/**
-	 *### .errorSummary()
-	 *
 	 * Displays a summary of validation errors for one or several models.
 	 *
-	 * This method is very similar to {@link CHtml::errorSummary} except that it also works
-	 * when AJAX validation is performed.
+	 * This method is a wrapper for {@link CActiveForm::errorSummary}.
 	 *
-	 * @param mixed $models the models whose input errors are to be displayed. This can be either
-	 * a single model or an array of models.
-	 * @param string $header a piece of HTML code that appears in front of the errors
-	 * @param string $footer a piece of HTML code that appears at the end of the errors
-	 * @param array $htmlOptions additional HTML attributes to be rendered in the container div tag.
-	 *
-	 * @return string the error summary. Empty if no errors are found.
-	 *
-	 * @see CHtml::errorSummary
+	 * @param mixed $models The models whose input errors are to be displayed. This can be either a single model or an array of models.
+	 * @param string $header A piece of HTML code that appears in front of the errors
+	 * @param string $footer A piece of HTML code that appears at the end of the errors
+	 * @param array $htmlOptions Additional HTML attributes to be rendered in the container div tag.
+	 * @return string The error summary. Empty if no errors are found.
+	 * @see CActiveForm::errorSummary
 	 */
 	public function errorSummary($models, $header = null, $footer = null, $htmlOptions = array())
 	{
 		if (!isset($htmlOptions['class'])) {
 			$htmlOptions['class'] = 'alert alert-block alert-error';
-		} // Bootstrap error class as default
+		}
 
 		return parent::errorSummary($models, $header, $footer, $htmlOptions);
 	}
 
 	/**
-	 *### .error()
+	 * Generates a url field row for a model attribute.
 	 *
-	 * Displays the first validation error for a model attribute.
+	 * This method is a wrapper for {@link CActiveForm::urlField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::urlField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute name
-	 * @param array $htmlOptions additional HTML attributes to be rendered in the container div tag.
-	 * @param boolean $enableAjaxValidation whether to enable AJAX validation for the specified attribute.
-	 * @param boolean $enableClientValidation whether to enable client-side validation for the specified attribute.
-	 *
-	 * @return string the validation result (error display or success message).
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated url field row.
+	 * @see CActiveForm::urlField
+	 * @see customFieldRow
 	 */
-	public function error(
-		$model,
-		$attribute,
-		$htmlOptions = array(),
-		$enableAjaxValidation = true,
-		$enableClientValidation = true
-	) {
-		if (!$this->enableAjaxValidation) {
-			$enableAjaxValidation = false;
-		}
-
-		if (!$this->enableClientValidation) {
-			$enableClientValidation = false;
-		}
-
-		if (!isset($htmlOptions['class'])) {
-			$htmlOptions['class'] = $this->errorMessageCssClass;
-		}
-
-		if (!$enableAjaxValidation && !$enableClientValidation) {
-			return $this->renderError($model, $attribute, $htmlOptions);
-		}
-
-		$id = CHtml::activeId($model, $attribute);
-		$inputID = isset($htmlOptions['inputID']) ? $htmlOptions['inputID'] : $id;
-		unset($htmlOptions['inputID']);
-		if (!isset($htmlOptions['id'])) {
-			$htmlOptions['id'] = $inputID . '_em_';
-		}
-
-		$option = array(
-			'id' => $id,
-			'inputID' => $inputID,
-			'errorID' => $htmlOptions['id'],
-			'model' => get_class($model),
-			'name' => CHtml::resolveName($model, $attribute),
-			'enableAjaxValidation' => $enableAjaxValidation,
-			'inputContainer' => 'div.control-group', // Bootstrap requires this
-		);
-
-		$optionNames = array(
-			'validationDelay',
-			'validateOnChange',
-			'validateOnType',
-			'hideErrorMessage',
-			'inputContainer',
-			'errorCssClass',
-			'successCssClass',
-			'validatingCssClass',
-			'beforeValidateAttribute',
-			'afterValidateAttribute',
-		);
-
-		foreach ($optionNames as $name) {
-			if (isset($htmlOptions[$name])) {
-				$option[$name] = $htmlOptions[$name];
-			}
-			unset($htmlOptions[$name]);
-		}
-
-		if ($model instanceof CActiveRecord && !$model->isNewRecord) {
-			$option['status'] = 1;
-		}
-
-		if ($enableClientValidation) {
-			$validators = isset($htmlOptions['clientValidation']) ? array($htmlOptions['clientValidation']) : array();
-
-			$attributeName = $attribute;
-			if (($pos = strrpos($attribute, ']')) !== false && $pos !== strlen($attribute) - 1) // e.g. [a]name
-			{
-				$attributeName = substr($attribute, $pos + 1);
-			}
-
-			foreach ($model->getValidators($attributeName) as $validator) {
-				/** @var $validator CValidator */
-				if ($validator->enableClientValidation) {
-					if (($js = $validator->clientValidateAttribute($model, $attributeName)) != '') {
-						$validators[] = $js;
-					}
-				}
-			}
-
-			if ($validators !== array()) {
-				$option['clientValidation'] = "js:function(value, messages, attribute) {\n" . implode(
-					"\n",
-					$validators
-				) . "\n}";
-			}
-		}
-
-		$html = $this->renderError($model, $attribute, $htmlOptions);
-
-		if ($html === '') {
-			if (isset($htmlOptions['style'])) {
-				$htmlOptions['style'] = rtrim($htmlOptions['style'], ';') . '; display: none';
-			} else {
-				$htmlOptions['style'] = 'display: none';
-			}
-
-			$html = CHtml::tag('span', $htmlOptions, '');
-		}
-
-		$this->attributes[$inputID] = $option;
-
-		return $html;
-	}
-
-	/**
-	 * Creates the HTML code wrapping the error text for given model attribute.
-	 *
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute name
-	 * @param array $htmlOptions additional HTML attributes to be rendered in the container div tag.
-	 *
-	 * @return string the error display. Empty if no errors are found.
-	 *
-	 * @see CModel::getErrors
-	 * @see errorMessageCss
-	 */
-	protected static function renderError($model, $attribute, $htmlOptions = array())
+	public function urlFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
-		/* Using side effects of `resolveName`:
-		   `$attribute` will be modified: `[a][b]attr` will be turned into `attr` */
-		CHtml::resolveName($model, $attribute);
-		$error = $model->getError($attribute);
-		return $error != '' ? CHtml::tag('span', $htmlOptions, $error) : '';
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'urlField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
 	}
 
 	/**
-	 *### .inputRow()
+	 * Generates an email field row for a model attribute.
 	 *
-	 * Creates an input row of a specific type.
+	 * This method is a wrapper for {@link CActiveForm::emailField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::emailField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
-	 * This is a generic factory method. It is mainly called by various helper methods
-	 *  which pass correct type definitions to it.
-	 *
-	 * @param string $type the input type
-	 * @param CModel $model the data model
-	 * @param string $attribute the attribute
-	 * @param array $data the data for list inputs
-	 * @param array $htmlOptions additional HTML attributes
-	 *
-	 * @return string the generated row
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string the generated email field row.
+	 * @see CActiveForm::emailField
+	 * @see customFieldRow
 	 */
-	public function inputRow($type, $model, $attribute, $data = null, $htmlOptions = array())
+	public function emailFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'emailField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a number field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::numberField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::numberField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated number filed row.
+	 * @see CActiveForm::numberField
+	 * @see customFieldRow
+	 */
+	public function numberFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'numberField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a range field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::rangeField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::rangeField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated range field row.
+	 * @see CActiveForm::rangeField
+	 * @see customFieldRow
+	 */
+	public function rangeFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'rangeField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a date field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::dateField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::dateField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated date field row.
+	 * @see CActiveForm::dateField
+	 * @see customFieldRow
+	 */
+	public function dateFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'dateField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a time field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::timeField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::timeField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated date field row.
+	 * @see CActiveForm::timeField
+	 * @see customFieldRow
+	 */
+	public function timeFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'timeField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a tel field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::telField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::telField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated date field row.
+	 * @see CActiveForm::telField
+	 * @see customFieldRow
+	 */
+	public function telFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'telField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a text field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::textField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::textField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated text field row.
+	 * @see CActiveForm::textField
+	 * @see customFieldRow
+	 */
+	public function textFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'textField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a search field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::searchField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::searchField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated text field row.
+	 * @see CActiveForm::searchField
+	 * @see customFieldRow
+	 */
+	public function searchFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		if ($this->type == self::TYPE_SEARCH) {
+			self::addCssClass($htmlOptions, 'search-query');
+		}
+
+		$fieldData = array(array($this, 'searchField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a password field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::passwordField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::passwordField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated password field row.
+	 * @see CActiveForm::passwordField
+	 * @see customFieldRow
+	 */
+	public function passwordFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'passwordField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a text area row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::textArea} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::textArea} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated text area row.
+	 * @see CActiveForm::textArea
+	 * @see customFieldRow
+	 */
+	public function textAreaRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'textArea'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a file field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::fileField} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::fileField} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated file field row.
+	 * @see CActiveForm::fileField
+	 * @see customFieldRow
+	 */
+	public function fileFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'fileField'), array($model, $attribute, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a radio button row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::radioButton} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::radioButton} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated radio button row.
+	 * @see CActiveForm::radioButton
+	 * @see customFieldRow
+	 */
+	public function radioButtonRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		self::addCssClass($rowOptions['labelOptions'], 'radio');
+		if ($this->type == self::TYPE_INLINE)
+			self::addCssClass($rowOptions['labelOptions'], 'inline');
+
+		$field = $this->radioButton($model, $attribute, $htmlOptions);
+		if ((!array_key_exists('uncheckValue', $htmlOptions) || isset($htmlOptions['uncheckValue']))
+			&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
+		) {
+			$hiddenField = $matches[0];
+			$field = str_replace($hiddenField, '', $field);
+		}
+
+		$realAttribute = $attribute;
+		CHtml::resolveName($model, $realAttribute);
+
+		ob_start();
+		if (isset($hiddenField)) echo $hiddenField;
+		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
+		echo $field;
+		echo $model->getAttributeLabel($realAttribute);
+		echo CHtml::closeTag('label');
+		$fieldData = ob_get_clean();
+
+		$rowOptions['label'] = '';
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a checkbox row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::checkBox} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::checkBox} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated checkbox row.
+	 * @see CActiveForm::checkBox
+	 * @see customFieldRow
+	 */
+	public function checkBoxRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		self::addCssClass($rowOptions['labelOptions'], 'checkbox');
+		if ($this->type == self::TYPE_INLINE)
+			self::addCssClass($rowOptions['labelOptions'], 'inline');
+
+		$field = $this->checkBox($model, $attribute, $htmlOptions);
+		if ((!array_key_exists('uncheckValue', $htmlOptions) || isset($htmlOptions['uncheckValue']))
+			&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
+		) {
+			$hiddenField = $matches[0];
+			$field = str_replace($hiddenField, '', $field);
+		}
+
+		$realAttribute = $attribute;
+		CHtml::resolveName($model, $realAttribute);
+
+		ob_start();
+		if (isset($hiddenField)) echo $hiddenField;
+		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
+		echo $field;
+		echo $model->getAttributeLabel($realAttribute);
+		echo CHtml::closeTag('label');
+		$fieldData = ob_get_clean();
+
+		$rowOptions['label'] = '';
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a dropdown list row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::dropDownList} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::dropDownList} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $data Data for generating the list options (value=>display).
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated drop down list row.
+	 * @see CActiveForm::dropDownList
+	 * @see customFieldRow
+	 */
+	public function dropDownListRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'dropDownList'), array($model, $attribute, $data, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a list box row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::listBox} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::listBox} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $data
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated list box row.
+	 * @see CActiveForm::listBox
+	 * @see customFieldRow
+	 */
+	public function listBoxRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this, 'listBox'), array($model, $attribute, $data, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a checkbox list row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::checkBoxList} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::checkBoxList} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $data Value-label pairs used to generate the check box list.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated checkbox list row.
+	 * @see CActiveForm::checkBoxList
+	 * @see customFieldRow
+	 */
+	public function checkBoxListRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		if (!isset($htmlOptions['labelOptions']['class']))
+			$htmlOptions['labelOptions']['class'] = 'checkbox';
+
+		if (!isset($htmlOptions['template']))
+			$htmlOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+
+		if (!isset($htmlOptions['separator']))
+			$htmlOptions['separator'] = "\n";
+
+		$fieldData = array(array($this, 'checkBoxList'), array($model, $attribute, $data, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a radio button list row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CActiveForm::radioButtonList} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::radioButtonList} for detailed information about $htmlOptions argument.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $data Value-label pairs used to generate the radio button list.
+	 * @param array $htmlOptions Additional HTML attributes.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated radio button list row.
+	 * @see CActiveForm::radioButtonList
+	 * @see customFieldRow
+	 */
+	public function radioButtonListRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		if (!isset($htmlOptions['labelOptions']['class']))
+			$htmlOptions['labelOptions']['class'] = 'radio';
+
+		if (!isset($htmlOptions['template']))
+			$htmlOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+
+		if (!isset($htmlOptions['separator']))
+			$htmlOptions['separator'] = "\n";
+
+		$fieldData = array(array($this, 'radioButtonList'), array($model, $attribute, $data, $htmlOptions));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	//public function buttonGroupRow($model, $attribute, $widgetOptions, $rowOptions = array())
+	//{
+	//	// TODO: this is future replacement for checkBoxGroupsList and radioButtonGroupsList
+	//	// TODO: but need to rewrite TbButtonGroup for field support
+	//}
+
+	/**
+	 * Generates a toggle button row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbToggleButton} widget and {@link customFieldRow}.
+	 * Please check {@link TbToggleButton} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated toggle button row.
+	 * @see TbToggleButton
+	 * @see customFieldRow
+	 */
+	public function toggleButtonRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbToggleButton', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a date picker row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbDatePicker} widget and {@link customFieldRow}.
+	 * Please check {@link TbDatePicker} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated date picker row.
+	 * @see TbDatePicker
+	 * @see customFieldRow
+	 */
+	public function datePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbDatePicker', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a date range picker row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbDateRangePicker} widget and {@link customFieldRow}.
+	 * Please check {@link TbDateRangePicker} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated date range picker row.
+	 * @see TbDateRangePicker
+	 * @see customFieldRow
+	 */
+	public function dateRangeRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbDateRangePicker', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a time picker row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbTimePicker} widget and {@link customFieldRow}.
+	 * Please check {@link TbTimePicker} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated time picker row.
+	 * @see TbTimePicker
+	 * @see customFieldRow
+	 */
+	public function timePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a date-time picker row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbDateTimePicker} widget and {@link customFieldRow}.
+	 * Please check {@link TbDateTimePicker} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated date-time picker row.
+	 * @see TbDateTimePicker
+	 * @see customFieldRow
+	 */
+	public function dateTimePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbDateTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a select2 row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbSelect2} widget and {@link customFieldRow}.
+	 * Please check {@link TbSelect2} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated select2 row.
+	 * @see TbSelect2
+	 * @see customFieldRow
+	 */
+	public function select2Row($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbSelect2', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a redactor editor row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldRow}.
+	 * Please check {@link TbRedactorJs} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated redactor editor row.
+	 * @see TbRedactorJs
+	 * @see customFieldRow
+	 */
+	public function redactorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbRedactorJs', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a html5 editor row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbHtml5Editor} widget and {@link customFieldRow}.
+	 * Please check {@link TbHtml5Editor} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated html5 editor row.
+	 * @see TbHtml5Editor
+	 * @see customFieldRow
+	 */
+	public function html5EditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbHtml5Editor', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a markdown editor row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbMarkdownEditorJs} widget and {@link customFieldRow}.
+	 * Please check {@link TbMarkdownEditorJs} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated markdown editor row.
+	 * @see TbMarkdownEditorJs
+	 * @see customFieldRow
+	 */
+	public function markdownEditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+		$widgetOptions['model'] = $model;
+		$widgetOptions['attribute'] = $attribute;
+
+		// TODO: rewrite TbMarkdownEditorJs and this method!
+		$fieldData = '<div class="wmd-panel">';
+		$fieldData .= '<div id="wmd-button-bar" class="btn-toolbar"></div>';
+		$fieldData .= $this->owner->widget('bootstrap.widgets.TbMarkdownEditorJs', $widgetOptions, true);
+		$fieldData .= '<div id="wmd-preview" class="wmd-panel wmd-preview" style="width:100%"></div>';
+		$fieldData .= '</div>'; // wmd-panel
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a CKEditor row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbCKEditor} widget and {@link customFieldRow}.
+	 * Please check {@link TbCKEditor} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated CKEditor row.
+	 * @see TbCKEditor
+	 * @see customFieldRow
+	 */
+	public function ckEditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbCKEditor', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a type-ahead row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbTypeahead} widget and {@link customFieldRow}.
+	 * Please check {@link TbTypeahead} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated type-ahead row.
+	 * @see TbTypeahead
+	 * @see customFieldRow
+	 */
+	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbTypeahead', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a masked text field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CMaskedTextField} widget and {@link customFieldRow}.
+	 * Please check {@link CMaskedTextField} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated masked text field row.
+	 * @see CMaskedTextField
+	 * @see customFieldRow
+	 */
+	public function maskedTextFieldRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('CMaskedTextField', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a color picker field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbColorPicker} widget and {@link customFieldRow}.
+	 * Please check {@link TbColorPicker} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated color picker row.
+	 * @see TbColorPicker
+	 * @see customFieldRow
+	 */
+	public function colorPickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbColorPicker', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a color picker field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CCaptcha} widget, {@link textField} and {@link customFieldRow}.
+	 * Please check {@link CCaptcha} documentation for detailed information about $widgetOptions.
+	 * Read detailed information about $htmlOptions in {@link CActiveForm::textField} method.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $htmlOptions Additional HTML attributes for captcha text field.
+	 * @param array $widgetOptions List of initial property values for the CCaptcha widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated color picker row.
+	 * @see CCaptcha
+	 * @see CActiveForm::textField
+	 * @see customFieldRow
+	 */
+	public function captchaRow($model, $attribute, $htmlOptions = array(), $widgetOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = $this->textField($model, $attribute, $htmlOptions);
+		$fieldData .= '<div class="captcha">' . $this->owner->widget('CCaptcha', $widgetOptions, true) . '</div>';
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a Pass*Field row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbPassfield} widget and {@link customFieldRow}.
+	 * Please check {@link TbPassfield} documentation for detailed information about $widgetOptions.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated color picker row.
+	 * @see TbPassfield
+	 * @see customFieldRow
+	 */
+	public function passFieldRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
+	{
+		return $this->widgetRowInternal('bootstrap.widgets.TbPassfield', $model, $attribute, $widgetOptions, $rowOptions);
+	}
+
+	/**
+	 * Generates a custom field row for a model attribute.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array()
+	 * function.
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated custom filed row.
+	 * @see call_user_func_array
+	 */
+	public function customFieldRow($fieldData, $model, $attribute, $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a widget row for a model attribute.
+	 *
+	 * This method is a wrapper for {@link CBaseController::widget} and {@link customFieldRow}.
+	 * Read detailed information about $widgetOptions in $properties argument of {@link CBaseController::widget} method.
+	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * This method relies that widget have $model and $attribute properties.
+	 *
+	 * @param string $className The widget class name or class in dot syntax (e.g. application.widgets.MyWidget).
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated widget row.
+	 * @see CBaseController::widget
+	 * @see customFieldRow
+	 */
+	public function widgetRow($className, $widgetOptions = array(), $rowOptions = array())
+	{
+		$this->initRowOptions($rowOptions);
+
+		$fieldData = array(array($this->owner, 'widget'), array($className, $widgetOptions, true));
+
+		return $this->customFieldRowInternal($fieldData, $widgetOptions['model'], $widgetOptions['attribute'], $rowOptions);
+	}
+
+	/**
+	 * This is a intermediate method for widget-based row methods.
+	 *
+	 * @param string $className The widget class name or class in dot syntax (e.g. application.widgets.MyWidget).
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated widget row.
+	 */
+	protected function widgetRowInternal($className, &$model, &$attribute, &$widgetOptions, &$rowOptions)
+	{
+		$this->initRowOptions($rowOptions);
+		$widgetOptions['model'] = $model;
+		$widgetOptions['attribute'] = $attribute;
+
+		$fieldData = array(array($this->owner, 'widget'), array($className, $widgetOptions, true));
+
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+
+	/**
+	 * Generates a custom field row for a model attribute.
+	 *
+	 * It's base function for generating row with field.
+	 *
+	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $rowOptions Row attributes.
+	 * @return string The generated custom filed row.
+	 * @throws CException Raised on invalid form type.
+	 */
+	protected function customFieldRowInternal(&$fieldData, &$model, &$attribute, &$rowOptions)
 	{
 		ob_start();
-		Yii::app()->controller->widget(
-			$this->getInputClassName(),
-			array(
-				'type' => $type,
-				'form' => $this,
-				'model' => $model,
-				'attribute' => $attribute,
-				'data' => $data,
-				'htmlOptions' => $htmlOptions,
-			)
-		);
-		echo "\n";
+		switch ($this->type) {
+			case self::TYPE_HORIZONTAL:
+				$this->horizontalFieldRow($fieldData, $model, $attribute, $rowOptions);
+				break;
+
+			case self::TYPE_VERTICAL:
+				$this->verticalFieldRow($fieldData, $model, $attribute, $rowOptions);
+				break;
+
+			case self::TYPE_INLINE:
+			case self::TYPE_SEARCH:
+				$this->inlineFieldRow($fieldData, $model, $attribute, $rowOptions);
+				break;
+
+			default:
+				throw new CException('Invalid form type');
+		}
+
 		return ob_get_clean();
 	}
 
 	/**
-	 * Returns the input widget class name suitable for the form.
-	 * @return string the class name
+	 * Renders a horizontal custom field row for a model attribute.
+	 *
+	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $rowOptions Row options.
 	 */
-	protected function getInputClassName()
+	protected function horizontalFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
 	{
-		if (isset($this->input)) {
-			return $this->input;
-		} else {
-			switch ($this->type) {
-				case self::TYPE_HORIZONTAL:
-					return self::INPUT_HORIZONTAL;
-					break;
+		$controlGroupHtmlOptions = array('class' => 'control-group');
+		if ($model->hasErrors($attribute)) {
+			self::addCssClass($controlGroupHtmlOptions, CHtml::$errorCss);
+		}
+		echo CHtml::openTag('div', $controlGroupHtmlOptions);
 
-				case self::TYPE_INLINE:
-					return self::INPUT_INLINE;
-					break;
-
-				case self::TYPE_SEARCH:
-					return self::INPUT_SEARCH;
-					break;
-
-				case self::TYPE_VERTICAL:
-				default:
-					return self::INPUT_VERTICAL;
-					break;
+		self::addCssClass($rowOptions['labelOptions'], 'control-label');
+		if (isset($rowOptions['label'])) {
+			if (!empty($rowOptions['label'])) {
+				echo CHtml::label($rowOptions['label'], CHtml::activeId($model, $attribute), $rowOptions['labelOptions']);
 			}
+		} else {
+			echo $this->labelEx($model, $attribute, $rowOptions['labelOptions']);
+		}
+
+		echo '<div class="controls">';
+
+		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
+			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
+		}
+
+		if (is_array($fieldData)) {
+			echo call_user_func_array($fieldData[0], $fieldData[1]);
+		} else {
+			echo $fieldData;
+		}
+
+		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
+			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
+		}
+
+		if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
+			echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
+		}
+
+		if (isset($rowOptions['hint'])) {
+			self::addCssClass($rowOptions['hintOptions'], $this->hintCssClass);
+			echo CHtml::tag($this->hintTag, $rowOptions['hintOptions'], $rowOptions['hint']);
+		}
+
+		echo '</div></div>'; // controls, control-group
+	}
+
+	/**
+	 * Renders a vertical custom field row for a model attribute.
+	 *
+	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $rowOptions Row options.
+	 */
+	protected function verticalFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
+	{
+		if (isset($rowOptions['label'])) {
+			if (!empty($rowOptions['label'])) {
+				echo CHtml::label($rowOptions['label'], CHtml::activeId($model, $attribute), $rowOptions['labelOptions']);
+			}
+		} else {
+			echo $this->labelEx($model, $attribute, $rowOptions['labelOptions']);
+		}
+
+		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
+			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
+		}
+
+		if (is_array($fieldData)) {
+			echo call_user_func_array($fieldData[0], $fieldData[1]);
+		} else {
+			echo $fieldData;
+		}
+
+		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
+			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
+		}
+
+		if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
+			echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
+		}
+
+		if (isset($rowOptions['hint'])) {
+			self::addCssClass($rowOptions['hintOptions'], $this->hintCssClass);
+			echo CHtml::tag($this->hintTag, $rowOptions['hintOptions'], $rowOptions['hint']);
+		}
+	}
+
+	/**
+	 * Renders a inline custom field row for a model attribute.
+	 *
+	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $rowOptions Row options.
+	 */
+	protected function inlineFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
+	{
+		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
+			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
+
+		if (is_array($fieldData)) {
+			echo call_user_func_array($fieldData[0], $fieldData[1]);
+		} else {
+			echo $fieldData;
+		}
+
+		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
+			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
+	}
+
+	/**
+	 * Renders add-on begin.
+	 *
+	 * @param string $prependText Prepended text.
+	 * @param string $appendText Appended text.
+	 * @param array $prependOptions Prepend options.
+	 */
+	protected function renderAddOnBegin($prependText, $appendText, $prependOptions)
+	{
+		$wrapperCssClass = array();
+		if (!empty($prependText))
+			$wrapperCssClass[] = $this->prependCssClass;
+		if (!empty($appendText))
+			$wrapperCssClass[] = $this->appendCssClass;
+
+		echo CHtml::tag($this->addOnWrapperTag, array('class' => implode(' ', $wrapperCssClass)), false, false);
+		if (!empty($prependText)) {
+			if (isset($prependOptions['isRaw']) && $prependOptions['isRaw']) {
+				echo $prependText;
+			} else {
+				self::addCssClass($prependOptions, $this->addOnCssClass);
+				echo CHtml::tag($this->addOnTag, $prependOptions, $prependText);
+			}
+		}
+	}
+
+	/**
+	 * Renders add-on end.
+	 *
+	 * @param string $appendText Appended text.
+	 * @param array $appendOptions Append options.
+	 */
+	protected function renderAddOnEnd($appendText, $appendOptions)
+	{
+		if (!empty($appendText)) {
+			if (isset($appendOptions['isRaw']) && $appendOptions['isRaw']) {
+				echo $appendText;
+			} else {
+				self::addCssClass($appendOptions, $this->addOnCssClass);
+				echo CHtml::tag($this->addOnTag, $appendOptions, $appendText);
+			}
+		}
+
+		echo CHtml::closeTag($this->addOnWrapperTag);
+	}
+
+	/**
+	 * @param array $options Row options.
+	 */
+	protected function initRowOptions(&$options)
+	{
+		if (!isset($options['labelOptions']))
+			$options['labelOptions'] = array();
+
+		if (!isset($options['errorOptions']))
+			$options['errorOptions'] = array();
+
+		if (!isset($options['prependOptions']))
+			$options['prependOptions'] = array();
+
+		if (!isset($options['prepend']))
+			$options['prepend'] = null;
+
+		if (!isset($options['appendOptions']))
+			$options['appendOptions'] = array();
+
+		if (!isset($options['append']))
+			$options['append'] = null;
+
+		if(!isset($options['enableAjaxValidation']))
+			$options['enableAjaxValidation'] = true;
+
+		if(!isset($options['enableClientValidation']))
+			$options['enableClientValidation'] = true;
+	}
+
+	/**
+	 * Utility function for appending class names for a generic $htmlOptions array.
+	 *
+	 * @param array $htmlOptions
+	 * @param string $class
+	 */
+	protected static function addCssClass(&$htmlOptions, $class)
+	{
+		if (empty($class)) {
+			return;
+		}
+
+		if (isset($htmlOptions['class'])) {
+			$htmlOptions['class'] .= ' ' . $class;
+		} else {
+			$htmlOptions['class'] = $class;
 		}
 	}
 }

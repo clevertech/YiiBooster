@@ -1,190 +1,102 @@
 <?php
 /**
- *## TbForm class file.
- *
- * @author Joe Blocher <yii@myticket.at>
- * @copyright Copyright &copy; Joe Blocher 2012
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * YiiBooster project.
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-Yii::import('bootstrap.widgets.*');
-
 /**
- *## Enhanced CActiveForm
+ * TbForm is adaptation of CFrom class for fast form building with bootstrap.
+ * Its public interface does not differs from original CFrom class.
+ * Please refer to {@link CFrom} for further information.
  *
- * Support for Yii formbuilder
- * @link http://www.yiiframework.com/doc/guide/1.1/en/form.builder
- *
- * Usage:
- *
- * 1. Create a CForm model
- *
-
-
-class FormbuilderTestModel extends CFormModel
-{
-  public $search;
-  public $agree;
-  public $radiolist;
-
-  public function rules()
-  {
-    return array(
-      array('search', 'required'),
-      array('agree,radiolist', 'boolean'),
-      array('agree', 'compare', 'compareValue' => true, 'message' => 'You must agree...'));
-  }
-
-  // Change the labels here
-  public function attributeLabels()
-  {
-    return array(
-      'search'=>'Text search',
-      'selectlist'=>'I agree',
-    );
-  }
-
-  // return the formbuilder config
-  public function getFormConfig()
-  {
-    array(
-      'title' => 'Formbuilder test form',
-      'showErrorSummary' => true,
-      'elements' => array(
-        'search' => array(
-          'type' => 'text',
-          'maxlength' => 32,
-          'hint' => 'This is a hint',
-          'placeholder' => 'title',
-          'class' => 'input-large',
-          'append' => '<i class="icon-search"></i>',
-        ),
-        'agree' => array(
-          'type' => 'checkbox',
-          'hint' => 'Agree to terms and conditions',
-        ),
-
-        'radiolist' => array(
-          'type' => 'radiolist',
-          'items' => array('item1' => '1', 'item2' => '2', 'item3' => '3'),
-        ),
-        'buttons' => array(
-          'submit' => array(
-            'type' => 'submit', //@see TbFormButtonElement::$TbButtonTypes
-            'layoutType' => 'primary', //@see TbButton->type
-            'label' => 'Submit',
-          ),
-          'reset' => array(
-            'type' => 'reset',
-            'label' => 'Reset',
-          ),
-        ),
-      )
-    );
-  }
-}
- *
- * 2. Create a testaction in the controller
- *
- * Check TbFormInputElement::$tbActiveFormMethods for available types
- *
-public function actionFormbuilderTest()
-{
-  $model = new FormbuilderTestModel;
-
-  if (isset($_POST['FormbuilderTestModel']))
-    $model->attributes = $_POST['FormbuilderTestModel'];
-
-  $model->validate();
-
-  $form = TbForm::createForm(
-    $model->getFormConfig(),
-    $model,
-    array( //@see TbActiveForm attributes
-      'htmlOptions'=>array('class'=>'well'),
-      'type'=>'horizontal', //'inline','horizontal','vertical'
-...
-    )
-  );
-
-  //no need for an extra view file for testing
-  $this->renderText($form);
-  //$this->render('formbuildertest',array('form'=>$form);
-}
- *
- * @package booster.widgets.forms
+ * @see CForm
  */
 class TbForm extends CForm
 {
 	/**
-	 * @var string the name of the class for representing a form input element. Defaults to 'TbFormInputElement'.
+	 * The name of the class for representing a form input element. Defaults to 'TbFormInputElement'.
+	 * @var string
+	 * @see TbFormInputElement
 	 */
 	public $inputElementClass = 'TbFormInputElement';
 
 	/**
-	 * @var string the name of the class for representing a form button element. Defaults to 'CFormButtonElement'.
+	 * The name of the class for representing a form button element. Defaults to 'TbFormButtonElement'.
+	 * @var string
+	 * @see TbFormButtonElement
 	 */
 	public $buttonElementClass = 'TbFormButtonElement';
 
 	/**
-	 * Create the TbForm and assign the TbActiveForm with options as activeForm
-	 *
-	 * @param array $config
-	 * @param $parent
-	 * @param array $options
-	 * @param CModel $model
-	 *
-	 * @return mixed
+	 * The configuration used to create the active form widget.
+	 * The widget will be used to render the form tag and the error messages.
+	 * The 'class' option is required, which specifies the class of the widget.
+	 * The rest of the options will be passed to {@link CBaseController::beginWidget()} call.
+	 * Defaults to array('class'=>'TbActiveForm').
+	 * @var array
+	 * @see TbActiveForm
 	 */
-	public static function createForm($config, $parent, $options = array(), $model = null)
-	{
-		$class = __CLASS__;
-		$options['class'] = 'TbActiveForm';
-
-		$form = new $class($config, $model, $parent);
-		$form->activeForm = $options;
-
-		return $form;
-	}
+	public $activeForm = array('class' => 'TbActiveForm');
 
 	/**
-	 * Override parent
-	 * Remove wrapper with class="row ..."
-	 *
-	 * @param mixed $element
-	 *
-	 * @return string
-	 */
-	public function renderElement($element)
-	{
-		if ($element instanceof TbFormInputElement) {
-			if ($element->type === 'hidden') {
-				return "<div style=\"display:none\">\n" . $element->renderInput() . "</div>\n";
-			} else {
-				return $element->render();
-			}
-		}
-
-		return parent::renderElement($element);
-	}
-
-	/**
-	 * Render the buttons as TbFormButtonElement
-	 *
-	 * @return string
+	 * Renders the {@link buttons} in this form.
+	 * @return string The rendering result.
 	 */
 	public function renderButtons()
 	{
 		$output = '';
 		foreach ($this->getButtons() as $button) {
-			$output .= $this->renderElement($button) . '&nbsp;';
+			$output .= $this->renderElement($button);
 		}
 
-		//form-actions div wrapper only if not is inline form
-		if ($output !== '' && $this->getActiveFormWidget()->type !== 'inline') {
+		if ($output !== '' && $this->activeFormWidget->type !== TbActiveForm::TYPE_INLINE) {
 			$output = "<div class=\"form-actions\">\n" . $output . "</div>\n";
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Renders the open tag of the form. The default implementation will render the open form tag.
+	 * @return string The rendering result.
+	 */
+	public function renderBegin()
+	{
+		if (!($this->getParent() instanceof self) and !isset($this->activeForm['class'])) {
+			$this->activeForm['class'] = 'TbActiveForm';
+		}
+
+		return parent::renderBegin();
+	}
+
+	/**
+	 * Renders a single element which could be an input element, a sub-form, a string, or a button.
+	 * @param mixed $element The form element to be rendered. This can be either a {@link CFormElement} instance
+	 * or a string representing the name of the form element.
+	 * @return string The rendering result.
+	 */
+	public function renderElement($element)
+	{
+		if (is_string($element)) {
+			if (($e = $this[$element]) === null && ($e = $this->getButtons()->itemAt($element)) === null)
+				return $element;
+			else
+				$element = $e;
+		}
+
+		if ($element->getVisible()) {
+			if ($element instanceof TbFormInputElement) {
+				if ($element->type === 'hidden') {
+					return "<div style=\"visibility:hidden\">\n" . $element->render() . "</div>\n";
+				} else {
+					return $element->render();
+				}
+			} elseif ($element instanceof TbFormButtonElement) {
+				return $element->render() . "\n";
+			} else {
+				return $element->render();
+			}
+		}
+		return '';
 	}
 }
