@@ -90,7 +90,9 @@ class TbDatePicker extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		Yii::app()->bootstrap->registerPackage('datepicker');
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+        $app->bootstrap->registerPackage('datepicker');
 	}
 
 	/**
@@ -98,7 +100,9 @@ class TbDatePicker extends CInputWidget
 	 */
 	public function registerLanguageScript()
 	{
-		$booster = Yii::app()->bootstrap;
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+		$booster = $app->bootstrap;
 
 		if (isset($this->options['language']) && $this->options['language'] != 'en')
 		{

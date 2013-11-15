@@ -309,7 +309,9 @@ class TbEditableField extends CWidget
 	{
 		parent::init();
 
-		$this->packageRegistry = Yii::app()->bootstrap;
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+		$this->packageRegistry = $app->bootstrap;
 
 		if (!$this->model) {
 			throw new CException('Parameter "model" should be provided for EditableField');

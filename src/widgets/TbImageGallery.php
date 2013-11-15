@@ -45,9 +45,11 @@ class TbImageGallery extends CWidget
 
 	public function init()
 	{
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-image-gallery' . (!YII_DEBUG ? '.min' : '') . '.css');
-		Yii::app()->bootstrap->registerAssetJs('fileupload/load-image.min.js');
-		Yii::app()->bootstrap->registerAssetJs('bootstrap-image-gallery' . (!YII_DEBUG ? '.min' : '') . '.js');
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+        $app->bootstrap->registerAssetCss('bootstrap-image-gallery' . (!YII_DEBUG ? '.min' : '') . '.css');
+        $app->bootstrap->registerAssetJs('fileupload/load-image.min.js');
+        $app->bootstrap->registerAssetJs('bootstrap-image-gallery' . (!YII_DEBUG ? '.min' : '') . '.js');
 		if ($this->fullScreen) {
 			Yii::app()->clientScript->registerScript(
 				$this->id,

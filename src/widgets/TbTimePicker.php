@@ -114,7 +114,9 @@ class TbTimePicker extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->assetsRegistry->registerPackage('timepicker');
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+        $app->bootstrap->assetsRegistry->registerPackage('timepicker');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 

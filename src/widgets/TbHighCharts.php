@@ -74,7 +74,9 @@ class TbHighCharts extends CWidget
 	 */
 	protected function registerClientScript()
 	{
-		$assets = Yii::app()->bootstrap->assetsRegistry;
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+		$assets = $app->bootstrap->assetsRegistry;
 
 		$assets->registerPackage('highcharts');
 
