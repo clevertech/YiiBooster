@@ -234,7 +234,7 @@ class TbAlert extends CWidget
 			echo '<a href="#" class="close" data-dismiss="alert">' . $alert['closeText'] . '</a>';
 		}
 
-		echo $alertText;
+		echo empty($alertText) ? 'Empty <strong>'.$type.'</strong> alert!' : $alertText;
 		echo CHtml::closeTag('div');
 	}
 }
