@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** Updated Bootstrap DateTimePicker to 2.2.0 (adeg)
 - **(enh)** Updated HighCharts to 3.0.6 (hijarian)
 - **(fix)** Now we can use Javascript function definitions in `TbHighCharts` and `TbRedactorJs` options. #696 (hijarian)
 - **(enh)** Now the source distribution will hold the user-level documentation for widgets in universal XML format, along with the examples in PHP. #692 (hijarian)
