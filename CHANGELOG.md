@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** Date range picker for inline forms (Hrumpa)
 - **(enh)** Updated Bootstrap DateTimePicker to 2.2.0 (adeg)
 - **(enh)** Updated HighCharts to 3.0.6 (hijarian)
 - **(fix)** Now we can use Javascript function definitions in `TbHighCharts` and `TbRedactorJs` options. #696 (hijarian)
