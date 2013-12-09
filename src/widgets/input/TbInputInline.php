@@ -25,7 +25,7 @@ class TbInputInline extends TbInputVertical
 	 */
 	protected function dropDownList()
 	{
-		echo $this->getLabel();
+		$this->htmlOptions['prompt'] = $this->model->getAttributeLabel($this->attribute);
 		echo $this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 	}
 
