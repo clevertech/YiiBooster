@@ -153,6 +153,40 @@ class TbInputInline extends TbInputVertical
         echo $this->getError() . $this->getHint();
     }
 
+     /**
+     * Renders a dateRange field.
+     * @return string the rendered content
+     * @author Hrumpa
+     */
+    protected function dateRangeField()
+    {
+    	if (isset($this->htmlOptions['options'])) {
+			$options = $this->htmlOptions['options'];
+			unset($this->htmlOptions['options']);
+		}
+
+		if (isset($options['callback'])) {
+			$callback = $options['callback'];
+			unset($options['callback']);
+		}
+
+        echo $this->setPlaceholder();
+		echo $this->getPrepend();
+		$this->widget(
+			'bootstrap.widgets.TbDateRangePicker',
+			array(
+				'model' => $this->model,
+				'attribute' => $this->attribute,
+				'options' => isset($options) ? $options : array(),
+				'callback' => isset($callback) ? $callback : '',
+				'htmlOptions' => $this->htmlOptions,
+			)
+		);
+		echo $this->getAppend();
+		echo $this->getError() . $this->getHint();
+    }
+	
+
 	protected function setPlaceholder()
 	{
 		if (!isset($this->htmlOptions['placeholder'])) {
