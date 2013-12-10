@@ -62,10 +62,12 @@ class TbMarkdownEditorJS extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetCss('markdown.editor.css');
-		Yii::app()->bootstrap->registerAssetJs('markdown.converter.js', CClientScript::POS_HEAD);
-		Yii::app()->bootstrap->registerAssetJs('markdown.sanitizer.js', CClientScript::POS_HEAD);
-		Yii::app()->bootstrap->registerAssetJs('markdown.editor.js', CClientScript::POS_HEAD);
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+        $app->bootstrap->registerAssetCss('markdown.editor.css');
+        $app->bootstrap->registerAssetJs('markdown.converter.js', CClientScript::POS_HEAD);
+        $app->bootstrap->registerAssetJs('markdown.sanitizer.js', CClientScript::POS_HEAD);
+        $app->bootstrap->registerAssetJs('markdown.editor.js', CClientScript::POS_HEAD);
 		Yii::app()->clientScript->registerScript(
 			$id,
 			"var converter = Markdown.getSanitizingConverter();

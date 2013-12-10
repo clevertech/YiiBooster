@@ -152,36 +152,38 @@ class TbFileUpload extends CJuiInputWidget
 	public function registerClientScript($id)
 	{
 
-		Yii::app()->bootstrap->registerAssetCss('fileupload/jquery.fileupload-ui.css');
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+        $app->bootstrap->registerAssetCss('fileupload/jquery.fileupload-ui.css');
 
 		// Upgrade widget factory
 		// @todo remove when jquery.ui 1.9+ is fully integrated into stable Yii versions
-		Yii::app()->bootstrap->registerAssetJs('fileupload/vendor/jquery.ui.widget.js');
+		$app->bootstrap->registerAssetJs('fileupload/vendor/jquery.ui.widget.js');
 		//The Templates plugin is included to render the upload/download listings
-		Yii::app()->bootstrap->registerAssetJs("fileupload/tmpl.min.js", CClientScript::POS_END);
+		$app->bootstrap->registerAssetJs("fileupload/tmpl.min.js", CClientScript::POS_END);
 
 		if ($this->previewImages || $this->imageProcessing) {
-			Yii::app()->bootstrap->registerAssetJs("fileupload/load-image.min.js", CClientScript::POS_END);
-			Yii::app()->bootstrap->registerAssetJs("fileupload/canvas-to-blob.min.js", CClientScript::POS_END);
+			$app->bootstrap->registerAssetJs("fileupload/load-image.min.js", CClientScript::POS_END);
+			$app->bootstrap->registerAssetJs("fileupload/canvas-to-blob.min.js", CClientScript::POS_END);
 			// gallery :)
-			Yii::app()->bootstrap->registerAssetCss("bootstrap-image-gallery.min.css");
-			Yii::app()->bootstrap->registerAssetJs("bootstrap-image-gallery.min.js", CClientScript::POS_END);
+			$app->bootstrap->registerAssetCss("bootstrap-image-gallery.min.css");
+			$app->bootstrap->registerAssetJs("bootstrap-image-gallery.min.js", CClientScript::POS_END);
 		}
 		//The Iframe Transport is required for browsers without support for XHR file uploads
-		Yii::app()->bootstrap->registerAssetJs('fileupload/jquery.iframe-transport.js');
-		Yii::app()->bootstrap->registerAssetJs('fileupload/jquery.fileupload.js');
+		$app->bootstrap->registerAssetJs('fileupload/jquery.iframe-transport.js');
+		$app->bootstrap->registerAssetJs('fileupload/jquery.fileupload.js');
 		// The File Upload image processing plugin
 		if ($this->imageProcessing) {
-			Yii::app()->bootstrap->registerAssetJs('fileupload/jquery.fileupload-ip.js');
+			$app->bootstrap->registerAssetJs('fileupload/jquery.fileupload-ip.js');
 		}
 		// The File Upload file processing plugin
 		if ($this->previewImages) {
-			Yii::app()->bootstrap->registerAssetJs('fileupload/jquery.fileupload-fp.js');
+			$app->bootstrap->registerAssetJs('fileupload/jquery.fileupload-fp.js');
 		}
 		// locale
-		Yii::app()->bootstrap->registerAssetJs('fileupload/jquery.fileupload-locale.js');
+		$app->bootstrap->registerAssetJs('fileupload/jquery.fileupload-locale.js');
 		//The File Upload user interface plugin
-		Yii::app()->bootstrap->registerAssetJs('fileupload/jquery.fileupload-ui.js');
+		$app->bootstrap->registerAssetJs('fileupload/jquery.fileupload-ui.js');
 
 		$options = CJavaScript::encode($this->options);
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').fileupload({$options});");

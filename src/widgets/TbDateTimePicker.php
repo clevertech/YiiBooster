@@ -90,7 +90,9 @@ class TbDateTimePicker extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		Yii::app()->bootstrap->registerPackage('datetimepicker');
+        $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+		$app->bootstrap->registerPackage('datetimepicker');
 	}
 
 	public function registerLanguageScript()
@@ -98,11 +100,13 @@ class TbDateTimePicker extends CInputWidget
 		if (isset($this->options['language']) && $this->options['language'] != 'en') {
 			$file = 'locales/bootstrap-datetimepicker.' . $this->options['language'] . '.js';
 			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.bootstrap-datetimepicker') . '/js/' . $file)) {
-				if (Yii::app()->bootstrap->enableCdn) {
+                $app = Yii::app()->controller->module ? Yii::app()->controller->module : Yii::app();
+
+				if ($app->bootstrap->enableCdn) {
 					// Not in CDN yet
-					Yii::app()->bootstrap->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
+                    $app->bootstrap->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
 				} else {
-					Yii::app()->bootstrap->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
+                    $app->bootstrap->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
 				}
 			}
 		}
