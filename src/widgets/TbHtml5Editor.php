@@ -73,16 +73,17 @@ class TbHtml5Editor extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-wysihtml5.css');
-		Yii::app()->bootstrap->registerAssetJs('wysihtml5-0.3.0.js');
-		Yii::app()->bootstrap->registerAssetJs('bootstrap-wysihtml5.js');
+        $booster = Bootstrap::getBooster();
+        $booster->registerAssetCss('bootstrap-wysihtml5.css');
+        $booster->registerAssetJs('wysihtml5-0.3.0.js');
+        $booster->registerAssetJs('bootstrap-wysihtml5.js');
 
 		if (isset($this->editorOptions['locale'])) {
-			Yii::app()->bootstrap->registerAssetJs(
+            $booster->registerAssetJs(
 				'locales/bootstrap-wysihtml5.' . $this->editorOptions['locale'] . '.js'
 			);
 		} elseif (in_array($this->lang, array('de-DE', 'es-ES', 'fr', 'fr-NL', 'pt-BR', 'sv-SE', 'it-IT'))) {
-			Yii::app()->bootstrap->registerAssetJs('locales/bootstrap-wysihtml5.' . $this->lang . '.js');
+            $booster->registerAssetJs('locales/bootstrap-wysihtml5.' . $this->lang . '.js');
 			$this->editorOptions['locale'] = $this->lang;
 		}
 
@@ -121,7 +122,7 @@ class TbHtml5Editor extends CInputWidget
 			return;
 		}
 
-		$defaultStyleSheetUrl = Yii::app()->bootstrap->getAssetsUrl() . '/css/wysiwyg-color.css';
+		$defaultStyleSheetUrl = Bootstrap::getBooster()->getAssetsUrl() . '/css/wysiwyg-color.css';
 		array_unshift($this->editorOptions['stylesheets'], $defaultStyleSheetUrl); // we want default css to be first
 	}
 

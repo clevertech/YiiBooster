@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** Now bootstrap can use with modules (fromYukki)
 - **(enh)** Inline dropDownList without label (naduvko)
 - **(enh)** Date range picker for inline forms (Hrumpa)
 - **(enh)** Updated Bootstrap DateTimePicker to 2.2.0 (adeg)

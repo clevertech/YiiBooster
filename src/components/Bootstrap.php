@@ -179,6 +179,11 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public $_assetsUrl;
 
+    /**
+     * @var Bootstrap
+     */
+    private static $_instance;
+
 	/**
 	 * Initializes the component.
 	 */
@@ -193,6 +198,8 @@ class Bootstrap extends CApplicationComponent
 		$this->setRootAliasIfUndefined();
 
 		$this->includeAssets();
+
+        self::setBooster($this);
 
 		parent::init();
 	}
@@ -913,4 +920,36 @@ class Bootstrap extends CApplicationComponent
 		return null;
 	}
 
+    /**
+     * @param Bootstrap $value
+     */
+    public static function setBooster($value)
+    {
+        if ($value instanceof Bootstrap) {
+            self::$_instance = $value;
+        }
+    }
+
+    /**
+     * @return Bootstrap
+     */
+    public static function getBooster()
+    {
+        if (null === self::$_instance) {
+            // Lets find inside current module
+            $module = Yii::app()->getController()->getModule();
+            if ($module) {
+                if ($module->hasComponent('bootstrap')) {
+                    self::$_instance = $module->getComponent('bootstrap');
+                }
+            }
+            // Still nothing?
+            if (null === self::$_instance) {
+                if (Yii::app()->hasComponent('bootstrap')) {
+                    self::$_instance = Yii::app()->getComponent('bootstrap');
+                }
+            }
+        }
+        return self::$_instance;
+    }
 }

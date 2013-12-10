@@ -88,8 +88,9 @@ class TbModalManager extends CWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetJs('bootstrap-modalmanager.js', CClientScript::POS_HEAD);
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-modalmanager.css');
+        $booster = Bootstrap::getBooster();
+        $booster->registerAssetJs('bootstrap-modalmanager.js', CClientScript::POS_HEAD);
+        $booster->registerAssetCss('bootstrap-modalmanager.css');
 
 		$options = !empty($this->format) ? CJavaScript::encode(array('format' => $this->format)) : '';
 

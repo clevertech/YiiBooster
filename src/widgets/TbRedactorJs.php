@@ -70,7 +70,7 @@ class TbRedactorJS extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		$assets = Yii::app()->bootstrap->assetsRegistry;
+		$assets = Bootstrap::getBooster()->assetsRegistry;
 
 		$assets->registerPackage('redactor');
 

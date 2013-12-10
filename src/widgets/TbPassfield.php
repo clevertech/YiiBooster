@@ -91,7 +91,7 @@ class TbPassfield extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		Yii::app()->bootstrap->registerPackage('passfield');
+        Bootstrap::getBooster()->registerPackage('passfield');
 	}
 
 }

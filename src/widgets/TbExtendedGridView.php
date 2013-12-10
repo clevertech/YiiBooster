@@ -619,7 +619,7 @@ class TbExtendedGridView extends TbGridView
 
 		$fixedHeaderJs = '';
 		if ($this->fixedHeader) {
-			Yii::app()->bootstrap->registerAssetJs('jquery.stickytableheaders' . (!YII_DEBUG ? '.min' : '') . '.js');
+            Bootstrap::getBooster()->registerAssetJs('jquery.stickytableheaders' . (!YII_DEBUG ? '.min' : '') . '.js');
 			$fixedHeaderJs = "$('#{$this->id} table.items').stickyTableHeaders({fixedOffset:{$this->headerOffset}});";
 			$this->componentsAfterAjaxUpdate[] = $fixedHeaderJs;
 		}
@@ -640,7 +640,7 @@ class TbExtendedGridView extends TbGridView
 
 			$this->selectableRows = 1;
 			$cs->registerCoreScript('jquery.ui');
-			Yii::app()->bootstrap->registerAssetJs('jquery.sortable.gridview.js');
+            Bootstrap::getBooster()->registerAssetJs('jquery.sortable.gridview.js');
 
 			if ($this->sortableAjaxSave && $this->sortableAction !== null) {
 				$sortableAction = Yii::app()->createUrl(
@@ -679,7 +679,7 @@ class TbExtendedGridView extends TbGridView
 				}
 			}
 			$cs->registerCoreScript('jquery.ui');
-			Yii::app()->bootstrap->registerAssetJs('jquery.selectable.gridview.js');
+            Bootstrap::getBooster()->registerAssetJs('jquery.selectable.gridview.js');
 			$afterSelectableCells = CJavaScript::encode($afterSelectableCells);
 			$this->componentsReadyScripts[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}',{$afterSelectableCells});";
 			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}', {$afterSelectableCells});";
@@ -1266,8 +1266,9 @@ class TbPercentOfTypeEasyPieOperation extends TbPercentOfTypeOperation
 	 */
 	protected function registerClientScripts()
 	{
-		Yii::app()->bootstrap->registerAssetCss('easy-pie-chart.css');
-		Yii::app()->bootstrap->registerAssetJs('jquery.easy.pie.chart.js');
+        $booster = Bootstrap::getBooster();
+        $booster->registerAssetCss('easy-pie-chart.css');
+        $booster->registerAssetJs('jquery.easy.pie.chart.js');
 
 		$options = CJavaScript::encode($this->chartOptions);
 		Yii::app()->getClientScript()->registerScript(

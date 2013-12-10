@@ -181,8 +181,9 @@ class TbTags extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-tags.css');
-		Yii::app()->bootstrap->registerAssetJs('bootstrap.tags.js');
+        $booster = Bootstrap::getBooster();
+        $booster->registerAssetCss('bootstrap-tags.css');
+        $booster->registerAssetJs('bootstrap.tags.js');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 

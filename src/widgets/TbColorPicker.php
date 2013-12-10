@@ -88,8 +88,8 @@ class TbColorPicker extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-		Yii::app()->bootstrap->registerAssetJs('bootstrap.colorpicker.js', CClientScript::POS_HEAD);
-		Yii::app()->bootstrap->registerAssetCss('bootstrap-colorpicker.css');
+        Bootstrap::getBooster()->registerAssetJs('bootstrap.colorpicker.js', CClientScript::POS_HEAD);
+        Bootstrap::getBooster()->registerAssetCss('bootstrap-colorpicker.css');
 
 		$options = !empty($this->format) ? CJavaScript::encode(array('format' => $this->format)) : '';
 
