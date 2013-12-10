@@ -58,7 +58,10 @@ class TbSelect2 extends CInputWidget
 
 		$this->normalizeOptions();
 
-		$this->addEmptyItemIfPlaceholderDefined();
+		if (empty($this->htmlOptions['multiple'])) 
+		{
+		    $this->addEmptyItemIfPlaceholderDefined();
+		}
 
 		$this->setDefaultWidthIfEmpty();
 	}
@@ -162,6 +165,8 @@ class TbSelect2 extends CInputWidget
 
 	private function prependDataWithEmptyItem()
 	{
+		$this->data = array_reverse($this->data, true);
 		$this->data[''] = '';
+		$this->data = array_reverse($this->data, true);
 	}
 }
