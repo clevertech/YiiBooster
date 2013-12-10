@@ -149,7 +149,7 @@ class TbSelect2 extends CInputWidget
 		if (!empty($this->htmlOptions['placeholder']))
 			$this->options['placeholder'] = $this->htmlOptions['placeholder'];
 
-		if (!empty($this->options['placeholder']))
+		if (!empty($this->options['placeholder']) && empty($this->htmlOptions['multiple']))
 			$this->prependDataWithEmptyItem();
 	}
 
@@ -162,6 +162,6 @@ class TbSelect2 extends CInputWidget
 
 	private function prependDataWithEmptyItem()
 	{
-		$this->data[''] = '';
+		$this->data = array('' => '') + $this->data;
 	}
 }
