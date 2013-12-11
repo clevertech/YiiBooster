@@ -29,9 +29,18 @@ class TbEditableDetailView extends TbDetailView
 		if (!$this->data instanceof CModel)
 			throw new CException('Property "data" should be of CModel class.');
 
-		//set bootstrap css
-		$this->htmlOptions = array('class' => 'table table-bordered table-striped table-hover');
-		//disable loading Yii's css for bootstrap
+        if (!is_array($this->htmlOptions)) {
+            $this->htmlOptions = array();
+        }
+
+        // Default css classes
+        $defaultClasses = 'table table-bordered table-striped table-hover';
+        if (!isset($this->htmlOptions['class'])) {
+            $this->htmlOptions['class'] = $defaultClasses;
+        } else {
+            $this->htmlOptions['class'] .= $defaultClasses;
+        }
+
 		$this->cssFile = false;
 
 		parent::init();
