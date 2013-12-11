@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** Tooltip for `TbButton` and `TbButtonGroup` #724 (fromYukki)
 - **(fix)** Ability to put any custom css class via htmlOptions attribute for `EditableDetailView` #684 (fromYukki)
 - **(fix)** Editable Detail view Date i18n error #686 (fromYukki)
 - **(enh)** Bootstrap carousel with links for images #682
