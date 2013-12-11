@@ -9,7 +9,8 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
-- **(enh)** Bootstrap carousel with links for images #682 (fromYukki)
+- **(fix)** Editable Detail view Date i18n error #686 (fromYukki)
+- **(enh)** Bootstrap carousel with links for images #682
 - **(fix)** Do not display empty alert messages #721 (fromYukki, amrbedair)
 - **(fix)** `TbSelect2` - Multi-select and placeholder lead to empty selection #717 (fromYukki)
 - **(enh)** Now bootstrap can use with modules (fromYukki)

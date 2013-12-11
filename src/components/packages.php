@@ -43,7 +43,7 @@ return array(
 	'jqui-tb-noconflict' => array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'js' => array('js/jqui-tb-noconflict.js'),
-		'depends' => array('jquery', 'jquery.ui') // we don't have any other choice to reliably prevent conflicts with jQueryUI than to forcefully include it before Bootstrap and the script preventing conflicts
+		'depends' => array('jquery'),
 	),
 
 	//widgets start
