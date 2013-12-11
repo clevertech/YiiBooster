@@ -38,7 +38,7 @@ class TbEditableDetailView extends TbDetailView
         if (!isset($this->htmlOptions['class'])) {
             $this->htmlOptions['class'] = $defaultClasses;
         } else {
-            $this->htmlOptions['class'] .= $defaultClasses;
+            $this->htmlOptions['class'] .= ' ' . $defaultClasses;
         }
 
 		$this->cssFile = false;
