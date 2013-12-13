@@ -536,11 +536,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerFontAwesomeCss()
 	{
-		if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7.0')) {
-			$this->registerPackage('font-awesome')->registerPackage('font-awesome-ie7');
-		} else {
-			$this->registerPackage('font-awesome');
-		}
+        $this->registerPackage('font-awesome');
 	}
 
 	//========================================================================
