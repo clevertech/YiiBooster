@@ -263,7 +263,7 @@ class TbButton extends CWidget
 			$this->htmlOptions['data-complete-text'] = $this->completeText;
 		}
 
-        if (isset($this->tooltip) && !$this->toggle) {
+        if (!empty($this->tooltip) && !$this->toggle) {
             if (!is_array($this->tooltipOptions)) {
                 $this->tooltipOptions = array();
             }
