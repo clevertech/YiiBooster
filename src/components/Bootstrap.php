@@ -193,13 +193,13 @@ class Bootstrap extends CApplicationComponent
 		if ($this->isInConsoleMode() && !$this->isInTests())
 			return;
 
+        self::setBooster($this);
+
+        $this->setRootAliasIfUndefined();
+
 		$this->setAssetsRegistryIfNotDefined();
 
-		$this->setRootAliasIfUndefined();
-
 		$this->includeAssets();
-
-        self::setBooster($this);
 
 		parent::init();
 	}
@@ -407,10 +407,52 @@ class Bootstrap extends CApplicationComponent
 	 */
 	protected function setAssetsRegistryIfNotDefined()
 	{
-		if (!$this->assetsRegistry)
-			$this->assetsRegistry = Yii::app()->getClientScript();
+		if (!$this->assetsRegistry) {
+            // Not exists, we are happy
+            if (!Yii::app()->getComponent('clientScript', false)) {
+                Yii::app()->setComponent('clientScript', array(
+                    'class' => 'bootstrap.components.BootstrapClientScript',
+                ), true);
+            }
+            $this->assetsRegistry = Yii::app()->getClientScript();
+
+            if ($this->assetsRegistry instanceof BootstrapClientScript) {
+                $this->assetsRegistry->attachEventHandler(
+                    'onAfterRegisterCoreScript',
+                    array($this, 'resolveUiConflict')
+                );
+                $this->assetsRegistry->attachEventHandler(
+                    'onAfterRegisterScriptFile',
+                    array($this, 'resolveUiConflict')
+                );
+            }
+        }
 	}
 
+    /**
+     * @param CEvent $event
+     */
+    public function resolveUiConflict($event = null)
+    {
+        if ($event instanceof CEvent && !empty($event->params['name'])) {
+            // Type of event (core|file)
+            $type = isset($event->params['type']) ? $event->params['type'] : 'core';
+
+            // Core script
+            if ($type == 'core' && $event->params['name'] == 'jquery.ui')
+            {
+                Yii::app()->getClientScript()->registerCoreScript('jqui-tb-noconflict');
+            }
+            // File
+            elseif ($type == 'file' && preg_match("/jquery[\W]?ui/i", $event->params['name']))
+            {
+                Yii::app()->getClientScript()->registerScriptFile(
+                    $this->getAssetsUrl() . '/js/jqui-tb-noconflict.js',
+                    $event->params['position']
+                );
+            }
+        }
+    }
 
 	public function registerBootstrapCss()
 	{
