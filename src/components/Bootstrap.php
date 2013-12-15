@@ -480,7 +480,6 @@ class Bootstrap extends CApplicationComponent
 				$filename .= '.no-responsive';
 		}
 
-		$filename .= $this->fontAwesomeCss ? '.no-icons' : '';
 		$filename .= $this->minify  ? '.min.css' : '.css';
 
 		return array('bootstrap.css' => array(

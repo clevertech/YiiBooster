@@ -88,7 +88,7 @@ class TbButtonColumn extends CButtonColumn
 		}
 
 		if (isset($button['icon'])) {
-			if (strpos($button['icon'], 'icon') === false) {
+			if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
 				$button['icon'] = 'icon-' . implode(' icon-', explode(' ', $button['icon']));
 			}
 

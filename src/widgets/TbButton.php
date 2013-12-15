@@ -240,7 +240,7 @@ class TbButton extends CWidget
 		}
 
 		if (isset($this->icon)) {
-			if (strpos($this->icon, 'icon') === false) {
+			if (strpos($this->icon, 'icon') === false && strpos($this->icon, 'fa') === false) {
 				$this->icon = 'icon-' . implode(' icon-', explode(' ', $this->icon));
 			}
 
