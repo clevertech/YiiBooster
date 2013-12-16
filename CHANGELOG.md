@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** Client validation for inline forms using `TbActiveForm` class #242 (fromYukki)
 - **(enh)** Basic version of new widget jQuery UI Layout Manager (`TbUiLayout`) #390 (fromYukki)
 - **(fix)** Fix tooltip binding for `TbButtonColumn`, `TbButtonGroupColumn` and `TbToggleColumn` #271 (fromYukki)
 - **(fix)** Store some Bootstrap widgets in his own variables to prevent conflicts with jQuery UI #228 (fromYukki)

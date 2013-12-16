@@ -1217,6 +1217,8 @@ class TbActiveForm extends CActiveForm
 	 */
 	protected function inlineFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
 	{
+        echo '<div class="controls-inline">';
+
 		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
 			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
 
@@ -1228,6 +1230,12 @@ class TbActiveForm extends CActiveForm
 
 		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
 			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
+
+        if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
+            echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
+        }
+
+        echo '</div>';
 	}
 
 	/**
