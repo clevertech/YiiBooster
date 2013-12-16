@@ -47,6 +47,12 @@ class TbSelect2 extends CInputWidget
 	 */
 	public $options;
 
+    /** @var bool */
+    public $readonly = false;
+
+    /** @var bool */
+    public $disabled = false;
+
 	/**
 	 *### .init()
 	 *
@@ -61,6 +67,14 @@ class TbSelect2 extends CInputWidget
 		$this->addEmptyItemIfPlaceholderDefined();
 
 		$this->setDefaultWidthIfEmpty();
+
+        // disabled & readonly
+        if (!empty($this->htmlOptions['readonly'])) {
+            $this->readonly = true;
+        }
+        if (!empty($this->htmlOptions['disabled'])) {
+            $this->disabled = true;
+        }
 	}
 
 	/**
@@ -121,6 +135,13 @@ class TbSelect2 extends CInputWidget
 		}
 		else
 			$defValue = '';
+
+        if ($this->readonly) {
+            $defValue .= ".select2('readonly', true)";
+        }
+        elseif ($this->disabled) {
+            $defValue .= ".select2('enable', false)";
+        }
 
 		ob_start();
 		echo "jQuery('#{$id}').select2({$options})$defValue";
