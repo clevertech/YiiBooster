@@ -22,7 +22,7 @@ Antonio Ramirez.
 - **(enh)** Bootstrap carousel with links for images #682
 - **(fix)** Do not display empty alert messages #721 (fromYukki, amrbedair)
 - **(fix)** `TbSelect2` - Multi-select and placeholder lead to empty selection #717 (fromYukki)
-- **(enh)** Now bootstrap can use with modules (fromYukki)
+- **(enh)** Now bootstrap can be used with modules (fromYukki)
 - **(enh)** Inline dropDownList without label (naduvko)
 - **(enh)** Date range picker for inline forms (Hrumpa)
 - **(enh)** Updated Bootstrap DateTimePicker to 2.2.0 (adeg)
@@ -155,7 +155,6 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 1.0.5
-
 - **(fix)** TbCarousel displayPrevAndNext set to false breaks the page (amosviedo)
 - **(enh)** Bootstrap upgrade to 2.2.1 (kazuo)
 - **(fix)** TbActiveForm class name is displayed on screen (sorinpohontu)
