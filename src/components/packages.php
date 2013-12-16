@@ -47,6 +47,12 @@ return array(
 	),
 
 	//widgets start
+    'ui-layout' => array(
+        'baseUrl' => $this->getAssetsUrl() . '/ui-layout/',
+        'css' => array('css/layout-default.css'),
+        'js' => array($this->minify ? 'js/jquery.layout.min.js' : 'js/jquery.layout.js'),
+        'depends' => array('jquery', 'jquery.ui'),
+    ),
 	'datepicker' => array(
 		'depends' => array('jquery'),
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/' : $this->getAssetsUrl() . '/bootstrap-datepicker/',
@@ -83,7 +89,6 @@ return array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-wizard',
 		'js' => array($this->minify ? 'jquery.bootstrap.wizard.min.js' : 'jquery.bootstrap.wizard.js')
 	),
-
 	'ajax-cache' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/ajax-cache',
 		'js' => array('jquery.ajax.cache.js'),
@@ -97,36 +102,30 @@ return array(
 		'js' => array('jquery.json.yiigridview.js'),
 		'depends' => array('jquery', 'jqote2', 'ajax-cache')
 	),
-
 	'redactor' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/redactor',
 		'js' => array($this->minify ? 'redactor.min.js' : 'redactor.js'),
 		'css' => array('redactor.css'),
 		'depends' => array('jquery')
 	),
-
 	'passfield' => array(
 		'depends' => array('jquery'),
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-passfield', // Not in CDN yet
 		'css' => array($this->minify ? 'css/passfield.min.css' : 'css/passfield.min.css'),
 		'js' => array($this->minify ? 'js/passfield.min.js' : 'js/passfield.min.js')
 	),
-
 	'timepicker' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-timepicker',
 		'js' => array($this->minify ? 'js/bootstrap-timepicker.min.js' : 'js/bootstrap-timepicker.js'),
 		'css' => array($this->minify ? 'css/bootstrap-timepicker.min.css' : 'css/bootstrap-timepicker.css'),
 		'depends' => array('bootstrap.js')
 	),
-
 	'ckeditor' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/ckeditor',
 		'js' => array('ckeditor.js')
 	),
-
 	'highcharts' => array(
 		'baseUrl' => $this->enableCdn ? '//code.highcharts.com' : $this->getAssetsUrl() . '/highcharts',
 		'js' => array($this->minify ? 'highcharts.js' : 'highcharts.src.js')
-	)
-
+	),
 );
