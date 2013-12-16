@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** Store some Bootstrap widgets in his own variables to prevent conflicts with jQuery UI #228 (fromYukki)
 - **(enh)** Using Bootstrap and Font-Awesome icons together, removed "no-icons" css for Bootstrap, changed logic for icons in widgets #706 (fromYukki)
 - **(enh)** Font Awesome updated to 4.0.3 including CDN #706 (fromYukki)
 - **(fix)** Resolve conflicts between jQuery UI and Bootstrap (fromYukki)

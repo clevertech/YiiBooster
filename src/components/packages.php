@@ -35,6 +35,11 @@ return array(
 		'baseUrl' => $this->getAssetsUrl() . '/notify/',
 		'js' => array($this->minify ? 'notify.min.js' : 'notify.js')
 	),
+    'bootstrap-noconflict' => array(
+        'baseUrl' => $this->getAssetsUrl(),
+        'js' => array('js/bootstrap-noconflict.js'),
+        'depends' => array('jquery'),
+    ),
 	'jqui-tb-noconflict' => array(
 		'baseUrl' => $this->getAssetsUrl(),
 		'js' => array('js/jqui-tb-noconflict.js'),

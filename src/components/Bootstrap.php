@@ -438,6 +438,13 @@ class Bootstrap extends CApplicationComponent
             // Type of event (core|file)
             $type = isset($event->params['type']) ? $event->params['type'] : 'core';
 
+            // Bootstrap
+            if ($type == 'core' && $event->params['name'] == 'bootstrap.js')
+            {
+                Yii::app()->getClientScript()->registerCoreScript('bootstrap-noconflict');
+            }
+
+            // jQuery UI
             // Core script
             if ($type == 'core' && $event->params['name'] == 'jquery.ui')
             {

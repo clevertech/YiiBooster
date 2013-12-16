@@ -9,7 +9,14 @@
     if (!($.widget && $.widget.bridge && $.ui)) {
         return;
     }
-    $.widget.bridge('uibutton', $.ui.button);
-    $.widget.bridge('uitooltip', $.ui.tooltip);
+    $.widget.bridge('uiButton', $.ui.button);
+    $.widget.bridge('uiTooltip', $.ui.tooltip);
+
+    if (bootstrapButton) {
+        $.fn.button = bootstrapButton;
+    }
+    if (bootstrapTooltip) {
+        $.fn.tooltip = bootstrapTooltip;
+    }
 })(jQuery);
 
