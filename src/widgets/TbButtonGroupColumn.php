@@ -89,8 +89,8 @@ class TbButtonGroupColumn extends TbButtonColumn
 			$options['title'] = $label;
 		}
 
-		if (!isset($options['rel'])) {
-			$options['rel'] = 'tooltip';
+		if (!isset($options['data-toggle'])) {
+			$options['data-toggle'] = 'tooltip';
 		}
 
 		if (!isset($options['class'])) {

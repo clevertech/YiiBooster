@@ -83,8 +83,8 @@ class TbButtonColumn extends CButtonColumn
 			$options['title'] = $label;
 		}
 
-		if (!isset($options['rel'])) {
-			$options['rel'] = 'tooltip';
+		if (!isset($options['data-toggle'])) {
+			$options['data-toggle'] = 'tooltip';
 		}
 
 		if (isset($button['icon'])) {
