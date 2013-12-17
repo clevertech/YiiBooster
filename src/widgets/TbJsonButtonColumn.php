@@ -46,18 +46,41 @@ class TbJsonButtonColumn extends TbButtonColumn
 	public function renderDataCell($row)
 	{
 		if ($this->grid->json) {
-			$data = $this->grid->dataProvider->data[$row];
-			$col = array();
-			ob_start();
-			$this->renderDataCellContent($row, $data);
-			$col['content'] = ob_get_contents();
-			ob_end_clean();
-			$col['attrs'] = '';
-			return $col;
+            $data = $this->grid->dataProvider->data[$row];
+            $options = $this->htmlOptions;
+            if ($this->cssClassExpression !== null) {
+                $class = $this->evaluateExpression($this->cssClassExpression, array('row' => $row, 'data' => $data));
+                if (!empty($class)) {
+                    if (isset($options['class'])) {
+                        $options['class'] .= ' ' . $class;
+                    } else {
+                        $options['class'] = $class;
+                    }
+                }
+            }
+
+            return array(
+                'attrs' => CHtml::renderAttributes($options),
+                'content' => $this->renderDataCellContent($row, $data),
+            );
 		}
 
 		parent::renderDataCell($row);
 	}
+
+    protected function renderDataCellContent($row, $data)
+    {
+        ob_start();
+        parent::renderDataCellContent($row, $data);
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        if ($this->grid->json) {
+            return $html;
+        }
+
+        echo $html;
+    }
 
 	/**
 	 * Initializes the default buttons (view, update and delete).

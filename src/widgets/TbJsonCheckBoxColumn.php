@@ -77,24 +77,24 @@ class TbJsonCheckBoxColumn extends CCheckBoxColumn
 	 */
 	public function renderDataCell($row)
 	{
-		$data = $this->grid->dataProvider->data[$row];
-		$options = $this->htmlOptions;
-		if ($this->cssClassExpression !== null) {
-			$class = $this->evaluateExpression($this->cssClassExpression, array('row' => $row, 'data' => $data));
-			if (!empty($class)) {
-				if (isset($options['class'])) {
-					$options['class'] .= ' ' . $class;
-				} else {
-					$options['class'] = $class;
-				}
-			}
-		}
-
 		if ($this->grid->json) {
-			return CMap::mergeArray(
-				$options,
-				array('content' => $this->renderDataCellContent($row, $data))
-			);
+            $data = $this->grid->dataProvider->data[$row];
+            $options = $this->htmlOptions;
+            if ($this->cssClassExpression !== null) {
+                $class = $this->evaluateExpression($this->cssClassExpression, array('row' => $row, 'data' => $data));
+                if (!empty($class)) {
+                    if (isset($options['class'])) {
+                        $options['class'] .= ' ' . $class;
+                    } else {
+                        $options['class'] = $class;
+                    }
+                }
+            }
+
+			return array(
+                'attrs' => CHtml::renderAttributes($options),
+                'content' => $this->renderDataCellContent($row, $data),
+            );
 		}
 
 		parent::renderDataCell($row);
