@@ -141,14 +141,14 @@ class TbButton extends CWidget
     /**
      * Tooltip for button
      * @var bool
-     * @since 2.0.0
+     * @since 2.1.0
      */
     public $tooltip = false;
 
     /**
      * Tooltip options
      * @var array
-     * @since 2.0.0
+     * @since 2.1.0
      */
     public $tooltipOptions = array();
 

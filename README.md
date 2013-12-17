@@ -5,7 +5,7 @@ YiiBooster
 
 **This is the master branch, containing work in progress on the next release. 
 Do not think that it's a production ready version which you can safely clone into your project.
-If you want the latest point release, check out the `2.0.0` branch**
+If you want the latest point release, check out the `2.1.0` branch**
 
 ---
 
@@ -59,8 +59,6 @@ If you find any bugs, please create an issue at [issue tracker for project Githu
 ## License
 This work as a whole is licensed under a BSD license. Full text is included in the `LICENSE` file in the root of codebase.
 
-> [![Clevertech](http://clevertech.biz/images/slir/w54-h36-c54:36/images/site/index/home/clevertech-logo.png)](http://www.clevertech.biz)
->
 > Well-built beautifully designed web applications.
 >
 > [www.clevertech.biz](http://www.clevertech.biz)

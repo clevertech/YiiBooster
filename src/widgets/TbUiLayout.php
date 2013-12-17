@@ -8,6 +8,8 @@
  *
  * About additional information you can read here:
  * @link http://layout.jquery-dev.net/documentation.cfm
+ *
+ * @since 2.1.0
  */
 class TbUiLayout extends CWidget
 {

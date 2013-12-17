@@ -164,7 +164,10 @@ class TbCarousel extends CWidget
 					$item['imageOptions'] = array();
 				}
 
-                // Is this image should be a link?
+                /**
+                 * Is this image should be a link?
+                 * @since 2.1.0
+                 */
                 if (isset($item['link'])) {
                     // Any kind of link options
                     if (!isset($item['linkOptions']) || !is_array($item['linkOptions'])) {

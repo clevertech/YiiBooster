@@ -14,6 +14,10 @@
  * Maintenance
  * @author Mark Safronov <hijarian@gmail.com>
  * @version 2.0.0
+ *
+ * Maintenance
+ * @author Maksim Naumov <fromyukki@gmail.com>
+ * @version 2.1.0
  */
 
 /**
@@ -341,7 +345,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function getVersion()
 	{
-		return '2.0.0';
+		return '2.1.0';
 	}
 
 	/**
@@ -431,6 +435,7 @@ class Bootstrap extends CApplicationComponent
 
     /**
      * @param CEvent $event
+     * @since 2.1.0
      */
     public function resolveUiConflict($event = null)
     {
@@ -966,6 +971,7 @@ class Bootstrap extends CApplicationComponent
 
     /**
      * @param Bootstrap $value
+     * @since 2.1.0
      */
     public static function setBooster($value)
     {
@@ -976,6 +982,7 @@ class Bootstrap extends CApplicationComponent
 
     /**
      * @return Bootstrap
+     * @since 2.1.0
      */
     public static function getBooster()
     {

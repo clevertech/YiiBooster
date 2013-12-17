@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @since 2.1.0
+ */
 class BootstrapClientScript extends CClientScript
 {
     /**
