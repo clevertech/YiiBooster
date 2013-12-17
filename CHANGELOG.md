@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** Fix "Maximum call stack size exceeded" inside `TbExtendedGridView` class #430 (fromYukki)
 - **(fix)** Fix attributes on `td` after update in classes `TbJsonButtonColumn` and `TbJsonCheckBoxColumn` #350 (fromYukki)
 - **(enh)** New attributes `readonly` and `disabled` for `TbSelect2` class #305 (fromYukki)
 - **(fix)** Client validation for inline forms using `TbActiveForm` class #242 (fromYukki)

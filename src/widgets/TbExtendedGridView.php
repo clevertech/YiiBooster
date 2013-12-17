@@ -699,23 +699,26 @@ class TbExtendedGridView extends TbGridView
 				var qs = $.deparam.querystring(options.url);
 				if (qs.hasOwnProperty("ajax") && qs.ajax == "' . $this->id . '")
 				{
-					options.realsuccess = options.success;
-					options.success = function(data)
-					{
-						if (options.realsuccess) {
-							options.realsuccess(data);
-							var $data = $("<div>" + data + "</div>");
-							// we need to get the grid again... as it has been updated
-							if ($(".' . $this->extendedSummaryCssClass . '", $("#' . $this->id . '")))
-							{
-								$(".' . $this->extendedSummaryCssClass . '", $("#' . $this->id . '")).html($("#' . $this->id . '-extended-summary", $data).html());
-							}
-							' . (count($this->componentsAfterAjaxUpdate) ? implode(
-				PHP_EOL,
-				$this->componentsAfterAjaxUpdate
-			) : '') . '
-						}
-					}
+				    if (typeof (options.realsuccess) == "undefined" || options.realsuccess !== options.success)
+				    {
+                        options.realsuccess = options.success;
+                        options.success = function(data)
+                        {
+                            if (options.realsuccess) {
+                                options.realsuccess(data);
+                                var $data = $("<div>" + data + "</div>");
+                                // we need to get the grid again... as it has been updated
+                                if ($(".' . $this->extendedSummaryCssClass . '", $("#' . $this->id . '")))
+                                {
+                                    $(".' . $this->extendedSummaryCssClass . '", $("#' . $this->id . '")).html($("#' . $this->id . '-extended-summary", $data).html());
+                                }
+                                ' . (count($this->componentsAfterAjaxUpdate) ? implode(
+                    PHP_EOL,
+                    $this->componentsAfterAjaxUpdate
+                ) : '') . '
+                            }
+                        }
+				    }
 				}
 			});'
 		);
