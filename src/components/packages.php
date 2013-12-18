@@ -40,11 +40,6 @@ return array(
         'js' => array('js/bootstrap-noconflict.js'),
         'depends' => array('jquery'),
     ),
-	'jqui-tb-noconflict' => array(
-		'baseUrl' => $this->getAssetsUrl(),
-		'js' => array('js/jqui-tb-noconflict.js'),
-		'depends' => array('jquery'),
-	),
 
 	//widgets start
     'ui-layout' => array(
