@@ -9,7 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
-
+- **(enh)** New widget `TbEditable` to be able to use `x-editable` without models #729 (fromYukki)
 
 ## YiiBooster version 2.1.1
 - **(fix)** No more overwrites `CClientScript` by Booster #726 (fromYukki)
