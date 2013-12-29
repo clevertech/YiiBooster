@@ -55,7 +55,7 @@
     display: block;
 }
 
-.grid-view table.items th:hover a:after {
+.grid-view table.items th:hover a.sort-link:after {
     content: "";
     display: block;
     position: absolute;
