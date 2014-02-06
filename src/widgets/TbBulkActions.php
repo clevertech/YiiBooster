@@ -256,9 +256,9 @@ $(document).on('click','#deals-grid_c0_all',function() {
     var checked=this.checked;
     if(checked)
     {
-        $('.odd, .even').addClass('selected');
+        $('#{$this->grid->id} .odd, #{$this->grid->id} .even').addClass('selected');
     } else {
-        $('.odd, .even').removeClass('selected');
+        $('#{$this->grid->id} .odd, #{$this->grid->id} .even').removeClass('selected');
     }
 });
 
