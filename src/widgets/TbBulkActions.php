@@ -220,10 +220,7 @@ class TbBulkActions extends CComponent
     public function registerClientScript()
     {
        
-        $js = '';
-        if(!$this->selectableRows)
-        {
-        $js .= <<<EOD
+        $js = <<<EOD
 $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
 	var grid = $("#{$this->grid->id}");
 	if ($("input[name='{$this->columnName}']:checked", grid).length)
@@ -239,15 +236,38 @@ $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
 	}
 });
 EOD;
+
+if($this->selectableRows)
+{
+$js.="$(document).on('click','#{$this->grid->id} tr', function(){
+
+$(document).on('click', '#{$this->grid->id} input[type=checkbox]', function(e){
+    var checkBox = $(this).prop('checked'); 
+    if(checkBox){
+        $(this).parent().parent().addClass('selected');} else {
+        $(this).parent().parent().removeClass('selected');}
+        e.stopPropagation();
+    })
+    var checkBox = $(this).children('.checkbox-column').children('input[name=\"{$this->grid->id}_c0\[\]\"]'); 
+    checkBox.prop('checked', !checkBox.prop('checked'));
+});
+    
+$(document).on('click','#deals-grid_c0_all',function() {
+    var checked=this.checked;
+    if(checked)
+    {
+        $('.odd, .even').addClass('selected');
+    } else {
+        $('.odd, .even').removeClass('selected');
+    }
+});
+
+
+";
+
 }
         foreach ($this->events as $buttonId => $handler) {
             $js .= "\n$(document).on('click','#{$buttonId}', function(){
-            var grid = $(\"#{$this->grid->id}\");
-            if (!$(\"input[name='{$this->columnName}']:checked\", grid).length)
-            {
-                alert('".$this->noCheckedMessage."');
-                return false;
-            }
             var checked = $('input[name=\"{$this->columnName}\"]:checked');\n
 			var fn = $handler; if ($.isFunction(fn)){fn(checked);}\nreturn false;});\n";
         }
