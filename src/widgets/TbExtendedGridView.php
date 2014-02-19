@@ -371,6 +371,8 @@ class TbExtendedGridView extends TbGridView
 	 */
 	public function renderBulkActions()
 	{
+        Bootstrap::getBooster()->registerAssetJs('jquery.saveselection.gridview.js');
+        $this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.afterUpdateGrid('".$this->id."');";
 		echo '<tr><td colspan="' . count($this->columns) . '">';
 		$this->bulk->renderButtons();
 		echo '</td></tr>';

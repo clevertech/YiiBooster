@@ -219,36 +219,20 @@ class TbBulkActions extends CComponent
      */
     public function registerClientScript()
     {
-       
+
         $js = '';
         if(!$this->selectableRows)
         {
-        $js .= <<<EOD
-$(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
-	var grid = $("#{$this->grid->id}");
-	if ($("input[name='{$this->columnName}']:checked", grid).length)
-	{
-
-		$(".bulk-actions-btn", grid).removeClass("disabled");
-		$("div.bulk-actions-blocker",grid).hide();
-	}
-	else
-	{
-		$(".bulk-actions-btn", grid).addClass("disabled");
-		$("div.bulk-actions-blocker",grid).show();
-	}
-});
-EOD;
+        $js .= "$.fn.yiiGridView.initBulkActions('{$this->grid->id}');";
 }
         foreach ($this->events as $buttonId => $handler) {
             $js .= "\n$(document).on('click','#{$buttonId}', function(){
-            var grid = $(\"#{$this->grid->id}\");
-            if (!$(\"input[name='{$this->columnName}']:checked\", grid).length)
+            var checked = $.fn.yiiGridView.getCheckedItems();
+            if (!checked.length)
             {
                 alert('".$this->noCheckedMessage."');
                 return false;
             }
-            var checked = $('input[name=\"{$this->columnName}\"]:checked');\n
 			var fn = $handler; if ($.isFunction(fn)){fn(checked);}\nreturn false;});\n";
         }
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), $js);
