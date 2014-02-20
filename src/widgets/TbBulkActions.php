@@ -252,7 +252,7 @@ $(document).on('click', '#{$this->grid->id} input[type=checkbox]', function(e){
     checkBox.prop('checked', !checkBox.prop('checked'));
 });
     
-$(document).on('click','#deals-grid_c0_all',function() {
+$(document).on('click','#{$this->grid->id}_c0_all',function() {
     var checked=this.checked;
     if(checked)
     {
