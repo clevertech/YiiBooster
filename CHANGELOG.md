@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(enh)** generateActiveRow() now detects enum and date columns and uses dropdownlistrow or datepickerrow class #762 (pitchinnate)
 - **(enh)** TbExtendedGridView remembering selected rows #628 (firsyura)
 - **(fix)** Arrow in header of sortable gridview column is now displayed only if the column is sortable (contains sort-link) (kev360)
 - **(enh)** New widget `TbEditable` to be able to use `x-editable` without models #729 (fromYukki)
