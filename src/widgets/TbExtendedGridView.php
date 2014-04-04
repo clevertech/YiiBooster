@@ -429,7 +429,7 @@ class TbExtendedGridView extends TbGridView
 				'htmlOptions' => array('style' => 'margin-bottom:5px')
 			)
 		);
-		echo '<div class="row">';
+		echo '<div>';
 		$buttons->init();
 		$buttons->run();
 		echo '</div>';
@@ -437,6 +437,7 @@ class TbExtendedGridView extends TbGridView
 		$chartId = preg_replace('[-\\ ?]', '_', 'exgvwChart' . $this->getId()); // cleaning out most possible characters invalid as javascript variable identifiers.
 
 		$this->componentsReadyScripts[] = '$(document).on("click",".' . $this->getId() . '-grid-control", function(){
+			$(this).parent().find("a").toggleClass("active");
 			if ($(this).hasClass("grid") && $("#' . $this->getId() . ' #' . $chartId . '").is(":visible"))
 			{
 				$("#' . $this->getId() . ' #' . $chartId . '").hide();
@@ -488,7 +489,7 @@ class TbExtendedGridView extends TbGridView
 		$this->chartOptions['htmlOptions']['style'] = 'display:none'; // sorry but use a class to provide styles, we need this
 		// build unique ID
 		// important!
-		echo '<div class="row">';
+		echo '<div>';
 		if ($this->ajaxUpdate !== false) {
 			if (isset($options['chart']) && is_array($options['chart'])) {
 				$options['chart']['renderTo'] = $chartId;
@@ -519,6 +520,16 @@ class TbExtendedGridView extends TbGridView
 		echo '</div>';
 		// end chart display
 		// ****************************************
+		
+		// check if the chart should appear by default
+		if(isset($this->chartOptions['defaultView']) && $this->chartOptions['defaultView'] === true) {
+			$this->componentsReadyScripts[] = '
+				$(".' . $this->getId() . '-grid-control.grid").removeClass("active");
+				$(".' . $this->getId() . '-grid-control.chart").addClass("active");
+				$("#' . $this->getId() . ' table.items").hide();
+				$("#' . $this->getId() . ' #' . $chartId . '").show();
+			';
+		}
 	}
 
 	/**
