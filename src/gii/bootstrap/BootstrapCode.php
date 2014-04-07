@@ -30,9 +30,25 @@ class BootstrapCode extends CrudCode
 			}
 
 			if ($column->type !== 'string' || $column->size === null) {
-				return "\$form->{$inputField}(\$model,'{$column->name}',array('class'=>'span5'))";
+				if($column->dbType == 'date') {
+					return "\$form->datepickerRow(\$model,'{$column->name}',array('options'=>array(),'htmlOptions'=>array('class'=>'span5')),array('prepend'=>'<i class=\"icon-calendar\"></i>','append'=>'Click on Month/Year at top to select a different year or type in (mm/dd/yyyy).'))";
+				} else {
+					return "\$form->{$inputField}(\$model,'{$column->name}',array('class'=>'span5'))";
+				}
 			} else {
-				return "\$form->{$inputField}(\$model,'{$column->name}',array('class'=>'span5','maxlength'=>$column->size))";
+				if (strpos ( $column->dbType, 'enum(' ) !== false) {
+					$temp = $column->dbType;
+					$temp = str_replace ( 'enum', 'array', $temp );
+					eval ( '$options = ' . $temp . ';' );
+					$dropdown_options = "array(";
+					foreach ( $options as $option ) {
+						$dropdown_options .= "\"$option\"=>\"$option\",";
+					}
+					$dropdown_options .= ")";
+					return "\$form->dropDownListRow(\$model,'{$column->name}',{$dropdown_options},array('class'=>'input-large'))";
+				} else {
+					return "\$form->{$inputField}(\$model,'{$column->name}',array('class'=>'span5','maxlength'=>$column->size))";
+				}
 			}
 		}
 	}
