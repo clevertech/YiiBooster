@@ -20,7 +20,10 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbColorPicker extends CInputWidget
+
+Yii::import('bootstrap.widgets.TbBaseInputWidget');
+
+class TbColorPicker extends TbBaseInputWidget
 {
 
 	/**
