@@ -51,7 +51,7 @@ class TbEditableField extends TbEditable
         parent::init();
 
         // set value
-        $this->value = $this->model->getAttribute($this->attribute);
+        $this->value = $this->model->{$this->attribute};
 
         /**
          * set data-pk only for existing records
