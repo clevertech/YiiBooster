@@ -486,7 +486,13 @@ class TbExtendedGridView extends TbGridView
 		);
 		$this->chartOptions['htmlOptions'] = isset($this->chartOptions['htmlOptions'])
 			? $this->chartOptions['htmlOptions'] : array();
-		$this->chartOptions['htmlOptions']['style'] = 'display:none'; // sorry but use a class to provide styles, we need this
+		
+		// sorry but use a class to provide styles, we need this
+		if(empty($this->chartOptions['htmlOptions']['style']))
+			$this->chartOptions['htmlOptions']['style'] = 'width: 100%; height: 100%;';
+		else
+			$this->chartOptions['htmlOptions']['style'] = $this->chartOptions['htmlOptions']['style'].'; width: 100%; height: 100%;';
+		
 		// build unique ID
 		// important!
 		echo '<div>';
@@ -528,6 +534,13 @@ class TbExtendedGridView extends TbGridView
 				$(".' . $this->getId() . '-grid-control.chart").addClass("active");
 				$("#' . $this->getId() . ' table.items").hide();
 				$("#' . $this->getId() . ' #' . $chartId . '").show();
+			';
+		} else {
+			$this->componentsReadyScripts[] = '
+				$(".' . $this->getId() . '-grid-control.grid").addClass("active");
+				$(".' . $this->getId() . '-grid-control.chart").removeClass("active");
+				$("#' . $this->getId() . ' table.items").show();
+				$("#' . $this->getId() . ' #' . $chartId . '").hide();
 			';
 		}
 	}
