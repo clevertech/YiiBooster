@@ -97,6 +97,11 @@ return array(
 		'js' => array('jquery.json.yiigridview.js'),
 		'depends' => array('jquery', 'jqote2', 'ajax-cache')
 	),
+	'group-grid-view' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/group-grid-view',
+		'js' => array('jquery.group.yiigridview.js'),
+		'depends' => array('jquery', 'jqote2', 'ajax-cache')
+	),
 	'redactor' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/redactor',
 		'js' => array($this->minify ? 'redactor.min.js' : 'redactor.js'),
