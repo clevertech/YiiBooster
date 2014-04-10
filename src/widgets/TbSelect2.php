@@ -150,10 +150,11 @@ class TbSelect2 extends CInputWidget
         }
 
 		ob_start();
-		echo "jQuery('#{$id}').select2({$options})$defValue";
+		echo "jQuery('#{$id}').select2({$options})";
 		foreach ($this->events as $event => $handler) {
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 		}
+		echo $defValue;
 
 		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
 	}
