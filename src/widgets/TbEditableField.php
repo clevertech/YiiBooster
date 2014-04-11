@@ -123,7 +123,7 @@ class TbEditableField extends TbEditable
     /**
      * @return string
      */
-    public function getSelector()
+    public function getSelector($unique = true)
 	{
 		if ($this->model->isNewRecord) {
 			$pk = 'new';
@@ -143,7 +143,9 @@ class TbEditableField extends TbEditable
 				);
 			}
 		}
-		return str_replace('\\', '_', get_class($this->model)) . '_' . $this->attribute . '_' . $pk;
+		return $unique ? 
+			str_replace('\\', '_', get_class($this->model)) . '_' . $this->attribute . '_' . $pk : 
+			str_replace('\\', '_', get_class($this->model)) . '_' . $this->attribute;
 	}
 
     /**

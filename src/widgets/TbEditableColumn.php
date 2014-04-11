@@ -70,13 +70,10 @@ class TbEditableColumn extends TbDataColumn
 			$options['text'] = $text;
 			$options['encode'] = false;
 		}
-
+		
 		/** @var $widget TbEditableField */
 		$widget = $this->grid->controller->createWidget('TbEditableField', $options);
-        $widget->buildHtmlOptions();
-        $widget->buildJsOptions();
-        $widget->registerAssets();
-
+		
 		//if editable not applied --> render original text
 		if (!$widget->apply) {
 			if (isset($text)) {
@@ -86,26 +83,28 @@ class TbEditableColumn extends TbDataColumn
 			}
 			return;
 		}
-
-		//manually make selector non unique to match all cells in column
-		$selector = str_replace('\\', '_',get_class($widget->model)) . '_' . $widget->attribute;
-		$widget->htmlOptions['rel'] = $selector;
+		
+		/* just add one editable call for all column cells */
+		$widget->buildHtmlOptions();
+		$widget->buildJsOptions();
+		$widget->registerAssets();
 
 		//can't call run() as it registers clientScript
 		$widget->renderLink();
-
+		
 		//manually render client script (one for all cells in column)
 		if (!$this->_isScriptRendered) {
-			$script = $widget->registerClientScript();
+			$script = $widget->registerClientScript(false);
+			
 			//use parent() as grid is totally replaced by new content
 			Yii::app()->getClientScript()->registerScript(
-				__CLASS__ . '#' . $this->grid->id . $selector . '-event',
-				'
-							   $("#' . $this->grid->id . '").parent().on("ajaxUpdate.yiiGridView", "#' . $this->grid->id . '", function() {' . $script . '});
-            '
+					__CLASS__ . '#' . $this->grid->id . '-event',
+					'
+					$("#' . $this->grid->id . '").parent().on("ajaxUpdate.yiiGridView", "#' . $this->grid->id . '", function() {' . $script . '});
+					'
 			);
 			$this->_isScriptRendered = true;
-		}
+		}									
 	}
 
 	/**

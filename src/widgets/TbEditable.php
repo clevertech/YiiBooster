@@ -326,13 +326,15 @@ class TbEditable extends CWidget
         $this->_prepareToAutoText = $value;
     }
 
-    public function registerClientScript()
+    public function getClientScript($unique = true)
     {
+    	$selector = $this->getSelector($unique);
         // target the specific field if parent ID is specified
+        $rel = $unique ? "rel=$selector" : "rel^=$selector";
         if ($this->parentid) {
-            $script = "$('#{$this->parentid} a[rel={$this->htmlOptions['rel']}]')";
+            $script = "$('#{$this->parentid} a[$rel]')";
         } else {
-            $script = "$('a[rel={$this->htmlOptions['rel']}]')";
+            $script = "$('a[$rel]')";
         }
 
         //attach events
@@ -349,6 +351,13 @@ class TbEditable extends CWidget
         //apply editable
         $options = CJavaScript::encode($this->options);
         $script .= ".editable($options);";
+
+        return $script;
+    }
+    
+    public function registerClientScript($unique = true)
+    {
+        $script = $this->getClientScript($unique);
 
         // unique script ID depending on the parent
         if ($this->parentid) {
@@ -379,7 +388,7 @@ class TbEditable extends CWidget
     /**
      * @return string
      */
-    public function getSelector()
+    public function getSelector($unique = true)
     {
         $pk = $this->pk;
         if($pk === null) {
@@ -396,7 +405,7 @@ class TbEditable extends CWidget
                 $pk = join('_', $buffer);
             }
         }
-        return $this->name.'_'.$pk;
+        return $unique ? $this->name.'_'.$pk : $this->name;
     }
 
     /**
@@ -488,16 +497,15 @@ class TbEditable extends CWidget
         if ($this->source) {
             //if source is array --> convert it to x-editable format.
             //Since 1.1.0 source as array with one element is NOT treated as Yii route!
-            if (is_array($this->source)) {
-                //if first elem is array assume it's normal x-editable format, so just pass it
-                if (isset($this->source[0]) && is_array($this->source[0])) {
-                    $options['source'] = $this->source;
-                } else { //else convert to x-editable source format {value: 1, text: 'abc'}
-                    $options['source'] = array();
-                    foreach ($this->source as $value => $text) {
-                        $options['source'][] = array('value' => $value, 'text' => $text);
-                    }
-                }
+            if (is_array($this->source)) { // array
+            	$this->htmlOptions['data-source'] = $this->prepareArray($this->source);
+            	unset($options['source']);  
+            } elseif (is_callable($this->source)) { // function that return an array 
+            	$array = $this->evaluateExpression($this->source, array('model'=>$this->model));
+            	if(!is_array($array))
+            		throw new CException('Parameter "source" function must return and array');
+            	$this->htmlOptions['data-source'] = $this->prepareArray($array);
+            	unset($options['source']);
             } else { //source is url
                 $options['source'] = $this->source;
             }
@@ -518,6 +526,23 @@ class TbEditable extends CWidget
         $this->options = CMap::mergeArray($this->options, $options);
     }
 
+    /**
+     * 
+     */
+    private function prepareArray($array)
+    {
+    	$ret = array();
+    	if (isset($array[0]) && is_array($array[0])) { //if first elem is array assume it's normal x-editable format, so just pass it
+    		$ret = $array;
+    	} else { //else convert to x-editable source format {value: 1, text: 'abc'}
+    		$ret = array();
+    		foreach ($array as $value => $text) {
+    			$ret[] = array('value' => $value, 'text' => $text);
+    		}
+    	}
+    	return json_encode($ret);
+    }
+    
     /**
      *
      */
