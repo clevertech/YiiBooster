@@ -859,7 +859,7 @@ class TbActiveForm extends CActiveForm
 			$uncheck = '';
 		}
 
-		$hiddenOptions = isset($htmlOptions['id']) ? array('id' => CHtml::ID_PREFIX . $htmlOptions['id'])
+		$hiddenOptions = isset($htmlOptions['id']) ? array('id' => $htmlOptions['id'])
 			: array('id' => false);
 		$hidden = $uncheck !== null ? CHtml::hiddenField($name, $uncheck, $hiddenOptions) : '';
 
