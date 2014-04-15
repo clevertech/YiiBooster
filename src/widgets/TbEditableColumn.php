@@ -34,9 +34,11 @@ class TbEditableColumn extends TbDataColumn
 	 */
 	public function init()
 	{
-		if (!$this->grid->dataProvider instanceOf CActiveDataProvider) {
+		// #745 adding support for CArrayDataProviders only if based on a CModel array
+		/* if (!$this->grid->dataProvider instanceOf CActiveDataProvider) {
 			throw new CException('EditableColumn can be applied only to grid based on CActiveDataProvider');
-		}
+		} */
+		
 		if (!$this->name) {
 			throw new CException('You should provide name for EditableColumn');
 		}
@@ -53,6 +55,11 @@ class TbEditableColumn extends TbDataColumn
 	 */
 	protected function renderDataCellContent($row, $data)
 	{
+		// #745 adding support for CArrayDataProviders only if based on a CModel array
+		if(!$data instanceOf CModel) {
+			throw new CException('EditableColumn can be applied only to CModel based objects');
+		}
+		
 		$options = CMap::mergeArray(
 			$this->editable,
 			array(
