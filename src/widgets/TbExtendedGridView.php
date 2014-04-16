@@ -316,7 +316,7 @@ class TbExtendedGridView extends TbGridView
 			$key = $this->dataProvider->keyAttribute === null ? $data->getPrimaryKey() : $data->{$this->dataProvider->keyAttribute};
 			return is_array($key) ? implode(',', $key) : $key;
 		}
-		if ($this->dataProvider instanceof CArrayDataProvider || $this->dataProvider instanceof CSqlDataProvider) {
+		if (($this->dataProvider instanceof CArrayDataProvider && $this->dataProvider->keyField !== false) || $this->dataProvider instanceof CSqlDataProvider) {
 			return is_object($data) ? $data->{$this->dataProvider->keyField}
 				: $data[$this->dataProvider->keyField];
 		}
