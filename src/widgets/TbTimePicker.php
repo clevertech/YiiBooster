@@ -80,7 +80,7 @@ class TbTimePicker extends CInputWidget
 
 		// We are overriding the result of $this->resolveNameID() here, because $id which it emits is not unique through the page.
 		if (empty($this->htmlOptions['id'])) {
-			$this->htmlOptions['id'] = $this->getId(true) . '-' . $id;
+			$this->htmlOptions['id'] = $id; // #716 this is stopping clientside error to appear - $this->getId(true) . '-' . $id;
 		}
 
 		// Adding essential class for timepicker to work.
