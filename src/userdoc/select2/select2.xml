@@ -1,0 +1,142 @@
+<documentation for="TbSelect2"
+               punchline="Traditional selector on steroids">
+
+<section named="Description">
+
+    <p> We have included the <a href="http://ivaynberg.github.com/select2/">Select2 on roids plugin</a>
+        of Igor Vaynberg.
+        The following is a simple example of the amount of possible features that this plugin can do. For further
+        information on its use, please visit <a href="http://ivaynberg.github.com/select2/" target="_blank">plugin docs</a>.
+    </p>
+
+    <p>Basic example of usage is this:</p>
+
+    <example name="basic" />
+
+</section>
+
+<section named="Widget Configuration">
+
+    <p>Here's all configuration properties which you can set for <wn>TbSelect2</wn> widget.</p>
+    <p>Note that this widget is a subclass of <yiidoc>CInputWidget</yiidoc>, so several attributes are common to all of such subclasses.</p>
+
+        <properties>
+            <property name="model" type="CModel" default="null">
+                <p>
+                    The data model associated with this widget.
+                    See <yiidoc>CInputWidget.model</yiidoc>.
+                    Either this property along with <pn>attribute</pn> should be defined, or the <pn>name</pn>.
+                </p>
+            </property>
+            <property name="attribute" type="string" default="null">
+                <p>
+                    If you set the <pn>model</pn> attribute,
+                    here you have to specify the name of the model property which you want to change with this widget.
+                    See <yiidoc>CInputWidget.attribute</yiidoc>.
+                    Either this property along with <pn>model</pn> should be defined, or the <pn>name</pn>.
+                </p>
+            </property>
+            <property name="name" type="string" default="null">
+                <p>
+                    The value of <pn>name</pn> HTML attribute of the input element.
+                    It must be set if you did not provide value for <pn>model</pn>.
+                    See <yiidoc>CInputWidget.name</yiidoc>.
+                    Either this property should be defined, or the <pn>model</pn> together with <pn>attribute</pn>.
+                </p>
+            </property>
+            <property name="value" type="string" default="null">
+                <p>
+                    Here you can force the initial value of the input.
+                    If <pn>model</pn> is provided, by default model's value is used.
+                    See <yiidoc>CInputWidget.value</yiidoc>.
+                </p>
+            </property>
+            <property name="htmlOptions" type="array" default="array()">
+                <p>
+                    HTML attributes of the input tag itself.
+                    Please note that it is <em>not</em> the attributes of a wrapper tag around the input.
+                    See <yiidoc>CInputWidget.htmlOptions</yiidoc>.
+                </p>
+            </property>
+
+            <property name="form" type="TbActiveForm" default="null">
+                <p>
+                    You can pass the <wn>TbActiveForm</wn> instance here to help the widget automatically generate proper <pn>name</pn> attribute.
+                    Actually, when you make Select2 using the <code>TbActiveForm.select2Row()</code> call, the form instance gets passed to widget through this very attribute
+                </p>
+
+            </property>
+
+            <property name="data" type="array" default="array()">
+                <p>
+                    Data for list options. Elements of this array are "value" => "value label", the same as the result of <yiidoc>CHtml::listData</yiidoc>.
+                </p>
+            </property>
+
+            <property name="asDropDownList" type="boolean" default="true">
+                <p>Whether to display as a dropdown list or as a tag selector.</p>
+            </property>
+
+            <property name="options" type="array" default="array()">
+                <p>
+                    Options for the original library. This value will be JSON-encoded and fed to <ln>select2</ln>.
+                    See the <a href="http://ivaynberg.github.io/select2/">library documentation</a> for list of all possible options.
+                </p>
+            </property>
+
+            <property name="events" type="array" default="array()">
+                    <p>
+                        Array of Javascript event handlers in format <code>"event_name" => "Javascript code for handler"</code>.
+                        This handlers will be attached to input element.
+                    </p>
+                    <p label="volatile">
+                        Note that the presence of this option encourages to write Javascript code inside your <em>view</em> files,
+                        so most possibly we will completely remove it in future versions.
+                    </p>
+            </property>
+
+            <property name="val" type="string" default="''">
+                <p>
+                    The default value.
+                </p>
+            </property>
+    </properties>
+</section>
+
+<section named="Examples of usage">
+
+    <subheader>Initially empty dropdown (e. g. for loading it with AJAX call) with placeholder:</subheader>
+
+    <example name="empty_data"/>
+
+    <subheader id="multiple-select">Sending multiple selected elements to server</subheader>
+
+    <p>This is the test for <github-issue id="574"/></p>
+
+    <p>
+        Select some elements in the selector, open Developer Tools in your browser (e. g. in Firefox it would be Firebug) and click on the button.
+        In the details about the POST request you should see properly formatted parameters being sent to the server.
+    </p>
+
+    <example name="574"/>
+
+    <p label="info">
+        We are wrapping the multiselect into the form, to send data to endpoint in traditional way.
+        Another way is to send the data formatted as you wish.
+        This way you get selected elements using either <a href="http://api.jquery.com/val/"><code>.val()</code></a>
+        or <a href="http://ivaynberg.github.io/select2/"><code>.select2('val')</code></a> method
+        of the jQuery element representing the <code>select</code> element.
+    </p>
+
+    <p>Like that:</p>
+
+    <example name="574_noform"/>
+
+    <p label="warning">
+        Please, as with all other such examples, do <em>NOT</em> write Javascript click handlers like the above.
+        This is only for illustration purposes so examples would be self-contained.
+        Your Javascript handlers should always be in separate Javascript source files.
+    </p>
+
+</section>
+</documentation>
