@@ -1132,7 +1132,7 @@ class TbActiveForm extends CActiveForm
 			return;
 		
 		$attribute = $fieldData[1][1];
-		$htmlOptions = &$fieldData[1][2];
+		$htmlOptions = &$fieldData[1][3];
 		if (!isset($htmlOptions['placeholder'])) {
 			$htmlOptions['placeholder'] = $model->getAttributeLabel($attribute);
 		}
