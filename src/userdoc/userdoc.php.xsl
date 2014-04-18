@@ -101,16 +101,76 @@ $this->menu = array(</xsl:text>
     </xsl:template>
     <xsl:template match="p[@label]">
         <p>
-            <span>
-                <xsl:attribute name="class">
-                    <xsl:text>label label-</xsl:text>
-                    <xsl:value-of select="@label" />
-                </xsl:attribute>
-                <xsl:value-of select="ctboost:ucfirst(@label)" />
-            </span>
+            <xsl:call-template name="label">
+                <xsl:with-param name="label" select="@label" />
+                <xsl:with-param name="caption" select="ctboost:ucfirst(@label)" />
+            </xsl:call-template>
+
             <xsl:text> </xsl:text>
             <xsl:apply-templates />
         </p>
+    </xsl:template>
+
+    <xsl:template match="p[@label=volatile]">
+        <p>
+            <xsl:call-template name="label">
+                <xsl:with-param name="label" select="'warning'" />
+                <xsl:with-param name="caption" select="'Volatile'" />
+                <xsl:with-param name="tooltip" select="'Suspect for renaming in future versions.'" />
+            </xsl:call-template>
+
+            <xsl:text> </xsl:text>
+            <xsl:apply-templates />
+        </p>
+    </xsl:template>
+
+    <xsl:template match="p[@label=deprecated]">
+        <p>
+            <xsl:call-template name="label">
+                <xsl:with-param name="label" select="'error'" />
+                <xsl:with-param name="caption" select="'Deprecated'" />
+                <xsl:with-param name="tooltip" select="'Do not use it in any new code and try to remove usage of it in existing code.'" />
+            </xsl:call-template>
+
+            <xsl:text> </xsl:text>
+            <xsl:apply-templates />
+        </p>
+    </xsl:template>
+
+    <xsl:template match="p[@label=internal]">
+        <p>
+            <xsl:call-template name="label">
+                <xsl:with-param name="label" select="'info'" />
+                <xsl:with-param name="caption" select="'Internal'" />
+                <xsl:with-param name="tooltip" select="'You are not expected to change this property in normal usage.'" />
+            </xsl:call-template>
+
+            <xsl:text> </xsl:text>
+            <xsl:apply-templates />
+        </p>
+    </xsl:template>
+
+    <xsl:template match="label" name="label">
+        <xsl:param name="label" />
+        <xsl:param name="caption" />
+        <xsl:param name="tooltip" />
+        <span>
+            <xsl:attribute name="class">
+                <xsl:text>label label-</xsl:text>
+                <xsl:value-of select="$label" />
+            </xsl:attribute>
+
+            <xsl:value-of select="$caption" />
+
+            <xsl:if test="string-length($tooltip) &gt; 0">
+                <xsl:attribute name="data-toggle">
+                    <xsl:text>tooltip</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:value-of select="$tooltip" />
+                </xsl:attribute>
+            </xsl:if>
+        </span>
     </xsl:template>
 
     <xsl:template match="ln">
@@ -126,7 +186,12 @@ $this->menu = array(</xsl:text>
     </xsl:template>
 
     <xsl:template match="subheader">
-        <h2><xsl:apply-templates /></h2>
+        <h2>
+            <xsl:if test="string-length(@id) &gt; 0">
+                <xsl:attribute name="id" select="@id" />
+            </xsl:if>
+            <xsl:apply-templates />
+        </h2>
     </xsl:template>
 
     <xsl:template match="yiidoc">
