@@ -194,7 +194,7 @@ class TbFormInputElement extends CFormElement
 			$attributes['attribute'] = $this->name;
 
 			return $this->getParent()->getActiveFormWidget()->customFieldRow(
-				array(array($this->getParent()->getOwner(), 'widget'), array($this->type, $this->attributes, true)),
+				array(array($this->getParent()->getOwner(), 'widget'), array($this->type, $attributes, true)),
 				$model,
 				$attribute,
 				$rowOptions
