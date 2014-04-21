@@ -522,8 +522,7 @@ abstract class TbInput extends CInputWidget
 	 */
 	protected function getContainerCssClass()
 	{
-		$attribute = $this->attribute;
-		return $this->model->hasErrors(CHtml::resolveName($this->model, $attribute)) ? CHtml::$errorCss : '';
+		return $this->model->hasErrors($this->attribute) ? CHtml::$errorCss : '';
 	}
 
 	/**
