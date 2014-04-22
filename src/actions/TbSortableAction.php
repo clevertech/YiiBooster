@@ -43,9 +43,7 @@ class TbSortableAction extends CAction
 
 		$sortOrderData = $_POST['sortOrder'];
 
-		$query = $this->makeUpdateQuery($model, $sortableAttribute, $sortOrderData);
-		Yii::app()->db->createCommand($query)->execute();
-
+		$this->update($model, $sortableAttribute, $sortOrderData);
 	}
 
 	private function isValidRequest()
@@ -62,17 +60,35 @@ class TbSortableAction extends CAction
 	 *
 	 * @return string
 	 */
-	private function makeUpdateQuery($model, $sortableAttribute, $sortOrderData)
+	private function update($model, $sortableAttribute, $sortOrderData)
 	{
-		$query = "UPDATE {$model->tableName()} SET {$sortableAttribute} = CASE ";
-		$ids = array();
-		foreach ($sortOrderData as $id => $sort_order) {
-			$id = intval($id);
-			$sort_order = intval($sort_order);
-			$query .= "WHEN {$model->tableSchema->primaryKey}={$id} THEN {$sort_order} ";
-			$ids[] = $id;
+		$pk = $model->tableSchema->primaryKey;
+		$pk_array = array();
+		if(is_array($pk)) { // composite key
+			$string_ids = array_keys($sortOrderData);
+			
+			$array_ids = array();
+			foreach ($string_ids as $string_id)
+				$array_ids[] = explode(',', $string_id);
+			
+			foreach ($array_ids as $array_id)
+				$pk_array[] = array_combine($pk, $array_id);
+		} else { // normal key
+			$pk_array = array_keys($sortOrderData);
 		}
-		$query .= "END WHERE {$model->tableSchema->primaryKey} IN (" . implode(',', $ids) . ');';
-		return $query;
+		
+		$models = $model->model()->findAllByPk($pk_array);
+		$transaction = Yii::app()->db->beginTransaction();
+		try {
+			foreach ($models as $model) {
+				$_key = is_array($pk) ? implode(',', array_values($model->primaryKey)) : $model->primaryKey;
+				$model->{$sortableAttribute} = $sortOrderData[$_key];
+				$model->save();
+			}
+			$transaction->commit();
+		}
+		catch(Exception $e) { // an exception is raised if a query fails
+			$transaction->rollback();
+		}
 	}
 }
