@@ -513,7 +513,7 @@ class TbActiveForm extends CActiveForm
 		if (isset($hiddenField)) echo $hiddenField;
 		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
 		echo $field;
-		echo $model->getAttributeLabel($realAttribute);
+		echo empty($rowOptions['label']) ? $model->getAttributeLabel($realAttribute) : $rowOptions['label'];
 		echo CHtml::closeTag('label');
 		$fieldData = ob_get_clean();
 
@@ -560,7 +560,7 @@ class TbActiveForm extends CActiveForm
 		if (isset($hiddenField)) echo $hiddenField;
 		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
 		echo $field;
-		echo $model->getAttributeLabel($realAttribute);
+		echo empty($rowOptions['label']) ? $model->getAttributeLabel($realAttribute) : $rowOptions['label'];
 		echo CHtml::closeTag('label');
 		$fieldData = ob_get_clean();
 
