@@ -477,12 +477,34 @@ class TbExtendedGridView extends TbGridView
 			}
 			++$cnt;
 		}
-
+		
+		$xAxisData[] = array('categories'=>array());
+		if(!empty($this->chartOptions['data']['xAxis'])){
+			$xAxis = $this->chartOptions['data']['xAxis'];
+			$categories = $xAxis['categories'];
+			if(is_array($categories)) {
+				$xAxisData['categories'] = $categories;
+			} else { // field name
+				for ($row = 0; $row < $count; ++$row) {
+					$column = $this->getColumnByName($categories);
+					if (!is_null($column) && $column->value !== null) {
+						$xAxisData['categories'][] = $this->evaluateExpression(
+								$column->value,
+								array('data' => $data[$row], 'row' => $row)
+						);
+					} else {
+						$value = CHtml::value($data[$row], $categories);
+						$xAxisData['categories'][] = $value;
+					}
+				}
+			}
+		}
+		
 		// ****************************************
 		// render chart
 		$options = CMap::mergeArray(
 			$this->chartOptions['config'],
-			array('series' => $seriesData)
+			array('series' => $seriesData, 'xAxis' => $xAxisData)
 		);
 		$this->chartOptions['htmlOptions'] = isset($this->chartOptions['htmlOptions'])
 			? $this->chartOptions['htmlOptions'] : array();
