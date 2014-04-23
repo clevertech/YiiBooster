@@ -87,7 +87,7 @@ class TbButtonColumn extends CButtonColumn
 			$options['data-toggle'] = 'tooltip';
 		}
 
-		if (isset($button['icon'])) {
+		if (isset($button['icon']) && $button['icon']) {
 			if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
 				$button['icon'] = 'icon-' . implode(' icon-', explode(' ', $button['icon']));
 			}
