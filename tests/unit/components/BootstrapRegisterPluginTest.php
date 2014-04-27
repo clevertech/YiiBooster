@@ -1,21 +1,27 @@
 <?php
 /**
- * Class BootstrapRegisterPluginTest
- *
- * Tests for `Bootstrap.registerPlugin` method
+ * YiiBooster project.
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
-require_once(__DIR__.'/../../src/components/Bootstrap.php');
-require_once(__DIR__.'/../fakes/FakeAssetsRegistry.php');
+
+require_once(__DIR__ . '/../../../src/components/Bootstrap.php');
+require_once(__DIR__ . '/../../fakes/AssetsRegistryHook.php');
+
+/**
+ * Tests for `Bootstrap::registerPlugin` method
+ */
 class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 {
-
 	/** @var Bootstrap */
 	private $component;
 
+	/**
+	 * @inheritdoc
+	 */
 	public function setUp()
 	{
-		$this->component = new Bootstrap;
-		$this->component->assetsRegistry = new FakeAssetsRegistry();
+		$this->component = new Bootstrap();
+		$this->component->assetsRegistry = new AssetsRegistryHook();
 	}
 
 	/**
@@ -24,7 +30,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testNoNameInvalidArgumentException()
 	{
-		$this->component->registerPlugin( null );
+		$this->component->registerPlugin(null);
 	}
 
 	public function testHasNameAndSelectorAndOptions_RegistersScript()
@@ -35,9 +41,10 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 			array('option1' => 'value1', 'option2' => 'value2')
 		);
 
-		$this->assertEquals(
-			"jQuery('.selector').name({\"option1\":\"value1\",\"option2\":\"value2\"});",
-			$this->getFirstRegisteredScript()
+		$this->assertTrue(
+			$this->component
+				->assetsRegistry
+				->hasRegisteredScript("jQuery('.selector').name({\"option1\":\"value1\",\"option2\":\"value2\"});")
 		);
 	}
 
@@ -48,9 +55,10 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 			'.selector'
 		);
 
-		$this->assertEquals(
-			"jQuery('.selector').name();",
-			$this->getFirstRegisteredScript()
+		$this->assertTrue(
+			$this->component
+				->assetsRegistry
+				->hasRegisteredScript("jQuery('.selector').name();")
 		);
 	}
 
@@ -63,9 +71,10 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->component->registerPlugin('name');
 
-		$this->assertEquals(
-			"jQuery('.myselector').name({\"myoption\":\"myvalue\"});",
-			$this->getFirstRegisteredScript()
+		$this->assertTrue(
+			$this->component
+				->assetsRegistry
+				->hasRegisteredScript("jQuery('.myselector').name({\"myoption\":\"myvalue\"});")
 		);
 	}
 
@@ -82,9 +91,10 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 			array('theiroption' => 'theirvalue')
 		);
 
-		$this->assertEquals(
-			"jQuery('.theirselector').name({\"theiroption\":\"theirvalue\"});",
-			$this->getFirstRegisteredScript()
+		$this->assertTrue(
+			$this->component
+				->assetsRegistry
+				->hasRegisteredScript("jQuery('.theirselector').name({\"theiroption\":\"theirvalue\"});")
 		);
 	}
 
@@ -92,7 +102,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 	{
 		$this->component->registerPlugin('noselector');
 
-		$this->assertEmpty($this->getAllRegisteredScripts());
+		$this->assertFalse($this->component->assetsRegistry->hasScripts());
 	}
 
 	public function testNoSelectorKnownPlugin_RegisterKnownPlugin()
@@ -103,21 +113,10 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->component->registerPlugin('name');
 
-		$this->assertEquals(
-			"jQuery('.selector').name();",
-			$this->getFirstRegisteredScript()
+		$this->assertTrue(
+			$this->component
+				->assetsRegistry
+				->hasRegisteredScript("jQuery('.selector').name();")
 		);
-	}
-
-	/** @return mixed */
-	private function getFirstRegisteredScript()
-	{
-		return $this->component->assetsRegistry->getFirstScript();
-	}
-
-	/** @return array */
-	private function getAllRegisteredScripts()
-	{
-		return $this->component->assetsRegistry->getAllScripts();
 	}
 }

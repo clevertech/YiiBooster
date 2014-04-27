@@ -4,8 +4,8 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-require_once(__DIR__ . '/../../src/widgets/TbActiveForm.php');
-require_once(__DIR__ . '/../fakes/FakeController.php');
+require_once(__DIR__ . '/../../../src/widgets/TbActiveForm.php');
+require_once(__DIR__ . '/../../fakes/FakeController.php');
 
 class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 {
@@ -488,12 +488,15 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$method = new ReflectionMethod($form, 'inlineFieldRow');
 		$method->setAccessible(true);
 
-		$rowOptions = array(
-			'prepend' => 'before',
-			'prependOptions' => array('class' => 'bar'),
-			'append' => 'after',
-			'appendOptions' => array('class' => 'apple'),
-		);
+		$rowOptions = [];
+		$methodInitRowOptions = new ReflectionMethod($form, 'initRowOptions');
+		$methodInitRowOptions->setAccessible(true);
+		$methodInitRowOptions->invokeArgs($form, array(&$rowOptions));
+
+		$rowOptions['prepend'] = 'before';
+		$rowOptions['prependOptions'] = array('class' => 'bar');
+		$rowOptions['append'] = 'after';
+		$rowOptions['appendOptions'] = array('class' => 'apple');
 
 		ob_start();
 		$method->invokeArgs($form, array(&$fieldData, &$model, &$attribute, &$rowOptions));

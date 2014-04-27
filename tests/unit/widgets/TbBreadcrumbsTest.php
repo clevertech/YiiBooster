@@ -1,14 +1,11 @@
 <?php
 /**
- *
+ * YiiBooster project.
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-require_once(__DIR__.'/../../src/widgets/TbBreadcrumbs.php');
+require_once(__DIR__ . '/../../../src/widgets/TbBreadcrumbs.php');
 
-/**
- * Class TbBreadcrumbsTest
- */
 class TbBreadcrumbsTest extends PHPUnit_Framework_TestCase
 {
 	private function makeWidget()
