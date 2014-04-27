@@ -27,17 +27,17 @@
         "source": "https://github.com/clevertech/YiiBooster"
     },
     "require": {
-        "php":">=5.1.0"
+        "php":">=5.4.0"
     },
     "require-dev": {
         "yiisoft/yii": "1.1.14",
         "phpunit/phpunit": "3.7.*",
         "ncuesta/pinocchio": "dev-master",
-        "phploc/phploc": "*",
-        "sebastian/phpcpd": "*",
+        "phploc/phploc": "2.*",
+        "sebastian/phpcpd": "2.*",
         "squizlabs/php_codesniffer": "1.*",
         "ardem/yii-coding-standard": "dev-master",
-        "mayflower/php-codebrowser": "1.0.*@dev"
+        "mayflower/php-codebrowser": "1.*"
     },
     "minimum-stability": "dev"
 }
