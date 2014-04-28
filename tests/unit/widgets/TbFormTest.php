@@ -4,10 +4,10 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-require_once(__DIR__ . '/../../src/widgets/TbForm.php');
-require_once(__DIR__ . '/../../src/widgets/TbFormInputElement.php');
-require_once(__DIR__ . '/../../src/widgets/TbFormButtonElement.php');
-require_once(__DIR__ . '/../../src/widgets/TbButton.php');
+require_once(__DIR__ . '/../../../src/widgets/TbForm.php');
+require_once(__DIR__ . '/../../../src/widgets/TbFormInputElement.php');
+require_once(__DIR__ . '/../../../src/widgets/TbFormButtonElement.php');
+require_once(__DIR__ . '/../../../src/widgets/TbButton.php');
 
 class TbFormTest extends PHPUnit_Framework_TestCase
 {
