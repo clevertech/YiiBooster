@@ -203,8 +203,7 @@ class TbBulkActions extends CComponent
         foreach ($this->buttons as $actionButton)
             $this->renderButton($actionButton);
 
-        if (!$this->selectableRows)
-            echo '<div style="position:absolute;top:0;left:0;height:100%;width:100%;display:block;" class="bulk-actions-blocker"></div>';
+        echo '<div style="position:absolute;top:0;left:0;height:100%;width:100%;display:block;" class="bulk-actions-blocker"></div>';
 
         echo CHtml::closeTag('div');
 
@@ -222,7 +221,7 @@ class TbBulkActions extends CComponent
 
        
         $js = <<<EOD
-$(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
+$(document).on("click", "#{$this->grid->id} input[type=checkbox], #{$this->grid->id} tr", function(){
 	var grid = $("#{$this->grid->id}");
 	if ($("input[name='{$this->columnName}']:checked", grid).length)
 	{
@@ -289,9 +288,9 @@ $(document).on('click','#{$this->grid->id}_c0_all',function() {
     protected function renderButton($actionButton)
     {
         // create widget and display
-        if (isset($actionButton['htmlOptions']['class']) && !$this->selectableRows)
+        if (isset($actionButton['htmlOptions']['class']))
             $actionButton['htmlOptions']['class'] .= ' disabled bulk-actions-btn';
-        elseif (isset($actionButton['htmlOptions']['class']) && $this->selectableRows)
+        elseif (isset($actionButton['htmlOptions']['class']))
             $actionButton['htmlOptions']['class'] .= 'bulk-actions-btn';
         else
             $actionButton['htmlOptions']['class'] = 'disabled bulk-actions-btn';
