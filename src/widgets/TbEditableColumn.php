@@ -44,10 +44,50 @@ class TbEditableColumn extends TbDataColumn
 		}
 
 		parent::init();
+		
+		$this->registerScripts();
+		
 
 		//need to attach ajaxUpdate handler to refresh editables on pagination and sort
 		//should be here, before render of grid js
 		$this->attachAjaxUpdateEvent();
+	}
+	
+	/**
+	 * try to register editable scripts before any render, this is used especially for empty data providers
+	 * works only for CActiveDataProvider; reason is that we have to know model name
+	 */
+	protected function registerScripts() {
+		
+		if (!$this->grid->dataProvider instanceOf CActiveDataProvider)
+			return;
+		
+		/* dummy data */
+		$data = new $this->grid->dataProvider->modelClass();
+		$options = CMap::mergeArray(
+			$this->editable,
+			array(
+				'model' => $data,
+				'attribute' => $this->name,
+				'parentid' => $this->grid->id,
+			)
+		);
+		
+		/* dummy widget */
+		$widget = $this->grid->controller->createWidget('TbEditableField', $options);
+		
+		
+		$widget->registerAssets();
+		
+		if (!$this->_isScriptRendered) {
+			$script = $widget->registerClientScript(false);
+				
+			//use parent() as grid is totally replaced by new content
+			Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->grid->id . '-event', '
+				$("#' . $this->grid->id . '").parent().on("ajaxUpdate.yiiGridView", "#' . $this->grid->id . '", function() {' . $script . '});
+			');
+			$this->_isScriptRendered = true;
+		}
 	}
 
 	/**
@@ -95,7 +135,7 @@ class TbEditableColumn extends TbDataColumn
 		$widget->buildHtmlOptions();
 		$widget->buildJsOptions();
 		$widget->registerAssets();
-
+		
 		//can't call run() as it registers clientScript
 		$widget->renderLink();
 		
@@ -111,7 +151,7 @@ class TbEditableColumn extends TbDataColumn
 					'
 			);
 			$this->_isScriptRendered = true;
-		}									
+		}								
 	}
 
 	/**
