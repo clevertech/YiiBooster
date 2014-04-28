@@ -430,19 +430,15 @@ class Bootstrap extends CApplicationComponent
 	{
 		if ($this->enableCdn && $this->responsiveCss && $this->minify)
 		{// CDN hosts only responsive minified versions
-			$baseUrl = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2';
-			$filename = "/css/bootstrap-combined";
+			$baseUrl = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/';
+			$filename = "css/bootstrap-combined";
 		}
 		else
 		{
-			$baseUrl = $this->getAssetsUrl() . '/bootstrap';
-			$filename = "/css/bootstrap";
+			$baseUrl = $this->getAssetsUrl() . '/bootstrap/';
+			$filename = "css/bootstrap";
 			if (!$this->responsiveCss)
 				$filename .= '.no-responsive';
-		}
-
-		if ($this->fontAwesomeCss) {
-			$filename .= '.no-icons';
 		}
 
 		$filename .= $this->minify  ? '.min.css' : '.css';
