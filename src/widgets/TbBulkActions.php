@@ -219,6 +219,7 @@ class TbBulkActions extends CComponent
      */
     public function registerClientScript()
     {
+
        
         $js = <<<EOD
 $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
@@ -237,28 +238,33 @@ $(document).on("click", "#{$this->grid->id} input[type=checkbox]", function(){
 });
 EOD;
 
+//if user is using selectableRows, when the row is clicked, only select
+//the "bulk actions" checkbox
 if($this->selectableRows)
 {
 $js.="$(document).on('click','#{$this->grid->id} tr', function(){
 
 $(document).on('click', '#{$this->grid->id} input[type=checkbox]', function(e){
-    var checkBox = $(this).prop('checked'); 
-    if(checkBox){
-        $(this).parent().parent().addClass('selected');} else {
-        $(this).parent().parent().removeClass('selected');}
+    var isTargetSelected = $(this).prop('checked'); 
+    if(isTargetSelected)
+    {
+        $(this).parents('tr').addClass('selected');
+    } else {
+        $(this).parents('tr').removeClass('selected');
+    }
         e.stopPropagation();
-    })
-    var checkBox = $(this).children('.checkbox-column').children('input[name=\"{$this->grid->id}_c0\[\]\"]'); 
-    checkBox.prop('checked', !checkBox.prop('checked'));
+    });
+    var isTargetSelected = $(this).children('.checkbox-column').children('input[name=\"{$this->grid->id}_c0\[\]\"]'); 
+    isTargetSelected.prop('isTargetSelected', !isTargetSelected.prop('checked'));
 });
     
 $(document).on('click','#{$this->grid->id}_c0_all',function() {
     var checked=this.checked;
     if(checked)
     {
-        $('#{$this->grid->id} .odd, #{$this->grid->id} .even').addClass('selected');
+        $('tr #{$this->grid->id}').addClass('selected');
     } else {
-        $('#{$this->grid->id} .odd, #{$this->grid->id} .even').removeClass('selected');
+        $('tr #{$this->grid->id}').removeClass('selected');
     }
 });
 
@@ -269,6 +275,7 @@ $(document).on('click','#{$this->grid->id}_c0_all',function() {
         foreach ($this->events as $buttonId => $handler) {
             $js .= "\n$(document).on('click','#{$buttonId}', function(){
             var checked = $('input[name=\"{$this->columnName}\"]:checked');\n
+
 			var fn = $handler; if ($.isFunction(fn)){fn(checked);}\nreturn false;});\n";
         }
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), $js);
