@@ -254,7 +254,7 @@ $(document).on('click', '#{$this->grid->id} input[type=checkbox]', function(e){
     }
         e.stopPropagation();
     });
-    var isTargetSelected = $(this).children('.checkbox-column').children('input[name=\"{$this->grid->id}_c0\[\]\"]'); 
+    var isTargetSelected = $(this).children('.checkbox-column').children('input[name=\"{$this->columnName}\[\]\"]'); 
     isTargetSelected.prop('isTargetSelected', !isTargetSelected.prop('checked'));
 });
     
@@ -267,8 +267,6 @@ $(document).on('click','#{$this->grid->id}_c0_all',function() {
         $('tr #{$this->grid->id}').removeClass('selected');
     }
 });
-
-
 ";
 
 }
