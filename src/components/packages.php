@@ -52,7 +52,8 @@ return array(
 		'depends' => array('jquery'),
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/' : $this->getAssetsUrl() . '/bootstrap-datepicker/',
 		'css' => array($this->minify ? 'css/datepicker.min.css' : 'css/datepicker.css'),
-		'js' => array($this->minify ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js')
+		'js' => array($this->minify ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js', 'js/bootstrap-datepicker-noconflict.js') 
+		// ... the noconflict code is in its own file so we do not want to touch the original js files to ease upgrading lib
 	),
 	'datetimepicker' => array(
 		'depends' => array('jquery'),
@@ -68,7 +69,7 @@ return array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-editable/',
 		'css' => array('css/bootstrap-editable.css'),
 		'js' => array($this->minify ? 'js/bootstrap-editable.min.js' : 'js/bootstrap-editable.js'),
-		'depends' => array('jquery')
+		'depends' => array('jquery','bootstrap.js')
 	),
 	'moment' => array(
 		'baseUrl' => $this->getAssetsUrl(),
@@ -95,6 +96,11 @@ return array(
 	'json-grid-view' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/json-grid-view',
 		'js' => array('jquery.json.yiigridview.js'),
+		'depends' => array('jquery', 'jqote2', 'ajax-cache')
+	),
+	'group-grid-view' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/group-grid-view',
+		'js' => array('jquery.group.yiigridview.js'),
 		'depends' => array('jquery', 'jqote2', 'ajax-cache')
 	),
 	'redactor' => array(

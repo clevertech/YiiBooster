@@ -9,6 +9,8 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** Update x-editable to 1.5.2 and fix setting locale for datepicker, when jQuery UI is loaded on page #770 (Wiseon3)
+- **(enh)** TbExtendedGridView remembering selected rows #628 (firsyura)
 - **(fix)** Arrow in header of sortable gridview column is now displayed only if the column is sortable (contains sort-link) (kev360)
 - **(enh)** New widget `TbEditable` to be able to use `x-editable` without models #729 (fromYukki)
 

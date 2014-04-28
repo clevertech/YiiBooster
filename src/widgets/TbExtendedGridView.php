@@ -316,7 +316,7 @@ class TbExtendedGridView extends TbGridView
 			$key = $this->dataProvider->keyAttribute === null ? $data->getPrimaryKey() : $data->{$this->dataProvider->keyAttribute};
 			return is_array($key) ? implode(',', $key) : $key;
 		}
-		if ($this->dataProvider instanceof CArrayDataProvider || $this->dataProvider instanceof CSqlDataProvider) {
+		if (($this->dataProvider instanceof CArrayDataProvider || $this->dataProvider instanceof CSqlDataProvider) && !empty($this->dataProvider->keyField)) {
 			return is_object($data) ? $data->{$this->dataProvider->keyField}
 				: $data[$this->dataProvider->keyField];
 		}
@@ -371,6 +371,8 @@ class TbExtendedGridView extends TbGridView
 	 */
 	public function renderBulkActions()
 	{
+        Bootstrap::getBooster()->registerAssetJs('jquery.saveselection.gridview.js');
+        $this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.afterUpdateGrid('".$this->id."');";
 		echo '<tr><td colspan="' . count($this->columns) . '">';
 		$this->bulk->renderButtons();
 		echo '</td></tr>';
@@ -427,7 +429,7 @@ class TbExtendedGridView extends TbGridView
 				'htmlOptions' => array('style' => 'margin-bottom:5px')
 			)
 		);
-		echo '<div class="row">';
+		echo '<div>';
 		$buttons->init();
 		$buttons->run();
 		echo '</div>';
@@ -435,6 +437,7 @@ class TbExtendedGridView extends TbGridView
 		$chartId = preg_replace('[-\\ ?]', '_', 'exgvwChart' . $this->getId()); // cleaning out most possible characters invalid as javascript variable identifiers.
 
 		$this->componentsReadyScripts[] = '$(document).on("click",".' . $this->getId() . '-grid-control", function(){
+			$(this).parent().find("a").toggleClass("active");
 			if ($(this).hasClass("grid") && $("#' . $this->getId() . ' #' . $chartId . '").is(":visible"))
 			{
 				$("#' . $this->getId() . ' #' . $chartId . '").hide();
@@ -474,19 +477,47 @@ class TbExtendedGridView extends TbGridView
 			}
 			++$cnt;
 		}
-
+		
+		$xAxisData[] = array('categories'=>array());
+		if(!empty($this->chartOptions['data']['xAxis'])){
+			$xAxis = $this->chartOptions['data']['xAxis'];
+			$categories = $xAxis['categories'];
+			if(is_array($categories)) {
+				$xAxisData['categories'] = $categories;
+			} else { // field name
+				for ($row = 0; $row < $count; ++$row) {
+					$column = $this->getColumnByName($categories);
+					if (!is_null($column) && $column->value !== null) {
+						$xAxisData['categories'][] = $this->evaluateExpression(
+								$column->value,
+								array('data' => $data[$row], 'row' => $row)
+						);
+					} else {
+						$value = CHtml::value($data[$row], $categories);
+						$xAxisData['categories'][] = $value;
+					}
+				}
+			}
+		}
+		
 		// ****************************************
 		// render chart
 		$options = CMap::mergeArray(
 			$this->chartOptions['config'],
-			array('series' => $seriesData)
+			array('series' => $seriesData, 'xAxis' => $xAxisData)
 		);
 		$this->chartOptions['htmlOptions'] = isset($this->chartOptions['htmlOptions'])
 			? $this->chartOptions['htmlOptions'] : array();
-		$this->chartOptions['htmlOptions']['style'] = 'display:none'; // sorry but use a class to provide styles, we need this
+		
+		// sorry but use a class to provide styles, we need this
+		if(empty($this->chartOptions['htmlOptions']['style']))
+			$this->chartOptions['htmlOptions']['style'] = 'width: 100%; height: 100%;';
+		else
+			$this->chartOptions['htmlOptions']['style'] = $this->chartOptions['htmlOptions']['style'].'; width: 100%; height: 100%;';
+		
 		// build unique ID
 		// important!
-		echo '<div class="row">';
+		echo '<div>';
 		if ($this->ajaxUpdate !== false) {
 			if (isset($options['chart']) && is_array($options['chart'])) {
 				$options['chart']['renderTo'] = $chartId;
@@ -517,6 +548,23 @@ class TbExtendedGridView extends TbGridView
 		echo '</div>';
 		// end chart display
 		// ****************************************
+		
+		// check if the chart should appear by default
+		if(isset($this->chartOptions['defaultView']) && $this->chartOptions['defaultView'] === true) {
+			$this->componentsReadyScripts[] = '
+				$(".' . $this->getId() . '-grid-control.grid").removeClass("active");
+				$(".' . $this->getId() . '-grid-control.chart").addClass("active");
+				$("#' . $this->getId() . ' table.items").hide();
+				$("#' . $this->getId() . ' #' . $chartId . '").show();
+			';
+		} else {
+			$this->componentsReadyScripts[] = '
+				$(".' . $this->getId() . '-grid-control.grid").addClass("active");
+				$(".' . $this->getId() . '-grid-control.chart").removeClass("active");
+				$("#' . $this->getId() . ' table.items").show();
+				$("#' . $this->getId() . ' #' . $chartId . '").hide();
+			';
+		}
 	}
 
 	/**

@@ -13,13 +13,17 @@ defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', false)
 
 // Set up the shorthands for test app paths
 define('APP_ROOT', realpath(__DIR__ . '/runtime'));
-define('APP_RUNTIME', realpath(APP_ROOT . '/runtime'));
-define('APP_ASSETS', realpath(APP_ROOT . '/assets'));
+define('APP_RUNTIME', APP_ROOT . '/runtime');
+define('APP_ASSETS', APP_ROOT . '/assets');
+
+is_dir(APP_RUNTIME) or mkdir(APP_RUNTIME);
+is_dir(APP_ASSETS) or mkdir(APP_ASSETS);
+
+// composer autoloader
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 require_once(YII_PATH . '/YiiBase.php');
 require_once(__DIR__ . '/fakes/Yii.php');
-
-Yii::setPathOfAlias('bootstrap', __DIR__ . '/../src');
 
 // Instantiated the test app
 require_once(__DIR__ . '/fakes/MinimalApplication.php');
@@ -29,6 +33,9 @@ Yii::createApplication(
 	array(
 		'basePath' => APP_ROOT,
 		'runtimePath' => APP_RUNTIME,
+		'aliases' => [
+			'bootstrap' => realpath(__DIR__ . '/../src'),
+		],
 		'components' => array(
 			'assetManager' => array(
 				'basePath' => APP_ASSETS // do not forget to clean this folder sometimes

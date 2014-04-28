@@ -513,7 +513,11 @@ class TbActiveForm extends CActiveForm
 		if (isset($hiddenField)) echo $hiddenField;
 		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
 		echo $field;
-		echo $model->getAttributeLabel($realAttribute);
+		if (isset($rowOptions['label'])) {
+			if ($rowOptions['label'])
+				echo $rowOptions['label'];
+		} else
+			echo $model->getAttributeLabel($realAttribute);
 		echo CHtml::closeTag('label');
 		$fieldData = ob_get_clean();
 
@@ -560,7 +564,11 @@ class TbActiveForm extends CActiveForm
 		if (isset($hiddenField)) echo $hiddenField;
 		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
 		echo $field;
-		echo $model->getAttributeLabel($realAttribute);
+		if (isset($rowOptions['label'])) {
+			if ($rowOptions['label'])
+				echo $rowOptions['label'];
+		} else
+			echo $model->getAttributeLabel($realAttribute);
 		echo CHtml::closeTag('label');
 		$fieldData = ob_get_clean();
 
@@ -1090,6 +1098,8 @@ class TbActiveForm extends CActiveForm
 	 */
 	protected function customFieldRowInternal(&$fieldData, &$model, &$attribute, &$rowOptions)
 	{
+		$this->setDefaultPlaceholder($fieldData);
+
 		ob_start();
 		switch ($this->type) {
 			case self::TYPE_HORIZONTAL:
@@ -1110,6 +1120,37 @@ class TbActiveForm extends CActiveForm
 		}
 
 		return ob_get_clean();
+	}
+	
+	/**
+	 * Sets default placeholder value in case of CModel attribute depending on attribute label
+	 *  
+	  * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
+	 */
+	protected function setDefaultPlaceholder(&$fieldData)
+	{
+		if(!is_array($fieldData) 
+			|| empty($fieldData[0][1]) /* 'textField' */
+			|| !is_array($fieldData[1]) /* ($model, $attribute, $htmlOptions) */
+		)
+			return;
+			
+		$model = $fieldData[1][0];
+		if(!$model instanceof CModel)
+			return;
+		
+		$attribute = $fieldData[1][1];
+		if(!empty($fieldData[1][3]) && is_array($fieldData[1][3])) {
+			/* ($model, $attribute, $data, $htmlOptions) */
+			$htmlOptions = &$fieldData[1][3];
+		} else {
+			/* ($model, $attribute, $htmlOptions) */
+			$htmlOptions = &$fieldData[1][2];
+		}
+		if (!isset($htmlOptions['placeholder'])) {
+			$htmlOptions['placeholder'] = $model->getAttributeLabel($attribute);
+		}
+		
 	}
 
 	/**

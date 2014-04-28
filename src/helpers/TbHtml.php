@@ -2580,7 +2580,7 @@ EOD;
 	{
 		if (is_string($icon))
 		{
-			if (strpos($icon, 'icon') === false)
+			if (strpos($icon, 'icon') === false && strpos($icon, 'fa') === false)
 				$icon = 'icon-' . implode(' icon-', explode(' ', $icon));
 			$htmlOptions = self::addClassName($icon, $htmlOptions);
 			return self::openTag($tagName, $htmlOptions) . CHtml::closeTag($tagName); // tag won't work in this case

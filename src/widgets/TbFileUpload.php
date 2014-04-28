@@ -104,7 +104,7 @@ class TbFileUpload extends CJuiInputWidget
 
 		list($name, $id) = $this->resolveNameID();
 
-		$this->htmlOptions['id'] = ($this->hasModel() ? get_class($this->model) : 'fileupload') . '-form';
+		$this->htmlOptions['id'] = $this->id.'-'.($this->hasModel() ? get_class($this->model) : 'fileupload') . '-form';
 
 		$this->options['url'] = $this->url;
 

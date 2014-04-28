@@ -172,7 +172,7 @@ class TbToggleColumn extends TbDataColumn
 		}
 
 		$this->button = array(
-			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("id"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
+			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("pk"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
 			'htmlOptions' => array('class' => $this->name . '_toggle' . $this->uniqueClassSuffix),
 		);
 

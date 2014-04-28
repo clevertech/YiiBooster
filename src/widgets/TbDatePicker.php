@@ -13,7 +13,10 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbDatePicker extends CInputWidget
+
+Yii::import('bootstrap.widgets.TbBaseInputWidget');
+
+class TbDatePicker extends TbBaseInputWidget
 {
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
@@ -41,13 +44,14 @@ class TbDatePicker extends CInputWidget
 	{
 		$this->htmlOptions['type'] = 'text';
 		$this->htmlOptions['autocomplete'] = 'off';
-
+		
 		if (!isset($this->options['language'])) {
 			$this->options['language'] = substr(Yii::app()->getLanguage(), 0, 2);
 		}
-
+		
+		parent::setDefaultPlaceholder();
 	}
-
+	
 	/**
 	 *### .run()
 	 *

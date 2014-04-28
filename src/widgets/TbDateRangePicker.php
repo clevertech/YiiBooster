@@ -14,7 +14,10 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbDateRangePicker extends CInputWidget
+
+Yii::import('bootstrap.widgets.TbBaseInputWidget');
+
+class TbDateRangePicker extends TbBaseInputWidget
 {
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
@@ -51,8 +54,9 @@ class TbDateRangePicker extends CInputWidget
 	public function init()
 	{
 		$this->registerClientScript();
+		parent::init();
 	}
-
+	
 	/**
 	 *### .run()
 	 *
