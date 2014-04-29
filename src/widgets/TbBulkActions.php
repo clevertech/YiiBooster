@@ -261,9 +261,9 @@ $(document).on('click','#{$this->grid->id}_c0_all',function() {
     var checked=this.checked;
     if(checked)
     {
-        $('tr #{$this->grid->id}').addClass('selected');
+        $(this).parents('table').find('tr').addClass('selected');
     } else {
-        $('tr #{$this->grid->id}').removeClass('selected');
+        $(this).parents('table').find('tr').removeClass('selected');
     }
 });
 ";
