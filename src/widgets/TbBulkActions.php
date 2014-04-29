@@ -256,16 +256,7 @@ $(document).on('click', '#{$this->grid->id} input[type=checkbox]', function(e){
     var isTargetSelected = $(this).children('.checkbox-column').children('input[name=\"{$this->columnName}\[\]\"]'); 
     isTargetSelected.prop('isTargetSelected', !isTargetSelected.prop('checked'));
 });
-    
-$(document).on('click','#{$this->grid->id}_c0_all',function() {
-    var checked=this.checked;
-    if(checked)
-    {
-        $(this).parents('table').find('tr').addClass('selected');
-    } else {
-        $(this).parents('table').find('tr').removeClass('selected');
-    }
-});
+   
 ";
 
 }
