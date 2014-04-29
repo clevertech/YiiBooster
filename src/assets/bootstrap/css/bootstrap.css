@@ -4323,6 +4323,9 @@ a.thumbnail:focus {
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
+table>tbody>tr>td>div.progress {
+  margin-bottom: -20px;
+}
 .progress .bar {
   width: 0%;
   height: 100%;

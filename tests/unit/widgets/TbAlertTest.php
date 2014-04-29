@@ -1,13 +1,10 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: hijarian
- * Date: 08.04.13
- * Time: 10:02
- * To change this template use File | Settings | File Templates.
+ * YiiBooster project.
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-require_once(__DIR__.'/../../src/widgets/TbAlert.php');
+require_once(__DIR__ . '/../../../src/widgets/TbAlert.php');
 
 class TbAlertTest extends PHPUnit_Framework_TestCase {
 
