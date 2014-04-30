@@ -9,6 +9,10 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
+ -
+ 
+## YiiBooster version 3.0.1
+- **(fix)** branch and tag fix - no code changes from 3.0.0
 
 ## YiiBooster version 3.0.0
 - **(fix)** TbExtendedGridView - TbProgress inside cell css fix - #448
