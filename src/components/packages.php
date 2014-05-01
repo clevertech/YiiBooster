@@ -15,7 +15,7 @@ return array(
 		'css' => array($this->minify ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'bootstrap.js' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
+		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/bootstrap/3.1.1/' : $this->getAssetsUrl() . '/bootstrap/',
 		'js' => array($this->minify ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
 		'depends' => array('jquery'),
 	),

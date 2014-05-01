@@ -14,8 +14,7 @@ Yii::import('zii.widgets.CMenu');
  *
  * @package booster.widgets.navigation
  */
-abstract class TbBaseMenu extends CMenu
-{
+abstract class TbBaseMenu extends CMenu {
 	/**
 	 *### .getDividerCssClass()
 	 *
@@ -48,8 +47,8 @@ abstract class TbBaseMenu extends CMenu
 	 * @param array $items menu items. Each menu item will be an array with at least two elements: 'label' and 'active'.
 	 * It may have three other optional elements: 'items', 'linkOptions' and 'itemOptions'.
 	 */
-	protected function renderMenu($items)
-	{
+	protected function renderMenu($items) {
+		
 		$n = count($items);
 
 		if ($n > 0) {

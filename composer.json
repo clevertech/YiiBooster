@@ -18,7 +18,12 @@
         },
         {
             "name": "Ruslan Fadeev"
-        }
+        },
+        {
+            "name": "Amr Bedair",
+            "email": "amr.bedair@gmail.com",
+            "homepage": "http://amr.nefya.com"
+        },
     ],
     "support": {
         "issues": "https://github.com/clevertech/YiiBooster/issues",
