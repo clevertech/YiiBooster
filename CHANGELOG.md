@@ -9,7 +9,8 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
- -
+ - 
+ - **(fix)** yiiGroupGridView fix - #786
  
 ## YiiBooster version 3.0.1
 - **(fix)** branch and tag fix - no code changes from 3.0.0
