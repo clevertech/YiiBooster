@@ -17,6 +17,8 @@ Yii::import('booster.widgets.TbCollapse');
  */
 class TbNavbar extends CWidget {
 	
+	const CONTAINER_PREFIX = 'yii_booster_collapse_';
+	
 	// Navbar types.
 	const TYPE_DEFAULT = 'default';
 	const TYPE_INVERSE = 'inverse';
@@ -67,9 +69,9 @@ class TbNavbar extends CWidget {
 	public $fluid = false;
 
 	/**
-	 * @var boolean whether to enable collapsing on narrow screens. Default to false.
+	 * @var boolean whether to enable collapsing on narrow screens. Default to true.
 	 */
-	public $collapse = false;
+	public $collapse = true;
 
 	/**
 	 * @var array the HTML attributes for the widget container.
@@ -95,21 +97,19 @@ class TbNavbar extends CWidget {
 			$this->brandOptions['href'] = CHtml::normalizeUrl($this->brandUrl);
 
 			if (isset($this->brandOptions['class'])) {
-				$this->brandOptions['class'] .= ' brand';
+				$this->brandOptions['class'] .= ' navbar-brand';
 			} else {
-				$this->brandOptions['class'] = 'brand';
+				$this->brandOptions['class'] = 'navbar-brand';
 			}
 		}
 
 		$classes = array('navbar');
 
-		/* if (isset($this->type) && in_array($this->type, array(self::TYPE_INVERSE))) {
+		if (isset($this->type) && in_array($this->type, array(self::TYPE_DEFAULT, self::TYPE_INVERSE))) {
 			$classes[] = 'navbar-' . $this->type;
 		} else {
-			$classes[] = 'navbar-' . $this->type;
-		} */
-		
-		$classes[] = 'navbar-' . $this->type;
+			$classes[] = 'navbar-' . self::TYPE_DEFAULT;
+		}
 
 		if ($this->fixed !== false && in_array($this->fixed, array(self::FIXED_TOP, self::FIXED_BOTTOM))) {
 			$classes[] = 'navbar-fixed-' . $this->fixed;
@@ -134,21 +134,20 @@ class TbNavbar extends CWidget {
 		
 		echo CHtml::openTag('nav', $this->htmlOptions);
 		echo '<div class="' . $this->getContainerCssClass() . '">';
-		echo '<div class="navbar-header">';
 		
-		// TODO: review this collapse button
-		$collapseId = TbCollapse::getNextContainerId();
-
-		if ($this->collapse !== false) {
-			echo '<a class="btn btn-navbar" data-toggle="collapse" data-target="#' . $collapseId . '">';
-			echo '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>';
-			echo '</a>';
+		echo '<div class="navbar-header">';
+		if($this->collapse) {
+			$this->controller->widget('booster.widgets.TbButton', array(
+				'label' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
+				'encodeLabel' => false,
+				'htmlOptions' => array(
+					'class' => 'navbar-toggle',
+					'data-toggle' => 'collapse',
+					'data-target' => '#'.self::CONTAINER_PREFIX.$this->id,
+				)
+			));
 		}
 		
-		echo '<a class="navbar-brand" href="#">Brand</a>';
-	    echo '</div>';
-	    
-		echo '<div class="collapse navbar-collapse" id="'.$this->id.'">';
 		if ($this->brand !== false) {
 			if ($this->brandUrl !== false) {
 				echo CHtml::openTag('a', $this->brandOptions) . $this->brand . '</a>';
@@ -157,18 +156,9 @@ class TbNavbar extends CWidget {
 				echo CHtml::openTag('span', $this->brandOptions) . $this->brand . '</span>';
 			}
 		}
-
-		if ($this->collapse !== false) {
-			$this->controller->beginWidget(
-				'booster.widgets.TbCollapse',
-				array(
-					'id' => $collapseId,
-					'toggle' => false, // navbars should be collapsed by default
-					'htmlOptions' => array('class' => 'nav-collapse'),
-				)
-			);
-		}
-
+		echo '</div>';
+		
+		echo '<div class="collapse navbar-collapse" id="'.self::CONTAINER_PREFIX.$this->id.'">';
 		foreach ($this->items as $item) {
 			if (is_string($item)) {
 				echo $item;
@@ -181,11 +171,6 @@ class TbNavbar extends CWidget {
 				}
 			}
 		}
-
-		if ($this->collapse !== false) {
-			$this->controller->endWidget();
-		}
-
 		echo '</div></div></nav>';
 	}
 
@@ -195,8 +180,8 @@ class TbNavbar extends CWidget {
 	 * Returns the navbar container CSS class.
 	 * @return string the class
 	 */
-	protected function getContainerCssClass()
-	{
+	protected function getContainerCssClass() {
+		
 		return $this->fluid ? 'container-fluid' : 'container';
 	}
 }
