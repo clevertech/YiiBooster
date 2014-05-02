@@ -37,7 +37,7 @@
 
 	methods = {
 		/**
-		 * yiiGridView set function.
+		 * yiiGroupGridView set function.
 		 * @param options map settings for the grid view. Available options are as follows:
 		 * - ajaxUpdate: array, IDs of the containers whose content may be updated by ajax response
 		 * - ajaxVar: string, the name of the request variable indicating the ID of the element triggering the AJAX request
@@ -88,7 +88,7 @@
 				gridSettings[id] = settings;
 
 				if (settings.ajaxUpdate.length > 0) {
-					$(document).on('click.yiiGridView', settings.updateSelector, function () {
+					$(document).on('click.yiiGroupGridView', settings.updateSelector, function () {
 						// Check to see if History.js is enabled for our Browser
 						if (settings.enableHistory && window.History.enabled) {
 							// Ajaxify this link
@@ -98,13 +98,13 @@
 							delete params[settings.ajaxVar];
 							window.History.pushState(null, document.title, decodeURIComponent($.param.querystring(url[0], params)));
 						} else {
-							$('#' + id).yiiGridView('update', {url: $(this).attr('href')});
+							$('#' + id).yiiGroupGridView('update', {url: $(this).attr('href')});
 						}
 						return false;
 					});
 				}
 
-				$(document).on('change.yiiGridView keydown.yiiGridView', settings.filterSelector, function (event) {
+				$(document).on('change.yiiGroupGridView keydown.yiiGroupGridView', settings.filterSelector, function (event) {
 					if (event.type === 'keydown') {
 						if (event.keyCode !== 13) {
 							return; // only react to enter key
@@ -124,13 +124,13 @@
 					}
 					if (settings.enableHistory && settings.ajaxUpdate !== false && window.History.enabled) {
 						// Ajaxify this link
-						var url = $('#' + id).yiiGridView('getUrl'),
+						var url = $('#' + id).yiiGroupGridView('getUrl'),
 							params = $.deparam.querystring($.param.querystring(url, data));
 
 						delete params[settings.ajaxVar];
 						window.History.pushState(null, document.title, decodeURIComponent($.param.querystring(url.substr(0, url.indexOf('?')), params)));
 					} else {
-						$('#' + id).yiiGridView('update', {data: data});
+						$('#' + id).yiiGroupGridView('update', {data: data});
 					}
 					return false;
 				});
@@ -138,13 +138,13 @@
 				if (settings.enableHistory && settings.ajaxUpdate !== false && window.History.enabled) {
 					$(window).bind('statechange', function() { // Note: We are using statechange instead of popstate
 						var State = window.History.getState(); // Note: We are using History.getState() instead of event.state
-						$('#' + id).yiiGridView('update', {url: State.url});
+						$('#' + id).yiiGroupGridView('update', {url: State.url});
 					});
 				}
 
 				if (settings.selectableRows > 0) {
 					selectCheckedRows(this.id);
-					$(document).on('click.yiiGridView', '#' + id + ' .' + settings.tableClass + ' > tbody > tr', function (e) {
+					$(document).on('click.yiiGroupGridView', '#' + id + ' .' + settings.tableClass + ' > tbody > tr', function (e) {
 						var $currentGrid, $row, isRowSelected, $checks,
 							$target = $(e.target);
 
@@ -169,7 +169,7 @@
 						}
 					});
 					if (settings.selectableRows > 1) {
-						$(document).on('click.yiiGridView', '#' + id + ' .select-on-check-all', function () {
+						$(document).on('click.yiiGroupGridView', '#' + id + ' .select-on-check-all', function () {
 							var $currentGrid = $('#' + id),
 								$checks = $('input.select-on-check', $currentGrid),
 								$checksAll = $('input.select-on-check-all', $currentGrid),
@@ -189,7 +189,7 @@
 						});
 					}
 				} else {
-					$(document).on('click.yiiGridView', '#' + id + ' .select-on-check', false);
+					$(document).on('click.yiiGroupGridView', '#' + id + ' .select-on-check', false);
 				}
 			});
 		},
@@ -253,7 +253,7 @@
 
 				options = $.extend({
 					type: settings.ajaxType,
-					url: $grid.yiiGridView('getUrl'),
+					url: $grid.yiiGroupGridView('getUrl'),
 					success: function (data) {
 						var $data = $('<div>' + data + '</div>');
 						$.each(settings.ajaxUpdate, function (i, el) {
@@ -398,7 +398,7 @@
 		} else if (typeof method === 'object' || !method) {
 			return methods.init.apply(this, arguments);
 		} else {
-			$.error('Method ' + method + ' does not exist on jQuery.yiiGridView');
+			$.error('Method ' + method + ' does not exist on jQuery.yiiGroupGridView');
 			return false;
 		}
 	};
