@@ -8,7 +8,7 @@
  * @version 1.1.0
  */
 
-Yii::import('bootstrap.widgets.TbEditable');
+Yii::import('booster.widgets.TbEditable');
 
 /**
  *## EditableField widget makes editable single attribute of model.

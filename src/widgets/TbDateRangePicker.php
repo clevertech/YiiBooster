@@ -15,7 +15,7 @@
  * @package booster.widgets.forms.inputs
  */
 
-Yii::import('bootstrap.widgets.TbBaseInputWidget');
+Yii::import('booster.widgets.TbBaseInputWidget');
 
 class TbDateRangePicker extends TbBaseInputWidget
 {
@@ -65,7 +65,7 @@ class TbDateRangePicker extends TbBaseInputWidget
 	public function run()
 	{
 		if ($this->selector) {
-            Bootstrap::getBooster()->registerDateRangePlugin($this->selector, $this->options, $this->callback);
+            Booster::getBooster()->registerDateRangePlugin($this->selector, $this->options, $this->callback);
 		} else {
 			list($name, $id) = $this->resolveNameID();
 
@@ -81,7 +81,7 @@ class TbDateRangePicker extends TbBaseInputWidget
 			}
 
 			$this->setLocaleSettings();
-            Bootstrap::getBooster()->registerDateRangePlugin('#' . $id, $this->options, $this->callback);
+            Booster::getBooster()->registerDateRangePlugin('#' . $id, $this->options, $this->callback);
 		}
 
 	}
@@ -130,7 +130,7 @@ class TbDateRangePicker extends TbBaseInputWidget
 	 */
 	public function registerClientScript()
 	{
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
         $booster->registerAssetCss('bootstrap-daterangepicker.css');
         $booster->registerAssetJs('bootstrap.daterangepicker.js');
         $booster->registerPackage('moment');

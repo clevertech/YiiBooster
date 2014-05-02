@@ -1,6 +1,6 @@
 <?php // You can use zero values in data
 $this->widget(
-    'bootstrap.widgets.TbHighCharts',
+    'booster.widgets.TbHighCharts',
     array(
         'options' => array(
             'series' => array(

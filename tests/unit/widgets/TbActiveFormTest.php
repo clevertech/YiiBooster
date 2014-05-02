@@ -299,20 +299,20 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 	public function dataProviderWidgetRows()
 	{
 		return array(
-			array('toggleButtonRow', 'bootstrap.widgets.TbToggleButton'),
-			array('datePickerRow', 'bootstrap.widgets.TbDatePicker'),
-			array('dateRangeRow', 'bootstrap.widgets.TbDateRangePicker'),
-			array('timePickerRow', 'bootstrap.widgets.TbTimePicker'),
-			array('dateTimePickerRow', 'bootstrap.widgets.TbDateTimePicker'),
-			array('select2Row', 'bootstrap.widgets.TbSelect2'),
-			array('redactorRow', 'bootstrap.widgets.TbRedactorJs'),
-			array('html5EditorRow', 'bootstrap.widgets.TbHtml5Editor'),
-			//array('markdownEditorRow', 'bootstrap.widgets.TbMarkdownEditorJs'),
-			array('ckEditorRow', 'bootstrap.widgets.TbCKEditor'),
-			array('typeAheadRow', 'bootstrap.widgets.TbTypeahead'),
+			array('toggleButtonRow', 'booster.widgets.TbToggleButton'),
+			array('datePickerRow', 'booster.widgets.TbDatePicker'),
+			array('dateRangeRow', 'booster.widgets.TbDateRangePicker'),
+			array('timePickerRow', 'booster.widgets.TbTimePicker'),
+			array('dateTimePickerRow', 'booster.widgets.TbDateTimePicker'),
+			array('select2Row', 'booster.widgets.TbSelect2'),
+			array('redactorRow', 'booster.widgets.TbRedactorJs'),
+			array('html5EditorRow', 'booster.widgets.TbHtml5Editor'),
+			//array('markdownEditorRow', 'booster.widgets.TbMarkdownEditorJs'),
+			array('ckEditorRow', 'booster.widgets.TbCKEditor'),
+			array('typeAheadRow', 'booster.widgets.TbTypeahead'),
 			array('maskedTextFieldRow', 'CMaskedTextField'),
-			array('colorPickerRow', 'bootstrap.widgets.TbColorPicker'),
-			array('passFieldRow', 'bootstrap.widgets.TbPassfield'),
+			array('colorPickerRow', 'booster.widgets.TbColorPicker'),
+			array('passFieldRow', 'booster.widgets.TbPassfield'),
 		);
 	}
 

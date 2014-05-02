@@ -14,7 +14,7 @@
  * @package booster.widgets.forms.inputs
  */
 
-Yii::import('bootstrap.widgets.TbBaseInputWidget');
+Yii::import('booster.widgets.TbBaseInputWidget');
 
 class TbDatePicker extends TbBaseInputWidget
 {
@@ -94,7 +94,7 @@ class TbDatePicker extends TbBaseInputWidget
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerPackage('datepicker');
+        Booster::getBooster()->registerPackage('datepicker');
 	}
 
 	/**
@@ -102,7 +102,7 @@ class TbDatePicker extends TbBaseInputWidget
 	 */
 	public function registerLanguageScript()
 	{
-		$booster = Bootstrap::getBooster();
+		$booster = Booster::getBooster();
 
 		if (isset($this->options['language']) && $this->options['language'] != 'en')
 		{
@@ -119,7 +119,7 @@ class TbDatePicker extends TbBaseInputWidget
 				}
 				else
 				{
-					$booster->assetsRegistry->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
+					$booster->cs->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
 				}
 			}
 		}

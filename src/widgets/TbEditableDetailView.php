@@ -8,8 +8,8 @@
  * @version 1.1.0
  */
 
-Yii::import('bootstrap.widgets.TbEditableField');
-Yii::import('bootstrap.widgets.TbDetailView');
+Yii::import('booster.widgets.TbEditableField');
+Yii::import('booster.widgets.TbDetailView');
 
 /**
  * EditableDetailView widget makes editable CDetailView (several attributes of single model shown as name-value table).

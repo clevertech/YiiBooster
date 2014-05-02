@@ -70,7 +70,7 @@ class TbRedactorJS extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		$assets = Bootstrap::getBooster()->assetsRegistry;
+		$assets = Booster::getBooster()->cs;
 
 		$assets->registerPackage('redactor');
 

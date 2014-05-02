@@ -14,7 +14,7 @@
  *
  * To use this widget, you may insert the following code in a view:
  * <pre>
- * $this->widget('bootstrap.widgets.TbHighCharts', array(
+ * $this->widget('booster.widgets.TbHighCharts', array(
  *    'options'=>array(
  *       'title' => array('text' => 'Fruit Consumption'),
  *       'xAxis' => array(
@@ -74,7 +74,7 @@ class TbHighCharts extends CWidget
 	 */
 	protected function registerClientScript()
 	{
-		$assets = Bootstrap::getBooster()->assetsRegistry;
+		$assets = Booster::getBooster()->cs;
 
 		$assets->registerPackage('highcharts');
 

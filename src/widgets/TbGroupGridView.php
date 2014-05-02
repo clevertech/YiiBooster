@@ -10,7 +10,7 @@
  * @author         antonio ramirez <antonio@clevertech.biz>
  */
 
-Yii::import('bootstrap.widgets.TbGridView');
+Yii::import('booster.widgets.TbGridView');
 
 /**
  *## TbGroupGridView widget

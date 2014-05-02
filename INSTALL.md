@@ -49,7 +49,7 @@ for details about using this feature.
 
 Now you can call widgets included in YiiBooster using the following incantation in your view files:
 
-    $this->widget('bootstrap.widgets.TbWidgetClassName', $config);
+    $this->widget('booster.widgets.TbWidgetClassName', $config);
 
 Where `WidgetClassName` placeholder stands for name of the widget.
 All YiiBooster widget classes are prefixed by `Tb` by convention.

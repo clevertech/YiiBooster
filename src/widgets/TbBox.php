@@ -60,13 +60,13 @@ class TbBox extends CWidget
 	 * <pre>
 	 *     array(
 	 *        array(
-	 *          'class' => 'bootstrap.widgets.TbButton',
+	 *          'class' => 'booster.widgets.TbButton',
 	 *          'label' => '...',
 	 *          'size' => '...',
 	 *          ...
 	 *        ),
 	 *      array(
-	 *          'class' => 'bootstrap.widgets.TbButtonGroup',
+	 *          'class' => 'booster.widgets.TbButtonGroup',
 	 *          'buttons' => array( ... ),
 	 *          'size' => '...',
 	 *        ),
@@ -211,8 +211,8 @@ class TbBox extends CWidget
 	 *
 	 * Registers required script files (CSS in this case)
 	 */
-	public function registerClientScript()
-	{
-		Bootstrap::getBooster()->registerAssetCss('bootstrap-box.css');
+	public function registerClientScript() {
+		
+		Booster::getBooster()->registerAssetCss('bootstrap-box.css');
 	}
 }

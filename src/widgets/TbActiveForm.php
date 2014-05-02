@@ -26,7 +26,7 @@
  *
  * Here's simple example how to build login form using this class:
  * <pre>
- * <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+ * <?php $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
  *     'type' => 'horizontal',
  *     'htmlOptions' => array('class' => 'well'),
  * )); ?>
@@ -718,7 +718,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function toggleButtonRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbToggleButton', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbToggleButton', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -738,7 +738,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function datePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbDatePicker', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbDatePicker', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -758,7 +758,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function dateRangeRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbDateRangePicker', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbDateRangePicker', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -778,7 +778,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function timePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -798,7 +798,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function dateTimePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbDateTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbDateTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -818,7 +818,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function select2Row($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbSelect2', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbSelect2', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -838,7 +838,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function redactorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbRedactorJs', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbRedactorJs', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -858,7 +858,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function html5EditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbHtml5Editor', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbHtml5Editor', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -885,7 +885,7 @@ class TbActiveForm extends CActiveForm
 		// TODO: rewrite TbMarkdownEditorJs and this method!
 		$fieldData = '<div class="wmd-panel">';
 		$fieldData .= '<div id="wmd-button-bar" class="btn-toolbar"></div>';
-		$fieldData .= $this->owner->widget('bootstrap.widgets.TbMarkdownEditorJs', $widgetOptions, true);
+		$fieldData .= $this->owner->widget('booster.widgets.TbMarkdownEditorJs', $widgetOptions, true);
 		$fieldData .= '<div id="wmd-preview" class="wmd-panel wmd-preview" style="width:100%"></div>';
 		$fieldData .= '</div>'; // wmd-panel
 
@@ -909,7 +909,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function ckEditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbCKEditor', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbCKEditor', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -929,7 +929,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbTypeahead', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbTypeahead', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -969,7 +969,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function colorPickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbColorPicker', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbColorPicker', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
@@ -1017,7 +1017,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	public function passFieldRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
-		return $this->widgetRowInternal('bootstrap.widgets.TbPassfield', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetRowInternal('booster.widgets.TbPassfield', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**

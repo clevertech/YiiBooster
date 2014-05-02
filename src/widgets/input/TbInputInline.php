@@ -7,7 +7,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
-Yii::import('bootstrap.widgets.input.TbInputVertical');
+Yii::import('booster.widgets.input.TbInputVertical');
 
 /**
  *## TbInputInline class
@@ -106,7 +106,7 @@ class TbInputInline extends TbInputVertical
         echo $this->setPlaceholder();
         echo $this->getPrepend();
         $this->widget(
-            'bootstrap.widgets.TbDatePicker',
+            'booster.widgets.TbDatePicker',
             array(
                 'model' => $this->model,
                 'attribute' => $this->attribute,
@@ -139,7 +139,7 @@ class TbInputInline extends TbInputVertical
         echo $this->setPlaceholder();
         echo $this->getPrepend();
         $this->widget(
-            'bootstrap.widgets.TbDateTimePicker',
+            'booster.widgets.TbDateTimePicker',
             array(
                 'model' => $this->model,
                 'attribute' => $this->attribute,
@@ -172,7 +172,7 @@ class TbInputInline extends TbInputVertical
         echo $this->setPlaceholder();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbDateRangePicker',
+			'booster.widgets.TbDateRangePicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,

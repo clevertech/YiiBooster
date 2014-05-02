@@ -138,7 +138,7 @@ class TbRelationalColumn extends TbDataColumn
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerAssetCss('bootstrap-relational.css');
+        Booster::getBooster()->registerAssetCss('bootstrap-relational.css');
 
 		/** @var $cs CClientScript */
 		$cs = Yii::app()->getClientScript();
@@ -155,7 +155,7 @@ class TbRelationalColumn extends TbDataColumn
 		$this->ajaxErrorMessage = CHtml::encode($this->ajaxErrorMessage);
 		$afterAjaxUpdate = CJavaScript::encode($this->afterAjaxUpdate);
 		$span = count($this->grid->columns);
-		$loadingPic = CHtml::image(Bootstrap::getBooster()->getAssetsUrl() . '/img/loading.gif');
+		$loadingPic = CHtml::image(Booster::getBooster()->getAssetsUrl() . '/img/loading.gif');
 		$cache = $this->cacheData ? 'true' : 'false';
 		$data = !empty($this->submitData) && is_array($this->submitData) ? $this->submitData : 'js:{}';
 		$data = CJavascript::encode($data);

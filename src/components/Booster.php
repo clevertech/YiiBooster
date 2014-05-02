@@ -71,6 +71,7 @@ class Booster extends CApplicationComponent {
 	/**
 	 * @var boolean whether to disable zooming capabilities on mobile devices
 	 * Defaults to false
+	 * @since 4.0.0
 	 */
 	public $disableZooming = false;
 
@@ -197,15 +198,15 @@ class Booster extends CApplicationComponent {
 	public $_assetsUrl;
 
     /**
-     * @var Bootstrap
+     * @var Booster
      */
     private static $_instance;
 
 	/**
 	 * Initializes the component.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		// Prevents the extension from registering scripts and publishing assets when ran from the command line.
 		if ($this->isInConsoleMode() && !$this->isInTests())
 			return;
@@ -222,14 +223,14 @@ class Booster extends CApplicationComponent {
 	}
 
 	/** @return bool */
-	protected function isInConsoleMode()
-	{
+	protected function isInConsoleMode() {
+		
 		return Yii::app() instanceof CConsoleApplication || PHP_SAPI == 'cli';
 	}
 
 	/** @return bool */
-	protected function isInTests()
-	{
+	protected function isInTests() {
+		
 		return defined('IS_IN_TESTS') && IS_IN_TESTS;
 	}
 
@@ -246,8 +247,8 @@ class Booster extends CApplicationComponent {
 	/**
 	 *
 	 */
-	protected function includeAssets()
-	{
+	protected function includeAssets() {
+		
 		$this->appendUserSuppliedPackagesToOurs();
 
 		$this->addOurPackagesToYii();
@@ -260,11 +261,11 @@ class Booster extends CApplicationComponent {
 	/**
 	 *
 	 */
-	protected function appendUserSuppliedPackagesToOurs()
-	{
+	protected function appendUserSuppliedPackagesToOurs() {
+		
 		$bootstrapPackages = require(Yii::getPathOfAlias('booster.components') . '/packages.php');
-		$bootstrapPackages += $this->makeBootstrapCssPackage();
-		$bootstrapPackages += $this->makeSelect2Package();
+		$bootstrapPackages += $this->createBootstrapCssPackage();
+		$bootstrapPackages += $this->createSelect2Package();
 
 		$this->packages = CMap::mergeArray(
 			$bootstrapPackages,
@@ -358,8 +359,7 @@ class Booster extends CApplicationComponent {
 	 * Returns the extension version number.
 	 * @return string the version
 	 */
-	public function getVersion()
-	{
+	public function getVersion() {
 		return '4.0.0';
 	}
 
@@ -434,7 +434,7 @@ class Booster extends CApplicationComponent {
 	 * and install and register it.
 	 * @return array
 	 */
-	protected function makeBootstrapCssPackage() {
+	protected function createBootstrapCssPackage() {
 		
 		/* 
 		if ($this->enableCdn && $this->responsiveCss && $this->minify)
@@ -462,8 +462,8 @@ class Booster extends CApplicationComponent {
 	 * Make select2 package definition
 	 * @return array
 	 */
-	protected function makeSelect2Package()
-	{
+	protected function createSelect2Package() {
+		
 		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
@@ -505,8 +505,8 @@ class Booster extends CApplicationComponent {
 	 * Registers the Font Awesome CSS.
 	 * @since 1.0.6
 	 */
-	public function registerFontAwesomeCss()
-	{
+	public function registerFontAwesomeCss() {
+		
         $this->registerPackage('font-awesome');
 	}
 
@@ -935,7 +935,7 @@ class Booster extends CApplicationComponent {
      */
     public static function setBooster($value) {
     	
-        if ($value instanceof Bootstrap) {
+        if ($value instanceof Booster) {
             self::$_instance = $value;
         }
     }

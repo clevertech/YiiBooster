@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../../../src/components/Bootstrap.php');
 require_once(__DIR__ . '/../../fakes/AssetsRegistryHook.php');
 
 /**
- * Tests for `Bootstrap::registerPlugin` method
+ * Tests for `Booster::registerPlugin` method
  */
 class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->component = new Bootstrap();
-		$this->component->assetsRegistry = new AssetsRegistryHook();
+		$this->component->cs = new AssetsRegistryHook();
 	}
 
 	/**
@@ -43,7 +43,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$this->component
-				->assetsRegistry
+				->cs
 				->hasRegisteredScript("jQuery('.selector').name({\"option1\":\"value1\",\"option2\":\"value2\"});")
 		);
 	}
@@ -57,7 +57,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$this->component
-				->assetsRegistry
+				->cs
 				->hasRegisteredScript("jQuery('.selector').name();")
 		);
 	}
@@ -73,7 +73,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$this->component
-				->assetsRegistry
+				->cs
 				->hasRegisteredScript("jQuery('.myselector').name({\"myoption\":\"myvalue\"});")
 		);
 	}
@@ -93,7 +93,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$this->component
-				->assetsRegistry
+				->cs
 				->hasRegisteredScript("jQuery('.theirselector').name({\"theiroption\":\"theirvalue\"});")
 		);
 	}
@@ -102,7 +102,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 	{
 		$this->component->registerPlugin('noselector');
 
-		$this->assertFalse($this->component->assetsRegistry->hasScripts());
+		$this->assertFalse($this->component->cs->hasScripts());
 	}
 
 	public function testNoSelectorKnownPlugin_RegisterKnownPlugin()
@@ -115,7 +115,7 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue(
 			$this->component
-				->assetsRegistry
+				->cs
 				->hasRegisteredScript("jQuery('.selector').name();")
 		);
 	}

@@ -7,7 +7,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
-Yii::import('bootstrap.widgets.input.TbInputInline');
+Yii::import('booster.widgets.input.TbInputInline');
 
 /**
  *## TbInputSearch class

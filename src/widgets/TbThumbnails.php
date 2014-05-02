@@ -7,7 +7,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
-Yii::import('bootstrap.widgets.TbListView');
+Yii::import('booster.widgets.TbListView');
 
 /**
  *## Bootstrap thumbnails widget.

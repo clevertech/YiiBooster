@@ -7,7 +7,7 @@
  * @package bootstrap.widgets
  */
 
-Yii::import('bootstrap.widgets.TbToggleColumn');
+Yii::import('booster.widgets.TbToggleColumn');
 
 /**
  * Bootstrap toggle button column widget.

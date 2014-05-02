@@ -62,7 +62,7 @@ class TbMarkdownEditorJS extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
         $booster->registerAssetCss('markdown.editor.css');
         $booster->registerAssetJs('markdown.converter.js', CClientScript::POS_HEAD);
         $booster->registerAssetJs('markdown.sanitizer.js', CClientScript::POS_HEAD);

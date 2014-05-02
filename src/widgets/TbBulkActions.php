@@ -8,7 +8,7 @@
  */
 
 Yii::import('zii.widgets.grid.CCheckBoxColumn');
-Yii::import('bootstrap.widgets.TbButton');
+Yii::import('booster.widgets.TbButton');
 
 /**
  * Bulk actions widget.
@@ -334,7 +334,7 @@ class TbBulkActions extends CComponent
 		}
 		// button configuration is a regular TbButton
 		$buttonConfig = array(
-			'class' => 'bootstrap.widgets.TbButton',
+			'class' => 'booster.widgets.TbButton',
 			'id' => $action['id'], // we must ensure this
 			'buttonType' => isset($action['buttonType']) ? $action['buttonType'] : TbButton::BUTTON_LINK,
 			'type' => isset($action['type']) ? $action['type'] : '',

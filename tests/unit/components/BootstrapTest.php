@@ -74,7 +74,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase
 	{
 		$component = new Bootstrap();
 		$component->_assetsUrl = 'assets';
-		$component->assetsRegistry = new AssetsRegistryHook();
+		$component->cs = new AssetsRegistryHook();
 
 		$component->enableCdn = $cdn;
 		$component->responsiveCss = $responsive;
@@ -85,7 +85,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase
 		$component->registerBootstrapCss();
 
 		$this->assertTrue(
-			$component->assetsRegistry->hasRegisteredCssFile($expected_filename)
+			$component->cs->hasRegisteredCssFile($expected_filename)
 		);
 	}
 }

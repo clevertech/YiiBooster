@@ -73,7 +73,7 @@ class TbHtml5Editor extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
         $booster->registerAssetCss('bootstrap-wysihtml5.css');
         $booster->registerAssetJs('wysihtml5-0.3.0.js');
         $booster->registerAssetJs('bootstrap-wysihtml5.js');
@@ -122,7 +122,7 @@ class TbHtml5Editor extends CInputWidget
 			return;
 		}
 
-		$defaultStyleSheetUrl = Bootstrap::getBooster()->getAssetsUrl() . '/css/wysiwyg-color.css';
+		$defaultStyleSheetUrl = Booster::getBooster()->getAssetsUrl() . '/css/wysiwyg-color.css';
 		array_unshift($this->editorOptions['stylesheets'], $defaultStyleSheetUrl); // we want default css to be first
 	}
 

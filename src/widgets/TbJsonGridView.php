@@ -7,8 +7,8 @@
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
-Yii::import('bootstrap.widgets.TbGridView');
-Yii::import('bootstrap.widgets.TbJsonDataColumn');
+Yii::import('booster.widgets.TbGridView');
+Yii::import('booster.widgets.TbJsonDataColumn');
 
 /**
  *## Class TbJsonGridView
@@ -50,9 +50,9 @@ class TbJsonGridView extends TbGridView
 
 	/**
 	 * @var array the configuration for the pager.
-	 * Defaults to <code>array('class'=>'ext.bootstrap.widgets.TbPager')</code>.
+	 * Defaults to <code>array('class'=>'ext.booster.widgets.TbPager')</code>.
 	 */
-	public $pager = array('class' => 'bootstrap.widgets.TbJsonPager');
+	public $pager = array('class' => 'booster.widgets.TbJsonPager');
 
 	/**
 	 * @var bool true when there is an AJAX request and having in template summary
@@ -128,7 +128,7 @@ class TbJsonGridView extends TbGridView
 	{
 		foreach ($this->columns as $i => $column) {
 			if (is_array($column) && !isset($column['class'])) {
-				$this->columns[$i]['class'] = 'bootstrap.widgets.TbJsonDataColumn';
+				$this->columns[$i]['class'] = 'booster.widgets.TbJsonDataColumn';
 			}
 		}
 

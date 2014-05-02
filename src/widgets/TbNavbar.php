@@ -7,7 +7,7 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-Yii::import('bootstrap.widgets.TbCollapse');
+Yii::import('booster.widgets.TbCollapse');
 
 /**
  *## Bootstrap navigation bar widget.
@@ -15,9 +15,10 @@ Yii::import('bootstrap.widgets.TbCollapse');
  * @package booster.widgets.navigation
  * @since 0.9.7
  */
-class TbNavbar extends CWidget
-{
+class TbNavbar extends CWidget {
+	
 	// Navbar types.
+	const TYPE_DEFAULT = 'default';
 	const TYPE_INVERSE = 'inverse';
 
 	// Navbar fix locations.
@@ -28,7 +29,7 @@ class TbNavbar extends CWidget
 	 * @var string the navbar type. Valid values are 'inverse'.
 	 * @since 1.0.0
 	 */
-	public $type;
+	public $type = self::TYPE_DEFAULT;
 
 	/**
 	 * @var string the text for the brand.
@@ -80,8 +81,8 @@ class TbNavbar extends CWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if ($this->brand !== false) {
 			if (!isset($this->brand)) {
 				$this->brand = CHtml::encode(Yii::app()->name);
@@ -102,9 +103,13 @@ class TbNavbar extends CWidget
 
 		$classes = array('navbar');
 
-		if (isset($this->type) && in_array($this->type, array(self::TYPE_INVERSE))) {
+		/* if (isset($this->type) && in_array($this->type, array(self::TYPE_INVERSE))) {
 			$classes[] = 'navbar-' . $this->type;
-		}
+		} else {
+			$classes[] = 'navbar-' . $this->type;
+		} */
+		
+		$classes[] = 'navbar-' . $this->type;
 
 		if ($this->fixed !== false && in_array($this->fixed, array(self::FIXED_TOP, self::FIXED_BOTTOM))) {
 			$classes[] = 'navbar-fixed-' . $this->fixed;
@@ -125,11 +130,13 @@ class TbNavbar extends CWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
-		echo CHtml::openTag('div', $this->htmlOptions);
-		echo '<div class="navbar-inner"><div class="' . $this->getContainerCssClass() . '">';
-
+	public function run() {
+		
+		echo CHtml::openTag('nav', $this->htmlOptions);
+		echo '<div class="' . $this->getContainerCssClass() . '">';
+		echo '<div class="navbar-header">';
+		
+		// TODO: review this collapse button
 		$collapseId = TbCollapse::getNextContainerId();
 
 		if ($this->collapse !== false) {
@@ -137,7 +144,11 @@ class TbNavbar extends CWidget
 			echo '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>';
 			echo '</a>';
 		}
-
+		
+		echo '<a class="navbar-brand" href="#">Brand</a>';
+	    echo '</div>';
+	    
+		echo '<div class="collapse navbar-collapse" id="'.$this->id.'">';
 		if ($this->brand !== false) {
 			if ($this->brandUrl !== false) {
 				echo CHtml::openTag('a', $this->brandOptions) . $this->brand . '</a>';
@@ -149,7 +160,7 @@ class TbNavbar extends CWidget
 
 		if ($this->collapse !== false) {
 			$this->controller->beginWidget(
-				'bootstrap.widgets.TbCollapse',
+				'booster.widgets.TbCollapse',
 				array(
 					'id' => $collapseId,
 					'toggle' => false, // navbars should be collapsed by default
@@ -175,7 +186,7 @@ class TbNavbar extends CWidget
 			$this->controller->endWidget();
 		}
 
-		echo '</div></div></div>';
+		echo '</div></div></nav>';
 	}
 
 	/**

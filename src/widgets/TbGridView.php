@@ -8,7 +8,7 @@
  */
 
 Yii::import('zii.widgets.grid.CGridView');
-Yii::import('bootstrap.widgets.TbDataColumn');
+Yii::import('booster.widgets.TbDataColumn');
 
 /**
  *## Bootstrap Zii grid view.
@@ -38,9 +38,9 @@ class TbGridView extends CGridView
 
 	/**
 	 * @var array the configuration for the pager.
-	 * Defaults to <code>array('class'=>'ext.bootstrap.widgets.TbPager')</code>.
+	 * Defaults to <code>array('class'=>'ext.booster.widgets.TbPager')</code>.
 	 */
-	public $pager = array('class' => 'bootstrap.widgets.TbPager');
+	public $pager = array('class' => 'booster.widgets.TbPager');
 
 	/**
 	 * @var string the URL of the CSS file used by this grid view.
@@ -93,7 +93,7 @@ class TbGridView extends CGridView
 			}
 		}
 
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
 		$popover = $booster->popoverSelector;
 		$tooltip = $booster->tooltipSelector;
 
@@ -118,7 +118,7 @@ class TbGridView extends CGridView
 	{
 		foreach ($this->columns as $i => $column) {
 			if (is_array($column) && !isset($column['class'])) {
-				$this->columns[$i]['class'] = 'bootstrap.widgets.TbDataColumn';
+				$this->columns[$i]['class'] = 'booster.widgets.TbDataColumn';
 			}
 		}
 

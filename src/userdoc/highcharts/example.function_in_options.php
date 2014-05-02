@@ -1,6 +1,6 @@
 <?php // You can pass functions as options to HighChart
 $this->widget(
-    'bootstrap.widgets.TbHighCharts',
+    'booster.widgets.TbHighCharts',
     array(
         'options' => array(
             'tooltip' => array(

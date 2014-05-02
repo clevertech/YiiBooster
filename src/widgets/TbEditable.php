@@ -548,14 +548,14 @@ class TbEditable extends CWidget
      */
     public function registerAssets()
     {
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
         $booster->registerPackage('x-editable');
 
         if ($this->type == 'date' || $this->type == 'combodate') {
             /** @var $widget TbDatePicker */
             $widget = Yii::app()->widgetFactory->createWidget(
                 $this->getOwner(),
-                'bootstrap.widgets.TbDatePicker',
+                'booster.widgets.TbDatePicker',
                 array('options' => $this->options['datepicker'])
             );
             $widget->registerLanguageScript();
@@ -566,7 +566,7 @@ class TbEditable extends CWidget
             /** @var $widget TbDateTimePicker */
             $widget = Yii::app()->widgetFactory->createWidget(
                 $this->getOwner(),
-                'bootstrap.widgets.TbDateTimePicker',
+                'booster.widgets.TbDateTimePicker',
                 array('options' => $this->options['datetimepicker'])
             );
             $widget->registerLanguageScript();
