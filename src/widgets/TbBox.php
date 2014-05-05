@@ -128,19 +128,19 @@ class TbBox extends CWidget
 	 *
 	 * Renders the header of the box with the header control (button to show/hide the box)
 	 */
-	public function renderHeader()
-	{
+	public function renderHeader() {
+		
 		if ($this->title !== false) {
 			echo CHtml::openTag('div', $this->htmlHeaderOptions);
 			if ($this->title) {
-				$this->title = '<h3>' . $this->title . '</h3>';
+				$this->title = '<h3 style="display: inline;">' . $this->title . '</h3>';
 
 				if ($this->headerIcon) {
 					$this->title = '<i class="' . $this->headerIcon . '"></i>' . $this->title;
 				}
 
-				echo $this->title;
 				$this->renderButtons();
+				echo $this->title;
 			}
 			echo CHtml::closeTag('div');
 		}
