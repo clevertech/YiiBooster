@@ -138,14 +138,15 @@ abstract class TbBaseMenu extends CMenu {
 	 *
 	 * @return string the rendered item
 	 */
-	protected function renderMenuItem($item)
-	{
+	protected function renderMenuItem($item) {
+		
 		if (isset($item['icon'])) {
 			if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
-				$item['icon'] = 'icon-' . implode(' icon-', explode(' ', $item['icon']));
+				$item['icon'] = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $item['icon']));
+				$item['label'] = '<span class="' . $item['icon'] . '"></span> ' . $item['label'];
+			} else {
+				$item['label'] = '<i class="' . $item['icon'] . '"></i> ' . $item['label'];
 			}
-
-			$item['label'] = '<i class="' . $item['icon'] . '"></i> ' . $item['label'];
 		}
 
 		if (!isset($item['linkOptions'])) {

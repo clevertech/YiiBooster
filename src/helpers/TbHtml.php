@@ -2039,7 +2039,7 @@ EOD;
 	public static function errorSummary($model, $header = null, $footer = null, $htmlOptions = array())
 	{
 		// kind of a quick fix but it will do for now.
-		$htmlOptions = self::addClassName('alert alert-block alert-error', $htmlOptions);
+		$htmlOptions = self::addClassName('alert alert-block alert-danger', $htmlOptions);
 		return CHtml::errorSummary($model, $header, $footer, $htmlOptions);
 	}
 

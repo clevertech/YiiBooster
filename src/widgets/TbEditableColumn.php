@@ -8,16 +8,15 @@
  * @version 1.1.0
  */
 
-Yii::import('booster.widgets.TbEditableField');
-Yii::import('booster.widgets.TbDataColumn');
+Yii::import('bootstrap.widgets.TbEditableField');
+Yii::import('bootstrap.widgets.TbDataColumn');
 
 /**
  *## EditableColumn widget makes editable one column in CGridView.
  *
  * @package booster.widgets.grids.columns
 */
-class TbEditableColumn extends TbDataColumn
-{
+class TbEditableColumn extends TbDataColumn {
 	/**
 	 * @var array editable config options.
 	 * @see EditableField config
@@ -25,15 +24,14 @@ class TbEditableColumn extends TbDataColumn
 	public $editable = array();
 
 	//flag to render client script only once for all column cells
-	private $_isScriptRendered = false;
+	private static $scripts = array();
 
 	/**
 	 *### .init()
 	 *
 	 * Widget initialization
 	 */
-	public function init()
-	{
+	public function init() {
 		// #745 adding support for CArrayDataProviders only if based on a CModel array
 		/* if (!$this->grid->dataProvider instanceOf CActiveDataProvider) {
 			throw new CException('EditableColumn can be applied only to grid based on CActiveDataProvider');
@@ -80,22 +78,28 @@ class TbEditableColumn extends TbDataColumn
 		$widget->buildJsOptions();
 		$widget->registerAssets();
 		
-		if (!$this->_isScriptRendered) {
+		$selector = $widget->getSelector(false);
+		if (!$this->isScriptRendered($selector)) {
 			$script = $widget->registerClientScript(false);
-				
 			//use parent() as grid is totally replaced by new content
-			Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->grid->id . '-event', '
+			Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->grid->id.'-'.$this->name.'-event', '
 				$("#' . $this->grid->id . '").parent().on("ajaxUpdate.yiiGridView", "#' . $this->grid->id . '", function() {' . $script . '});
 			');
-			$this->_isScriptRendered = true;
 		}
+	}
+	
+	private function isScriptRendered($script) {
+		if(in_array($script, self::$scripts))
+			return true;
+		self::$scripts[] = $script;
+		return false;
 	}
 
 	/**
 	 *### .renderDataCellContent()
 	 */
-	protected function renderDataCellContent($row, $data)
-	{
+	protected function renderDataCellContent($row, $data) {
+		
 		// #745 adding support for CArrayDataProviders only if based on a CModel array
 		if(!$data instanceOf CModel) {
 			throw new CException('EditableColumn can be applied only to CModel based objects');
@@ -141,17 +145,13 @@ class TbEditableColumn extends TbDataColumn
 		$widget->renderLink();
 		
 		//manually render client script (one for all cells in column)
-		if (!$this->_isScriptRendered) {
+		$selector = $widget->getSelector(false);
+		if (!$this->isScriptRendered($selector)) {
 			$script = $widget->registerClientScript(false);
-			
 			//use parent() as grid is totally replaced by new content
-			Yii::app()->getClientScript()->registerScript(
-					__CLASS__ . '#' . $this->grid->id . '-event',
-					'
-					$("#' . $this->grid->id . '").parent().on("ajaxUpdate.yiiGridView", "#' . $this->grid->id . '", function() {' . $script . '});
-					'
-			);
-			$this->_isScriptRendered = true;
+			Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->grid->id.'-'.$this->name.'-event', '
+				$("#' . $this->grid->id . '").parent().on("ajaxUpdate.yiiGridView", "#' . $this->grid->id . '", function() {' . $script . '});
+			');
 		}								
 	}
 
@@ -164,8 +164,8 @@ class TbEditableColumn extends TbDataColumn
 	 * issue in Yii github: https://github.com/yiisoft/yii/issues/1313
 	 *
 	 */
-	protected function attachAjaxUpdateEvent()
-	{
+	protected function attachAjaxUpdateEvent() {
+		
 		$trigger = '$("#"+id).trigger("ajaxUpdate.yiiGridView");';
 
 		//check if trigger already inserted by another column
