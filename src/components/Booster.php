@@ -454,7 +454,7 @@ class Booster extends CApplicationComponent {
 		*/
 		return array('bootstrap.css' => array(
 			'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/bootstrap/3.1.1/' : $this->getAssetsUrl() . '/bootstrap/',
-			'css' => array( ($this->minify || $this->enableCdn) ? 'css/bootstrap.min.css' : 'bootstrap.css' ),
+			'css' => array( ($this->minify || $this->enableCdn) ? 'css/bootstrap.min.css' : 'css/bootstrap.css' ),
 		));
 	}
 
@@ -468,15 +468,15 @@ class Booster extends CApplicationComponent {
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
 			$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2). '.js';
-			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
+			if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 				$jsFiles[] = $locale;
 			} else {
 				$locale = 'select2_locale_'. Yii::app()->language . '.js';
-				if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
+				if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 					$jsFiles[] = $locale;
 				}else{
 					$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
-					if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
+					if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 						$jsFiles[] = $locale;
 					}
 				}
