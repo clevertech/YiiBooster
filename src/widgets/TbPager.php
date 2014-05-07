@@ -14,24 +14,34 @@
  *
  * @package booster.widgets.supplementary
  */
-class TbPager extends CLinkPager
-{
+class TbPager extends CLinkPager {
+	
 	// Pager alignments.
 	const ALIGNMENT_CENTER = 'centered';
 	const ALIGNMENT_RIGHT = 'right';
 
 	/**
+	 * @var string attributes for the pager container tag.
+	 */
+	public $containerTag = 'div';
+	
+	/**
+	 * @var array HTML attributes for the pager container tag.
+	 */
+	public $containerHtmlOptions = array();
+	
+	/**
 	 * @var string the pager alignment.
 	 * Valid values are 'centered' and 'right'.
 	 */
-	public $alignment;
+	public $alignment = self::ALIGNMENT_CENTER;
 
 	/**
 	 * @var string the text shown before page buttons.
 	 * Defaults to an empty string, meaning that no header will be displayed.
 	 */
 	public $header = '';
-
+	
 	/**
 	 * @var string the URL of the CSS file used by this pager.
 	 * Defaults to false, meaning that no CSS will be included.
@@ -48,22 +58,32 @@ class TbPager extends CLinkPager
 	 *
 	 * Initializes the pager by setting some default property values.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if ($this->nextPageLabel === null) {
-			$this->nextPageLabel = '&rarr;';
+			$this->nextPageLabel = '&raquo;';
 		}
 
 		if ($this->prevPageLabel === null) {
-			$this->prevPageLabel = '&larr;';
+			$this->prevPageLabel = '&laquo;';
 		}
 
-		$classes = array();
+		$classes = array('pagination');
 
+		/* TODO: move these to styles files! */
+		$style = '';
+		$containerStyle = '';
+		
 		$validAlignments = array(self::ALIGNMENT_CENTER, self::ALIGNMENT_RIGHT);
 
 		if (in_array($this->alignment, $validAlignments)) {
-			$classes[] = 'pagination-' . $this->alignment;
+			if($this->alignment == self::ALIGNMENT_RIGHT)
+				$classes[] = 'pull-right';
+			
+			if($this->alignment == self::ALIGNMENT_CENTER) {
+				// $style = 'margin-left: auto; margin-right: auto;'; // not needed!
+				$containerStyle = 'text-align: center;';
+			}
 		}
 
 		if (!empty($classes)) {
@@ -74,8 +94,39 @@ class TbPager extends CLinkPager
 				$this->htmlOptions['class'] = $classes;
 			}
 		}
+		
+		if(!empty($style)) {
+			if(isset($this->htmlOptions['style']) && !empty($this->htmlOptions['style']))
+				$this->htmlOptions['style'] .= ' '.$style;
+			else 
+				$this->htmlOptions['style'] = $style;
+		}
+		
+		if(!empty($containerStyle)) {
+			if(isset($this->containerHtmlOptions['style']) && !empty($this->containerHtmlOptions['style']))
+				$this->containerHtmlOptions['style'] .= ' '.$containerStyle;
+			else
+				$this->containerHtmlOptions['style'] = $containerStyle;
+		}
 
 		parent::init();
+	}
+	
+	/**
+	 * Executes the widget.
+	 * This overrides the parent implementation by displaying the generated page buttons.
+	 */
+	public function run() {
+		
+		$this->registerClientScript();
+		$buttons=$this->createPageButtons();
+		if(empty($buttons))
+			return;
+		echo CHtml::openTag($this->containerTag, $this->containerHtmlOptions);
+		echo $this->header;
+		echo CHtml::tag('ul',$this->htmlOptions,implode("\n",$buttons));
+		echo $this->footer;
+		echo CHtml::closeTag($this->containerTag);
 	}
 
 	/**
@@ -84,8 +135,8 @@ class TbPager extends CLinkPager
 	 * Creates the page buttons.
 	 * @return array a list of page buttons (in HTML code).
 	 */
-	protected function createPageButtons()
-	{
+	protected function createPageButtons() {
+
 		if (($pageCount = $this->getPageCount()) <= 1) {
 			return array();
 		}
