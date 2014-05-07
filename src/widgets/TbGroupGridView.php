@@ -199,7 +199,8 @@ class TbGroupGridView extends TbGridView
 		}
 
 		//iterate data
-		for ($i = 1; $i < count($data); $i++) {
+		$rowcount = count($data);
+		for ($i = 1; $i < $rowcount; $i++) {
 			//save row values in array
 			$current = $this->getRowValues($groupColumns, $data[$i], $i);
 
