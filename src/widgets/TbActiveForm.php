@@ -68,14 +68,21 @@
  * @see http://getbootstrap.com/2.3.2/base-css.html#forms
  * @see CActiveForm
  */
-class TbActiveForm extends CActiveForm
-{
+class TbActiveForm extends CActiveForm {
+	
 	// Allowed form types.
 	const TYPE_VERTICAL = 'vertical';
 	const TYPE_INLINE = 'inline';
 	const TYPE_HORIZONTAL = 'horizontal';
-	const TYPE_SEARCH = 'search';
+	
+	const TYPE_SEARCH = 'search'; /* TODO: remove this */
 
+	protected static $typeClasses = array (
+		self::TYPE_VERTICAL => '',
+		self::TYPE_INLINE => '-inline',
+		self::TYPE_HORIZONTAL => '-horizontal',
+		self::TYPE_SEARCH => ''
+	);
 	/**
 	 * The form type. Allowed types are in `TYPE_*` constants.
 	 * @var string
@@ -128,7 +135,7 @@ class TbActiveForm extends CActiveForm
 	 * Hint wrapper tag.
 	 * @var string
 	 */
-	public $hintTag = 'p';
+	public $hintTag = 'span';
 
 	/**
 	 * Whether to render field error after input. Only for vertical and horizontal types.
@@ -140,9 +147,9 @@ class TbActiveForm extends CActiveForm
 	 * Initializes the widget.
 	 * This renders the form open tag.
 	 */
-	public function init()
-	{
-		self::addCssClass($this->htmlOptions, 'form-' . $this->type);
+	public function init() {
+		
+		self::addCssClass($this->htmlOptions, 'form' . self::$typeClasses[$this->type]);
 
 		if (!isset($this->inlineErrors)) {
 			$this->inlineErrors = $this->type === self::TYPE_HORIZONTAL;
@@ -372,9 +379,18 @@ class TbActiveForm extends CActiveForm
 
 		$fieldData = array(array($this, 'textField'), array($model, $attribute, $htmlOptions));
 
-		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions, $rowOptions);
 	}
-
+	
+	public function textFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$this->addCssClass($options['controlOptions'], 'form-control');
+		$fieldData = array(array($this, 'textField'), array($model, $attribute, $options['controlOptions']));
+	
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $options);
+	}
+	
 	/**
 	 * Generates a search field row for a model attribute.
 	 *
@@ -425,6 +441,16 @@ class TbActiveForm extends CActiveForm
 		$fieldData = array(array($this, 'passwordField'), array($model, $attribute, $htmlOptions));
 
 		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+	
+	public function passwordFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$this->addCssClass($options['controlOptions'], 'form-control');
+	
+		$fieldData = array(array($this, 'passwordField'), array($model, $attribute, $options['controlOptions']));
+	
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -575,6 +601,43 @@ class TbActiveForm extends CActiveForm
 		$rowOptions['label'] = '';
 
 		return $this->customFieldRowInternal($fieldData, $model, $attribute, $rowOptions);
+	}
+	
+	public function checkboxGroup($model, $attribute, $options = array()) {
+
+		$this->initOptions($options);
+	
+		if ($this->type == self::TYPE_INLINE)
+			self::addCssClass($options['labelOptions'], 'inline');
+	
+		$field = $this->checkBox($model, $attribute, $options['controlOptions']);
+		if ((!array_key_exists('uncheckValue', $options['controlOptions']) || isset($options['controlOptions']['uncheckValue']))
+		&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
+		) {
+			$hiddenField = $matches[0];
+			$field = str_replace($hiddenField, '', $field);
+		}
+	
+		$realAttribute = $attribute;
+		CHtml::resolveName($model, $realAttribute);
+	
+		ob_start();
+		echo '<div class="checkbox">';
+		if (isset($hiddenField)) echo $hiddenField;
+		echo CHtml::tag('label', $options['labelOptions'], false, false);
+		echo $field;
+		if (isset($options['label'])) {
+			if ($options['label'])
+				echo $options['label'];
+		} else
+			echo ' '.$model->getAttributeLabel($realAttribute);
+		echo CHtml::closeTag('label');
+		echo '</div>';
+		$fieldData = ob_get_clean();
+	
+		$options['label'] = '';
+	
+		return $this->customFieldRowInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -1096,23 +1159,24 @@ class TbActiveForm extends CActiveForm
 	 * @return string The generated custom filed row.
 	 * @throws CException Raised on invalid form type.
 	 */
-	protected function customFieldRowInternal(&$fieldData, &$model, &$attribute, &$rowOptions)
-	{
+	protected function customFieldRowInternal(&$fieldData, &$model, &$attribute, &$options) {
+		
 		$this->setDefaultPlaceholder($fieldData);
 
 		ob_start();
 		switch ($this->type) {
 			case self::TYPE_HORIZONTAL:
-				$this->horizontalFieldRow($fieldData, $model, $attribute, $rowOptions);
+				$this->horizontalFieldRow($fieldData, $model, $attribute, $options);
 				break;
 
 			case self::TYPE_VERTICAL:
-				$this->verticalFieldRow($fieldData, $model, $attribute, $rowOptions);
+				// $this->verticalFieldRow($fieldData, $model, $attribute, $rowOptions);
+				$this->verticalGroup($fieldData, $model, $attribute, $options);
 				break;
 
 			case self::TYPE_INLINE:
 			case self::TYPE_SEARCH:
-				$this->inlineFieldRow($fieldData, $model, $attribute, $rowOptions);
+				$this->inlineFieldRow($fieldData, $model, $attribute, $options);
 				break;
 
 			default:
@@ -1161,27 +1225,29 @@ class TbActiveForm extends CActiveForm
 	 * @param string $attribute The attribute.
 	 * @param array $rowOptions Row options.
 	 */
-	protected function horizontalFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
-	{
-		$controlGroupHtmlOptions = array('class' => 'control-group');
+	protected function horizontalFieldRow(&$fieldData, &$model, &$attribute, &$options) {
+		
+		$controlGroupHtmlOptions = array('class' => 'form-group');
 		if ($model->hasErrors($attribute)) {
 			self::addCssClass($controlGroupHtmlOptions, CHtml::$errorCss);
 		}
 		echo CHtml::openTag('div', $controlGroupHtmlOptions);
 
-		self::addCssClass($rowOptions['labelOptions'], 'control-label');
-		if (isset($rowOptions['label'])) {
-			if (!empty($rowOptions['label'])) {
-				echo CHtml::label($rowOptions['label'], CHtml::activeId($model, $attribute), $rowOptions['labelOptions']);
+		self::addCssClass($options['labelOptions'], 'col-sm-2 control-label');
+		if (isset($options['label'])) {
+			if (!empty($options['label'])) {
+				echo CHtml::label($options['label'], CHtml::activeId($model, $attribute), $options['labelOptions']);
+			} else {
+				echo '<span class="col-sm-2"></span>';
 			}
 		} else {
-			echo $this->labelEx($model, $attribute, $rowOptions['labelOptions']);
+			echo $this->labelEx($model, $attribute, $options['labelOptions']);
 		}
 
-		echo '<div class="controls">';
+		echo '<div class="col-sm-10">';
 
-		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
-			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
+		if (!empty($options['prepend']) || !empty($options['append'])) {
+			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
 		}
 
 		if (is_array($fieldData)) {
@@ -1190,17 +1256,17 @@ class TbActiveForm extends CActiveForm
 			echo $fieldData;
 		}
 
-		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
-			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
+		if (!empty($options['prepend']) || !empty($options['append'])) {
+			$this->renderAddOnEnd($options['append'], $options['appendOptions']);
 		}
 
-		if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
-			echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
-		}
+		//if ($this->showErrors && $options['errorOptions'] !== false) {
+			//echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
+		//}
 
-		if (isset($rowOptions['hint'])) {
-			self::addCssClass($rowOptions['hintOptions'], $this->hintCssClass);
-			echo CHtml::tag($this->hintTag, $rowOptions['hintOptions'], $rowOptions['hint']);
+		if (isset($options['hint'])) {
+			self::addCssClass($options['hintOptions'], $this->hintCssClass);
+			echo CHtml::tag($this->hintTag, $options['hintOptions'], $options['hint']);
 		}
 
 		echo '</div></div>'; // controls, control-group
@@ -1247,6 +1313,42 @@ class TbActiveForm extends CActiveForm
 			echo CHtml::tag($this->hintTag, $rowOptions['hintOptions'], $rowOptions['hint']);
 		}
 	}
+	
+	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
+		echo '<div class="form-group">';
+		if (isset($options['label'])) {
+			if (!empty($options['label'])) {
+				echo CHtml::label($options['label'], CHtml::activeId($model, $attribute), $options['labelOptions']);
+			}
+		} else {
+			echo $this->labelEx($model, $attribute, $options['labelOptions']);
+		}
+	
+		if (!empty($options['prepend']) || !empty($options['append'])) {
+			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
+		}
+	
+		if (is_array($fieldData)) {
+			echo call_user_func_array($fieldData[0], $fieldData[1]);
+		} else {
+			echo $fieldData;
+		}
+	
+		if (!empty($options['prepend']) || !empty($options['append'])) {
+			$this->renderAddOnEnd($options['append'], $options['appendOptions']);
+		}
+	
+		if ($this->showErrors && $options['errorOptions'] !== false) {
+			echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
+		}
+	
+		if (isset($options['hint'])) {
+			self::addCssClass($options['hintOptions'], $this->hintCssClass);
+			echo CHtml::tag($this->hintTag, $options['hintOptions'], $options['hint']);
+		}
+		
+		echo '</div>';
+	}
 
 	/**
 	 * Renders a inline custom field row for a model attribute.
@@ -1256,9 +1358,9 @@ class TbActiveForm extends CActiveForm
 	 * @param string $attribute The attribute.
 	 * @param array $rowOptions Row options.
 	 */
-	protected function inlineFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
-	{
-        echo '<div class="controls-inline">';
+	protected function inlineFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions) {
+		
+        echo '<div class="form-group">';
 
 		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
 			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
@@ -1276,7 +1378,7 @@ class TbActiveForm extends CActiveForm
             echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
         }
 
-        echo '</div>';
+        echo '</div> '; // <- this space is important 
 	}
 
 	/**
@@ -1354,6 +1456,43 @@ class TbActiveForm extends CActiveForm
 		if(!isset($options['enableClientValidation']))
 			$options['enableClientValidation'] = true;
 	}
+	
+	/**
+	 * TODO: review this
+	 * @param unknown $options
+	 */
+	protected function initOptions(&$options) {
+		
+		if (!isset($options['groupOptions']))
+			$options['groupOptions'] = array();
+		
+		if (!isset($options['labelOptions']))
+			$options['labelOptions'] = array();
+		
+		if (!isset($options['controlOptions']))
+			$options['controlOptions'] = array();
+	
+		if (!isset($options['errorOptions']))
+			$options['errorOptions'] = array();
+	
+		if (!isset($options['prependOptions']))
+			$options['prependOptions'] = array();
+	
+		if (!isset($options['prepend']))
+			$options['prepend'] = null;
+	
+		if (!isset($options['appendOptions']))
+			$options['appendOptions'] = array();
+	
+		if (!isset($options['append']))
+			$options['append'] = null;
+	
+		if(!isset($options['enableAjaxValidation']))
+			$options['enableAjaxValidation'] = true;
+	
+		if(!isset($options['enableClientValidation']))
+			$options['enableClientValidation'] = true;
+	}
 
 	/**
 	 * Utility function for appending class names for a generic $htmlOptions array.
@@ -1361,8 +1500,8 @@ class TbActiveForm extends CActiveForm
 	 * @param array $htmlOptions
 	 * @param string $class
 	 */
-	protected static function addCssClass(&$htmlOptions, $class)
-	{
+	protected static function addCssClass(&$htmlOptions, $class) {
+		
 		if (empty($class)) {
 			return;
 		}

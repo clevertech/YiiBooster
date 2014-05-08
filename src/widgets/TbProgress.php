@@ -23,7 +23,7 @@ class TbProgress extends CWidget {
 	const TYPE_WARNING = 'warning';
 	const TYPE_DANGER = 'danger';
 
-	protected static $type_classes = array (
+	protected static $typeClasses = array (
 			self::TYPE_DEFAULT => '',
 			self::TYPE_SUCCESS => 'success',
 			self::TYPE_INFO => 'info',

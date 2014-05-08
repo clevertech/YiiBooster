@@ -25,7 +25,7 @@ class TbAlert extends CWidget {
 	const TYPE_ERROR = 'error';
 	const TYPE_DANGER = 'danger'; // same as error
 
-	protected static $type_classes = array (
+	protected static $typeClasses = array (
 		self::TYPE_DEFAULT => '',
 		self::TYPE_SUCCESS => 'success',
 		self::TYPE_INFO => 'info',
@@ -202,7 +202,7 @@ class TbAlert extends CWidget {
 		);
 
 		if (in_array($type, $validTypes)) {
-			$classes[] = 'alert-' . self::$type_classes[$type];
+			$classes[] = 'alert-' . self::$typeClasses[$type];
 		}
 
 		if (!isset($alert['htmlOptions'])) {

@@ -21,7 +21,7 @@ class TbBadge extends CWidget
 	const TYPE_WARNING = 'warning';
 	const TYPE_DANGER = 'danger';
 
-	protected static $type_classes = array (
+	protected static $typeClasses = array (
 		self::TYPE_SUCCESS => 'success',
 		self::TYPE_INFO => 'info',
 		self::TYPE_WARNING => 'warning',
@@ -67,7 +67,7 @@ class TbBadge extends CWidget
 		);
 
 		if (isset($this->type) && in_array($this->type, $validTypes)) {
-			$classes[] = 'alert-' . self::$type_classes[$this->type];
+			$classes[] = 'alert-' . self::$typeClasses[$this->type];
 		}
 
 		if (!empty($classes)) {
