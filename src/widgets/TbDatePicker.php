@@ -16,8 +16,8 @@
 
 Yii::import('booster.widgets.TbBaseInputWidget');
 
-class TbDatePicker extends TbBaseInputWidget
-{
+class TbDatePicker extends TbBaseInputWidget {
+	
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
 	 * This attribute is set to the form that renders the widget
@@ -40,8 +40,8 @@ class TbDatePicker extends TbBaseInputWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		$this->htmlOptions['type'] = 'text';
 		$this->htmlOptions['autocomplete'] = 'off';
 		
@@ -57,8 +57,8 @@ class TbDatePicker extends TbBaseInputWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		list($name, $id) = $this->resolveNameID();
 
 		if ($this->hasModel()) {

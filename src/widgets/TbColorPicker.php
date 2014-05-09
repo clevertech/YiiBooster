@@ -23,8 +23,7 @@
 
 Yii::import('booster.widgets.TbBaseInputWidget');
 
-class TbColorPicker extends TbBaseInputWidget
-{
+class TbColorPicker extends TbBaseInputWidget {
 
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
@@ -89,8 +88,8 @@ class TbColorPicker extends TbBaseInputWidget
 	 *
 	 * @param string $id
 	 */
-	public function registerClientScript($id)
-	{
+	public function registerClientScript($id) {
+		
         Booster::getBooster()->registerAssetJs('bootstrap.colorpicker.js', CClientScript::POS_HEAD);
         Booster::getBooster()->registerAssetCss('bootstrap-colorpicker.css');
 

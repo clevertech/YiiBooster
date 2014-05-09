@@ -51,7 +51,7 @@ return array(
 	'datepicker' => array(
 		'depends' => array('jquery'),
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/' : $this->getAssetsUrl() . '/bootstrap-datepicker/',
-		'css' => array($this->minify ? 'css/datepicker.min.css' : 'css/datepicker.css'),
+		'css' => array('css/datepicker3.css'), // $this->minify ? 'css/datepicker.min.css' : 'css/datepicker.css'),
 		'js' => array($this->minify ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js', 'js/bootstrap-datepicker-noconflict.js') 
 		// ... the noconflict code is in its own file so we do not want to touch the original js files to ease upgrading lib
 	),
@@ -117,7 +117,7 @@ return array(
 	),
 	'timepicker' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-timepicker',
-		'js' => array($this->minify ? 'js/bootstrap-timepicker.min.js' : 'js/bootstrap-timepicker.js'),
+		'js' => array('js/bootstrap-timepicker.js'),
 		'css' => array($this->minify ? 'css/bootstrap-timepicker.min.css' : 'css/bootstrap-timepicker.css'),
 		'depends' => array('bootstrap.js')
 	),
