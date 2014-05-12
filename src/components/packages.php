@@ -65,6 +65,12 @@ return array(
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/datejs/1.0/' : $this->getAssetsUrl() . '/js/',
 		'js' => array('date.min.js')
 	),
+	'colorpicker' => array(
+		'depends' => array('jquery'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-colorpicker/',
+		'css' => array($this->minify ? 'css/bootstrap-colorpicker.min.css' : 'css/bootstrap-colorpicker.css'),
+		'js' => array($this->minify ? 'js/bootstrap-colorpicker.min.js' : 'js/bootstrap-colorpicker.js')
+	),
 	'x-editable' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-editable/',
 		'css' => array('css/bootstrap-editable.css'),
@@ -128,5 +134,23 @@ return array(
 	'highcharts' => array(
 		'baseUrl' => $this->enableCdn ? '//code.highcharts.com' : $this->getAssetsUrl() . '/highcharts',
 		'js' => array($this->minify ? 'highcharts.js' : 'highcharts.src.js')
+	),
+	'wysihtml5' => array(
+		'depends' => array('bootstrap.js'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap3-wysihtml5',
+		'css' => array('bootstrap-wysihtml5.css'),
+		'js' => array('wysihtml5-0.3.0.js', 'bootstrap3-wysihtml5.js'),
+	),
+	'markdown' => array(
+		'depends' => array('bootstrap.js'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-markdown',
+		'css' => array('css/bootstrap-markdown.min.css'),
+		'js' => array('js/bootstrap-markdown.js'),
+	),
+	'switch' => array(
+		'depends' => array('bootstrap.js'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-switch',
+		'css' => array($this->minify ? 'css/bootstrap3/bootstrap-switch.min.css' : 'css/bootstrap3/bootstrap-switch.css'),
+		'js' => array($this->minify ? 'js/bootstrap-switch.min.js' : 'js/bootstrap-switch.js'),
 	),
 );

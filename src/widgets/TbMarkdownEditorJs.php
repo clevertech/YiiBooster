@@ -14,6 +14,7 @@
  * @see <https://github.com/arhpreston/jquery-markdown>
  *
  * @package booster.widgets.forms.inputs.wysiwyg
+ * @deprecated replaced with TbMarkdownEditor
  */
 class TbMarkdownEditorJS extends CInputWidget
 {

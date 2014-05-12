@@ -316,8 +316,8 @@ class Booster extends CApplicationComponent {
 	 *
 	 * @since 0.9.11
 	 */
-	public function registerYiiCss()
-	{
+	public function registerYiiCss() {
+		
 		$this->registerPackage('bootstrap-yii');
 	}
 
@@ -360,7 +360,8 @@ class Booster extends CApplicationComponent {
 	 * @return string the version
 	 */
 	public function getVersion() {
-		return '4.0.0';
+		
+		return '4.0.0-beta-1';
 	}
 
 	/**
@@ -372,8 +373,8 @@ class Booster extends CApplicationComponent {
 	 * @see CClientScript::registerPackage
 	 * @since 1.0.7
 	 */
-	public function registerPackage($name)
-	{
+	public function registerPackage($name) {
+		
 		return $this->cs->registerPackage($name);
 	}
 
@@ -385,8 +386,8 @@ class Booster extends CApplicationComponent {
 	 *
 	 * @see CClientScript::registerCssFile
 	 */
-	public function registerAssetCss($name, $media = '')
-	{
+	public function registerAssetCss($name, $media = '') {
+		
 		$this->cs->registerCssFile($this->getAssetsUrl() . "/css/{$name}", $media);
 	}
 
@@ -398,8 +399,8 @@ class Booster extends CApplicationComponent {
 	 *
 	 * @see CClientScript::registerScriptFile
 	 */
-	public function registerAssetJs($name, $position = CClientScript::POS_END)
-	{
+	public function registerAssetJs($name, $position = CClientScript::POS_END) {
+		
 		$this->cs->registerScriptFile($this->getAssetsUrl() . "/js/{$name}", $position);
 	}
 
@@ -486,7 +487,7 @@ class Booster extends CApplicationComponent {
 		return array('select2' => array(
 			'baseUrl' => $this->getAssetsUrl() . '/select2/',
 			'js' => $jsFiles,
-			'css' => array('select2.css'),
+			'css' => array('select2.css', 'select2-bootstrap.css'),
 			'depends' => array('jquery'),
 		));
 	}

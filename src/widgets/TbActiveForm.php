@@ -385,8 +385,11 @@ class TbActiveForm extends CActiveForm {
 	public function textFieldGroup($model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
-		$this->addCssClass($options['widgetOptions'], 'form-control');
-		$fieldData = array(array($this, 'textField'), array($model, $attribute, $options['widgetOptions']));
+		$widgetOptions = $options['widgetOptions'];
+		
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
+		$fieldData = array(array($this, 'textField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 	
 		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
@@ -446,9 +449,9 @@ class TbActiveForm extends CActiveForm {
 	public function passwordFieldGroup($model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
-		$this->addCssClass($options['widgetOptions'], 'form-control');
+		$this->addCssClass($options['widgetOptions']['htmlOptions'], 'form-control');
 	
-		$fieldData = array(array($this, 'passwordField'), array($model, $attribute, $options['widgetOptions']));
+		$fieldData = array(array($this, 'passwordField'), array($model, $attribute, $options['widgetOptions']['htmlOptions']));
 	
 		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
@@ -468,13 +471,14 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::textArea
 	 * @see customFieldRow
 	 */
-	public function textAreaRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function textAreaGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$this->addCssClass($options['widgetOptions']['htmlOptions'], 'form-control');
 
-		$fieldData = array(array($this, 'textArea'), array($model, $attribute, $htmlOptions));
+		$fieldData = array(array($this, 'textArea'), array($model, $attribute, $options['widgetOptions']['htmlOptions']));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -492,13 +496,16 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::fileField
 	 * @see customFieldRow
 	 */
-	public function fileFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function fileFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
+		
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
+		$fieldData = array(array($this, 'fileField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
-		$fieldData = array(array($this, 'fileField'), array($model, $attribute, $htmlOptions));
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -610,7 +617,7 @@ class TbActiveForm extends CActiveForm {
 		if ($this->type == self::TYPE_INLINE)
 			self::addCssClass($options['labelOptions'], 'inline');
 	
-		$field = $this->checkBox($model, $attribute, $options['widgetOptions']);
+		$field = $this->checkBox($model, $attribute, $options['widgetOptions']['htmlOptions']);
 		if ((!array_key_exists('uncheckValue', $options['widgetOptions']) || isset($options['widgetOptions']['uncheckValue']))
 		&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
 		) {
@@ -656,13 +663,19 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::dropDownList
 	 * @see customFieldRow
 	 */
-	public function dropDownListRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function dropDownListGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
+		
+		if(!isset($widgetOptions['data']))
+			throw new CException('$options["widgetOptions"]["data"] must exist');
+		
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
+		$fieldData = array(array($this, 'dropDownList'), array($model, $attribute, $widgetOptions['data'], $widgetOptions['htmlOptions']));
 
-		$fieldData = array(array($this, 'dropDownList'), array($model, $attribute, $data, $htmlOptions));
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -681,8 +694,8 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::listBox
 	 * @see customFieldRow
 	 */
-	public function listBoxRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
-	{
+	public function listBoxRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array()) {
+		
 		$this->initRowOptions($rowOptions);
 
 		$fieldData = array(array($this, 'listBox'), array($model, $attribute, $data, $htmlOptions));
@@ -779,9 +792,9 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbToggleButton
 	 * @see customFieldRow
 	 */
-	public function toggleButtonRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbToggleButton', $model, $attribute, $widgetOptions, $rowOptions);
+	public function switchGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbSwitch', $model, $attribute, $options);
 	}
 
 	/**
@@ -879,9 +892,9 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbSelect2
 	 * @see customFieldRow
 	 */
-	public function select2Row($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbSelect2', $model, $attribute, $widgetOptions, $rowOptions);
+	public function select2Group($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbSelect2', $model, $attribute, $options);
 	}
 
 	/**
@@ -899,9 +912,9 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbRedactorJs
 	 * @see customFieldRow
 	 */
-	public function redactorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbRedactorJs', $model, $attribute, $widgetOptions, $rowOptions);
+	public function redactorGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbRedactorJs', $model, $attribute, $options);
 	}
 
 	/**
@@ -919,9 +932,9 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbHtml5Editor
 	 * @see customFieldRow
 	 */
-	public function html5EditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbHtml5Editor', $model, $attribute, $widgetOptions, $rowOptions);
+	public function html5EditorGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbHtml5Editor', $model, $attribute, $options);
 	}
 
 	/**
@@ -939,9 +952,13 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbMarkdownEditorJs
 	 * @see customFieldRow
 	 */
-	public function markdownEditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function markdownEditorGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbMarkdownEditor', $model, $attribute, $options);
+		return;
+		
+		$this->initOptions($rowOptions);
+		$widgetOptions = $options['widgetOptions'];
 		$widgetOptions['model'] = $model;
 		$widgetOptions['attribute'] = $attribute;
 
@@ -970,9 +987,9 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbCKEditor
 	 * @see customFieldRow
 	 */
-	public function ckEditorRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbCKEditor', $model, $attribute, $widgetOptions, $rowOptions);
+	public function ckEditorGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbCKEditor', $model, $attribute, $options);
 	}
 
 	/**
@@ -1030,9 +1047,9 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbColorPicker
 	 * @see customFieldRow
 	 */
-	public function colorPickerGroup($model, $attribute, $widgetOptions = array(), $rowOptions = array()) {
+	public function colorPickerGroup($model, $attribute, $options = array()) {
 		
-		return $this->widgetGroupInternal('booster.widgets.TbColorPicker', $model, $attribute, $widgetOptions, $rowOptions);
+		return $this->widgetGroupInternal('booster.widgets.TbColorPicker', $model, $attribute, $options);
 	}
 
 	/**
@@ -1143,13 +1160,8 @@ class TbActiveForm extends CActiveForm {
 		$widgetOptions['model'] = $model;
 		$widgetOptions['attribute'] = $attribute;
 		
-		if(!isset($widgetOptions['htmlOptions']))
-			$widgetOptions['htmlOptions'] = array();
-		if(isset($widgetOptions['htmlOptions']['class']) && !empty($widgetOptions['htmlOptions']['class']))
-			$widgetOptions['htmlOptions']['class'] .= ' form-control';
-		else 
-			$widgetOptions['htmlOptions']['class'] = 'form-control';
-
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
 		$fieldData = array(array($this->owner, 'widget'), array($className, $widgetOptions, true));
 
 		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
@@ -1485,6 +1497,9 @@ class TbActiveForm extends CActiveForm {
 		
 		if (!isset($options['widgetOptions']))
 			$options['widgetOptions'] = array();
+		
+		if (!isset($options['widgetOptions']['htmlOptions']))
+			$options['widgetOptions']['htmlOptions'] = array();
 		
 		if (!isset($options['errorOptions']))
 			$options['errorOptions'] = array();

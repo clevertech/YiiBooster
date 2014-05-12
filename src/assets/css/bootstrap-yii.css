@@ -290,6 +290,11 @@ table td, table th {
 
 }
 
+input.form-control[type="file"]{
+	border-radius:0;
+	padding: 0;
+}
+
 /* Gii */
 .form.gii .tooltip {
     opacity: 1;

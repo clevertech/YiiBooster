@@ -113,8 +113,8 @@ class TbTimePicker extends CInputWidget {
 	 *
 	 * @param string $id
 	 */
-	public function registerClientScript($id)
-	{
+	public function registerClientScript($id) {
+		
         Booster::getBooster()->cs->registerPackage('timepicker');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
