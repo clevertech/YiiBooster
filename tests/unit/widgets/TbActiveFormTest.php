@@ -7,12 +7,12 @@
 require_once(__DIR__ . '/../../../src/widgets/TbActiveForm.php');
 require_once(__DIR__ . '/../../fakes/FakeController.php');
 
-class TbActiveForm2Test extends PHPUnit_Framework_TestCase
-{
+class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
+	
 	const WIDGET_CLASS = 'TbActiveForm';
 
-	public function setUp()
-	{
+	public function setUp() {
+		
 		$_SERVER['REQUEST_URI'] = 'test';
 		$controller = new FakeController('fake');
 		Yii::app()->setController($controller);
@@ -21,19 +21,19 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 	/**
 	 * @return TbActiveForm
 	 */
-	protected function makeWidget()
-	{
+	protected function makeWidget() {
+		
 		$className = self::WIDGET_CLASS;
 		return new $className();
 	}
 
-	public function testParentClass()
-	{
+	public function testParentClass() {
+		
 		$this->assertInstanceOf('CActiveForm', $this->makeWidget());
 	}
 
-	public function testAddCssClass()
-	{
+	public function testAddCssClass() {
+		
 		$form = $this->makeWidget();
 		$method = new ReflectionMethod($form, 'addCssClass');
 		$method->setAccessible(true);
@@ -66,8 +66,8 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$this->assertStringStartsWith('<form', $data);
 	}
 
-	public function testConstantsAndDefaults()
-	{
+	public function testConstantsAndDefaults() {
+		
 		$className = self::WIDGET_CLASS;
 
 		$this->assertEquals($className::TYPE_HORIZONTAL, 'horizontal');
@@ -78,13 +78,13 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$form = $this->makeWidget();
 		$this->assertAttributeEquals('vertical', 'type', $form);
 		$this->assertAttributeEquals(null, 'inlineErrors', $form);
-		$this->assertAttributeEquals('input-prepend', 'prependCssClass', $form);
-		$this->assertAttributeEquals('input-append', 'appendCssClass', $form);
-		$this->assertAttributeEquals('add-on', 'addOnCssClass', $form);
+		$this->assertAttributeEquals('input-group', 'prependCssClass', $form);
+		$this->assertAttributeEquals('input-group', 'appendCssClass', $form);
+		$this->assertAttributeEquals('input-group-addon', 'addOnCssClass', $form);
 		$this->assertAttributeEquals('span', 'addOnTag', $form);
 		$this->assertAttributeEquals('div', 'addOnWrapperTag', $form);
 		$this->assertAttributeEquals('help-block', 'hintCssClass', $form);
-		$this->assertAttributeEquals('p', 'hintTag', $form);
+		$this->assertAttributeEquals('span', 'hintTag', $form);
 	}
 
 	public function testInitFormClass()
@@ -170,11 +170,11 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$this->assertArrayNotHasKey('inputContainer', $form->clientOptions);
 	}
 
-	public function testInitRowOptions()
-	{
+	public function testInitOptions() {
+		
 		$form = $this->makeWidget();
 		$form->type = 'inline';
-		$method = new ReflectionMethod($form, 'initRowOptions');
+		$method = new ReflectionMethod($form, 'initOptions');
 		$method->setAccessible(true);
 
 		$options = array();
@@ -211,7 +211,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$this->assertContains($form->appendCssClass, $addonWrapper->attributes->getNamedItem('class')->nodeValue);
 		$addon = $actual->documentElement->getElementsByTagName($form->addOnTag)->item(0);
 		$this->assertEquals('foo', $addon->nodeValue);
-		$this->assertContains('add-on', $addon->attributes->getNamedItem('class')->nodeValue);
+		$this->assertContains('input-group-addon', $addon->attributes->getNamedItem('class')->nodeValue);
 		$this->assertContains('foobar', $addon->attributes->getNamedItem('class')->nodeValue);
 
 		ob_start();
@@ -233,7 +233,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$actual = new DOMDocument();
 		$actual->loadHTML("<{$form->addOnWrapperTag}>" . ob_get_clean());
 		$addon = $actual->documentElement->getElementsByTagName($form->addOnTag)->item(0);
-		$this->assertContains('add-on', $addon->attributes->getNamedItem('class')->nodeValue);
+		$this->assertContains('input-group-addon', $addon->attributes->getNamedItem('class')->nodeValue);
 		$this->assertContains('foobar', $addon->attributes->getNamedItem('class')->nodeValue);
 		$this->assertEquals('foo', $addon->nodeValue);
 
@@ -246,9 +246,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @dataProvider  dataProviderStandardRows
+	 * @dataProvider  dataProviderStandardGroups
 	 */
-	public function testStandardRows($outerMethod, $innerMethod)
+	public function testStandardGroups($outerMethod, $innerMethod)
 	{
 		$model = new FakeModel();
 		$attribute = 'foobar';
@@ -258,70 +258,70 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$mock->$outerMethod($model, $attribute, array());
 	}
 
-	public function dataProviderStandardRows()
+	public function dataProviderStandardGroups()
 	{
 		return array(
-			array('urlFieldRow', 'urlField'),
-			array('emailFieldRow', 'emailField'),
-			array('numberFieldRow', 'numberField'),
-			array('rangeFieldRow', 'rangeField'),
-			array('dateFieldRow', 'dateField'),
-			array('timeFieldRow', 'timeField'),
-			array('telFieldRow', 'telField'),
-			array('textFieldRow', 'textField'),
-			array('searchFieldRow', 'searchField'),
-			array('passwordFieldRow', 'passwordField'),
-			array('textAreaRow', 'textArea'),
-			array('fileFieldRow', 'fileField'),
-			array('radioButtonRow', 'radioButton'),
-			array('checkBoxRow', 'checkBox'),
-			array('dropDownListRow', 'dropDownList'),
-			array('listBoxRow', 'listBox'),
-			array('checkBoxListRow', 'checkBoxList'),
-			array('radioButtonListRow', 'radioButtonList'),
+			array('urlFieldGroup', 'urlField'),
+			array('emailFieldGroup', 'emailField'),
+			array('numberFieldGroup', 'numberField'),
+			array('rangeFieldGroup', 'rangeField'),
+			array('dateFieldGroup', 'dateField'),
+			array('timeFieldGroup', 'timeField'),
+			array('telFieldGroup', 'telField'),
+			array('textFieldGroup', 'textField'),
+			array('searchFieldGroup', 'searchField'),
+			array('passwordFieldGroup', 'passwordField'),
+			array('textAreaGroup', 'textArea'),
+			array('fileFieldGroup', 'fileField'),
+			array('radioButtonGroup', 'radioButton'),
+			array('checkBoxGroup', 'checkBox'),
+			array('dropDownListGroup', 'dropDownList'),
+			array('listBoxGroup', 'listBox'),
+			array('checkBoxListGroup', 'checkBoxList'),
+			array('radioButtonListGroup', 'radioButtonList'),
 		);
 	}
 
 	/**
-	 * @dataProvider dataProviderWidgetRows
+	 * @dataProvider dataProviderWidgetGroups
 	 */
-	public function testWidgetRows($outerMethod, $className)
-	{
+	public function testWidgetGroups($outerMethod, $className) {
+		
 		$model = new FakeModel();
 		$attribute = 'foobar';
 
-		$mock = $this->getMock(self::WIDGET_CLASS, array('widgetRowInternal'));
-		$mock->expects($this->once())->method('widgetRowInternal')->with($className, $this->anything(),
-			$this->anything(), $this->anything(), $this->anything());
+		$mock = $this->getMock(self::WIDGET_CLASS, array('widgetGroupInternal'));
+		$mock->expects($this->once())->method('widgetGroupInternal')->with($className, $this->anything(),
+			$this->anything(), $this->anything());
 		$mock->$outerMethod($model, $attribute, array());
 	}
 
-	public function dataProviderWidgetRows()
-	{
+	public function dataProviderWidgetGroups() {
+		
 		return array(
-			array('toggleButtonRow', 'booster.widgets.TbToggleButton'),
-			array('datePickerRow', 'booster.widgets.TbDatePicker'),
-			array('dateRangeRow', 'booster.widgets.TbDateRangePicker'),
-			array('timePickerRow', 'booster.widgets.TbTimePicker'),
-			array('dateTimePickerRow', 'booster.widgets.TbDateTimePicker'),
-			array('select2Row', 'booster.widgets.TbSelect2'),
-			array('redactorRow', 'booster.widgets.TbRedactorJs'),
-			array('html5EditorRow', 'booster.widgets.TbHtml5Editor'),
-			//array('markdownEditorRow', 'booster.widgets.TbMarkdownEditorJs'),
-			array('ckEditorRow', 'booster.widgets.TbCKEditor'),
-			array('typeAheadRow', 'booster.widgets.TbTypeahead'),
-			array('maskedTextFieldRow', 'CMaskedTextField'),
-			array('colorPickerRow', 'booster.widgets.TbColorPicker'),
-			array('passFieldRow', 'booster.widgets.TbPassfield'),
+			array('toggleButtonGroup', 'booster.widgets.TbToggleButton'),
+			array('datePickerGroup', 'booster.widgets.TbDatePicker'),
+			array('dateRangeGroup', 'booster.widgets.TbDateRangePicker'),
+			array('timePickerGroup', 'booster.widgets.TbTimePicker'),
+			array('dateTimePickerGroup', 'booster.widgets.TbDateTimePicker'),
+			array('select2Group', 'booster.widgets.TbSelect2'),
+			array('redactorGroup', 'booster.widgets.TbRedactorJs'),
+			array('html5EditorGroup', 'booster.widgets.TbHtml5Editor'),
+			//array('markdownEditorGroup', 'booster.widgets.TbMarkdownEditorJs'),
+			array('ckEditorGroup', 'booster.widgets.TbCKEditor'),
+			array('typeAheadGroup', 'booster.widgets.TbTypeahead'),
+			array('maskedTextFieldGroup', 'CMaskedTextField'),
+			array('colorPickerGroup', 'booster.widgets.TbColorPicker'),
+			array('passFieldGroup', 'booster.widgets.TbPassfield'),
 		);
 	}
 
-	public function testRadioButtonRow()
+	public function testRadioButtonGroup()
 	{
 		$model = new FakeModel();
 		$form = $this->makeWidget();
 
-		$data = $form->radioButtonRow($model, 'login', array('class' => 'foobar'), array('labelOptions' => array('class' => 'foo')));
+		$data = $form->radioButtonGroup($model, 'login', array('class' => 'foobar'), array('labelOptions' => array('class' => 'foo')));
 		$doc = new DOMDocument();
 		$doc->loadHTML($data);
 		$actual = new DOMXPath($doc);
@@ -329,12 +329,12 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $mathches->length);
 	}
 
-	public function testCheckBoxRow()
+	public function testCheckBoxGroup()
 	{
 		$model = new FakeModel();
 		$form = $this->makeWidget();
 
-		$data = $form->checkBoxRow($model, 'login', array('class' => 'foobar'), array('labelOptions' => array('class' => 'foo')));
+		$data = $form->checkBoxGroup($model, 'login', array('class' => 'foobar'), array('labelOptions' => array('class' => 'foo')));
 		$doc = new DOMDocument();
 		$doc->loadHTML($data);
 		$actual = new DOMXPath($doc);
@@ -342,11 +342,11 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $mathches->length);
 	}
 
-	public function testCaptchaRow()
+	public function testCaptchaGroup()
 	{
 		$model = new FakeModel();
 		$form = $this->makeWidget();
-		$data = $form->captchaRow($model, 'login');
+		$data = $form->captchaGroup($model, 'login');
 		$doc = new DOMDocument();
 		$doc->loadHTML($data);
 		$actual = new DOMXPath($doc);
@@ -355,55 +355,55 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 
 	}
 
-	public function testCustomFieldRow()
+	public function testCustomFieldGroup()
 	{
-		$mock = $this->getMock(self::WIDGET_CLASS, array('customFieldRowInternal', 'initRowOptions'));
-		$mock->expects($this->once())->method('initRowOptions');
-		$mock->expects($this->once())->method('customFieldRowInternal');
+		$mock = $this->getMock(self::WIDGET_CLASS, array('customFieldGroupInternal', 'initOptions'));
+		$mock->expects($this->once())->method('initOptions');
+		$mock->expects($this->once())->method('customFieldGroupInternal');
 
-		$mock->customFieldRow('field', null, null);
+		$mock->customFieldGroup('field', null, null);
 	}
 
-	public function testWidgetRow()
+	public function testWidgetGroup()
 	{
-		$mock = $this->getMock(self::WIDGET_CLASS, array('customFieldRowInternal', 'initRowOptions'));
-		$mock->expects($this->once())->method('initRowOptions');
-		$mock->expects($this->once())->method('customFieldRowInternal');
+		$mock = $this->getMock(self::WIDGET_CLASS, array('customFieldGroupInternal', 'initOptions'));
+		$mock->expects($this->once())->method('initOptions');
+		$mock->expects($this->once())->method('customFieldGroupInternal');
 
-		$mock->widgetRow('foobar', array('model' => null, 'attribute' => null));
+		$mock->widgetGroup('foobar', array('model' => null, 'attribute' => null));
 	}
 
-	public function testCustomFieldRowInternal()
-	{
+	public function testCustomFieldGroupInternal() {
+		
 		$model = new FakeModel();
-		$mock = $this->getMock(self::WIDGET_CLASS, array('horizontalFieldRow', 'verticalFieldRow', 'inlineFieldRow'));
+		$mock = $this->getMock(self::WIDGET_CLASS, array('horizontalGroup', 'verticalGroup', 'inlineGroup'));
 
 		$mock->type = 'horizontal';
-		$mock->expects($this->once())->method('horizontalFieldRow');
-		$mock->textFieldRow($model, 'login');
+		$mock->expects($this->once())->method('horizontalGroup');
+		$mock->textFieldGroup($model, 'login');
 
 		$mock->type = 'vertical';
-		$mock->expects($this->once())->method('verticalFieldRow');
-		$mock->textFieldRow($model, 'login');
+		$mock->expects($this->once())->method('verticalGroup');
+		$mock->textFieldGroup($model, 'login');
 
 		$mock->type = 'inline';
-		$mock->expects($this->once())->method('inlineFieldRow');
-		$mock->textFieldRow($model, 'login');
+		$mock->expects($this->once())->method('inlineGroup');
+		$mock->textFieldGroup($model, 'login');
 
 		$form = $this->makeWidget();
 		$form->type = 'foobar';
 		$this->setExpectedException('CException');
-		$form->textFieldRow($model, 'login');
+		$form->textFieldGroup($model, 'login');
 	}
 
-	public function testHorizontalFieldRow()
-	{
+	public function testHorizontalGroup() {
+		
 		$model = new FakeModel();
 		$fieldData = 'here_will_be_field';
 		$attribute = 'login';
 		$model->addError($attribute, 'simple error text');
 		$form = $this->makeWidget();
-		$method = new ReflectionMethod($form, 'horizontalFieldRow');
+		$method = new ReflectionMethod($form, 'horizontalGroup');
 		$method->setAccessible(true);
 
 		$rowOptions = array(
@@ -426,26 +426,27 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$doc->loadHTML($data);
 		$actual = new DOMXPath($doc);
 		$matches = $actual->query(
-			'//div[contains(@class, "control-group") and contains(@class, "' . CHtml::$errorCss . '")]'
+			'//div[contains(@class, "form-group") and contains(@class, "' . CHtml::$errorCss . '")]'
 			. '/label[contains(@class, "control-label") and contains(@class, "' . $rowOptions['labelOptions']['class'] . '")]'
-			. '/following-sibling::div[@class="controls"]'
-			. '/div[contains(@class, "input-prepend") and contains(@class, "input-append")  and text()="' . $fieldData . '"]'
-			. '/span[contains(@class,"add-on") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
-			. '/following-sibling::span[contains(@class,"add-on") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
-			. '/following::div[@class="' . $rowOptions['errorOptions']['class'] . '"]'
-			. '/following-sibling::p[contains(@class,"' . $rowOptions['hintOptions']['class'] . '") and text()="' . $rowOptions['hint'] . '"]'
+			. '/following::div'
+			// . '/following-sibling::div[@class="controls"]' // removed in bootstrap 3
+			. '/div[contains(@class, "input-group") and contains(@class, "input-group")  and text()="' . $fieldData . '"]'
+			. '/span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
+			. '/following-sibling::span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
+			// . '/following::div[@class="' . $rowOptions['errorOptions']['class'] . '"]' // not handled yet
+			. '/following::span[contains(@class,"' . $rowOptions['hintOptions']['class'] . '") and text()="' . $rowOptions['hint'] . '"]'
 		);
 		$this->assertEquals(1, $matches->length);
 	}
 
-	public function testVerticalFieldRow()
-	{
+	public function testVerticalGroup() {
+		
 		$model = new FakeModel();
 		$fieldData = 'here_will_be_field';
 		$attribute = 'login';
 		$model->addError($attribute, 'simple error text');
 		$form = $this->makeWidget();
-		$method = new ReflectionMethod($form, 'verticalFieldRow');
+		$method = new ReflectionMethod($form, 'verticalFieldGroup');
 		$method->setAccessible(true);
 
 		$rowOptions = array(
@@ -469,29 +470,29 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$actual = new DOMXPath($doc);
 		$matches = $actual->query(
 			'//label[contains(@class, "' . $rowOptions['labelOptions']['class'] . '")]'
-			. '/following-sibling::div[contains(@class, "input-prepend") and contains(@class, "input-append")  and text()="' . $fieldData . '"]'
-			. '/span[contains(@class,"add-on") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
-			. '/following-sibling::span[contains(@class,"add-on") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
+			. '/following-sibling::div[contains(@class, "input-group") and contains(@class, "input-group")  and text()="' . $fieldData . '"]'
+			. '/span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
+			. '/following-sibling::span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
 			. '/following::div[@class="' . $rowOptions['errorOptions']['class'] . '"]'
 			. '/following-sibling::p[contains(@class,"' . $rowOptions['hintOptions']['class'] . '") and text()="' . $rowOptions['hint'] . '"]'
 		);
 		$this->assertEquals(1, $matches->length);
 	}
 
-	public function testInlineFieldRow()
-	{
+	public function testInlineGroup() {
+		
 		$model = new FakeModel();
 		$fieldData = 'here_will_be_field';
 		$attribute = 'login';
 		$model->addError($attribute, 'simple error text');
 		$form = $this->makeWidget();
-		$method = new ReflectionMethod($form, 'inlineFieldRow');
+		$method = new ReflectionMethod($form, 'inlineFieldGroup');
 		$method->setAccessible(true);
 
 		$rowOptions = [];
-		$methodInitRowOptions = new ReflectionMethod($form, 'initRowOptions');
-		$methodInitRowOptions->setAccessible(true);
-		$methodInitRowOptions->invokeArgs($form, array(&$rowOptions));
+		$methodInitGroupOptions = new ReflectionMethod($form, 'initOptions');
+		$methodInitGroupOptions->setAccessible(true);
+		$methodInitGroupOptions->invokeArgs($form, array(&$rowOptions));
 
 		$rowOptions['prepend'] = 'before';
 		$rowOptions['prependOptions'] = array('class' => 'bar');
@@ -505,9 +506,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase
 		$doc->loadHTML($data);
 		$actual = new DOMXPath($doc);
 		$matches = $actual->query(
-			'//div[contains(@class, "input-prepend") and contains(@class, "input-append") and text()="' . $fieldData . '"]'
-			. '/span[contains(@class,"add-on") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
-			. '/following-sibling::span[contains(@class,"add-on") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
+			'//div[contains(@class, "input-group") and contains(@class, "input-group") and text()="' . $fieldData . '"]'
+			. '/span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
+			. '/following-sibling::span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
 		);
 		$this->assertEquals(1, $matches->length);
 	}

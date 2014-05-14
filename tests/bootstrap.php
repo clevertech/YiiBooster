@@ -41,7 +41,7 @@ Yii::createApplication(
 				'basePath' => APP_ASSETS // do not forget to clean this folder sometimes
 			),
 			'bootstrap' => array(
-				'class' => 'bootstrap.components.Bootstrap'
+				'class' => 'booster.components.Booster'
 			),
 		)
 	)

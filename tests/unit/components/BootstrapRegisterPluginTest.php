@@ -4,23 +4,23 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-require_once(__DIR__ . '/../../../src/components/Bootstrap.php');
+require_once(__DIR__ . '/../../../src/components/Booster.php');
 require_once(__DIR__ . '/../../fakes/AssetsRegistryHook.php');
 
 /**
  * Tests for `Booster::registerPlugin` method
  */
-class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
-{
-	/** @var Bootstrap */
+class BoosterRegisterPluginTest extends PHPUnit_Framework_TestCase {
+	
+	/** @var Booster */
 	private $component;
 
 	/**
 	 * @inheritdoc
 	 */
-	public function setUp()
-	{
-		$this->component = new Bootstrap();
+	public function setUp() {
+		
+		$this->component = new Booster();
 		$this->component->cs = new AssetsRegistryHook();
 	}
 
@@ -28,13 +28,13 @@ class BootstrapRegisterPluginTest extends PHPUnit_Framework_TestCase
 	 * @expectedException InvalidArgumentException
 	 * @expectedExceptionMessage You cannot register a plugin without providing its name!
 	 */
-	public function testNoNameInvalidArgumentException()
-	{
+	public function testNoNameInvalidArgumentException() {
+		
 		$this->component->registerPlugin(null);
 	}
 
-	public function testHasNameAndSelectorAndOptions_RegistersScript()
-	{
+	public function testHasNameAndSelectorAndOptions_RegistersScript() {
+		
 		$this->component->registerPlugin(
 			'name',
 			'.selector',

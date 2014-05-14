@@ -1196,7 +1196,7 @@ class TbActiveForm extends CActiveForm {
 
 			case self::TYPE_INLINE:
 			case self::TYPE_SEARCH:
-				$this->inlineFieldRow($fieldData, $model, $attribute, $options);
+				$this->inlineGroup($fieldData, $model, $attribute, $options);
 				break;
 
 			default:
@@ -1384,7 +1384,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param string $attribute The attribute.
 	 * @param array $rowOptions Row options.
 	 */
-	protected function inlineFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions) {
+	protected function inlineGroup(&$fieldData, &$model, &$attribute, &$rowOptions) {
 		
         echo '<div class="form-group">';
 
