@@ -37,3 +37,4 @@ switch
 /composer*
 /vendor*
 
+/phpdoc.xml
