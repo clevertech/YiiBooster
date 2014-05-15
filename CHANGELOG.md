@@ -9,7 +9,8 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
- - 
+ - **(fix)** many Editable fixes
+ - **(fix)** TbExtendedGridView - fix JavaScript undefined variable error, when using strict mode - #805, #805
  - **(fix)** yiiGroupGridView fix - #786
  
 ## YiiBooster version 3.0.1
