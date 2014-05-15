@@ -291,7 +291,9 @@ table td, table th {
 }
 
 input.form-control[type="file"]{
-	border-radius:0;
+	border: none;
+	border-radius: 0;
+    box-shadow: none;
 	padding: 0;
 }
 

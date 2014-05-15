@@ -37,7 +37,7 @@
  * <?php echo $form->passwordFieldRow($model, 'password', array(), array(
  *     'hint' => 'Check keyboard layout'
  * )); ?>
- * <?php echo $form->checkBoxRow($model, 'rememberMe'); ?>
+ * <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
 
  * <div class="form-actions">
  *     <?php echo CHtml::submitButton('Login', array('class'=>'btn')); ?>
@@ -523,16 +523,17 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::radioButton
 	 * @see customFieldRow
 	 */
-	public function radioButtonRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
-
-		self::addCssClass($rowOptions['labelOptions'], 'radio');
-		if ($this->type == self::TYPE_INLINE)
-			self::addCssClass($rowOptions['labelOptions'], 'inline');
-
-		$field = $this->radioButton($model, $attribute, $htmlOptions);
-		if ((!array_key_exists('uncheckValue', $htmlOptions) || isset($htmlOptions['uncheckValue']))
+	public function radioButtonGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions']['htmlOptions'];
+		
+		self::addCssClass($options['labelOptions'], 'radio');
+		if( $this->type == self::TYPE_INLINE || (isset($options['inline']) && $options['inline']) )
+			self::addCssClass($options['labelOptions'], 'radio-inline');
+		
+		$field = $this->radioButton($model, $attribute, $widgetOptions);
+		if ((!array_key_exists('uncheckValue', $widgetOptions) || isset($widgetOptions['uncheckValue']))
 			&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
 		) {
 			$hiddenField = $matches[0];
@@ -544,26 +545,26 @@ class TbActiveForm extends CActiveForm {
 
 		ob_start();
 		if (isset($hiddenField)) echo $hiddenField;
-		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
+		echo CHtml::tag('label', $options['labelOptions'], false, false);
 		echo $field;
-		if (isset($rowOptions['label'])) {
-			if ($rowOptions['label'])
-				echo $rowOptions['label'];
+		if (isset($options['label'])) {
+			if ($options['label'])
+				echo $options['label'];
 		} else
 			echo $model->getAttributeLabel($realAttribute);
 		echo CHtml::closeTag('label');
 		$fieldData = ob_get_clean();
 
-		$rowOptions['label'] = '';
+		$widgetOptions['label'] = '';
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
 	 * Generates a checkbox row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::checkBox} and {@link customFieldRow}.
-	 * Please check {@link CActiveForm::checkBox} for detailed information about $htmlOptions argument.
+	 * This method is a wrapper for {@link CActiveForm::checkbox} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::checkbox} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
@@ -571,18 +572,18 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated checkbox row.
-	 * @see CActiveForm::checkBox
+	 * @see CActiveForm::checkbox
 	 * @see customFieldRow
 	 */
-	public function checkBoxRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function checkboxRow($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
 
-		self::addCssClass($rowOptions['labelOptions'], 'checkbox');
+		self::addCssClass($options['labelOptions'], 'checkbox');
 		if ($this->type == self::TYPE_INLINE)
-			self::addCssClass($rowOptions['labelOptions'], 'inline');
+			self::addCssClass($options['labelOptions'], 'inline');
 
-		$field = $this->checkBox($model, $attribute, $htmlOptions);
+		$field = $this->checkbox($model, $attribute, $htmlOptions);
 		if ((!array_key_exists('uncheckValue', $htmlOptions) || isset($htmlOptions['uncheckValue']))
 			&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
 		) {
@@ -617,7 +618,7 @@ class TbActiveForm extends CActiveForm {
 		if ($this->type == self::TYPE_INLINE)
 			self::addCssClass($options['labelOptions'], 'inline');
 	
-		$field = $this->checkBox($model, $attribute, $options['widgetOptions']['htmlOptions']);
+		$field = $this->checkbox($model, $attribute, $options['widgetOptions']['htmlOptions']);
 		if ((!array_key_exists('uncheckValue', $options['widgetOptions']) || isset($options['widgetOptions']['uncheckValue']))
 		&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
 		) {
@@ -706,8 +707,8 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a checkbox list row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::checkBoxList} and {@link customFieldRow}.
-	 * Please check {@link CActiveForm::checkBoxList} for detailed information about $htmlOptions argument.
+	 * This method is a wrapper for {@link CActiveForm::checkboxList} and {@link customFieldRow}.
+	 * Please check {@link CActiveForm::checkboxList} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
@@ -716,25 +717,32 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated checkbox list row.
-	 * @see CActiveForm::checkBoxList
+	 * @see CActiveForm::checkboxList
 	 * @see customFieldRow
 	 */
-	public function checkBoxListRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function checkboxListGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
 
-		if (!isset($htmlOptions['labelOptions']['class']))
-			$htmlOptions['labelOptions']['class'] = 'checkbox';
+		$widgetOptions = $options['widgetOptions']['htmlOptions'];
+		
+		if (!isset($widgetOptions['labelOptions']['class']))
+			$widgetOptions['labelOptions']['class'] = 'checkbox';
+		
+		if(isset($options['inline']) && $options['inline'])
+			$widgetOptions['labelOptions']['class'] = 'checkbox-inline';
 
-		if (!isset($htmlOptions['template']))
-			$htmlOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+		if (!isset($widgetOptions['template']))
+			$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
 
-		if (!isset($htmlOptions['separator']))
-			$htmlOptions['separator'] = "\n";
+		if (!isset($widgetOptions['separator']))
+			$widgetOptions['separator'] = "\n";
 
-		$fieldData = array(array($this, 'checkBoxList'), array($model, $attribute, $data, $htmlOptions));
+		$data = $options['widgetOptions']['data'];
+		
+		$fieldData = array(array($this, 'checkboxList'), array($model, $attribute, $data, $widgetOptions));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -753,29 +761,30 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::radioButtonList
 	 * @see customFieldRow
 	 */
-	public function radioButtonListRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function radioButtonListGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		
+		$widgetOptions = $options['widgetOptions']['htmlOptions'];
+		
+		if (!isset($widgetOptions['labelOptions']['class']))
+			$widgetOptions['labelOptions']['class'] = 'radio';
+		
+		if(isset($options['inline']) && $options['inline'])
+			$widgetOptions['labelOptions']['class'] = 'checkbox-inline';
+		
+		if (!isset($widgetOptions['template']))
+			$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
 
-		if (!isset($htmlOptions['labelOptions']['class']))
-			$htmlOptions['labelOptions']['class'] = 'radio';
+		if (!isset($widgetOptions['separator']))
+			$widgetOptions['separator'] = "\n";
+		
+		$data = $options['widgetOptions']['data'];
 
-		if (!isset($htmlOptions['template']))
-			$htmlOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
-
-		if (!isset($htmlOptions['separator']))
-			$htmlOptions['separator'] = "\n";
-
-		$fieldData = array(array($this, 'radioButtonList'), array($model, $attribute, $data, $htmlOptions));
+		$fieldData = array(array($this, 'radioButtonList'), array($model, $attribute, $data, $widgetOptions));
 
 		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
 	}
-
-	//public function buttonGroupRow($model, $attribute, $widgetOptions, $rowOptions = array())
-	//{
-	//	// TODO: this is future replacement for checkBoxGroupsList and radioButtonGroupsList
-	//	// TODO: but need to rewrite TbButtonGroup for field support
-	//}
 
 	/**
 	 * Generates a toggle button row for a model attribute.
@@ -955,21 +964,6 @@ class TbActiveForm extends CActiveForm {
 	public function markdownEditorGroup($model, $attribute, $options = array()) {
 		
 		return $this->widgetGroupInternal('booster.widgets.TbMarkdownEditor', $model, $attribute, $options);
-		return;
-		
-		$this->initOptions($rowOptions);
-		$widgetOptions = $options['widgetOptions'];
-		$widgetOptions['model'] = $model;
-		$widgetOptions['attribute'] = $attribute;
-
-		// TODO: rewrite TbMarkdownEditorJs and this method!
-		$fieldData = '<div class="wmd-panel">';
-		$fieldData .= '<div id="wmd-button-bar" class="btn-toolbar"></div>';
-		$fieldData .= $this->owner->widget('booster.widgets.TbMarkdownEditorJs', $widgetOptions, true);
-		$fieldData .= '<div id="wmd-preview" class="wmd-panel wmd-preview" style="width:100%"></div>';
-		$fieldData .= '</div>'; // wmd-panel
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
 	}
 
 	/**
@@ -1211,8 +1205,8 @@ class TbActiveForm extends CActiveForm {
 	 *  
 	  * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
 	 */
-	protected function setDefaultPlaceholder(&$fieldData)
-	{
+	protected function setDefaultPlaceholder(&$fieldData) {
+		
 		if(!is_array($fieldData) 
 			|| empty($fieldData[0][1]) /* 'textField' */
 			|| !is_array($fieldData[1]) /* ($model, $attribute, $htmlOptions) */
@@ -1305,6 +1299,8 @@ class TbActiveForm extends CActiveForm {
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $rowOptions Row options.
+	 * 
+	 * @todo delete this 
 	 */
 	protected function verticalFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
 	{
@@ -1341,6 +1337,7 @@ class TbActiveForm extends CActiveForm {
 	}
 	
 	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
+		
 		echo '<div class="form-group">';
 		if (isset($options['label'])) {
 			if (!empty($options['label'])) {
