@@ -2,7 +2,7 @@
     "name": "clevertech/yii-booster",
     "description": "Widget toolkit for Yii framework",
     "type": "library",
-    "license": "BSD",
+    "license": "BSD-2-Clause",
     "keywords": ["yii", "bootstrap"],
     "homepage": "http://yiibooster.clevertech.biz/",
     "authors": [
