@@ -25,6 +25,8 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(YII_PATH . '/YiiBase.php');
 require_once(__DIR__ . '/fakes/Yii.php');
 
+YiiBase::$enableIncludePath = false;
+
 // Instantiated the test app
 require_once(__DIR__ . '/fakes/MinimalApplication.php');
 

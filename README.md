@@ -1,7 +1,7 @@
 YiiBooster 
 ==========
 
-https://travis-ci.org/clevertech/YiiBooster.svg?branch=master
+[![Travis CI](https://travis-ci.org/clevertech/YiiBooster.svg?branch=master)]
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/clevertech/YiiBooster/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/clevertech/YiiBooster/?branch=master)
 
