@@ -1,10 +1,8 @@
 YiiBooster 
 ==========
 
-[![Travis CI](https://travis-ci.org/clevertech/YiiBooster.svg?branch=master)]
-
+(https://travis-ci.org/clevertech/YiiBooster.svg?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/clevertech/YiiBooster/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/clevertech/YiiBooster/?branch=master)
-
 [![Code Coverage](https://scrutinizer-ci.com/g/clevertech/YiiBooster/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/clevertech/YiiBooster/?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/clevertech/yii-booster/v/stable.png)](https://github.com/clevertech/YiiBooster/tree/3.0.1) [![Total Downloads](https://poser.pugx.org/clevertech/yii-booster/downloads.png)](https://packagist.org/packages/clevertech/yii-booster) [![Latest Unstable Version](https://poser.pugx.org/clevertech/yii-booster/v/unstable.png)](https://github.com/clevertech/YiiBooster/tree/master) [![License](https://poser.pugx.org/clevertech/yii-booster/license.png)](https://github.com/clevertech/YiiBooster/blob/master/LICENSE)
