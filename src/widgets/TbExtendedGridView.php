@@ -736,7 +736,7 @@ class TbExtendedGridView extends TbGridView
 		$cs->registerScript(
 			__CLASS__ . '#' . $this->id . 'Ex',
 			'
-					   $grid = $("#' . $this->id . '");
+			var $grid = $("#' . $this->id . '");
 			' . $fixedHeaderJs . '
 			if ($(".' . $this->extendedSummaryCssClass . '", $grid).length)
 			{
