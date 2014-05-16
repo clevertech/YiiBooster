@@ -36,6 +36,7 @@ Yii::createApplication(
 		'basePath' => APP_ROOT,
 		'runtimePath' => APP_RUNTIME,
 		'aliases' => [
+			'fakes' => realpath(__DIR__ . '/fakes'),
 			'bootstrap' => realpath(__DIR__ . '/../src'),
 		],
 		'components' => array(
@@ -48,6 +49,9 @@ Yii::createApplication(
 		)
 	)
 );
+
+// fix bug in yii's autoloader (https://github.com/yiisoft/yii/issues/1907)
+Yii::import('fakes.*');
 
 // See the `Boostrap.init()` method for explanation why it is needed
 define('IS_IN_TESTS', true);
