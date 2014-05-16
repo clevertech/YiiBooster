@@ -752,7 +752,7 @@ class TbActiveForm extends CActiveForm {
 
 		$fieldData = array(array($this, 'radioButtonList'), array($model, $attribute, $data, $widgetOptions));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -1208,13 +1208,13 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function horizontalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupHtmlOptions = $options['groupHtmlOptions']; // array('class' => 'form-group');
-		self::addCssClass($groupHtmlOptions, 'form-group');
+		$groupOptions = $options['groupOptions']; // array('class' => 'form-group');
+		self::addCssClass($groupOptions, 'form-group');
 		
 		if ($model->hasErrors($attribute))
-			self::addCssClass($groupHtmlOptions, 'has-error');
+			self::addCssClass($groupOptions, 'has-error');
 		
-		echo CHtml::openTag('div', $groupHtmlOptions);
+		echo CHtml::openTag('div', $groupOptions);
 
 		self::addCssClass($options['labelOptions'], 'col-sm-3 control-label');
 		if (isset($options['label'])) {
@@ -1307,13 +1307,13 @@ class TbActiveForm extends CActiveForm {
 	
 	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupHtmlOptions = $options['groupHtmlOptions']; // array('class' => 'form-group');
-		self::addCssClass($groupHtmlOptions, 'form-group');
+		$groupOptions = $options['groupOptions']; // array('class' => 'form-group');
+		self::addCssClass($groupOptions, 'form-group');
 		
 		if ($model->hasErrors($attribute))
-			self::addCssClass($groupHtmlOptions, 'has-error');
+			self::addCssClass($groupOptions, 'has-error');
 		
-		echo CHtml::openTag('div', $groupHtmlOptions);
+		echo CHtml::openTag('div', $groupOptions);
 		
 		self::addCssClass($options['labelOptions'], 'control-label');
 		if (isset($options['label'])) {
@@ -1462,9 +1462,9 @@ class TbActiveForm extends CActiveForm {
 	 * @param unknown $options
 	 */
 	protected function initOptions(&$options) {
-		// TODO: not used maybe removed!
-		if (!isset($options['groupHtmlOptions']))
-			$options['groupHtmlOptions'] = array();
+		
+		if (!isset($options['groupOptions']))
+			$options['groupOptions'] = array();
 		
 		if (!isset($options['labelOptions']))
 			$options['labelOptions'] = array();
