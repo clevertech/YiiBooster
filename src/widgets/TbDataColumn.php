@@ -36,7 +36,7 @@ class TbDataColumn extends CDataColumn
 			$sort = $this->grid->dataProvider->getSort();
 			$label = isset($this->header) ? $this->header : $sort->resolveLabel($this->name);
 
-            $booster = Bootstrap::getBooster();
+            $booster = Booster::getBooster();
 
 			if ($sort->resolveAttribute($this->name) !== false){
                             if($sort->getDirection($this->name) === CSort::SORT_ASC){

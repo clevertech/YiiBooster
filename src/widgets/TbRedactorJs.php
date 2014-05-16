@@ -70,7 +70,7 @@ class TbRedactorJS extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-		$assets = Bootstrap::getBooster()->assetsRegistry;
+		$assets = Booster::getBooster()->cs;
 
 		$assets->registerPackage('redactor');
 
@@ -83,7 +83,7 @@ class TbRedactorJS extends CInputWidget
 
 		if (isset($this->editorOptions['plugins'])) {
 			foreach ($this->editorOptions['plugins'] as $name) {
-				$filepath = Yii::getPathOfAlias('bootstrap.assets.redactor.plugins') . '/' . $name . '/' . $name;
+				$filepath = Yii::getPathOfAlias('booster.assets.redactor.plugins') . '/' . $name . '/' . $name;
 				$url = $baseUrl . '/plugins/' . $name . '/' . $name;
 
 				if (file_exists($filepath . '.css'))

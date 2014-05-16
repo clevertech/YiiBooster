@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+
+install:
+  - composer self-update
+  - composer install --dev --prefer-dist
+
+before_script:
+  - cd tests
+
+script:
+  - ../vendor/bin/phpunit --verbose --coverage-clover=coverage.clover
+
+after_script:
+  - cd ..
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover tests/coverage.clover
+
+

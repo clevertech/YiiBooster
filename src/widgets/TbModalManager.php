@@ -88,7 +88,7 @@ class TbModalManager extends CWidget
 	 */
 	public function registerClientScript($id)
 	{
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
         $booster->registerAssetJs('bootstrap-modalmanager.js', CClientScript::POS_HEAD);
         $booster->registerAssetCss('bootstrap-modalmanager.css');
 

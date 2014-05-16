@@ -25,6 +25,8 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(YII_PATH . '/YiiBase.php');
 require_once(__DIR__ . '/fakes/Yii.php');
 
+YiiBase::$enableIncludePath = false;
+
 // Instantiated the test app
 require_once(__DIR__ . '/fakes/MinimalApplication.php');
 
@@ -34,6 +36,7 @@ Yii::createApplication(
 		'basePath' => APP_ROOT,
 		'runtimePath' => APP_RUNTIME,
 		'aliases' => [
+			'fakes' => realpath(__DIR__ . '/fakes'),
 			'bootstrap' => realpath(__DIR__ . '/../src'),
 		],
 		'components' => array(
@@ -41,11 +44,14 @@ Yii::createApplication(
 				'basePath' => APP_ASSETS // do not forget to clean this folder sometimes
 			),
 			'bootstrap' => array(
-				'class' => 'bootstrap.components.Bootstrap'
+				'class' => 'booster.components.Booster'
 			),
 		)
 	)
 );
+
+// fix bug in yii's autoloader (https://github.com/yiisoft/yii/issues/1907)
+Yii::import('fakes.*');
 
 // See the `Boostrap.init()` method for explanation why it is needed
 define('IS_IN_TESTS', true);

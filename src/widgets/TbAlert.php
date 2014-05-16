@@ -16,23 +16,30 @@
  *
  * @package booster.widgets.decoration
  */
-class TbAlert extends CWidget
-{
+class TbAlert extends CWidget {
+	
+	const TYPE_DEFAULT = 'default';
 	const TYPE_SUCCESS = 'success';
 	const TYPE_INFO = 'info';
 	const TYPE_WARNING = 'warning';
 	const TYPE_ERROR = 'error';
 	const TYPE_DANGER = 'danger'; // same as error
 
+	protected static $typeClasses = array (
+		self::TYPE_DEFAULT => '',
+		self::TYPE_SUCCESS => 'success',
+		self::TYPE_INFO => 'info',
+		self::TYPE_WARNING => 'warning',
+		self::TYPE_ERROR => 'danger',
+		self::TYPE_DANGER => 'danger',
+	);
+	
 	/**
 	 * @var array The configuration for individual types of alerts.
 	 *
 	 * Here's the allowed array elements:
 	 *
 	 * 'visible' (= null) If set to false, this type of alerts will not be rendered.
-	 * 'block' (= widget value) The same as a global block property.
-	 *   If set, size of alert block will be larger.
-	 *   It defaults to the widget-level block property value.
 	 * 'fade' (= widget value) The same as a global fade property.
 	 *   If set, alert will close itself fading away.
 	 *   It defaults to the widget-level fade property value.
@@ -58,11 +65,6 @@ class TbAlert extends CWidget
 	 * If set to false, no close button will be rendered, making user unable to close the alert.
 	 */
 	public $closeText = '&times;';
-
-	/**
-	 * @var boolean When set, alert has a larger block size. Defaults to 'true'
-	 */
-	public $block = true;
 
 	/**
 	 * @var boolean When set, alert will fade out using transitions when closed. Defaults to 'true'
@@ -126,8 +128,8 @@ class TbAlert extends CWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		$id = $this->htmlOptions['id'];
 
 		echo CHtml::openTag('div', $this->htmlOptions);
@@ -179,17 +181,9 @@ class TbAlert extends CWidget
 	 * @param $type
 	 * @param $alertText
 	 */
-	protected function renderSingleAlert($alert, $type, $alertText)
-	{
+	protected function renderSingleAlert($alert, $type, $alertText) {
+		
 		$classes = array('alert in');
-
-		if (!isset($alert['block'])) {
-			$alert['block'] = $this->block;
-		}
-
-		if ($alert['block'] === true) {
-			$classes[] = 'alert-block';
-		}
 
 		if (!isset($alert['fade'])) {
 			$alert['fade'] = $this->fade;
@@ -208,7 +202,7 @@ class TbAlert extends CWidget
 		);
 
 		if (in_array($type, $validTypes)) {
-			$classes[] = 'alert-' . $type;
+			$classes[] = 'alert-' . self::$typeClasses[$type];
 		}
 
 		if (!isset($alert['htmlOptions'])) {

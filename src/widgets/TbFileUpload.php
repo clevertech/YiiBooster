@@ -59,22 +59,22 @@ class TbFileUpload extends CJuiInputWidget
 	/**
 	 * @var string name of the form view to be rendered
 	 */
-	public $formView = 'bootstrap.views.fileupload.form';
+	public $formView = 'booster.views.fileupload.form';
 
 	/**
 	 * @var string name of the upload view to be rendered
 	 */
-	public $uploadView = 'bootstrap.views.fileupload.upload';
+	public $uploadView = 'booster.views.fileupload.upload';
 
 	/**
 	 * @var string name of the download view to be rendered
 	 */
-	public $downloadView = 'bootstrap.views.fileupload.download';
+	public $downloadView = 'booster.views.fileupload.download';
 
 	/**
 	 * @var string name of the view to display images at bootstrap-slideshow
 	 */
-	public $previewImagesView = 'bootstrap.views.gallery.preview';
+	public $previewImagesView = 'booster.views.gallery.preview';
 
 	/**
 	 * Widget initialization
@@ -151,7 +151,7 @@ class TbFileUpload extends CJuiInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        $booster = Bootstrap::getBooster();
+        $booster = Booster::getBooster();
         $booster->registerAssetCss('fileupload/jquery.fileupload-ui.css');
 
 		// Upgrade widget factory

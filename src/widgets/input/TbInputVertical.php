@@ -8,7 +8,7 @@
  * @since 11/25/12 10:49 AM  updated by Antonio Ramirez <antonio@clevertech.biz>
  */
 
-Yii::import('bootstrap.widgets.input.TbInput');
+Yii::import('booster.widgets.input.TbInput');
 
 /**
  *## TbInputVertical class
@@ -55,7 +55,7 @@ class TbInputVertical extends TbInput
 		$options['htmlOptions'] = $this->htmlOptions;
 
 		echo $this->getLabel();
-		$this->widget('bootstrap.widgets.TbToggleButton', $options);
+		$this->widget('booster.widgets.TbToggleButton', $options);
 		echo $this->getError() . $this->getHint();
 	}
 
@@ -159,7 +159,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbPassfield',
+			'booster.widgets.TbPassfield',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -318,7 +318,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbDatePicker',
+			'booster.widgets.TbDatePicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -351,7 +351,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbDateTimePicker',
+			'booster.widgets.TbDateTimePicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -385,7 +385,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbColorPicker',
+			'booster.widgets.TbColorPicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -418,7 +418,7 @@ class TbInputVertical extends TbInput
 		}
 		echo $this->getLabel();
 		$this->widget(
-			'bootstrap.widgets.TbRedactorJs',
+			'booster.widgets.TbRedactorJs',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -450,7 +450,7 @@ class TbInputVertical extends TbInput
 		echo '<div class="wmd-panel">';
 		echo '<div id="wmd-button-bar" class="btn-toolbar"></div>';
 		$this->widget(
-			'bootstrap.widgets.TbMarkdownEditorJs',
+			'booster.widgets.TbMarkdownEditorJs',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -478,7 +478,7 @@ class TbInputVertical extends TbInput
 
 		echo $this->getLabel();
 		$this->widget(
-			'bootstrap.widgets.TbCKEditor',
+			'booster.widgets.TbCKEditor',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -509,7 +509,7 @@ class TbInputVertical extends TbInput
 		}
 		echo $this->getLabel();
 		$this->widget(
-			'bootstrap.widgets.TbHtml5Editor',
+			'booster.widgets.TbHtml5Editor',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -542,7 +542,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbDateRangePicker',
+			'booster.widgets.TbDateRangePicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -575,7 +575,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbTimePicker',
+			'booster.widgets.TbTimePicker',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,
@@ -624,7 +624,7 @@ class TbInputVertical extends TbInput
 		echo $this->getLabel();
 		echo $this->getPrepend();
 		$this->widget(
-			'bootstrap.widgets.TbSelect2',
+			'booster.widgets.TbSelect2',
 			array(
 				'model' => $this->model,
 				'attribute' => $this->attribute,

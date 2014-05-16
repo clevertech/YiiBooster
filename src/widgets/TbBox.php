@@ -60,13 +60,13 @@ class TbBox extends CWidget
 	 * <pre>
 	 *     array(
 	 *        array(
-	 *          'class' => 'bootstrap.widgets.TbButton',
+	 *          'class' => 'booster.widgets.TbButton',
 	 *          'label' => '...',
 	 *          'size' => '...',
 	 *          ...
 	 *        ),
 	 *      array(
-	 *          'class' => 'bootstrap.widgets.TbButtonGroup',
+	 *          'class' => 'booster.widgets.TbButtonGroup',
 	 *          'buttons' => array( ... ),
 	 *          'size' => '...',
 	 *        ),
@@ -128,19 +128,19 @@ class TbBox extends CWidget
 	 *
 	 * Renders the header of the box with the header control (button to show/hide the box)
 	 */
-	public function renderHeader()
-	{
+	public function renderHeader() {
+		
 		if ($this->title !== false) {
 			echo CHtml::openTag('div', $this->htmlHeaderOptions);
 			if ($this->title) {
-				$this->title = '<h3>' . $this->title . '</h3>';
+				$this->title = '<h3 style="display: inline;">' . $this->title . '</h3>';
 
 				if ($this->headerIcon) {
 					$this->title = '<i class="' . $this->headerIcon . '"></i>' . $this->title;
 				}
 
-				echo $this->title;
 				$this->renderButtons();
+				echo $this->title;
 			}
 			echo CHtml::closeTag('div');
 		}
@@ -211,8 +211,8 @@ class TbBox extends CWidget
 	 *
 	 * Registers required script files (CSS in this case)
 	 */
-	public function registerClientScript()
-	{
-		Bootstrap::getBooster()->registerAssetCss('bootstrap-box.css');
+	public function registerClientScript() {
+		
+		Booster::getBooster()->registerAssetCss('bootstrap-box.css');
 	}
 }

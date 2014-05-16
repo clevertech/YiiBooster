@@ -1,6 +1,6 @@
 <?php // Basic usage of TbRedactorJs widget
 $this->widget(
-    'bootstrap.widgets.TbRedactorJs',
+    'booster.widgets.TbRedactorJs',
     [
         'name' => 'fancy_text',
         'value' => 'Press Enter in here to test the callback.',

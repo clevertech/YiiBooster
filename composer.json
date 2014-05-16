@@ -2,7 +2,7 @@
     "name": "clevertech/yii-booster",
     "description": "Widget toolkit for Yii framework",
     "type": "library",
-    "license": "MIT",
+    "license": "BSD-2-Clause",
     "keywords": ["yii", "bootstrap"],
     "homepage": "http://yiibooster.clevertech.biz/",
     "authors": [
@@ -18,6 +18,11 @@
         },
         {
             "name": "Ruslan Fadeev"
+        },
+        {
+            "name": "Amr Bedair",
+            "email": "amr.bedair@gmail.com",
+            "homepage": "http://amr.nefya.com"
         }
     ],
     "support": {

@@ -31,6 +31,7 @@
  * WARNING: to be renamed in future versions!
  *
  * @package booster.components
+ * @deprecated 4.0.0 stop using this ... will be removed before 4.0.0 release
  */
 class Bootstrap extends CApplicationComponent
 {

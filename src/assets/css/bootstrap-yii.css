@@ -290,6 +290,17 @@ table td, table th {
 
 }
 
+input.form-control[type="file"] {
+	border: none;
+	border-radius: 0;
+    box-shadow: none;
+	padding: 0;
+}
+
+.form-inline .form-group {
+	vertical-align: top;
+}
+
 /* Gii */
 .form.gii .tooltip {
     opacity: 1;

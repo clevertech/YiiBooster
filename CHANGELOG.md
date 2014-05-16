@@ -10,6 +10,14 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
 
+## YiiBooster version 4.0.0-alpha
+- upgrade the bootstrap version to 3.1.1
+- upgrade and fix many widgets to work with bootstrap 3.1.1
+- many widgets still not ported
+- code structure is not final yet 
+- working widgets (TbAlert, TbBadge, TbButton, TbJumbotron, TbLabel, TbProgressBar, TbEditableField, TbEditableColumn, TbEditableDetailView, TbHighChart, TbActiveForm, TbPager)
+- not all TbActiveForm controls are ported yet
+
 ## YiiBooster version 3.0.0
 - **(fix)** TbExtendedGridView - TbProgress inside cell css fix - #448
 - **(enh)** TbGridView - try to register TbEditableColumn scripts for empty providers - works only with CActiveDataProvider - #526 

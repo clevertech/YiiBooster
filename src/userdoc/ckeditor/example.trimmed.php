@@ -1,6 +1,6 @@
 <?php // Basic usage of TbCKEditor widget
 $this->widget(
-    'bootstrap.widgets.TbCKEditor',
+    'booster.widgets.TbCKEditor',
     array(
         'name' => 'some_random_text_field',
         'editorOptions' => array(

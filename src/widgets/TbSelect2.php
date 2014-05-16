@@ -14,8 +14,8 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbSelect2 extends CInputWidget
-{
+class TbSelect2 extends CInputWidget {
+	
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
 	 * This attribute is set to the form that renders the widget
@@ -124,9 +124,9 @@ class TbSelect2 extends CInputWidget
 	 * Registers required client script for bootstrap select2. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
 	 */
-	public function registerClientScript($id)
-	{
-        Bootstrap::getBooster()->registerPackage('select2');
+	public function registerClientScript($id) {
+		
+        Booster::getBooster()->registerPackage('select2');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 

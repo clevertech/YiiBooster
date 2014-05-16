@@ -7,7 +7,7 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  */
 
-Yii::import('bootstrap.widgets.TbTabs');
+Yii::import('booster.widgets.TbTabs');
 
 /**
  *## Class TbTabView

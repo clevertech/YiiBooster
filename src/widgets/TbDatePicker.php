@@ -14,10 +14,10 @@
  * @package booster.widgets.forms.inputs
  */
 
-Yii::import('bootstrap.widgets.TbBaseInputWidget');
+Yii::import('booster.widgets.TbBaseInputWidget');
 
-class TbDatePicker extends TbBaseInputWidget
-{
+class TbDatePicker extends TbBaseInputWidget {
+	
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
 	 * This attribute is set to the form that renders the widget
@@ -40,8 +40,8 @@ class TbDatePicker extends TbBaseInputWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		$this->htmlOptions['type'] = 'text';
 		$this->htmlOptions['autocomplete'] = 'off';
 		
@@ -57,8 +57,8 @@ class TbDatePicker extends TbBaseInputWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		list($name, $id) = $this->resolveNameID();
 
 		if ($this->hasModel()) {
@@ -94,32 +94,27 @@ class TbDatePicker extends TbBaseInputWidget
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerPackage('datepicker');
+        Booster::getBooster()->registerPackage('datepicker');
 	}
 
 	/**
 	 * FIXME: this method delves too deeply into the internals of Bootstrap component
 	 */
-	public function registerLanguageScript()
-	{
-		$booster = Bootstrap::getBooster();
+	public function registerLanguageScript() {
+		
+		$booster = Booster::getBooster();
 
-		if (isset($this->options['language']) && $this->options['language'] != 'en')
-		{
+		if (isset($this->options['language']) && $this->options['language'] != 'en') {
 			$filename = '/bootstrap-datepicker/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js';
 
-			if (file_exists(Yii::getPathOfAlias('bootstrap.assets') . $filename))
-			{
-				if ($booster->enableCdn)
-				{
+			if (file_exists(Yii::getPathOfAlias('booster.assets') . $filename)) {
+				if ($booster->enableCdn) {
 					Yii::app()->clientScript->registerScriptFile(
 						'//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js',
 						CClientScript::POS_HEAD
 					);
-				}
-				else
-				{
-					$booster->assetsRegistry->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
+				} else {
+					$booster->cs->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
 				}
 			}
 		}

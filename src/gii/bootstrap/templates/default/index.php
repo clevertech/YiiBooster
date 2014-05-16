@@ -20,7 +20,7 @@ array('label'=>'Manage <?php echo $this->modelClass; ?>','url'=>array('admin')),
 
 <h1><?php echo $label; ?></h1>
 
-<?php echo "<?php"; ?> $this->widget('bootstrap.widgets.TbListView',array(
+<?php echo "<?php"; ?> $this->widget('booster.widgets.TbListView',array(
 'dataProvider'=>$dataProvider,
 'itemView'=>'_view',
 )); ?>

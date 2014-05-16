@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+	<title><![CDATA[YiiBooster - API]]></title>
+	<parser>
+		<target>doc/api</target>
+		<default-package-name>booster</default-package-name>
+		<markers>
+			<item>TODO</item>
+			<item>FIXME</item>
+		</markers>
+	</parser>
+	<transformer>
+		<target>doc/api</target>
+	</transformer>
+	<files>
+		<directory>src</directory>
+	</files>
+</phpdoc>

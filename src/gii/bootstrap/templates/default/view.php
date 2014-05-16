@@ -25,7 +25,7 @@ array('label'=>'Manage <?php echo $this->modelClass; ?>','url'=>array('admin')),
 
 <h1>View <?php echo $this->modelClass . " #<?php echo \$model->{$this->tableSchema->primaryKey}; ?>"; ?></h1>
 
-<?php echo "<?php"; ?> $this->widget('bootstrap.widgets.TbDetailView',array(
+<?php echo "<?php"; ?> $this->widget('booster.widgets.TbDetailView',array(
 'data'=>$model,
 'attributes'=>array(
 <?php
