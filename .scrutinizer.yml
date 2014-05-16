@@ -1,0 +1,3 @@
+# as per https://scrutinizer-ci.com/docs/tools/external-code-coverage/#configuration
+tools:
+    external_code_coverage: true
