@@ -9,15 +9,16 @@
  * Basically form consists of rows with label, field, error info, hint text and other useful stuff.
  * TbActiveForm brings together all of these things to quickly build custom forms even with non-standard fields.
  *
- * Each field method has $rowOptions for customizing rendering appearance.
+ * Each field method has $options for customizing rendering appearance.
  * <ul>
  * <li>'label' - Custom label text</li>
- * <li>'labelOptions' - HTML options for label tag or passed to {@link CActiveForm::labelEx} call if 'label' is not set</li>
- * <li>'errorOptions' - HTML options for {@link CActiveForm::error} call</li>
+ * <li>'labelOptions' - options for label tag or passed to {@link CActiveForm::labelEx} call if 'label' is not set</li>
+ * <li>'widgetOption' - options that will be passed to the contained widget</li>
+ * <li>'errorOptions' - options for {@link CActiveForm::error} call</li>
  * <li>'prepend' - Custom text/HTML-code rendered before field</li>
- * <li>'prependOptions' - HTML options for prepend wrapper tag</li>
+ * <li>'prependOptions' - contains either isRaw => true , or HTML options for prepend wrapper tag</li>
  * <li>'append' - Custom text/HTML-code rendered after field</li>
- * <li>'appendOptions' - HTML options for append wrapper tag</li>
+ * <li>'appendOptions' - contains either isRaw => true , or HTML options for append wrapper tag</li>
  * <li>'hint' - Hint text rendered below the field</li>
  * <li>'hintOptions' - HTML options for hint wrapper tag</li>
  * <li>'enableAjaxValidation' - passed to {@link CActiveForm::error} call</li>
@@ -33,7 +34,7 @@
  *
  * <?php echo $form->errorSummary($model); ?>
  *
- * <?php echo $form->textFieldRow($model, 'username'); ?>
+ * <?php echo $form->textFieldGroup($model, 'username'); ?>
  * <?php echo $form->passwordFieldRow($model, 'password', array(), array(
  *     'hint' => 'Check keyboard layout'
  * )); ?>
@@ -47,17 +48,17 @@
  * </pre>
  *
  * Additionally this class provides two additional ways to render custom widget or field or even everything you want
- * with {@link TbActiveForm::widgetRow} and {@link TbActiveForm::customFieldRow}.
+ * with {@link TbActiveForm::widgetGroup} and {@link TbActiveForm::customFieldGroup}.
  * Examples are simply clear:
  * <code>
- * $form->widgetRow(
+ * $form->widgetGroup(
  *     'my.super.cool.widget',
  *     array('model' => $model, 'attribute' => $attribute, 'data' => $mydata),
  *     array('hint' => 'Hint text here!')
  * );
  *
  * // suppose that field is rendered via SomeClass::someMethod($model, $attribute) call.
- * $form->customFieldRow(
+ * $form->customFieldGroup(
  *     array(array('SomeClass', 'someMethod'), array($model, $attribute)),
  *     $mode,
  *     $attribute,
@@ -75,25 +76,16 @@ class TbActiveForm extends CActiveForm {
 	const TYPE_INLINE = 'inline';
 	const TYPE_HORIZONTAL = 'horizontal';
 	
-	const TYPE_SEARCH = 'search'; /* TODO: remove this */
-
 	protected static $typeClasses = array (
 		self::TYPE_VERTICAL => '',
 		self::TYPE_INLINE => '-inline',
 		self::TYPE_HORIZONTAL => '-horizontal',
-		self::TYPE_SEARCH => ''
 	);
 	/**
 	 * The form type. Allowed types are in `TYPE_*` constants.
 	 * @var string
 	 */
 	public $type = self::TYPE_VERTICAL;
-
-	/**
-	 * Whether to render errors inline.
-	 * @var bool
-	 */
-	public $inlineErrors;
 
 	/**
 	 * Prepend wrapper CSS class.
@@ -150,21 +142,12 @@ class TbActiveForm extends CActiveForm {
 	public function init() {
 		
 		self::addCssClass($this->htmlOptions, 'form' . self::$typeClasses[$this->type]);
+		
+		$this->errorMessageCssClass = 'help-block error';
 
-		if (!isset($this->inlineErrors)) {
-			$this->inlineErrors = $this->type === self::TYPE_HORIZONTAL;
-		}
-
-		if (!isset($this->errorMessageCssClass)) {
-			if ($this->inlineErrors) {
-				$this->errorMessageCssClass = 'help-inline error';
-			} else {
-				$this->errorMessageCssClass = 'help-block error';
-			}
-		}
-
-		if ($this->type == self::TYPE_HORIZONTAL && !isset($this->clientOptions['inputContainer']))
-			$this->clientOptions['inputContainer'] = 'div.control-group';
+		$this->clientOptions['errorCssClass'] = 'has-error';
+		$this->clientOptions['successCssClass'] = 'has-success';
+		$this->clientOptions['inputContainer'] = 'div.form-group';
 
 		parent::init();
 	}
@@ -193,7 +176,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a url field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::urlField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::urlField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::urlField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -203,7 +186,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated url field row.
 	 * @see CActiveForm::urlField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function urlFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -217,7 +200,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates an email field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::emailField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::emailField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::emailField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -227,7 +210,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string the generated email field row.
 	 * @see CActiveForm::emailField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function emailFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -241,7 +224,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a number field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::numberField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::numberField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::numberField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -251,7 +234,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated number filed row.
 	 * @see CActiveForm::numberField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function numberFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -265,7 +248,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a range field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::rangeField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::rangeField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::rangeField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -275,7 +258,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated range field row.
 	 * @see CActiveForm::rangeField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function rangeFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -289,7 +272,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a date field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::dateField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::dateField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::dateField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -299,7 +282,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated date field row.
 	 * @see CActiveForm::dateField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function dateFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -313,7 +296,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a time field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::timeField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::timeField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::timeField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -323,7 +306,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated date field row.
 	 * @see CActiveForm::timeField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function timeFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -337,7 +320,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a tel field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::telField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::telField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::telField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -347,7 +330,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated date field row.
 	 * @see CActiveForm::telField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function telFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -361,7 +344,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a text field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::textField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::textField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::textField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -371,17 +354,8 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated text field row.
 	 * @see CActiveForm::textField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
-	public function textFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
-
-		$fieldData = array(array($this, 'textField'), array($model, $attribute, $htmlOptions));
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions, $rowOptions);
-	}
-	
 	public function textFieldGroup($model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
@@ -397,35 +371,30 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a search field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::searchField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::searchField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::searchField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
+	 * @param array $options Group attributes.
 	 * @return string The generated text field row.
 	 * @see CActiveForm::searchField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
-	public function searchFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function searchFieldRow($model, $attribute, $options = array()) {
+		
+		$this->initOptions($rowOptions);
+		$widgetOptions = $options['widgetOptions'];
+		$fieldData = array(array($this, 'searchField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
-		if ($this->type == self::TYPE_SEARCH) {
-			self::addCssClass($htmlOptions, 'search-query');
-		}
-
-		$fieldData = array(array($this, 'searchField'), array($model, $attribute, $htmlOptions));
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
 	 * Generates a password field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::passwordField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::passwordField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::passwordField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -435,7 +404,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated password field row.
 	 * @see CActiveForm::passwordField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function passwordFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
 	{
@@ -459,7 +428,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a text area row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::textArea} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::textArea} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::textArea} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -469,7 +438,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated text area row.
 	 * @see CActiveForm::textArea
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function textAreaGroup($model, $attribute, $options = array()) {
 		
@@ -484,7 +453,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a file field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::fileField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::fileField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::fileField} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -494,7 +463,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated file field row.
 	 * @see CActiveForm::fileField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function fileFieldGroup($model, $attribute, $options = array()) {
 		
@@ -511,7 +480,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a radio button row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::radioButton} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::radioButton} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::radioButton} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -521,7 +490,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated radio button row.
 	 * @see CActiveForm::radioButton
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function radioButtonGroup($model, $attribute, $options = array()) {
 		
@@ -563,7 +532,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a checkbox row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::checkbox} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::checkbox} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::checkbox} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -573,7 +542,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated checkbox row.
 	 * @see CActiveForm::checkbox
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function checkboxRow($model, $attribute, $options = array()) {
 		
@@ -651,7 +620,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a dropdown list row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::dropDownList} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::dropDownList} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::dropDownList} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -662,7 +631,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated drop down list row.
 	 * @see CActiveForm::dropDownList
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function dropDownListGroup($model, $attribute, $options = array()) {
 		
@@ -682,7 +651,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a list box row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::listBox} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::listBox} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::listBox} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -693,7 +662,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated list box row.
 	 * @see CActiveForm::listBox
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function listBoxRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array()) {
 		
@@ -707,7 +676,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a checkbox list row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::checkboxList} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::checkboxList} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::checkboxList} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -718,7 +687,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated checkbox list row.
 	 * @see CActiveForm::checkboxList
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function checkboxListGroup($model, $attribute, $options = array()) {
 		
@@ -748,7 +717,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a radio button list row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CActiveForm::radioButtonList} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CActiveForm::radioButtonList} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::radioButtonList} for detailed information about $htmlOptions argument.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -759,7 +728,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated radio button list row.
 	 * @see CActiveForm::radioButtonList
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function radioButtonListGroup($model, $attribute, $options = array()) {
 		
@@ -789,7 +758,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a toggle button row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbToggleButton} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbToggleButton} widget and {@link customFieldGroup}.
 	 * Please check {@link TbToggleButton} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -799,7 +768,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated toggle button row.
 	 * @see TbToggleButton
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function switchGroup($model, $attribute, $options = array()) {
 		
@@ -809,7 +778,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a date picker row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbDatePicker} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbDatePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbDatePicker} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -819,7 +788,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated date picker row.
 	 * @see TbDatePicker
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function datePickerGroup($model, $attribute, $options = array()) {
 		
@@ -829,7 +798,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a date range picker row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbDateRangePicker} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbDateRangePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbDateRangePicker} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -839,7 +808,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated date range picker row.
 	 * @see TbDateRangePicker
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function dateRangeGroup($model, $attribute, $options = array()) {
 		
@@ -849,7 +818,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a time picker row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbTimePicker} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbTimePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbTimePicker} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -859,7 +828,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated time picker row.
 	 * @see TbTimePicker
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function timePickerGroup($model, $attribute, $options = array()) {
 		
@@ -869,7 +838,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a date-time picker row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbDateTimePicker} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbDateTimePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbDateTimePicker} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -879,7 +848,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated date-time picker row.
 	 * @see TbDateTimePicker
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function dateTimePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
@@ -889,7 +858,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a select2 row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbSelect2} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbSelect2} widget and {@link customFieldGroup}.
 	 * Please check {@link TbSelect2} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -899,7 +868,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated select2 row.
 	 * @see TbSelect2
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function select2Group($model, $attribute, $options = array()) {
 		
@@ -909,7 +878,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a redactor editor row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldGroup}.
 	 * Please check {@link TbRedactorJs} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -919,7 +888,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated redactor editor row.
 	 * @see TbRedactorJs
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function redactorGroup($model, $attribute, $options = array()) {
 		
@@ -929,7 +898,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a html5 editor row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbHtml5Editor} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbHtml5Editor} widget and {@link customFieldGroup}.
 	 * Please check {@link TbHtml5Editor} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -939,7 +908,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated html5 editor row.
 	 * @see TbHtml5Editor
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function html5EditorGroup($model, $attribute, $options = array()) {
 		
@@ -949,7 +918,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a markdown editor row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbMarkdownEditorJs} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbMarkdownEditorJs} widget and {@link customFieldGroup}.
 	 * Please check {@link TbMarkdownEditorJs} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -959,7 +928,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated markdown editor row.
 	 * @see TbMarkdownEditorJs
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function markdownEditorGroup($model, $attribute, $options = array()) {
 		
@@ -969,7 +938,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a CKEditor row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbCKEditor} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbCKEditor} widget and {@link customFieldGroup}.
 	 * Please check {@link TbCKEditor} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -979,7 +948,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated CKEditor row.
 	 * @see TbCKEditor
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function ckEditorGroup($model, $attribute, $options = array()) {
 		
@@ -989,7 +958,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a type-ahead row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbTypeahead} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbTypeahead} widget and {@link customFieldGroup}.
 	 * Please check {@link TbTypeahead} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -999,7 +968,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated type-ahead row.
 	 * @see TbTypeahead
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
@@ -1009,7 +978,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a masked text field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CMaskedTextField} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CMaskedTextField} widget and {@link customFieldGroup}.
 	 * Please check {@link CMaskedTextField} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -1019,17 +988,16 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated masked text field row.
 	 * @see CMaskedTextField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
-	public function maskedTextFieldRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
+	public function maskedTextFieldGroup($model, $attribute, $widgetOptions = array(), $rowOptions = array()) {
 		return $this->widgetGroupInternal('CMaskedTextField', $model, $attribute, $widgetOptions, $rowOptions);
 	}
 
 	/**
 	 * Generates a color picker field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbColorPicker} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbColorPicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbColorPicker} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -1039,7 +1007,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated color picker row.
 	 * @see TbColorPicker
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function colorPickerGroup($model, $attribute, $options = array()) {
 		
@@ -1049,7 +1017,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a color picker field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CCaptcha} widget, {@link textField} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CCaptcha} widget, {@link textField} and {@link customFieldGroup}.
 	 * Please check {@link CCaptcha} documentation for detailed information about $widgetOptions.
 	 * Read detailed information about $htmlOptions in {@link CActiveForm::textField} method.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
@@ -1062,7 +1030,7 @@ class TbActiveForm extends CActiveForm {
 	 * @return string The generated color picker row.
 	 * @see CCaptcha
 	 * @see CActiveForm::textField
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function captchaRow($model, $attribute, $htmlOptions = array(), $widgetOptions = array(), $rowOptions = array())
 	{
@@ -1077,7 +1045,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a Pass*Field row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link TbPassfield} widget and {@link customFieldRow}.
+	 * This method is a wrapper for {@link TbPassfield} widget and {@link customFieldGroup}.
 	 * Please check {@link TbPassfield} documentation for detailed information about $widgetOptions.
 	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
 	 *
@@ -1087,7 +1055,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param array $rowOptions Row attributes.
 	 * @return string The generated color picker row.
 	 * @see TbPassfield
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
 	public function passFieldRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
 	{
@@ -1106,7 +1074,7 @@ class TbActiveForm extends CActiveForm {
 	 * @return string The generated custom filed row.
 	 * @see call_user_func_array
 	 */
-	public function customFieldRow($fieldData, $model, $attribute, $rowOptions = array())
+	public function customFieldGroup($fieldData, $model, $attribute, $rowOptions = array())
 	{
 		$this->initRowOptions($rowOptions);
 
@@ -1116,25 +1084,26 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * Generates a widget row for a model attribute.
 	 *
-	 * This method is a wrapper for {@link CBaseController::widget} and {@link customFieldRow}.
+	 * This method is a wrapper for {@link CBaseController::widget} and {@link customFieldGroup}.
 	 * Read detailed information about $widgetOptions in $properties argument of {@link CBaseController::widget} method.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
-	 * This method relies that widget have $model and $attribute properties.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param string $className The widget class name or class in dot syntax (e.g. application.widgets.MyWidget).
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $options List of initial property values for the group (Property Name => Property Value).
 	 * @return string The generated widget row.
 	 * @see CBaseController::widget
-	 * @see customFieldRow
+	 * @see customFieldGroup
 	 */
-	public function widgetRow($className, $widgetOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
-
+	public function widgetGroup($className, $model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
+		
 		$fieldData = array(array($this->owner, 'widget'), array($className, $widgetOptions, true));
 
-		return $this->customFieldGroupInternal($fieldData, $widgetOptions['model'], $widgetOptions['attribute'], $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -1241,10 +1210,12 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function horizontalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupHtmlOptions = array('class' => 'form-group');
-		if ($model->hasErrors($attribute)) {
-			self::addCssClass($groupHtmlOptions, CHtml::$errorCss);
-		}
+		$groupHtmlOptions = $options['groupHtmlOptions']; // array('class' => 'form-group');
+		self::addCssClass($groupHtmlOptions, 'form-group');
+		
+		if ($model->hasErrors($attribute))
+			self::addCssClass($groupHtmlOptions, 'has-error');
+		
 		echo CHtml::openTag('div', $groupHtmlOptions);
 
 		self::addCssClass($options['labelOptions'], 'col-sm-3 control-label');
@@ -1280,16 +1251,16 @@ class TbActiveForm extends CActiveForm {
 			$this->renderAddOnEnd($options['append'], $options['appendOptions']);
 		}
 
-		//if ($this->showErrors && $options['errorOptions'] !== false) {
-			//echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
-		//}
+		if ($this->showErrors && $options['errorOptions'] !== false) {
+			echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
+		}
 
 		if (isset($options['hint'])) {
 			self::addCssClass($options['hintOptions'], $this->hintCssClass);
 			echo CHtml::tag($this->hintTag, $options['hintOptions'], $options['hint']);
 		}
 
-		echo '</div></div>'; // controls, control-group
+		echo '</div></div>'; // controls, form-group
 	}
 
 	/**
@@ -1338,7 +1309,15 @@ class TbActiveForm extends CActiveForm {
 	
 	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		echo '<div class="form-group">';
+		$groupHtmlOptions = $options['groupHtmlOptions']; // array('class' => 'form-group');
+		self::addCssClass($groupHtmlOptions, 'form-group');
+		
+		if ($model->hasErrors($attribute))
+			self::addCssClass($groupHtmlOptions, 'has-error');
+		
+		echo CHtml::openTag('div', $groupHtmlOptions);
+		
+		self::addCssClass($options['labelOptions'], 'control-label');
 		if (isset($options['label'])) {
 			if (!empty($options['label'])) {
 				echo CHtml::label($options['label'], CHtml::activeId($model, $attribute), $options['labelOptions']);
@@ -1360,7 +1339,7 @@ class TbActiveForm extends CActiveForm {
 		if (!empty($options['prepend']) || !empty($options['append'])) {
 			$this->renderAddOnEnd($options['append'], $options['appendOptions']);
 		}
-	
+		
 		if ($this->showErrors && $options['errorOptions'] !== false) {
 			echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
 		}
@@ -1411,8 +1390,8 @@ class TbActiveForm extends CActiveForm {
 	 * @param string $appendText Appended text.
 	 * @param array $prependOptions Prepend options.
 	 */
-	protected function renderAddOnBegin($prependText, $appendText, $prependOptions)
-	{
+	protected function renderAddOnBegin($prependText, $appendText, $prependOptions) {
+		
 		$wrapperCssClass = array();
 		if (!empty($prependText))
 			$wrapperCssClass[] = $this->prependCssClass;
@@ -1436,8 +1415,8 @@ class TbActiveForm extends CActiveForm {
 	 * @param string $appendText Appended text.
 	 * @param array $appendOptions Append options.
 	 */
-	protected function renderAddOnEnd($appendText, $appendOptions)
-	{
+	protected function renderAddOnEnd($appendText, $appendOptions) {
+		
 		if (!empty($appendText)) {
 			if (isset($appendOptions['isRaw']) && $appendOptions['isRaw']) {
 				echo $appendText;
@@ -1485,9 +1464,9 @@ class TbActiveForm extends CActiveForm {
 	 * @param unknown $options
 	 */
 	protected function initOptions(&$options) {
-		
-		if (!isset($options['groupOptions']))
-			$options['groupOptions'] = array();
+		// TODO: not used maybe removed!
+		if (!isset($options['groupHtmlOptions']))
+			$options['groupHtmlOptions'] = array();
 		
 		if (!isset($options['labelOptions']))
 			$options['labelOptions'] = array();
