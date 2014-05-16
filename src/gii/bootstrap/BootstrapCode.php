@@ -39,6 +39,7 @@ class BootstrapCode extends CrudCode
 				if (strpos ( $column->dbType, 'enum(' ) !== false) {
 					$temp = $column->dbType;
 					$temp = str_replace ( 'enum', 'array', $temp );
+					// FIXME: What. The. Seriously, parse the enum declaration from MySQL as an array definition in PHP?!
 					eval ( '$options = ' . $temp . ';' );
 					$dropdown_options = "array(";
 					foreach ( $options as $option ) {
