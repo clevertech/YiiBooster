@@ -188,13 +188,16 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::urlField
 	 * @see customFieldGroup
 	 */
-	public function urlFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function urlFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'urlField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		$fieldData = array(array($this, 'urlField'), array($model, $attribute, $widgetOptions['htmlOptions']));
+
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
@@ -1271,40 +1274,6 @@ class TbActiveForm extends CActiveForm {
 	 * 
 	 * @todo delete this 
 	 */
-	protected function verticalFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
-	{
-		if (isset($rowOptions['label'])) {
-			if (!empty($rowOptions['label'])) {
-				echo CHtml::label($rowOptions['label'], CHtml::activeId($model, $attribute), $rowOptions['labelOptions']);
-			}
-		} else {
-			echo $this->labelEx($model, $attribute, $rowOptions['labelOptions']);
-		}
-
-		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
-			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
-		}
-
-		if (is_array($fieldData)) {
-			echo call_user_func_array($fieldData[0], $fieldData[1]);
-		} else {
-			echo $fieldData;
-		}
-
-		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append'])) {
-			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
-		}
-
-		if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
-			echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
-		}
-
-		if (isset($rowOptions['hint'])) {
-			self::addCssClass($rowOptions['hintOptions'], $this->hintCssClass);
-			echo CHtml::tag($this->hintTag, $rowOptions['hintOptions'], $rowOptions['hint']);
-		}
-	}
-	
 	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
 		$groupOptions = $options['groupOptions']; // array('class' => 'form-group');
@@ -1458,8 +1427,7 @@ class TbActiveForm extends CActiveForm {
 	}
 	
 	/**
-	 * TODO: review this
-	 * @param unknown $options
+	 * @param array $options
 	 */
 	protected function initOptions(&$options) {
 		
