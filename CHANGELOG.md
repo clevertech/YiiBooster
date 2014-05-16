@@ -10,6 +10,12 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
 
+## YiiBooster version 4.0.0-beta-1
+- TbActiveForm working
+- more widgets working 
+- api doc
+- travis, and scrutinizer ci
+
 ## YiiBooster version 4.0.0-alpha
 - upgrade the bootstrap version to 3.1.1
 - upgrade and fix many widgets to work with bootstrap 3.1.1
