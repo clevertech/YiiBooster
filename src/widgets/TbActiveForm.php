@@ -1146,19 +1146,17 @@ class TbActiveForm extends CActiveForm {
 		
 		$this->setDefaultPlaceholder($fieldData);
 
-		// ob_start();
+		ob_start();
 		switch ($this->type) {
 			case self::TYPE_HORIZONTAL:
 				$this->horizontalGroup($fieldData, $model, $attribute, $options);
 				break;
 
 			case self::TYPE_VERTICAL:
-				// $this->verticalFieldRow($fieldData, $model, $attribute, $rowOptions);
 				$this->verticalGroup($fieldData, $model, $attribute, $options);
 				break;
 
 			case self::TYPE_INLINE:
-			case self::TYPE_SEARCH:
 				$this->inlineGroup($fieldData, $model, $attribute, $options);
 				break;
 
@@ -1166,7 +1164,7 @@ class TbActiveForm extends CActiveForm {
 				throw new CException('Invalid form type');
 		}
 
-		// return ob_get_clean();
+		return ob_get_clean();
 	}
 	
 	/**

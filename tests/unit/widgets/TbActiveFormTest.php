@@ -56,8 +56,8 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('foo bar', $htmlOptions['class']);
 	}
 
-	public function testInitCallParentInit()
-	{
+	public function testInitCallParentInit() {
+		
 		// parent init call
 		$form = $this->makeWidget();
 		ob_start();
@@ -73,11 +73,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($className::TYPE_HORIZONTAL, 'horizontal');
 		$this->assertEquals($className::TYPE_VERTICAL, 'vertical');
 		$this->assertEquals($className::TYPE_INLINE, 'inline');
-		$this->assertEquals($className::TYPE_SEARCH, 'search');
 
 		$form = $this->makeWidget();
 		$this->assertAttributeEquals('vertical', 'type', $form);
-		$this->assertAttributeEquals(null, 'inlineErrors', $form);
 		$this->assertAttributeEquals('input-group', 'prependCssClass', $form);
 		$this->assertAttributeEquals('input-group', 'appendCssClass', $form);
 		$this->assertAttributeEquals('input-group-addon', 'addOnCssClass', $form);
