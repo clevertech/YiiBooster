@@ -6,7 +6,7 @@
 
 /**
  * This class is extended version of {@link CActiveForm}, that allows you fully take advantage of bootstrap forms.
- * Basically form consists of rows with label, field, error info, hint text and other useful stuff.
+ * Basically form consists of control groups with label, field, error info, hint text and other useful stuff.
  * TbActiveForm brings together all of these things to quickly build custom forms even with non-standard fields.
  *
  * Each field method has $options for customizing rendering appearance.
@@ -35,10 +35,10 @@
  * <?php echo $form->errorSummary($model); ?>
  *
  * <?php echo $form->textFieldGroup($model, 'username'); ?>
- * <?php echo $form->passwordFieldRow($model, 'password', array(), array(
+ * <?php echo $form->passwordFieldGroup($model, 'password', array(), array(
  *     'hint' => 'Check keyboard layout'
  * )); ?>
- * <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
+ * <?php echo $form->checkboxGroup($model, 'rememberMe'); ?>
 
  * <div class="form-actions">
  *     <?php echo CHtml::submitButton('Login', array('class'=>'btn')); ?>
@@ -174,17 +174,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a url field row for a model attribute.
+	 * Generates a url field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::urlField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::urlField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated url field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated url field group.
 	 * @see CActiveForm::urlField
 	 * @see customFieldGroup
 	 */
@@ -201,161 +201,179 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates an email field row for a model attribute.
+	 * Generates an email field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::emailField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::emailField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string the generated email field row.
+	 * @param array $options Group attributes.
+	 * @return string the generated email field group.
 	 * @see CActiveForm::emailField
 	 * @see customFieldGroup
 	 */
-	public function emailFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function emailFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'emailField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		$fieldData = array(array($this, 'emailField'), array($model, $attribute, $widgetOptions['htmlOptions']));
+
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a number field row for a model attribute.
+	 * Generates a number field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::numberField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::numberField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated number filed row.
+	 * @param array $options Group attributes.
+	 * @return string The generated number filed group.
 	 * @see CActiveForm::numberField
 	 * @see customFieldGroup
 	 */
-	public function numberFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function numberFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'numberField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		$fieldData = array(array($this, 'numberField'), array($model, $attribute, $widgetOptions['htmlOptions']));
+
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a range field row for a model attribute.
+	 * Generates a range field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::rangeField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::rangeField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated range field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated range field group.
 	 * @see CActiveForm::rangeField
 	 * @see customFieldGroup
 	 */
-	public function rangeFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function rangeFieldGroup($model, $attribute, $options = array()) {
+				
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'rangeField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
+		$fieldData = array(array($this, 'rangeField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a date field row for a model attribute.
+	 * Generates a date field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::dateField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::dateField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated date field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated date field group.
 	 * @see CActiveForm::dateField
 	 * @see customFieldGroup
 	 */
-	public function dateFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function dateFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'dateField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
+		$fieldData = array(array($this, 'dateField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a time field row for a model attribute.
+	 * Generates a time field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::timeField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::timeField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated date field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated date field group.
 	 * @see CActiveForm::timeField
 	 * @see customFieldGroup
 	 */
-	public function timeFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function timeFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'timeField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		$fieldData = array(array($this, 'timeField'), array($model, $attribute, $widgetOptions['htmlOptions']));
+
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a tel field row for a model attribute.
+	 * Generates a tel field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::telField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::telField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated date field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated date field group.
 	 * @see CActiveForm::telField
 	 * @see customFieldGroup
 	 */
-	public function telFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function telFieldGroup($model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
 
-		$fieldData = array(array($this, 'telField'), array($model, $attribute, $htmlOptions));
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
+		$fieldData = array(array($this, 'telField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a text field row for a model attribute.
+	 * Generates a text field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::textField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::textField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated text field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated text field group.
 	 * @see CActiveForm::textField
 	 * @see customFieldGroup
 	 */
@@ -372,7 +390,7 @@ class TbActiveForm extends CActiveForm {
 	}
 	
 	/**
-	 * Generates a search field row for a model attribute.
+	 * Generates a search field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::searchField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::searchField} for detailed information about $htmlOptions argument.
@@ -381,43 +399,37 @@ class TbActiveForm extends CActiveForm {
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $options Group attributes.
-	 * @return string The generated text field row.
+	 * @return string The generated text field group.
 	 * @see CActiveForm::searchField
 	 * @see customFieldGroup
 	 */
-	public function searchFieldRow($model, $attribute, $options = array()) {
+	public function searchFieldGroup($model, $attribute, $options = array()) {
 		
-		$this->initOptions($rowOptions);
+		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
+		
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		
 		$fieldData = array(array($this, 'searchField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
 		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a password field row for a model attribute.
+	 * Generates a password field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::passwordField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::passwordField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated password field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated password field group.
 	 * @see CActiveForm::passwordField
 	 * @see customFieldGroup
 	 */
-	public function passwordFieldRow($model, $attribute, $htmlOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
-
-		$fieldData = array(array($this, 'passwordField'), array($model, $attribute, $htmlOptions));
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
-	}
-	
 	public function passwordFieldGroup($model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
@@ -429,17 +441,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a text area row for a model attribute.
+	 * Generates a text area group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::textArea} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::textArea} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated text area row.
+	 * @param array $options Group attributes.
+	 * @return string The generated text area group.
 	 * @see CActiveForm::textArea
 	 * @see customFieldGroup
 	 */
@@ -454,17 +466,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a file field row for a model attribute.
+	 * Generates a file field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::fileField} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::fileField} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated file field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated file field group.
 	 * @see CActiveForm::fileField
 	 * @see customFieldGroup
 	 */
@@ -481,17 +493,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a radio button row for a model attribute.
+	 * Generates a radio button group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::radioButton} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::radioButton} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated radio button row.
+	 * @param array $options Group attributes.
+	 * @return string The generated radio button group.
 	 * @see CActiveForm::radioButton
 	 * @see customFieldGroup
 	 */
@@ -533,56 +545,20 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a checkbox row for a model attribute.
+	 * Generates a checkbox group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::checkbox} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::checkbox} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated checkbox row.
+	 * @param array $options Group attributes.
+	 * @return string The generated checkbox group.
 	 * @see CActiveForm::checkbox
 	 * @see customFieldGroup
 	 */
-	public function checkboxRow($model, $attribute, $options = array()) {
-		
-		$this->initOptions($options);
-
-		self::addCssClass($options['labelOptions'], 'checkbox');
-		if ($this->type == self::TYPE_INLINE)
-			self::addCssClass($options['labelOptions'], 'inline');
-
-		$field = $this->checkbox($model, $attribute, $htmlOptions);
-		if ((!array_key_exists('uncheckValue', $htmlOptions) || isset($htmlOptions['uncheckValue']))
-			&& preg_match('/\<input.*?type="hidden".*?\>/', $field, $matches)
-		) {
-			$hiddenField = $matches[0];
-			$field = str_replace($hiddenField, '', $field);
-		}
-
-		$realAttribute = $attribute;
-		CHtml::resolveName($model, $realAttribute);
-
-		ob_start();
-		if (isset($hiddenField)) echo $hiddenField;
-		echo CHtml::tag('label', $rowOptions['labelOptions'], false, false);
-		echo $field;
-		if (isset($rowOptions['label'])) {
-			if ($rowOptions['label'])
-				echo $rowOptions['label'];
-		} else
-			echo $model->getAttributeLabel($realAttribute);
-		echo CHtml::closeTag('label');
-		$fieldData = ob_get_clean();
-
-		$rowOptions['label'] = '';
-
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
-	}
-	
 	public function checkboxGroup($model, $attribute, $options = array()) {
 
 		$this->initOptions($options);
@@ -621,18 +597,18 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a dropdown list row for a model attribute.
+	 * Generates a dropdown list group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::dropDownList} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::dropDownList} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $data Data for generating the list options (value=>display).
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated drop down list row.
+	 * @param array $options Group attributes.
+	 * @return string The generated drop down list group.
 	 * @see CActiveForm::dropDownList
 	 * @see customFieldGroup
 	 */
@@ -652,43 +628,49 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a list box row for a model attribute.
+	 * Generates a list box group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::listBox} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::listBox} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $data
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated list box row.
+	 * @param array $options Group attributes.
+	 * @return string The generated list box group.
 	 * @see CActiveForm::listBox
 	 * @see customFieldGroup
 	 */
-	public function listBoxRow($model, $attribute, $data, $htmlOptions = array(), $rowOptions = array()) {
+	public function listBoxGroup($model, $attribute, $options = array()) {
 		
-		$this->initRowOptions($rowOptions);
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
+		
+		if(!isset($widgetOptions['data']))
+			throw new CException('$options["widgetOptions"]["data"] must exist');
+		
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
-		$fieldData = array(array($this, 'listBox'), array($model, $attribute, $data, $htmlOptions));
+		$fieldData = array(array($this, 'listBox'), array($model, $attribute, $widgetOptions['data'], $widgetOptions['htmlOptions']));
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a checkbox list row for a model attribute.
+	 * Generates a checkbox list group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::checkboxList} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::checkboxList} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $data Value-label pairs used to generate the check box list.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated checkbox list row.
+	 * @param array $options Group attributes.
+	 * @return string The generated checkbox list group.
 	 * @see CActiveForm::checkboxList
 	 * @see customFieldGroup
 	 */
@@ -718,18 +700,18 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a radio button list row for a model attribute.
+	 * Generates a radio button list group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CActiveForm::radioButtonList} and {@link customFieldGroup}.
 	 * Please check {@link CActiveForm::radioButtonList} for detailed information about $htmlOptions argument.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $data Value-label pairs used to generate the radio button list.
 	 * @param array $htmlOptions Additional HTML attributes.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated radio button list row.
+	 * @param array $options Group attributes.
+	 * @return string The generated radio button list group.
 	 * @see CActiveForm::radioButtonList
 	 * @see customFieldGroup
 	 */
@@ -759,17 +741,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a toggle button row for a model attribute.
+	 * Generates a toggle button group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbToggleButton} widget and {@link customFieldGroup}.
 	 * Please check {@link TbToggleButton} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated toggle button row.
+	 * @param array $options Group attributes.
+	 * @return string The generated toggle button group.
 	 * @see TbToggleButton
 	 * @see customFieldGroup
 	 */
@@ -779,17 +761,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a date picker row for a model attribute.
+	 * Generates a date picker group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbDatePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbDatePicker} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated date picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated date picker group.
 	 * @see TbDatePicker
 	 * @see customFieldGroup
 	 */
@@ -799,17 +781,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a date range picker row for a model attribute.
+	 * Generates a date range picker group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbDateRangePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbDateRangePicker} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated date range picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated date range picker group.
 	 * @see TbDateRangePicker
 	 * @see customFieldGroup
 	 */
@@ -819,17 +801,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a time picker row for a model attribute.
+	 * Generates a time picker group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbTimePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbTimePicker} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated time picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated time picker group.
 	 * @see TbTimePicker
 	 * @see customFieldGroup
 	 */
@@ -839,37 +821,37 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a date-time picker row for a model attribute.
+	 * Generates a date-time picker group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbDateTimePicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbDateTimePicker} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated date-time picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated date-time picker group.
 	 * @see TbDateTimePicker
 	 * @see customFieldGroup
 	 */
-	public function dateTimePickerRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbDateTimePicker', $model, $attribute, $widgetOptions, $rowOptions);
+	public function dateTimePickerRow($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbDateTimePicker', $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a select2 row for a model attribute.
+	 * Generates a select2 group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbSelect2} widget and {@link customFieldGroup}.
 	 * Please check {@link TbSelect2} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated select2 row.
+	 * @param array $options Group attributes.
+	 * @return string The generated select2 group.
 	 * @see TbSelect2
 	 * @see customFieldGroup
 	 */
@@ -879,17 +861,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a redactor editor row for a model attribute.
+	 * Generates a redactor editor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldGroup}.
 	 * Please check {@link TbRedactorJs} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated redactor editor row.
+	 * @param array $options Group attributes.
+	 * @return string The generated redactor editor group.
 	 * @see TbRedactorJs
 	 * @see customFieldGroup
 	 */
@@ -899,17 +881,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a html5 editor row for a model attribute.
+	 * Generates a html5 editor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbHtml5Editor} widget and {@link customFieldGroup}.
 	 * Please check {@link TbHtml5Editor} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated html5 editor row.
+	 * @param array $options Group attributes.
+	 * @return string The generated html5 editor group.
 	 * @see TbHtml5Editor
 	 * @see customFieldGroup
 	 */
@@ -919,17 +901,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a markdown editor row for a model attribute.
+	 * Generates a markdown editor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbMarkdownEditorJs} widget and {@link customFieldGroup}.
 	 * Please check {@link TbMarkdownEditorJs} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated markdown editor row.
+	 * @param array $options Group attributes.
+	 * @return string The generated markdown editor group.
 	 * @see TbMarkdownEditorJs
 	 * @see customFieldGroup
 	 */
@@ -939,17 +921,17 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a CKEditor row for a model attribute.
+	 * Generates a CKEditor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbCKEditor} widget and {@link customFieldGroup}.
 	 * Please check {@link TbCKEditor} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated CKEditor row.
+	 * @param array $options Group attributes.
+	 * @return string The generated CKEditor group.
 	 * @see TbCKEditor
 	 * @see customFieldGroup
 	 */
@@ -959,56 +941,56 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a type-ahead row for a model attribute.
+	 * Generates a type-ahead group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbTypeahead} widget and {@link customFieldGroup}.
 	 * Please check {@link TbTypeahead} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated type-ahead row.
+	 * @param array $options Group attributes.
+	 * @return string The generated type-ahead group.
 	 * @see TbTypeahead
 	 * @see customFieldGroup
 	 */
-	public function typeAheadRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbTypeahead', $model, $attribute, $widgetOptions, $rowOptions);
+	public function typeAheadGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbTypeahead', $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a masked text field row for a model attribute.
+	 * Generates a masked text field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CMaskedTextField} widget and {@link customFieldGroup}.
 	 * Please check {@link CMaskedTextField} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated masked text field row.
+	 * @param array $options Group attributes.
+	 * @return string The generated masked text field group.
 	 * @see CMaskedTextField
 	 * @see customFieldGroup
 	 */
-	public function maskedTextFieldGroup($model, $attribute, $widgetOptions = array(), $rowOptions = array()) {
-		return $this->widgetGroupInternal('CMaskedTextField', $model, $attribute, $widgetOptions, $rowOptions);
+	public function maskedTextFieldGroup($model, $attribute, $options = array()) {
+		return $this->widgetGroupInternal('CMaskedTextField', $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a color picker field row for a model attribute.
+	 * Generates a color picker field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbColorPicker} widget and {@link customFieldGroup}.
 	 * Please check {@link TbColorPicker} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated color picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated color picker group.
 	 * @see TbColorPicker
 	 * @see customFieldGroup
 	 */
@@ -1018,74 +1000,77 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a color picker field row for a model attribute.
+	 * Generates a color picker field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CCaptcha} widget, {@link textField} and {@link customFieldGroup}.
 	 * Please check {@link CCaptcha} documentation for detailed information about $widgetOptions.
 	 * Read detailed information about $htmlOptions in {@link CActiveForm::textField} method.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $htmlOptions Additional HTML attributes for captcha text field.
 	 * @param array $widgetOptions List of initial property values for the CCaptcha widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated color picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated color picker group.
 	 * @see CCaptcha
 	 * @see CActiveForm::textField
 	 * @see customFieldGroup
 	 */
-	public function captchaRow($model, $attribute, $htmlOptions = array(), $widgetOptions = array(), $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function captchaGroup($model, $attribute, $htmlOptions = array(), $options = array()) {
+		
+		$this->initOptions($options);
+		$widgetOptions = $options['widgetOptions'];
+		
+		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
-		$fieldData = $this->textField($model, $attribute, $htmlOptions);
+		$fieldData = $this->textField($model, $attribute, $widgetOptions['htmlOptions']);
 		$fieldData .= '<div class="captcha">' . $this->owner->widget('CCaptcha', $widgetOptions, true) . '</div>';
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a Pass*Field row for a model attribute.
+	 * Generates a Pass*Field group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbPassfield} widget and {@link customFieldGroup}.
 	 * Please check {@link TbPassfield} documentation for detailed information about $widgetOptions.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated color picker row.
+	 * @param array $options Group attributes.
+	 * @return string The generated color picker group.
 	 * @see TbPassfield
 	 * @see customFieldGroup
 	 */
-	public function passFieldRow($model, $attribute, $widgetOptions = array(), $rowOptions = array())
-	{
-		return $this->widgetGroupInternal('booster.widgets.TbPassfield', $model, $attribute, $widgetOptions, $rowOptions);
+	public function passFieldGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbPassfield', $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a custom field row for a model attribute.
-	 * About $rowOptions argument parameters see {@link TbActiveForm} documentation.
+	 * Generates a custom field group for a model attribute.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
 	 *
 	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array()
 	 * function.
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated custom filed row.
+	 * @param array $options Group attributes.
+	 * @return string The generated custom filed group.
 	 * @see call_user_func_array
 	 */
-	public function customFieldGroup($fieldData, $model, $attribute, $rowOptions = array())
-	{
-		$this->initRowOptions($rowOptions);
+	public function customFieldGroup($fieldData, $model, $attribute, $options = array()) {
+		
+		$this->initOptions($options);
 
-		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $rowOptions);
+		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
 	}
 
 	/**
-	 * Generates a widget row for a model attribute.
+	 * Generates a widget group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link CBaseController::widget} and {@link customFieldGroup}.
 	 * Read detailed information about $widgetOptions in $properties argument of {@link CBaseController::widget} method.
@@ -1095,7 +1080,7 @@ class TbActiveForm extends CActiveForm {
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $options List of initial property values for the group (Property Name => Property Value).
-	 * @return string The generated widget row.
+	 * @return string The generated widget group.
 	 * @see CBaseController::widget
 	 * @see customFieldGroup
 	 */
@@ -1110,14 +1095,14 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * This is a intermediate method for widget-based row methods.
+	 * This is a intermediate method for widget-based group methods.
 	 *
 	 * @param string $className The widget class name or class in dot syntax (e.g. application.widgets.MyWidget).
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
 	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated widget row.
+	 * @param array $options Group attributes.
+	 * @return string The generated widget group.
 	 */
 	protected function widgetGroupInternal($className, &$model, &$attribute, &$options) {
 		
@@ -1134,15 +1119,15 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a custom field row for a model attribute.
+	 * Generates a custom field group for a model attribute.
 	 *
-	 * It's base function for generating row with field.
+	 * It's base function for generating group with field.
 	 *
 	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $rowOptions Row attributes.
-	 * @return string The generated custom filed row.
+	 * @param array $options Group attributes.
+	 * @return string The generated custom filed group.
 	 * @throws CException Raised on invalid form type.
 	 */
 	protected function customFieldGroupInternal(&$fieldData, &$model, &$attribute, &$options) {
@@ -1202,12 +1187,12 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Renders a horizontal custom field row for a model attribute.
+	 * Renders a horizontal custom field group for a model attribute.
 	 *
 	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $rowOptions Row options.
+	 * @param array $options Row options.
 	 */
 	protected function horizontalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
@@ -1265,12 +1250,12 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Renders a vertical custom field row for a model attribute.
+	 * Renders a vertical custom field group for a model attribute.
 	 *
 	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $rowOptions Row options.
+	 * @param array $options Row options.
 	 * 
 	 * @todo delete this 
 	 */
@@ -1320,19 +1305,19 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Renders a inline custom field row for a model attribute.
+	 * Renders a inline custom field group for a model attribute.
 	 *
 	 * @param array|string $fieldData Pre-rendered field as string or array of arguments for call_user_func_array() function.
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $rowOptions Row options.
+	 * @param array $options Row options.
 	 */
-	protected function inlineGroup(&$fieldData, &$model, &$attribute, &$rowOptions) {
+	protected function inlineGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
         echo '<div class="form-group">';
 
-		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
-			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
+		if (!empty($options['prepend']) || !empty($options['append']))
+			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
 
 		if (is_array($fieldData)) {
 			echo call_user_func_array($fieldData[0], $fieldData[1]);
@@ -1340,11 +1325,11 @@ class TbActiveForm extends CActiveForm {
 			echo $fieldData;
 		}
 
-		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
-			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
+		if (!empty($options['prepend']) || !empty($options['append']))
+			$this->renderAddOnEnd($options['append'], $options['appendOptions']);
 
-        if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
-            echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
+        if ($this->showErrors && $options['errorOptions'] !== false) {
+            echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
         }
 
         echo '</div> '; // <- this space is important 
