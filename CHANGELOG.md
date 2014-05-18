@@ -8,7 +8,8 @@ Thank you all
 
 Antonio Ramirez.
 
-## YiiBooster latest development alpha  
+## YiiBooster latest development alpha
+ - **(enh)** Add bootstrap2 skin to select2 from https://github.com/t0m/select2-bootstrap-css (kev360)
  - **(fix)** many Editable fixes
  - **(fix)** TbExtendedGridView - fix JavaScript undefined variable error, when using strict mode - #805, #805
  - **(fix)** yiiGroupGridView fix - #786
