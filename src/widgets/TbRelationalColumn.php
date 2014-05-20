@@ -15,8 +15,8 @@
  *
  * @package booster.widgets.grids.columns
  */
-class TbRelationalColumn extends TbDataColumn
-{
+class TbRelationalColumn extends TbDataColumn {
+	
 	/**
 	 * @var string $url the route to call via AJAX to get the data from
 	 */
@@ -71,8 +71,8 @@ class TbRelationalColumn extends TbDataColumn
 	/**
 	 * widget initialization
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		parent::init();
 
 		if (empty($this->url))
@@ -88,8 +88,8 @@ class TbRelationalColumn extends TbDataColumn
 	 *
 	 * @param int $row
 	 */
-	public function renderDataCell($row)
-	{
+	public function renderDataCell($row) {
+		
 		$data = $this->grid->dataProvider->data[$row];
 		$options = $this->htmlOptions;
 
@@ -117,8 +117,8 @@ class TbRelationalColumn extends TbDataColumn
 	 *
 	 * @return null|string
 	 */
-	protected function getPrimaryKey($data)
-	{
+	protected function getPrimaryKey($data) {
+		
 		if ($this->grid->dataProvider instanceof CActiveDataProvider) {
 			$key = $this->grid->dataProvider->keyAttribute === null ? $data->getPrimaryKey()
 				: $data->{$this->grid->dataProvider->keyAttribute};
@@ -136,8 +136,8 @@ class TbRelationalColumn extends TbDataColumn
 	/**
 	 * Register script that will handle its behavior
 	 */
-	public function registerClientScript()
-	{
+	public function registerClientScript() {
+		
         Booster::getBooster()->registerAssetCss('bootstrap-relational.css');
 
 		/** @var $cs CClientScript */

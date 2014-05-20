@@ -34,7 +34,7 @@ class TbGridView extends CGridView
 	/**
 	 * @var string the CSS class name for the pager container. Defaults to 'pagination'.
 	 */
-	public $pagerCssClass = '';
+	public $pagerCssClass = 'no-class';
 
 	/**
 	 * @var array the configuration for the pager.
@@ -63,8 +63,8 @@ class TbGridView extends CGridView
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		parent::init();
 
 		$classes = array('table');

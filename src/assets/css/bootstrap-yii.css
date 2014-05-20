@@ -56,7 +56,11 @@
 }
 
 .grid-view table.items th:hover a.sort-link:after {
-    content: "";
+	font-family: 'Glyphicons Halflings';
+	font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    content: "\e094";
     display: block;
     position: absolute;
     top: 0;
@@ -65,13 +69,14 @@
     height: 14px;
     line-height: 14px;
     vertical-align: text-top;
-    background-image: url("../bootstrap/img/glyphicons-halflings.png");
+    /* background-image: url("../bootstrap/img/glyphicons-halflings.png"); */
     background-position: -312px -96px;
     background-repeat: no-repeat;
 }
 
 .grid-view table.items th:hover a.asc:after {
-    background-position: -289px -96px;
+    /* background-position: -289px -96px; */
+    content: "\e093";
 }
 
 .grid-view table.items tr.selected td {
@@ -304,6 +309,11 @@ input.form-control[type="file"] {
 .select2-container {
 	min-width: 150px;
 }
+
+.pagination {
+	margin: 0;
+}
+
 /* Gii */
 .form.gii .tooltip {
     opacity: 1;

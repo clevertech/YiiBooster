@@ -34,7 +34,7 @@ class TbPager extends CLinkPager {
 	 * @var string the pager alignment.
 	 * Valid values are 'centered' and 'right'.
 	 */
-	public $alignment = self::ALIGNMENT_CENTER;
+	public $alignment = self::ALIGNMENT_RIGHT;
 
 	/**
 	 * @var string the text shown before page buttons.
@@ -125,6 +125,7 @@ class TbPager extends CLinkPager {
 		echo CHtml::openTag($this->containerTag, $this->containerHtmlOptions);
 		echo $this->header;
 		echo CHtml::tag('ul',$this->htmlOptions,implode("\n",$buttons));
+		echo '<div style="clear: both;"></div>';
 		echo $this->footer;
 		echo CHtml::closeTag($this->containerTag);
 	}
