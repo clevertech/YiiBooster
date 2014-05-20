@@ -290,6 +290,10 @@ table td, table th {
 
 }
 
+.dropdown-backdrop {
+    position: static;
+}
+
 /* Gii */
 .form.gii .tooltip {
     opacity: 1;
