@@ -37,14 +37,14 @@ class TbEditable extends CWidget
      * @var string mode of input: `inline` | `popup`. If not set - default X-editable value is used: `popup`.
      * @see x-editable
      */
-    public $mode = 'popup';
+    public $mode = null; // 'popup'; // #813
 
     /**
      * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`.
      * If `null` - default X-editable value is used: `top`
      * @see x-editable
      */
-    public $placement = 'top';
+    public $placement = null; // 'top'; // #813
 
     /**
      * @var boolean will editable be initially disabled. It means editable plugin will be applied to element,
@@ -66,7 +66,7 @@ class TbEditable extends CWidget
      * If `null` - default X-editable value is used: `Empty`
      * @see x-editable
      */
-    public $emptytext = 'Empty';
+    public $emptytext = null; // 'Empty'; // #813
 
     /**
      * @var string text to be shown as element content
