@@ -497,9 +497,9 @@ class Booster extends CApplicationComponent {
 	 */
 	protected function registerMetadataForResponsive() {
 		if($this->disableZooming)
-			$this->cs->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
+			$this->cs->registerMetaTag('width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', 'viewport');
 		else
-			$this->cs->registerMetaTag('width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+			$this->cs->registerMetaTag('width=device-width, initial-scale=1', 'viewport');
 	}
 
 	/**

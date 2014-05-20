@@ -310,10 +310,6 @@ input.form-control[type="file"] {
 	min-width: 150px;
 }
 
-.pagination {
-	margin: 0;
-}
-
 /* Gii */
 .form.gii .tooltip {
     opacity: 1;
