@@ -17,8 +17,8 @@ Yii::import('booster.widgets.TbButton');
  *
  * @package booster.widgets.forms.buttons
  */
-class TbButtonGroup extends CWidget
-{
+class TbButtonGroup extends CWidget {
+	
 	// Toggle options.
 	const TOGGLE_CHECKBOX = 'checkbox';
 	const TOGGLE_RADIO = 'radio';
@@ -33,7 +33,12 @@ class TbButtonGroup extends CWidget
 	 * @var string the button type.
 	 * @see BootButton::type
 	 */
-	public $type;
+	public $type = TbButton::TYPE_DEFAULT;
+	
+	/**
+	 * @var boolean indicates whether to use justified button groups
+	 */
+	public $justified = false;
 
 	/**
 	 * @var string the button size.
@@ -80,16 +85,22 @@ class TbButtonGroup extends CWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
-		$classes = array('btn-group');
-
+	public function init() {
+		
+		$classes = [];
+		
 		if ($this->stacked === true) {
 			$classes[] = 'btn-group-vertical';
+		} else {
+			$classes[] = 'btn-group';
 		}
 
 		if ($this->dropup === true) {
 			$classes[] = 'dropup';
+		}
+		
+		if ($this->justified === true) {
+			$classes[] = 'btn-group-justified';
 		}
 
 		if (!empty($classes)) {
@@ -104,7 +115,7 @@ class TbButtonGroup extends CWidget
 		$validToggles = array(self::TOGGLE_CHECKBOX, self::TOGGLE_RADIO);
 
 		if (isset($this->toggle) && in_array($this->toggle, $validToggles)) {
-			$this->htmlOptions['data-toggle'] = 'buttons-' . $this->toggle;
+			$this->htmlOptions['data-toggle'] = 'buttons';
 		}
 	}
 
@@ -113,14 +124,32 @@ class TbButtonGroup extends CWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		echo CHtml::openTag('div', $this->htmlOptions);
 
 		foreach ($this->buttons as $button) {
 			if (isset($button['visible']) && $button['visible'] === false) {
 				continue;
 			}
+			
+			$validToggles = array(self::TOGGLE_CHECKBOX, self::TOGGLE_RADIO);
+			if (isset($this->toggle) && in_array($this->toggle, $validToggles)) {
+				$this->buttonType = $this->toggle;
+			}
+			/*
+				$this->controller->widget(
+				'booster.widgets.TbToggleButton',
+					array(
+						'type' => isset($button['type']) ? $button['type'] : $this->type,
+						'label' => isset($button['label']) ? $button['label'] : null,
+						'toggleType' => $this->toggle,
+						'icon' => isset($button['icon']) ? $button['icon'] : null,
+						'size' => $this->size, // all buttons in a group cannot vary in size
+					)
+				);
+				continue;
+			}*/
 
 			$this->controller->widget(
 				'booster.widgets.TbButton',
@@ -144,5 +173,47 @@ class TbButtonGroup extends CWidget
 			);
 		}
 		echo '</div>';
+	}
+	
+	protected function renderToggle() {
+		if($this->toggle === self::TOGGLE_RADIO) {
+			echo"
+			<label class='btn btn-{$button["type"]}'>
+			    <input type='radio' name='options' id='option1'> Option 1
+			</label>
+			";
+		} elseif ($this->toggle === self::TOGGLE_CHECKBOX) {
+			
+		} // else { /* not supported option */ }
+	}
+}
+
+class TbToggleButton extends CInputWidget {
+	
+	public $type;
+	
+	public $toggleType;
+	
+	public $label;
+	
+	public $icon;
+	
+	public function init() {
+		if (isset($this->icon)) { // no need for implode as newglyphicon only supports one icon
+			if (strpos($this->icon, 'icon') === false && strpos($this->icon, 'fa') === false) {
+				$this->icon = 'glyphicon glyphicon-' . $this->icon; // implode(' glyphicon-', explode(' ', $this->icon));
+				$this->label = '<span class="' . $this->icon . '"></span> ' . $this->label;
+			} else { // to support font awesome icons
+				$this->label = '<i class="' . $this->icon . '"></i> ' . $this->label;
+			}
+		}
+	}
+	
+	public function run() {
+		echo"
+		<label class='btn btn-{$this->type}'>
+			<input type='{$this->toggleType}' name='{$this->id}_options' id='option_{$this->id}'> {$this->label}
+		</label>
+		";
 	}
 }

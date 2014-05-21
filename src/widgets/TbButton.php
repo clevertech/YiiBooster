@@ -28,6 +28,8 @@ class TbButton extends CWidget {
 	const BUTTON_AJAXSUBMIT = 'ajaxSubmit';
 	const BUTTON_INPUTBUTTON = 'inputButton';
 	const BUTTON_INPUTSUBMIT = 'inputSubmit';
+	const BUTTON_TOGGLE_RADIO = 'radio';
+	const BUTTON_TOGGLE_CHECKBOX = 'checkbox';
 
 	// Button types.
 	const TYPE_DEFAULT = 'default';
@@ -39,9 +41,17 @@ class TbButton extends CWidget {
 	const TYPE_LINK = 'link';
 
 	// Button sizes.
-	const SIZE_LARGE = 'lg';
-	const SIZE_SMALL = 'sm';
-	const SIZE_EXTRA_SMALL = 'xs';
+	const SIZE_LARGE = 'large';
+	const SIZE_DEFAULT = 'default';
+	const SIZE_SMALL = 'small';
+	const SIZE_EXTRA_SMALL = 'extra_small';
+	
+	protected static $sizeClasses = [
+		self::SIZE_LARGE => 'btn-lg',
+		self::SIZE_DEFAULT => '',
+		self::SIZE_SMALL => 'btn-sm',
+		self::SIZE_EXTRA_SMALL => 'btn-xs',
+	];
 
 	/**
 	 * @var string the button callback types.
@@ -181,12 +191,13 @@ class TbButton extends CWidget {
 
 		$validSizes = array(
 			self::SIZE_LARGE, 
+			self::SIZE_DEFAULT,
 			self::SIZE_SMALL, 
 			self::SIZE_EXTRA_SMALL
 		);
 
 		if (isset($this->size) && in_array($this->size, $validSizes)) {
-			$classes[] = 'btn-' . $this->size;
+			$classes[] = self::$sizeClasses[$this->size];
 		}
 
 		if ($this->block) {
@@ -300,7 +311,7 @@ class TbButton extends CWidget {
 
 		
 		if ($this->hasDropdown()) {
-			echo '<div class="btn-group">';
+			echo '<div class="btn-group group-dropdown">';
 			
 			echo $this->createButton();
 		
@@ -365,11 +376,27 @@ class TbButton extends CWidget {
 			case self::BUTTON_INPUTSUBMIT:
 				$this->htmlOptions['type'] = 'submit';
 				return CHtml::button($this->label, $this->htmlOptions);
-
+				
+			case self::BUTTON_TOGGLE_RADIO:
+				return $this->createToggleButton('radio');
+				
+			case self::BUTTON_TOGGLE_CHECKBOX:
+				return $this->createToggleButton('checkbox');
+				
 			default:
 			case self::BUTTON_BUTTON:
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 		}
+	}
+	
+	protected function createToggleButton($toggleType) {
+		
+		$html = '';
+		$html .= CHtml::openTag('label', $this->htmlOptions);
+		$html .= "<input type='{$toggleType}' name='{$this->id}_options' id='option_{$this->id}'> {$this->label}";
+		$html .= CHtml::closeTag('label');
+		
+		return $html;
 	}
 
 	/**
@@ -379,8 +406,8 @@ class TbButton extends CWidget {
 	 *
 	 * @return bool the result.
 	 */
-	protected function hasDropdown()
-	{
+	protected function hasDropdown() {
+		
 		return isset($this->items) && !empty($this->items);
 	}
 }
