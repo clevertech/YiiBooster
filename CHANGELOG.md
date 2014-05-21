@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+ - **(enh)** latest Font Awesome 1.4.0 - #818
  - **(enh)** Add bootstrap2 skin to select2 from https://github.com/t0m/select2-bootstrap-css (kev360)
  - **(fix)** many Editable fixes
  - **(fix)** TbExtendedGridView - fix JavaScript undefined variable error, when using strict mode - #805, #805
