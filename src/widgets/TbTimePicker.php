@@ -12,7 +12,10 @@
  * @since 1.0.3
  * @package booster.widgets.forms.inputs
  */
-class TbTimePicker extends CInputWidget {
+
+Yii::import('booster.widgets.TbBaseInputWidget');
+
+class TbTimePicker extends TbBaseInputWidget {
 	
 	/**
 	 * @var TbActiveForm If we're called from the form, here lies the reference to it.
@@ -81,7 +84,7 @@ class TbTimePicker extends CInputWidget {
 
 		// We are overriding the result of $this->resolveNameID() here, because $id which it emits is not unique through the page.
 		if (empty($this->htmlOptions['id'])) {
-			$this->htmlOptions['id'] = $id; // #716 this is stopping clientside error to appear - $this->getId(true) . '-' . $id;
+			$this->htmlOptions['id'] = $this->id;
 		}
 
 		// Adding essential class for timepicker to work.
@@ -105,7 +108,7 @@ class TbTimePicker extends CInputWidget {
 			$this->echoAppend();
 		echo CHtml::closeTag('div');
 
-		$this->registerClientScript($this->htmlOptions['id']);
+		$this->registerClientScript($this->id);
 	}
 
 	/**

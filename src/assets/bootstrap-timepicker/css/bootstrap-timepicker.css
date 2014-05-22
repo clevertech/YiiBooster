@@ -97,6 +97,7 @@
 }
 .bootstrap-timepicker-widget table td:not(.separator) {
   min-width: 30px;
+  max-width: 50px;
 }
 .bootstrap-timepicker-widget table td span {
   width: 100%;
@@ -123,7 +124,7 @@
   font-size: 18px;
 }
 .bootstrap-timepicker-widget table td input {
-  width: 40px;
+  width: 100%;
   margin: 0;
   padding: 6px;
   text-align: center;

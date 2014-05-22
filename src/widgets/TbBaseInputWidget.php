@@ -12,15 +12,20 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbBaseInputWidget extends CInputWidget
-{
-	public function init()
-	{
+class TbBaseInputWidget extends CInputWidget {
+	
+	public function init() {
+		
 		$this->setDefaultPlaceholder();
+		
+		if(!isset($this->htmlOptions['class']) || empty($this->htmlOptions['class']))
+			$this->htmlOptions['class'] = 'form-control';
+		else
+			$this->htmlOptions['class'] .= ' form-control';
 	}
 	
-	protected function setDefaultPlaceholder()
-	{
+	protected function setDefaultPlaceholder() {
+		
 		if (!$this->model)
 			return;
 	

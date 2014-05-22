@@ -2,41 +2,64 @@
 /**
  *## TbTypeahead class file.
  *
- * @author Christoffer Niska <ChristofferNiska@gmail.com>
- * @copyright Copyright &copy; Christoffer Niska 2011-
+ * @author Amr Bedair <amr.bedair@gmail.com>
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @since v4.0.0
+ * 
+ * @todo add support of bloodhound datasets, and remote ajax 
+ * @see <https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md#bloodhound-integration>
  */
 
 /**
- *## Bootstrap typeahead widget.
+ *## Twitter typeahead widget.
  *
- * @see http://twitter.github.com/bootstrap/javascript.html#typeahead
+ * @see https://github.com/twitter/typeahead.js
  *
- * @since 0.9.10
+ * @since 4.0.0
  * @package booster.widgets.forms.inputs
  */
-class TbTypeahead extends CInputWidget
-{
+
+Yii::import('booster.widgets.TbBaseInputWidget');
+
+class TbTypeahead extends TbBaseInputWidget {
+	
 	/**
-	 * @var array the options for the Bootstrap Javascript plugin.
+	 * @var array the options for the twitter typeahead widget
+	 * @see <https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md#options>
 	 */
 	public $options = array();
+	
+	/**
+	 * @var array the datasets for the twitter typeahead widget 
+	 * @see <https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md#datasets>
+	 */
+	public $datasets = array();
 
 	/**
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
-		$this->htmlOptions['type'] = 'text';
-		$this->htmlOptions['data-provide'] = 'typeahead';
-		$this->htmlOptions['autocomplete'] = 'off';
+	public function init() {
+		
+		if(!isset($this->datasets['source']) || empty($this->datasets['source']))
+			throw new CException('you must provide datasets["source"] option');
+		
+		if(empty($this->options))
+			$this->options['minLength'] = 1;
+		$this->registerClientScript();
+		
+		if(!isset($this->htmlOptions['class']) || empty($this->htmlOptions['class']))
+			$this->htmlOptions['class'] = 'typeahead';
+		else
+			$this->htmlOptions['class'] .= ' typeahead';
+		
+		parent::init();
 	}
 
 	/**
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		// print_r($this->htmlOptions); //typeahead
 		list($name, $id) = $this->resolveNameID();
 
 		if (isset($this->htmlOptions['id'])) {
@@ -55,7 +78,56 @@ class TbTypeahead extends CInputWidget
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
 
-		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
-		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').typeahead({$options});");
+		$this->datasets['source'] = 'js:substringMatcher(_'.$this->id.'_source_list)';
+		
+		$options = CJavaScript::encode($this->options);
+		$datasets = CJavaScript::encode($this->datasets);
+		
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').typeahead({$options}, {$datasets});");
+		
+	}
+
+	/**
+	 * 
+	 * @param unknown $id
+	 */
+	function registerClientScript() {
+	
+		$booster = Booster::getBooster();
+		$booster->registerPackage('typeahead');
+		
+		if(empty($this->datasets) || !isset($this->datasets['source']) || !is_array($this->datasets['source']))
+			return;
+		
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#substringMatcher', '
+			var substringMatcher = function(strs) {
+				return function findMatches(q, cb) {
+					var matches, substringRegex;
+					 
+					// an array that will be populated with substring matches
+					matches = [];
+					 
+					// regex used to determine if a string contains the substring `q`
+					substrRegex = new RegExp(q, "i");
+					 
+					// iterate through the pool of strings and for any string that
+					// contains the substring `q`, add it to the `matches` array
+					$.each(strs, function(i, str) {
+						if (substrRegex.test(str)) {
+							// the typeahead jQuery plugin expects suggestions to a
+							// JavaScript object, refer to typeahead docs for more info
+							matches.push({ value: str });
+						}
+					});
+					 
+					cb(matches);
+				};
+			};
+		', CClientScript::POS_HEAD);
+		
+		$source_list = !empty($this->options) ? CJavaScript::encode($this->datasets['source']) : '';
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#source_list#'.$this->id, '
+			var _'.$this->id.'_source_list = '.$source_list.';
+		', CClientScript::POS_HEAD);
 	}
 }

@@ -153,4 +153,10 @@ return array(
 		'css' => array($this->minify ? 'css/bootstrap3/bootstrap-switch.min.css' : 'css/bootstrap3/bootstrap-switch.css'),
 		'js' => array($this->minify ? 'js/bootstrap-switch.min.js' : 'js/bootstrap-switch.js'),
 	),
+	'typeahead' => array(
+		'depends' => array('jquery'),
+		'baseUrl' => $this->getAssetsUrl() . '/typeahead',
+		'css' => array('css/typeahead.css'),
+		'js' => array($this->minify ? 'js/typeahead.bundle.min.js' : 'js/typeahead.bundle.js'),
+	),
 );
