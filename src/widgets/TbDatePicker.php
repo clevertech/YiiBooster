@@ -49,7 +49,7 @@ class TbDatePicker extends TbBaseInputWidget {
 			$this->options['language'] = substr(Yii::app()->getLanguage(), 0, 2);
 		}
 		
-		parent::setDefaultPlaceholder();
+		parent::init();
 	}
 	
 	/**
@@ -92,8 +92,8 @@ class TbDatePicker extends TbBaseInputWidget {
 	 * Registers required client script for bootstrap datepicker. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
 	 */
-	public function registerClientScript()
-	{
+	public function registerClientScript() {
+		
         Booster::getBooster()->registerPackage('datepicker');
 	}
 

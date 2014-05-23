@@ -75,7 +75,7 @@ return array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-editable/',
 		'css' => array('css/bootstrap-editable.css'),
 		'js' => array($this->minify ? 'js/bootstrap-editable.min.js' : 'js/bootstrap-editable.js'),
-		'depends' => array('jquery','bootstrap.js')
+		'depends' => array('jquery','bootstrap.js', 'datepicker') /* this is to ensure that datepicker always come before editable */
 	),
 	'moment' => array(
 		'baseUrl' => $this->getAssetsUrl(),

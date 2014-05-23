@@ -532,7 +532,6 @@ class TbEditable extends CWidget
     public function registerAssets() {
     	
     	$booster = Booster::getBooster();
-    	$booster->registerPackage('x-editable');
     	
    		if ($this->type == 'date' || $this->type == 'combodate') {
             /** @var $widget TbDatePicker */
@@ -559,8 +558,10 @@ class TbEditable extends CWidget
         } elseif ($this->type == 'select2') { //include select2 if needed
             $booster->registerPackage('select2');
         }
+        
+        $booster->registerPackage('x-editable');
     	
-    	return;
+        return;
     	
     	/* TODO original */
         $am = Yii::app()->getAssetManager();

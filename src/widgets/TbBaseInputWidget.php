@@ -19,9 +19,9 @@ class TbBaseInputWidget extends CInputWidget {
 		$this->setDefaultPlaceholder();
 		
 		if(!isset($this->htmlOptions['class']) || empty($this->htmlOptions['class']))
-			$this->htmlOptions['class'] = 'form-control';
+			$this->htmlOptions['class'] = 'ct-form-control';
 		else
-			$this->htmlOptions['class'] .= ' form-control';
+			$this->htmlOptions['class'] .= ' ct-form-control';
 	}
 	
 	protected function setDefaultPlaceholder() {
