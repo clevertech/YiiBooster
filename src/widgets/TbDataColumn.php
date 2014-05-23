@@ -102,6 +102,12 @@ class TbDataColumn extends CDataColumn
 			} else {
 				$filterInputOptions = array();
 			}
+			
+			if(!isset($filterInputOptions['class']) || empty($filterInputOptions['class']))
+				$filterInputOptions['class'] = 'form-control';
+			else
+				$filterInputOptions['class'] .= ' form-control';
+			
 			if (is_array($this->filter)) {
 				if (!isset($filterInputOptions['prompt'])) {
 					$filterInputOptions['prompt'] = '';

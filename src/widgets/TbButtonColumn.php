@@ -17,8 +17,8 @@ Yii::import('zii.widgets.grid.CButtonColumn');
  *
  * @package booster.widgets.grids.columns
  */
-class TbButtonColumn extends CButtonColumn
-{
+class TbButtonColumn extends CButtonColumn {
+	
 	/**
 	 * @var string the view button icon (defaults to 'eye-open').
 	 */
@@ -39,8 +39,8 @@ class TbButtonColumn extends CButtonColumn
 	 *
 	 * Initializes the default buttons (view, update and delete).
 	 */
-	protected function initDefaultButtons()
-	{
+	protected function initDefaultButtons() {
+		
 		parent::initDefaultButtons();
 
 		if ($this->viewButtonIcon !== false && !isset($this->buttons['view']['icon'])) {
@@ -64,8 +64,8 @@ class TbButtonColumn extends CButtonColumn
 	 * @param integer $row the row number (zero-based)
 	 * @param mixed $data the data object associated with the row
 	 */
-	protected function renderButton($id, $button, $row, $data)
-	{
+	protected function renderButton($id, $button, $row, $data) {
+		
 		if (isset($button['visible']) && !$this->evaluateExpression(
 			$button['visible'],
 			array('row' => $row, 'data' => $data)
@@ -89,7 +89,7 @@ class TbButtonColumn extends CButtonColumn
 
 		if (isset($button['icon']) && $button['icon']) {
 			if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
-				$button['icon'] = 'icon-' . implode(' icon-', explode(' ', $button['icon']));
+				$button['icon'] = 'glyphicon glyphicon-' . implode('glyphicon-', explode(' ', $button['icon']));
 			}
 
 			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $url, $options);
