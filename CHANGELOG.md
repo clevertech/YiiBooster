@@ -11,6 +11,18 @@ Antonio Ramirez.
 ## YiiBooster latest development alpha  
 
 ## YiiBooster version 4.0.0-beta-1
+- Finalize editables
+- Finalize datepicker
+- Finalize timepicker
+- Finalize select2
+- Finalize pagers
+- Finalize navbar
+- Finalize buttons, and button groups
+- Finalize typeahead
+- more work done on grids, extended grids, bulk actions
+- upgrade font awesome 
+
+## YiiBooster version 4.0.0-beta-1
 - TbActiveForm working
 - more widgets working 
 - api doc
