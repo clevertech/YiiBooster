@@ -52,14 +52,14 @@ abstract class TbBaseMenu extends CMenu {
 		$n = count($items);
 
 		if ($n > 0) {
-			echo CHtml::openTag('ul', $this->htmlOptions);
+			echo CHtml::openTag('ul', $this->htmlOptions) . "\n";
 
 			$count = 0;
 			foreach ($items as $item) {
 				$count++;
 
 				if (isset($item['divider'])) {
-					echo '<li class="' . $this->getDividerCssClass() . '"></li>';
+					echo "<li class=\"{$this->getDividerCssClass()}\"></li>\n";
 				} else {
 					$options = isset($item['itemOptions']) ? $item['itemOptions'] : array();
 					$classes = array();
@@ -97,7 +97,7 @@ abstract class TbBaseMenu extends CMenu {
 						}
 					}
 
-					echo CHtml::openTag('li', $options);
+					echo CHtml::openTag('li', $options) . "\n";
 
 					$menu = $this->renderMenuItem($item);
 
@@ -120,11 +120,11 @@ abstract class TbBaseMenu extends CMenu {
 						$this->controller->widget('booster.widgets.TbDropdown', $dropdownOptions);
 					}
 
-					echo '</li>';
+					echo "</li>\n";
 				}
 			}
 
-			echo '</ul>';
+			echo "</ul>\n";
 		}
 	}
 
