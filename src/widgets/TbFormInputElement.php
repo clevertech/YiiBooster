@@ -9,41 +9,41 @@ class TbFormInputElement extends CFormElement
 	 */
 	public static $inputTypes = array(
 		// standard fields
-		'text' => 'textFieldRow',
+		'text' => 'textFieldGroup',
 		'hidden' => 'hiddenField',
-		'password' => 'passwordFieldRow',
-		'textarea' => 'textAreaRow',
-		'file' => 'fileFieldRow',
-		'radio' => 'radioButtonRow',
-		'checkbox' => 'checkBoxRow',
-		'listbox' => 'listBoxRow',
-		'dropdownlist' => 'dropDownListRow',
-		'checkboxlist' => 'checkBoxListRow',
-		'radiolist' => 'radioButtonListRow',
-		'url' => 'urlFieldRow',
-		'email' => 'emailFieldRow',
-		'number' => 'numberFieldRow',
-		'range' => 'rangeFieldRow',
-		'date' => 'dateFieldRow',
-		'time' => 'timeFieldRow',
-		'tel' => 'telFieldRow',
-		'search' => 'searchFieldRow',
+		'password' => 'passwordFieldGroup',
+		'textarea' => 'textAreaGroup',
+		'file' => 'fileFieldGroup',
+		'radio' => 'radioButtonGroup',
+		'checkbox' => 'checkBoxGroup',
+		'listbox' => 'listBoxGroup',
+		'dropdownlist' => 'dropDownListGroup',
+		'checkboxlist' => 'checkBoxListGroup',
+		'radiolist' => 'radioButtonListGroup',
+		'url' => 'urlFieldGroup',
+		'email' => 'emailFieldGroup',
+		'number' => 'numberFieldGroup',
+		'range' => 'rangeFieldGroup',
+		'date' => 'dateFieldGroup',
+		'time' => 'timeFieldGroup',
+		'tel' => 'telFieldGroup',
+		'search' => 'searchFieldGroup',
 		// extended fields
-		'toggle' => 'toggleButtonRow',
-		'datepicker' => 'datePickerRow',
-		'daterange' => 'dateRangeRow',
-		'timepicker' => 'timePickerRow',
-		'datetimepicker' => 'dateTimePickerRow',
-		'select2' => 'select2Row',
-		'redactor' => 'redactorRow',
-		'html5editor' => 'html5EditorRow',
-		'markdowneditor' => 'markdownEditorRow',
-		'ckeditor' => 'ckEditorRow',
-		'typeahead' => 'typeAheadRow',
-		'maskedtext' => 'maskedTextFieldRow',
-		'colorpicker' => 'colorPickerRow',
-		//'captcha' => 'captchaRow',
-		'pass' => 'passFieldRow'
+		'toggle' => 'toggleButtonGroup',
+		'datepicker' => 'datePickerGroup',
+		'daterange' => 'dateRangeGroup',
+		'timepicker' => 'timePickerGroup',
+		'datetimepicker' => 'dateTimePickerGroup',
+		'select2' => 'select2Group',
+		'redactor' => 'redactorGroup',
+		'html5editor' => 'html5EditorGroup',
+		'markdowneditor' => 'markdownEditorGroup',
+		'ckeditor' => 'ckEditorGroup',
+		'typeahead' => 'typeAheadGroup',
+		'maskedtext' => 'maskedTextFieldGroup',
+		'colorpicker' => 'colorPickerGroup',
+		//'captcha' => 'captchaGroup',
+		'pass' => 'passFieldGroup'
 	);
 
 	/**
@@ -179,10 +179,10 @@ class TbFormInputElement extends CFormElement
 			$method = self::$inputTypes[$this->type];
 
 			switch ($method) {
-				case 'listBoxRow':
-				case 'dropDownListRow':
-				case 'checkBoxListRow':
-				case 'radioButtonListRow':
+				case 'listBoxGroup':
+				case 'dropDownListGroup':
+				case 'checkBoxListGroup':
+				case 'radioButtonListGroup':
 					return $this->getParent()->getActiveFormWidget()->$method($model, $attribute, $this->items, $this->attributes, $rowOptions);
 
 				default:
@@ -193,7 +193,7 @@ class TbFormInputElement extends CFormElement
 			$attributes['model'] = $this->getParent()->getModel();
 			$attributes['attribute'] = $this->name;
 
-			return $this->getParent()->getActiveFormWidget()->customFieldRow(
+			return $this->getParent()->getActiveFormWidget()->customFieldGroup(
 				array(array($this->getParent()->getOwner(), 'widget'), array($this->type, $attributes, true)),
 				$model,
 				$attribute,
