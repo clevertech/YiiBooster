@@ -333,8 +333,8 @@ class TbExtendedGridView extends TbGridView {
 	 *
 	 * Renders grid header
 	 */
-	public function renderTableHeader()
-	{
+	public function renderTableHeader() {
+		
 		$this->renderChart();
 		parent::renderTableHeader();
 	}
@@ -549,8 +549,13 @@ class TbExtendedGridView extends TbGridView {
 			echo "<div id='{$chartId}' " . CHtml::renderAttributes(
 				$this->chartOptions['htmlOptions']
 			) . " data-config='{$jsOptions}'></div>";
-
-			$this->componentsAfterAjaxUpdate[] = "highchart{$chartId} = new Highcharts.Chart($('#{$chartId}').data('config'));";
+			
+			/* fix for chart dimensions changing after ajax */
+			$this->componentsAfterAjaxUpdate[] = "
+				$('#".$chartId."').width($('#".$this->id." table').width());
+				$('#".$chartId."').height($('#".$this->id." table').height() + 150);
+				highchart{$chartId} = new Highcharts.Chart($('#{$chartId}').data('config'));
+			";
 		}
 		$configChart = array(
 			'class' => 'booster.widgets.TbHighCharts',

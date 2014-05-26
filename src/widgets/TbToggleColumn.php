@@ -14,8 +14,7 @@
  *
  * @package booster.widgets.grids.columns
  */
-class TbToggleColumn extends TbDataColumn
-{
+class TbToggleColumn extends TbDataColumn {
 
 	public $value;
 
@@ -64,18 +63,18 @@ class TbToggleColumn extends TbDataColumn
 	 * @var string the glyph icon toggle button "checked" state.
 	 * You may set this property to be false to render a text link instead.
 	 */
-	public $checkedIcon = 'icon-ok-circle';
+	public $checkedIcon = 'ok-circle';
 
 	/**
 	 * @var string the glyph icon toggle button "unchecked" state.
 	 * You may set this property to be false to render a text link instead.
 	 */
-	public $uncheckedIcon = 'icon-remove-sign';
+	public $uncheckedIcon = 'remove-sign';
 
 	/**
 	 * @var string the glyph icon toggle button "empty" state (example for null value)
 	 */
-	public $emptyIcon = 'icon-question-sign';
+	public $emptyIcon = 'question-sign';
 
 	/**
 	 * @var boolean display button with text or only icon with label tooltip
@@ -231,8 +230,8 @@ function() {
 	 * @param integer $row the row number (zero-based)
 	 * @param mixed $data the data associated with the row
 	 */
-	protected function renderDataCellContent($row, $data)
-	{
+	protected function renderDataCellContent($row, $data) {
+		
 		$checked = ($this->value === null)
 			? CHtml::value($data, $this->name)
 			: $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
@@ -249,7 +248,7 @@ function() {
             if (!isset($button['htmlOptions']['data-toggle'])) {
                 $button['htmlOptions']['data-toggle'] = 'tooltip';
             }
-			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $button['url'], $button['htmlOptions']);
+			echo CHtml::link('<span class="glyphicon glyphicon-' . $button['icon'] . '"></span>', $button['url'], $button['htmlOptions']);
 		} else {
 			$button['label'] = $this->getButtonLabel($checked);
 			$button['class'] = 'booster.widgets.TbButton';
@@ -259,9 +258,8 @@ function() {
 		}
 	}
 
-	private function getButtonLabel($value)
-	{
-		return $value === null ? $this->emptyButtonLabel
-			: ($value ? $this->checkedButtonLabel : $this->uncheckedButtonLabel);
+	private function getButtonLabel($value) {
+		
+		return $value === null ? $this->emptyButtonLabel : ($value ? $this->checkedButtonLabel : $this->uncheckedButtonLabel);
 	}
 }

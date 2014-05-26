@@ -435,6 +435,11 @@ Kure2012.
 }
 */
 
+.toggle-column {
+	text-align: center;
+	width: 20px;
+}
+
 /* Gii */
 .form.gii .tooltip {
     opacity: 1;
