@@ -164,8 +164,8 @@ class TbActiveForm extends CActiveForm {
 	 * @return string The error summary. Empty if no errors are found.
 	 * @see CActiveForm::errorSummary
 	 */
-	public function errorSummary($models, $header = null, $footer = null, $htmlOptions = array())
-	{
+	public function errorSummary($models, $header = null, $footer = null, $htmlOptions = array()) {
+		
 		if (!isset($htmlOptions['class'])) {
 			$htmlOptions['class'] = 'alert alert-block alert-danger';
 		}
@@ -614,11 +614,11 @@ class TbActiveForm extends CActiveForm {
 	 */
 	public function dropDownListGroup($model, $attribute, $options = array()) {
 		
-		$this->initOptions($options);
+		$this->initOptions($options, true);
 		$widgetOptions = $options['widgetOptions'];
 		
-		if(!isset($widgetOptions['data']))
-			throw new CException('$options["widgetOptions"]["data"] must exist');
+		// if(!isset($widgetOptions['data']))
+			// throw new CException('$options["widgetOptions"]["data"] must exist');
 		
 		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 		
@@ -645,11 +645,11 @@ class TbActiveForm extends CActiveForm {
 	 */
 	public function listBoxGroup($model, $attribute, $options = array()) {
 		
-		$this->initOptions($options);
+		$this->initOptions($options, true);
 		$widgetOptions = $options['widgetOptions'];
 		
-		if(!isset($widgetOptions['data']))
-			throw new CException('$options["widgetOptions"]["data"] must exist');
+		// if(!isset($widgetOptions['data']))
+			// throw new CException('$options["widgetOptions"]["data"] must exist');
 		
 		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
@@ -676,9 +676,12 @@ class TbActiveForm extends CActiveForm {
 	 */
 	public function checkboxListGroup($model, $attribute, $options = array()) {
 		
-		$this->initOptions($options);
+		$this->initOptions($options, true);
 
 		$widgetOptions = $options['widgetOptions']['htmlOptions'];
+		
+		// if(!isset($options['widgetOptions']['data']))
+			// throw new CException('$options["widgetOptions"]["data"] must exist');
 		
 		if (!isset($widgetOptions['labelOptions']['class']))
 			$widgetOptions['labelOptions']['class'] = 'checkbox';
@@ -717,9 +720,12 @@ class TbActiveForm extends CActiveForm {
 	 */
 	public function radioButtonListGroup($model, $attribute, $options = array()) {
 		
-		$this->initOptions($options);
+		$this->initOptions($options, true);
 		
 		$widgetOptions = $options['widgetOptions']['htmlOptions'];
+		
+		// if(!isset($options['widgetOptions']['data']))
+			// throw new CException('$options["widgetOptions"]["data"] must exist');
 		
 		if (!isset($widgetOptions['labelOptions']['class']))
 			$widgetOptions['labelOptions']['class'] = 'radio';
@@ -835,7 +841,7 @@ class TbActiveForm extends CActiveForm {
 	 * @see TbDateTimePicker
 	 * @see customFieldGroup
 	 */
-	public function dateTimePickerRow($model, $attribute, $options = array()) {
+	public function dateTimePickerGroup($model, $attribute, $options = array()) {
 		
 		return $this->widgetGroupInternal('booster.widgets.TbDateTimePicker', $model, $attribute, $options);
 	}
@@ -976,6 +982,7 @@ class TbActiveForm extends CActiveForm {
 	 * @see customFieldGroup
 	 */
 	public function maskedTextFieldGroup($model, $attribute, $options = array()) {
+		
 		return $this->widgetGroupInternal('CMaskedTextField', $model, $attribute, $options);
 	}
 
@@ -1025,6 +1032,7 @@ class TbActiveForm extends CActiveForm {
 		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
 		$fieldData = $this->textField($model, $attribute, $widgetOptions['htmlOptions']);
+		unset($widgetOptions['htmlOptions']);
 		$fieldData .= '<div class="captcha">' . $this->owner->widget('CCaptcha', $widgetOptions, true) . '</div>';
 
 		return $this->customFieldGroupInternal($fieldData, $model, $attribute, $options);
@@ -1087,7 +1095,7 @@ class TbActiveForm extends CActiveForm {
 	public function widgetGroup($className, $model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
-		$widgetOptions = $options['widgetOptions'];
+		$widgetOptions = isset($options['widgetOptions']) ? $options['widgetOptions'] : null;
 		
 		$fieldData = array(array($this->owner, 'widget'), array($className, $widgetOptions, true));
 
@@ -1105,7 +1113,7 @@ class TbActiveForm extends CActiveForm {
 	 * @return string The generated widget group.
 	 */
 	protected function widgetGroupInternal($className, &$model, &$attribute, &$options) {
-		
+		// if(empty($options['widgetOptions']['mask'])) exit;
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 		$widgetOptions['model'] = $model;
@@ -1196,7 +1204,7 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function horizontalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupOptions = $options['groupOptions']; // array('class' => 'form-group');
+		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array(); // array('class' => 'form-group');
 		self::addCssClass($groupOptions, 'form-group');
 		
 		if ($model->hasErrors($attribute))
@@ -1261,7 +1269,7 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupOptions = $options['groupOptions']; // array('class' => 'form-group');
+		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array();
 		self::addCssClass($groupOptions, 'form-group');
 		
 		if ($model->hasErrors($attribute))
@@ -1414,7 +1422,7 @@ class TbActiveForm extends CActiveForm {
 	/**
 	 * @param array $options
 	 */
-	protected function initOptions(&$options) {
+	protected function initOptions(&$options, $initData = false) {
 		
 		if (!isset($options['groupOptions']))
 			$options['groupOptions'] = array();
@@ -1427,6 +1435,9 @@ class TbActiveForm extends CActiveForm {
 		
 		if (!isset($options['widgetOptions']['htmlOptions']))
 			$options['widgetOptions']['htmlOptions'] = array();
+		
+		if($initData && !isset($options['widgetOptions']['data']))
+			$options['widgetOptions']['data'] = array();
 		
 		if (!isset($options['errorOptions']))
 			$options['errorOptions'] = array();

@@ -34,7 +34,7 @@ class TbBreadcrumbsTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals('ul', 'tagName', $widget);
 		$this->assertAttributeEquals(array('class' => 'breadcrumb'), 'htmlOptions', $widget);
 		$this->assertAttributeEquals('{label}', 'inactiveLinkTemplate', $widget);
-		$this->assertAttributeEquals('/', 'separator', $widget);
+		$this->assertAttributeEquals(' &raquo; ', 'separator', $widget);
 	}
 
 	public function testSeparatorInit()
@@ -43,7 +43,7 @@ class TbBreadcrumbsTest extends PHPUnit_Framework_TestCase
 		$separator = $widget->separator;
 		$widget->init();
 
-		$this->assertAttributeEquals('<span class="divider">'.$separator.'</span>', 'separator', $widget);
+		$this->assertAttributeEquals(' &raquo; ', 'separator', $widget);
 	}
 
 	public function testHomeLink()
@@ -83,7 +83,7 @@ class TbBreadcrumbsTest extends PHPUnit_Framework_TestCase
 		$actualHtml->loadHTML($content);
 
 		$expectedHtml = new DOMDocument();
-		$expectedHtml->loadHTML('<ul class="breadcrumb"><li class="active">foobar<span class="divider">/</span></li><li class="active">test</li></ul>');
+		$expectedHtml->loadHTML('<ul class="breadcrumb"><li class="active">foobar</li><li class="active">test</li></ul>');
 
 		//echo $expectedHtml->saveHTML()."\n";
 		//echo $actualHtml->saveHTML();
@@ -110,7 +110,7 @@ class TbBreadcrumbsTest extends PHPUnit_Framework_TestCase
 		$actualHtml->loadHTML($content);
 
 		$expectedHtml = new DOMDocument();
-		$expectedHtml->loadHTML('<ul class="breadcrumb"><li class="active">foobar<span class="divider">/</span></li><li><a href="bar">foo</a><span class="divider">/</span></li><li class="active">end</li></ul>');
+		$expectedHtml->loadHTML('<ul class="breadcrumb"><li class="active">foobar</li><li><a href="bar">foo</a></li><li class="active">end</li></ul>');
 
 		$this->assertEquals($expectedHtml, $actualHtml);
 	}

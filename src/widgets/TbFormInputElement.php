@@ -1,50 +1,52 @@
 <?php
 
 
-class TbFormInputElement extends CFormElement
-{
+class TbFormInputElement extends CFormElement {
+	
 	/**
 	 * Input types (alias => TbActiveForm method name).
 	 * @var array
 	 */
 	public static $inputTypes = array(
 		// standard fields
-		'text' => 'textFieldRow',
+		'text' => 'textFieldGroup',
 		'hidden' => 'hiddenField',
-		'password' => 'passwordFieldRow',
-		'textarea' => 'textAreaRow',
-		'file' => 'fileFieldRow',
-		'radio' => 'radioButtonRow',
-		'checkbox' => 'checkBoxRow',
-		'listbox' => 'listBoxRow',
-		'dropdownlist' => 'dropDownListRow',
-		'checkboxlist' => 'checkBoxListRow',
-		'radiolist' => 'radioButtonListRow',
-		'url' => 'urlFieldRow',
-		'email' => 'emailFieldRow',
-		'number' => 'numberFieldRow',
-		'range' => 'rangeFieldRow',
-		'date' => 'dateFieldRow',
-		'time' => 'timeFieldRow',
-		'tel' => 'telFieldRow',
-		'search' => 'searchFieldRow',
+		'password' => 'passwordFieldGroup',
+		'textarea' => 'textAreaGroup',
+		'file' => 'fileFieldGroup',
+		'radio' => 'radioButtonGroup',
+		'checkbox' => 'checkBoxGroup',
+		'listbox' => 'listBoxGroup',
+		'dropdownlist' => 'dropDownListGroup',
+		'checkboxlist' => 'checkBoxListGroup',
+		'radiolist' => 'radioButtonListGroup',
+		'url' => 'urlFieldGroup',
+		'email' => 'emailFieldGroup',
+		'number' => 'numberFieldGroup',
+		'range' => 'rangeFieldGroup',
+		'date' => 'dateFieldGroup',
+		'time' => 'timeFieldGroup',
+		'tel' => 'telFieldGroup',
+		'search' => 'searchFieldGroup',
 		// extended fields
-		'toggle' => 'toggleButtonRow',
-		'datepicker' => 'datePickerRow',
-		'daterange' => 'dateRangeRow',
-		'timepicker' => 'timePickerRow',
-		'datetimepicker' => 'dateTimePickerRow',
-		'select2' => 'select2Row',
-		'redactor' => 'redactorRow',
-		'html5editor' => 'html5EditorRow',
-		'markdowneditor' => 'markdownEditorRow',
-		'ckeditor' => 'ckEditorRow',
-		'typeahead' => 'typeAheadRow',
-		'maskedtext' => 'maskedTextFieldRow',
-		'colorpicker' => 'colorPickerRow',
-		//'captcha' => 'captchaRow',
-		'pass' => 'passFieldRow'
+		'switch' => 'switchGroup',
+		'datepicker' => 'datePickerGroup',
+		'daterange' => 'dateRangeGroup',
+		'timepicker' => 'timePickerGroup',
+		'datetimepicker' => 'dateTimePickerGroup',
+		'select2' => 'select2Group',
+		'redactor' => 'redactorGroup',
+		'html5editor' => 'html5EditorGroup',
+		'markdowneditor' => 'markdownEditorGroup',
+		'ckeditor' => 'ckEditorGroup',
+		'typeahead' => 'typeAheadGroup',
+		'maskedtext' => 'maskedTextFieldGroup',
+		'colorpicker' => 'colorPickerGroup',
+		//'captcha' => 'captchaGroup',
+		'pass' => 'passFieldGroup'
 	);
+	
+	public $widgetOptions = array();
 
 	/**
 	 * The type of this input. This can be a widget class name, a path alias of a widget class name,
@@ -150,54 +152,59 @@ class TbFormInputElement extends CFormElement
 	 * Generates row options array from this class properties.
 	 * @return array The row options.
 	 */
-	protected function generateRowOptions()
-	{
-		$rowOptions = array();
-		$fields = array('label', 'labelOptions', 'errorOptions', 'hint', 'hintOptions', 'prepend', 'prependOptions',
+	protected function generateGroupOptions() {
+		
+		$options = array();
+		$fields = array('widgetOptions, label', 'labelOptions', 'errorOptions', 'hint', 'hintOptions', 'prepend', 'prependOptions',
 			'append', 'appendOptions', 'enableAjaxValidation', 'enableClientValidation');
 
 		foreach ($fields as $prop) {
 			if (isset($this->$prop)) {
-				$rowOptions[$prop] = $this->$prop;
+				$options[$prop] = $this->$prop;
 			}
 		}
+		
+		$options['widgetOptions']['data'] = $this->items;
 
-		return $rowOptions;
+		return $options;
 	}
 
 	/**
 	 * Render this element.
 	 * @return string The rendered element.
 	 */
-	public function render()
-	{
+	public function render() {
+		
 		$model = $this->getParent()->getModel();
 		$attribute = $this->name;
-		$rowOptions = $this->generateRowOptions();
+		$options = $this->generateGroupOptions();
 
 		if (isset(self::$inputTypes[$this->type])) {
 			$method = self::$inputTypes[$this->type];
-
+			// FIXME ... why we are passing $this->attributes ... most all TbActiveForm method only require $options 
+			return $this->getParent()->getActiveFormWidget()->$method($model, $attribute, $this->attributes, $options);
+			/* no need for this as now data goes inside $options['widgetOptions']['data']
 			switch ($method) {
-				case 'listBoxRow':
-				case 'dropDownListRow':
-				case 'checkBoxListRow':
-				case 'radioButtonListRow':
-					return $this->getParent()->getActiveFormWidget()->$method($model, $attribute, $this->items, $this->attributes, $rowOptions);
+				case 'listBoxGroup':
+				case 'dropDownListGroup':
+				case 'checkBoxListGroup':
+				case 'radioButtonListGroup': 
+					return $this->getParent()->getActiveFormWidget()->$method($model, $attribute, $this->attributes, $this->items, $options);
 
 				default:
-					return $this->getParent()->getActiveFormWidget()->$method($model, $attribute, $this->attributes, $rowOptions);
+					return $this->getParent()->getActiveFormWidget()->$method($model, $attribute, $this->attributes, $options);
 			}
+			*/
 		} else {
 			$attributes = $this->attributes;
 			$attributes['model'] = $this->getParent()->getModel();
 			$attributes['attribute'] = $this->name;
 
-			return $this->getParent()->getActiveFormWidget()->customFieldRow(
+			return $this->getParent()->getActiveFormWidget()->customFieldGroup(
 				array(array($this->getParent()->getOwner(), 'widget'), array($this->type, $attributes, true)),
 				$model,
 				$attribute,
-				$rowOptions
+				$options
 			);
 		}
 	}
@@ -207,8 +214,8 @@ class TbFormInputElement extends CFormElement
 	 * input is safe for the current model scenario.
 	 * @return bool Whether this element is visible.
 	 */
-	protected function evaluateVisible()
-	{
+	protected function evaluateVisible() {
+		
 		return $this->getParent()->getModel()->isAttributeSafe($this->name);
 	}
 }

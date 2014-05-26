@@ -40,8 +40,12 @@ class TbTypeahead extends TbBaseInputWidget {
 	 */
 	public function init() {
 		
-		if(!isset($this->datasets['source']) || empty($this->datasets['source']))
-			throw new CException('you must provide datasets["source"] option');
+		if(!isset($this->datasets['source']))
+			$this->datasets['source'] = array();
+		
+		// @todo: which one is more correct? 
+		// if(!isset($this->datasets['source']) || empty($this->datasets['source']))
+			// throw new CException('you must provide datasets["source"] option');
 		
 		if(empty($this->options))
 			$this->options['minLength'] = 1;

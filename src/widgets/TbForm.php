@@ -11,8 +11,8 @@
  *
  * @see CForm
  */
-class TbForm extends CForm
-{
+class TbForm extends CForm {
+	
 	/**
 	 * The name of the class for representing a form input element. Defaults to 'TbFormInputElement'.
 	 * @var string
@@ -42,8 +42,8 @@ class TbForm extends CForm
 	 * Renders the {@link buttons} in this form.
 	 * @return string The rendering result.
 	 */
-	public function renderButtons()
-	{
+	public function renderButtons() {
+		
 		$output = '';
 		foreach ($this->getButtons() as $button) {
 			$output .= $this->renderElement($button);
@@ -60,8 +60,8 @@ class TbForm extends CForm
 	 * Renders the open tag of the form. The default implementation will render the open form tag.
 	 * @return string The rendering result.
 	 */
-	public function renderBegin()
-	{
+	public function renderBegin() {
+		
 		if (!($this->getParent() instanceof self) and !isset($this->activeForm['class'])) {
 			$this->activeForm['class'] = 'TbActiveForm';
 		}
@@ -75,8 +75,8 @@ class TbForm extends CForm
 	 * or a string representing the name of the form element.
 	 * @return string The rendering result.
 	 */
-	public function renderElement($element)
-	{
+	public function renderElement($element) {
+		
 		if (is_string($element)) {
 			if (($e = $this[$element]) === null && ($e = $this->getButtons()->itemAt($element)) === null)
 				return $element;

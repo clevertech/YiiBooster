@@ -8,8 +8,8 @@
  * For available attributes and values read {@link TbButton} documentation.
  * @see TbButton
  */
-class TbFormButtonElement extends CFormElement
-{
+class TbFormButtonElement extends CFormElement {
+	
 	/**
 	 * Name of this button.
 	 * @var string

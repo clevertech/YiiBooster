@@ -9,14 +9,14 @@ require_once(__DIR__ . '/../../../src/widgets/TbFormInputElement.php');
 require_once(__DIR__ . '/../../../src/widgets/TbFormButtonElement.php');
 require_once(__DIR__ . '/../../../src/widgets/TbButton.php');
 
-class TbFormTest extends PHPUnit_Framework_TestCase
-{
+class TbFormTest extends PHPUnit_Framework_TestCase {
+	
 	/**
 	 * Test for whole TbForm class.
 	 * Just ensure that class works fine.
 	 */
-	public function testCommon()
-	{
+	public function testCommon() {
+		
 		$model = new FakeTbFormModel;
 
 		$form = new TbForm(array(
@@ -47,7 +47,7 @@ class TbFormTest extends PHPUnit_Framework_TestCase
 				'tel' => array('type' => 'tel'),
 				'search' => array('type' => 'search'),
 				// extended fields
-				'toggle' => array('type' => 'toggle'),
+				'switch' => array('type' => 'switch'),
 				'datepicker' => array('type' => 'datepicker'),
 				'daterange' => array('type' => 'daterange'),
 				'timepicker' => array('type' => 'timepicker'),
@@ -60,7 +60,7 @@ class TbFormTest extends PHPUnit_Framework_TestCase
 				'typeahead' => array('type' => 'typeahead'),
 				'maskedtext' => array(
 					'type' => 'maskedtext',
-					'mask' => 'DD/DD/DDDD'
+					'attributes' => array('widgetOptions'=>array('mask' => 'DD/DD/DDDD')), // this is a hack ... needs a fix @see TbFormInputElement@184
 				),
 				'colorpicker' => array('type' => 'colorpicker'),
 				//'captcha' => array('type' => 'captcha'),
