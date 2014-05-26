@@ -17,8 +17,8 @@ Yii::import('booster.components.JSONStorage', true);
  *
  * @package booster.widgets.supplementary
  */
-class TbExtendedFilter extends CWidget
-{
+class TbExtendedFilter extends CWidget {
+	
 	/**
 	 * @var CActiveRecord the model that works as a filter to the grid
 	 */
@@ -65,8 +65,8 @@ class TbExtendedFilter extends CWidget
 	 * Widget initialization
 	 * @throws CException
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if (!$this->model instanceof CActiveRecord) {
 			throw new CException(Yii::t('zii', '"model" attribute must be an CActiveRecord type of component'));
 		}
@@ -103,8 +103,8 @@ class TbExtendedFilter extends CWidget
 	 * Checks whether there has been send the command to remove a filter from the registry and redirects to
 	 * specified route
 	 */
-	protected function checkRequestRemovalFilter()
-	{
+	protected function checkRequestRemovalFilter() {
+		
 		if ($key = Yii::app()->getRequest()->getParam($this->removeFilterVar)) {
 			if ($this->jsonStorage->removeData($key, $this->registry)) {
 				Yii::app()->getController()->redirect($this->redirectRoute);
@@ -146,8 +146,7 @@ class TbExtendedFilter extends CWidget
 	 *
 	 * Widget's run method
 	 */
-	public function run()
-	{
+	public function run() {
 
 		$registryKey = $this->generateRegistryItemKey($this->filteredBy);
 
@@ -178,8 +177,8 @@ class TbExtendedFilter extends CWidget
 	 *
 	 * Registers the required
 	 */
-	public function registerClientScript()
-	{
+	public function registerClientScript() {
+		
 		$url = CHtml::normalizeUrl($this->redirectRoute);
 
 		Yii::app()->clientScript->registerScript(
@@ -187,7 +186,7 @@ class TbExtendedFilter extends CWidget
 			<<<EOD
            		$(document).on('click', '#{$this->grid->id} .btn-extended-filter-save', function(e){
 			e.preventDefault();
-			bootbox.prompt("How do you wish to save this filter?", "Cancel", "Ok", function(result){
+			bootbox.prompt("How do you wish to save this filter?", function(result){
 				if ($.trim(result).length > 0)
 				{
 					$('#{$this->grid->id}').yiiGridView('update',{data:{{$this->saveFilterVar}:result}});
@@ -197,13 +196,11 @@ class TbExtendedFilter extends CWidget
 		$(document).on('click', '#{$this->grid->id} .btn-extended-filter-apply', function(e) {
 			e.preventDefault();
 			var option = $('#{$this->getId()} select.select-extended-filter option:selected');
-			if (!option.length || !option.data('filter'))
-			{
+			if (!option.length || !option.data('filter')) {
 				return false;
 			}
 			var data ={data:option.data('filter')};
-			if (option.val()==-1)
-			{
+			if (option.val()==-1) {
 				data.url = "{$url}";
 			}
 			$('#{$this->grid->id}').yiiGridView('update',data);
@@ -212,13 +209,11 @@ class TbExtendedFilter extends CWidget
 		$(document).on('click', '#{$this->grid->id} .btn-extended-filter-delete', function(e) {
 			e.preventDefault();
 			var option = $('#{$this->grid->id} select.select-extended-filter option:selected');
-			if (!option.length || !option.data('key') || option.val()==-1)
-			{
+			if (!option.length || !option.data('key') || option.val()==-1) {
 				return false;
 			}
 			bootbox.confirm('Delete "'+option.text()+'" filter?', function(confirmed){
-				if (confirmed)
-				{
+				if (confirmed) {
 					$('#{$this->grid->id}').yiiGridView('update',{data:{{$this->removeFilterVar}:option.data('key')}});
 				}
 			});
@@ -234,18 +229,14 @@ EOD
 	 *
 	 * @param string $registryKey
 	 */
-	protected function displaySaveButton($registryKey)
-	{
+	protected function displaySaveButton($registryKey) {
+		
 		if (null == $registryKey || $this->jsonStorage->getData($registryKey, $this->registry))
 			return;
 
 		echo CHtml::openTag('p');
 
-		echo CHtml::link(
-			'save filter',
-			'#',
-			array('class' => 'btn btn-success btn-extended-filter-save')
-		);
+		echo CHtml::link('save filter', '#', array('class' => 'btn btn-success btn-extended-filter-save'));
 
 		echo CHtml::closeTag('p');
 	}
@@ -257,13 +248,16 @@ EOD
 	 *
 	 * @param string $registryKey
 	 */
-	protected function displaySavedFilters($registryKey)
-	{
+	protected function displaySavedFilters($registryKey) {
+		
 		if ($this->jsonStorage->getLength($this->registry)) {
 			$registry = $this->jsonStorage->getRegistry($this->registry);
-
-			echo '<p><span class="span6" >';
+			echo '<div class="row">';
+			echo '<div class="col-md-6 col-sm-12" >';
 			echo '<label class="label label-info">Saved Filters [select and click ok sign button]</label><br/>';
+			echo '</div></div>';
+			echo '<div class="row" style="margin-top: 5px;">';
+			echo '<div class="col-md-6 col-sm-12" >';
 			echo '<select class="select-extended-filter">';
 			echo '<option value="-1" data-filter="{}" ' . (!$registryKey ? 'selected' : '') . '>No Filters</option>';
 			foreach ($registry as $key => $filter) {
@@ -281,17 +275,13 @@ EOD
 			echo '</select>&nbsp;';
 
 			echo CHtml::link(
-				'<i class="icon-ok icon-white"></i>',
+				'<i class="glyphicon glyphicon-ok glyphicon glyphicon-white"></i>',
 				'#',
-				array('class' => 'btn btn-primary btn-extended-filter-apply', 'style' => 'margin-bottom:9px')
+				array('class' => 'btn btn-primary btn-extended-filter-apply')
 			);
 			echo '&nbsp;';
-			echo CHtml::link(
-				'<i class="icon-trash"></i>',
-				'#',
-				array('class' => 'btn btn-warning btn-extended-filter-delete', 'style' => 'margin-bottom:9px')
-			);
-			echo '</span></p>';
+			echo CHtml::link('<i class="glyphicon glyphicon-trash"></i>', '#', array('class' => 'btn btn-warning btn-extended-filter-delete'));
+			echo '</div></div>';
 		}
 	}
 
@@ -302,8 +292,8 @@ EOD
 	 *
 	 * @return null|string
 	 */
-	protected function generateRegistryItemKey()
-	{
+	protected function generateRegistryItemKey() {
+		
 		if (!count($this->filteredBy)) {
 			return null;
 		}
@@ -319,8 +309,8 @@ EOD
 	 *
 	 * @return string
 	 */
-	protected function displayExtendedFilterValues($filteredBy)
-	{
+	protected function displayExtendedFilterValues($filteredBy) {
+		
 		$values = array();
 		foreach ($filteredBy as $key => $value) {
 			$values[] = '<span class="label label-info">' . $key . '</span> ' . $value;
