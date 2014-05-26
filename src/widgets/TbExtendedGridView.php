@@ -450,6 +450,15 @@ class TbExtendedGridView extends TbGridView
 			}
 			return false;
 		});';
+		$this->componentsAfterAjaxUpdate[] = '
+			if($("a.active.'.$this->getId().'-grid-control").hasClass("grid")) {
+				$("#' . $this->getId() . ' #' . $chartId . '").hide();
+				$("#' . $this->getId() . ' table.items").show();
+			} else {
+				$("#' . $this->getId() . ' table.items").hide();
+				$("#' . $this->getId() . ' #' . $chartId . '").show();
+			}
+		';
 		// end switch buttons
 		// ****************************************
 
@@ -534,7 +543,12 @@ class TbExtendedGridView extends TbGridView
 				$this->chartOptions['htmlOptions']
 			) . " data-config='{$jsOptions}'></div>";
 
-			$this->componentsAfterAjaxUpdate[] = "highchart{$chartId} = new Highcharts.Chart($('#{$chartId}').data('config'));";
+			/* fix for chart dimensions changing after ajax */
+			$this->componentsAfterAjaxUpdate[] = "
+				$('#".$chartId."').width($('#".$this->id." table').width());
+				$('#".$chartId."').height($('#".$this->id." table').height() + 150);
+				highchart{$chartId} = new Highcharts.Chart($('#{$chartId}').data('config'));
+			";
 		}
 		$configChart = array(
 			'class' => 'bootstrap.widgets.TbHighCharts',
