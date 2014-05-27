@@ -1,58 +1,63 @@
 <?php
 /**
- *## TbBox widget class
+ *## TbPanel widget class
  *
- * @author Antonio Ramirez <antonio@clevertech.biz>
- * @copyright Copyright &copy; Clevertech 2012-
+ * @author amr bedair <amr.bedair@gmail.com>
+ * @copyright Copyright &copy; Clevertech 2014-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
+Yii::import('booster.widgets.TbWidget');
+
 /**
- * TbBox widget.
+ * TbPanel widget.
+ *
+ *@see <http://getbootstrap.com/components/#panels>
  *
  * @package booster.widgets.grouping
  */
-class TbBox extends CWidget
-{
+class TbPanel extends TbWidget {
+	
 	/**
 	 * @var mixed
-	 * Box title
-	 * If set to false, a box with no title is rendered
+	 * Panel title
+	 * If set to false, a panel with no title is rendered
 	 */
 	public $title = '';
 
 	/**
 	 * @var string
-	 * The class icon to display in the header title of the box.
+	 * The class icon to display in the header title of the panel.
 	 * @see <http://twitter.github.com/bootstrap/base-css.html#icon>
 	 */
 	public $headerIcon;
 
-
 	/**
 	 * @var string
-	 * Box Content
-	 * optional, the content of this attribute is echoed as the box content
+	 * Panel Content
+	 * optional, the content of this attribute is echoed as the panel content
 	 */
 	public $content = '';
+	
+	public $padContent = true;
 
 	/**
 	 * @var array
-	 * box HTML additional attributes
+	 * panel HTML additional attributes
 	 */
 	public $htmlOptions = array();
 
 	/**
 	 * @var array
-	 * box header HTML additional attributes
+	 * panel header HTML additional attributes
 	 */
-	public $htmlHeaderOptions = array();
+	public $headerHtmlOptions = array();
 
 	/**
 	 * @var array
-	 * box content HTML additional attributes
+	 * panel content HTML additional attributes
 	 */
-	public $htmlContentOptions = array();
+	public $contentHtmlOptions = array();
 
 	/**
 	 * @var array the configuration for additional header buttons. Each array element specifies a single button
@@ -81,33 +86,29 @@ class TbBox extends CWidget
 	 *
 	 * Widget initialization
 	 */
-	public function init()
-	{
-		if (isset($this->htmlOptions['class'])) {
-			$this->htmlOptions['class'] = 'bootstrap-widget ' . $this->htmlOptions['class'];
-		} else {
-			$this->htmlOptions['class'] = 'bootstrap-widget';
+	public function init() {
+		
+		$this->addCssClass($this->htmlOptions, 'panel');
+		
+		if(self::isValidContext($this->context))
+			self::addCssClass($this->htmlOptions, 'panel-'.self::$ctxCssClasses[$this->context]);
+
+		if ($this->padContent)
+			self::addCssClass($this->contentHtmlOptions, 'panel-body');
+
+		if (!isset($this->contentHtmlOptions['id'])) {
+			$this->contentHtmlOptions['id'] = $this->getId();
 		}
 
-		if (isset($this->htmlContentOptions['class'])) {
-			$this->htmlContentOptions['class'] = 'bootstrap-widget-content ' . $this->htmlContentOptions['class'];
+		if (isset($this->headerHtmlOptions['class'])) {
+			$this->headerHtmlOptions['class'] = 'panel-heading ' . $this->headerHtmlOptions['class'];
 		} else {
-			$this->htmlContentOptions['class'] = 'bootstrap-widget-content';
-		}
-
-		if (!isset($this->htmlContentOptions['id'])) {
-			$this->htmlContentOptions['id'] = $this->getId();
-		}
-
-		if (isset($this->htmlHeaderOptions['class'])) {
-			$this->htmlHeaderOptions['class'] = 'bootstrap-widget-header ' . $this->htmlHeaderOptions['class'];
-		} else {
-			$this->htmlHeaderOptions['class'] = 'bootstrap-widget-header';
+			$this->headerHtmlOptions['class'] = 'panel-heading';
 		}
 
 		echo CHtml::openTag('div', $this->htmlOptions);
 
-		$this->registerClientScript();
+		// $this->registerClientScript();
 		$this->renderHeader();
 		$this->renderContentBegin();
 	}
@@ -117,8 +118,8 @@ class TbBox extends CWidget
 	 *
 	 * Widget run - used for closing procedures
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		$this->renderContentEnd();
 		echo CHtml::closeTag('div') . "\n";
 	}
@@ -126,22 +127,26 @@ class TbBox extends CWidget
 	/**
 	 *### .renderHeader()
 	 *
-	 * Renders the header of the box with the header control (button to show/hide the box)
+	 * Renders the header of the panel with the header control (button to show/hide the panel)
 	 */
 	public function renderHeader() {
 		
 		if ($this->title !== false) {
-			echo CHtml::openTag('div', $this->htmlHeaderOptions);
+			echo CHtml::openTag('div', $this->headerHtmlOptions);
 			if ($this->title) {
-				$this->title = '<h3 style="display: inline;">' . $this->title . '</h3>';
+				$this->title = '<h3 class="panel-title" style="display: inline;">' . $this->title . '</h3>';
 
 				if ($this->headerIcon) {
-					$this->title = '<i class="' . $this->headerIcon . '"></i>' . $this->title;
+					if (strpos($this->headerIcon, 'icon') === false && strpos($this->headerIcon, 'fa') === false)
+						$this->title = '<span class="glyphicon glyphicon-' . $this->headerIcon . '"></span> ' . $this->title;
+					else
+						$this->title = '<i class="' . $this->headerIcon . '"></i> ' . $this->title;
 				}
-
+				
 				$this->renderButtons();
 				echo $this->title;
 			}
+			echo '<div class="clearfix"></div>';
 			echo CHtml::closeTag('div');
 		}
 	}
@@ -151,13 +156,12 @@ class TbBox extends CWidget
 	 *
 	 * Renders a header buttons to display the configured actions
 	 */
-	public function renderButtons()
-	{
-		if (empty($this->headerButtons)) {
+	public function renderButtons() {
+		
+		if (empty($this->headerButtons))
 			return;
-		}
 
-		echo '<div class="bootstrap-toolbar pull-right">';
+		echo '<div class="pull-right">';
 
 		if (!empty($this->headerButtons) && is_array($this->headerButtons)) {
 			foreach ($this->headerButtons as $button) {
@@ -179,7 +183,6 @@ class TbBox extends CWidget
 				$this->controller->widget($button, $options);
 			}
 		}
-
 		echo '</div>';
 	}
 
@@ -188,9 +191,9 @@ class TbBox extends CWidget
 	 *
 	 * Renders the opening of the content element and the optional content
 	 */
-	public function renderContentBegin()
-	{
-		echo CHtml::openTag('div', $this->htmlContentOptions);
+	public function renderContentBegin() {
+		
+		echo CHtml::openTag('div', $this->contentHtmlOptions);
 		if (!empty($this->content)) {
 			echo $this->content;
 		}
@@ -201,8 +204,8 @@ class TbBox extends CWidget
 	 *
 	 * Closes the content element
 	 */
-	public function renderContentEnd()
-	{
+	public function renderContentEnd() {
+		
 		echo CHtml::closeTag('div');
 	}
 
@@ -213,6 +216,6 @@ class TbBox extends CWidget
 	 */
 	public function registerClientScript() {
 		
-		Booster::getBooster()->registerAssetCss('bootstrap-box.css');
+		// Booster::getBooster()->registerAssetCss('bootstrap-panel.css');
 	}
 }

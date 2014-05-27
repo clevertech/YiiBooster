@@ -161,7 +161,7 @@ class TbButton extends CWidget {
      * @since 2.1.0
      */
     public $tooltipOptions = array();
-
+    
 	/**
 	 *### .init()
 	 *
@@ -308,10 +308,8 @@ class TbButton extends CWidget {
 		if (false === $this->visible) {
 			return;
 		}
-
 		
 		if ($this->hasDropdown()) {
-			echo '<div class="btn-group group-dropdown">';
 			
 			echo $this->createButton();
 		
@@ -324,8 +322,6 @@ class TbButton extends CWidget {
 					'id' => isset($this->dropdownOptions['id']) ? $this->dropdownOptions['id'] : null,
 				)
 			);
-			
-			echo '</div>';
 		} else {
 			echo $this->createButton();
 		}

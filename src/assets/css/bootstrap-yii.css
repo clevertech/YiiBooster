@@ -435,9 +435,17 @@ Kure2012.
 }
 */
 
+.btn-group {
+	margin: 0px 5px;
+}
+
 .toggle-column {
 	text-align: center;
 	width: 20px;
+}
+
+.panel-heading {
+	padding: 5px 10px;
 }
 
 /* Gii */
