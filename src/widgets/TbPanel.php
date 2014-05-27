@@ -164,23 +164,21 @@ class TbPanel extends TbWidget {
 		echo '<div class="pull-right">';
 
 		if (!empty($this->headerButtons) && is_array($this->headerButtons)) {
-			foreach ($this->headerButtons as $button) {
-				$options = $button;
-				$button = $options['class'];
+			
+			foreach ($this->headerButtons as $options) {
+				
+				$class = $options['class'];
 				unset($options['class']);
 
-				if (strpos($button, 'TbButton') === false) {
-					throw new CException('message');
-				}
+				if (strpos($class, 'TbButton') === false)
+					throw new CException('Button must be either TbButton, or TbButtonGroup');
 
-				if (!isset($options['htmlOptions'])) {
+				if (!isset($options['htmlOptions']))
 					$options['htmlOptions'] = array();
-				}
 
-				$class = isset($options['htmlOptions']['class']) ? $options['htmlOptions']['class'] : '';
-				$options['htmlOptions']['class'] = $class . ' pull-right';
-
-				$this->controller->widget($button, $options);
+				self::addCssClass($options['htmlOptions'], 'pull-right');
+				
+				$this->controller->widget($class, $options);
 			}
 		}
 		echo '</div>';
