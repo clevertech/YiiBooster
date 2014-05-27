@@ -6,6 +6,7 @@
  * @copyright Copyright &copy; Christoffer Niska 2012-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @since 1.0.0
+ * 
  */
 
 /**
@@ -13,9 +14,10 @@
  * @see <http://twitter.github.com/bootstrap/javascript.html#collapse>
  *
  * @package booster.widgets.grouping
+ * @todo is this really a widget!?
  */
-class TbCollapse extends CWidget /* is this widget needed */
-{
+class TbCollapse extends CWidget {
+	
 	const CONTAINER_PREFIX = 'yii_bootstrap_collapse_';
 
 	/**
@@ -55,8 +57,8 @@ class TbCollapse extends CWidget /* is this widget needed */
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if (!isset($this->htmlOptions['id'])) {
 			$this->htmlOptions['id'] = $this->getId();
 		}
@@ -83,8 +85,8 @@ class TbCollapse extends CWidget /* is this widget needed */
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		$id = $this->htmlOptions['id'];
 
 		echo CHtml::closeTag($this->tagName);
@@ -107,8 +109,8 @@ class TbCollapse extends CWidget /* is this widget needed */
 	 * @return string the id
 	 * @static
 	 */
-	public static function getNextContainerId()
-	{
+	public static function getNextContainerId() {
+		
 		return self::CONTAINER_PREFIX . self::$_containerId++;
 	}
 }
