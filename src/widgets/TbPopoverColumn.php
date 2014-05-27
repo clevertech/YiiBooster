@@ -43,7 +43,8 @@ class TbPopoverColumn extends TbDataColumn {
 	 * @param mixed $data
 	 */
 	public function renderDataCellContent($row, $data) {
-
+		
+		$value = '';
 		if ($this->value !== null) {
 			$value = $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
 		} else if ($this->name !== null) {
