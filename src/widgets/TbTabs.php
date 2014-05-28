@@ -16,8 +16,8 @@ Yii::import('booster.widgets.TbMenu');
  *
  * @package booster.widgets.grouping
  */
-class TbTabs extends CWidget
-{
+class TbTabs extends CWidget {
+	
 	// Tab placements.
 	const PLACEMENT_ABOVE = 'above';
 	const PLACEMENT_BELOW = 'below';
@@ -49,6 +49,12 @@ class TbTabs extends CWidget
 	 * @var boolean indicates whether to stack navigation items.
 	 */
 	public $stacked = false;
+	
+	/**
+	 * 
+	 * @var boolean indecates whether to justify navigation items
+	 */
+	public $justified = false;
 
 	/**
 	 * @var boolean whether to encode item labels.
@@ -80,8 +86,8 @@ class TbTabs extends CWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if (!isset($this->htmlOptions['id'])) {
 			$this->htmlOptions['id'] = $this->getId();
 		}
@@ -120,8 +126,8 @@ class TbTabs extends CWidget
 	 *
 	 * Run this widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		$id = $this->id;
 		$content = array();
 		$items = $this->normalizeTabs($this->tabs, $content);
@@ -131,6 +137,7 @@ class TbTabs extends CWidget
 			'booster.widgets.TbMenu',
 			array(
 				'stacked' => $this->stacked,
+				'justified' => $this->justified,
 				'type' => $this->type,
 				'encodeLabel' => $this->encodeLabel,
 				'htmlOptions' => $this->tabMenuHtmlOptions,
@@ -170,8 +177,8 @@ class TbTabs extends CWidget
 	 *
 	 * @return array the items
 	 */
-	protected function normalizeTabs($tabs, &$panes, &$i = 0)
-	{
+	protected function normalizeTabs($tabs, &$panes, &$i = 0) {
+		
 		$id = $this->getId();
 		$items = array();
 

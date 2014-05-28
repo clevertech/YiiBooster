@@ -40,6 +40,12 @@ class TbMenu extends TbBaseMenu {
 	 * @var boolean indicates whether the menu should appear vertically stacked.
 	 */
 	public $stacked = false;
+	
+	/**
+	 * @var boolean indicates whether the menu should be justified.
+	 */
+	public $justified = false;
+	
 
 	/**
 	 * @var boolean indicates whether dropdowns should be dropups instead.
@@ -65,6 +71,10 @@ class TbMenu extends TbBaseMenu {
 
 		if ($this->stacked && $this->type !== self::TYPE_LIST) {
 			$classes[] = 'nav-stacked';
+		}
+		
+		if ($this->justified && $this->type !== self::TYPE_LIST) {
+			$classes[] = 'nav-justified';
 		}
 
 		if ($this->dropup === true) {
