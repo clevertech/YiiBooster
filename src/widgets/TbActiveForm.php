@@ -1265,7 +1265,6 @@ class TbActiveForm extends CActiveForm {
 	 * @param string $attribute The attribute.
 	 * @param array $options Row options.
 	 * 
-	 * @todo delete this 
 	 */
 	protected function verticalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
@@ -1340,7 +1339,7 @@ class TbActiveForm extends CActiveForm {
             echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
         }
 
-        echo '</div> '; // <- this space is important 
+        echo "</div>\r\n"; 
 	}
 
 	/**
@@ -1389,36 +1388,6 @@ class TbActiveForm extends CActiveForm {
 		echo CHtml::closeTag($this->addOnWrapperTag);
 	}
 
-	/**
-	 * @param array $options Row options.
-	 */
-	protected function initRowOptions(&$options)
-	{
-		if (!isset($options['labelOptions']))
-			$options['labelOptions'] = array();
-
-		if (!isset($options['errorOptions']))
-			$options['errorOptions'] = array();
-
-		if (!isset($options['prependOptions']))
-			$options['prependOptions'] = array();
-
-		if (!isset($options['prepend']))
-			$options['prepend'] = null;
-
-		if (!isset($options['appendOptions']))
-			$options['appendOptions'] = array();
-
-		if (!isset($options['append']))
-			$options['append'] = null;
-
-		if(!isset($options['enableAjaxValidation']))
-			$options['enableAjaxValidation'] = true;
-
-		if(!isset($options['enableClientValidation']))
-			$options['enableClientValidation'] = true;
-	}
-	
 	/**
 	 * @param array $options
 	 */
