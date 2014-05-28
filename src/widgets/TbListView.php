@@ -14,8 +14,8 @@ Yii::import('zii.widgets.CListView');
  *
  * @package booster.widgets.grouping
  */
-class TbListView extends CListView
-{
+class TbListView extends CListView {
+	
 	/**
 	 * @var string the CSS class name for the pager container. Defaults to 'pagination'.
 	 */
@@ -38,8 +38,8 @@ class TbListView extends CListView
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		parent::init();
 
         $booster = Booster::getBooster();

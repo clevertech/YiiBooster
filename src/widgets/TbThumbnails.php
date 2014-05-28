@@ -16,21 +16,21 @@ Yii::import('booster.widgets.TbListView');
  *
  * @package booster.widgets.grouping
  */
-class TbThumbnails extends TbListView
-{
+class TbThumbnails extends TbListView {
+	
 	/**
 	 * Renders the data items for the view.
 	 * Each item is corresponding to a single data model instance.
 	 * Child classes should override this method to provide the actual item rendering logic.
 	 */
-	public function renderItems()
-	{
+	public function renderItems() {
+		
 		echo CHtml::openTag($this->itemsTagName, array('class' => $this->itemsCssClass)) . "\n";
 
 		$data = $this->dataProvider->getData();
 
 		if (!empty($data)) {
-			echo CHtml::openTag('ul', array('class' => 'thumbnails'));
+			echo CHtml::openTag('div', array('class' => 'row'));
 			$owner = $this->getOwner();
 			$render = $owner instanceof CController ? 'renderPartial' : 'render';
 			foreach ($data as $i => $item) {
@@ -41,7 +41,7 @@ class TbThumbnails extends TbListView
 				$owner->$render($this->itemView, $data);
 			}
 
-			echo '</ul>';
+			echo '</div>';
 		} else {
 			$this->renderEmptyText();
 		}
