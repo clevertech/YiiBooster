@@ -103,9 +103,9 @@ class TbMenu extends TbBaseMenu {
 	 *
 	 * @return string the class name
 	 */
-	public function getDividerCssClass()
-	{
-		return (isset($this->type) && $this->type === self::TYPE_LIST) ? 'divider' : 'divider-vertical';
+	public function getDividerCssClass() {
+		
+		return (isset($this->type) && $this->type === self::TYPE_LIST) ? 'nav-divider' : 'divider-vertical';
 	}
 
 	/**
@@ -115,8 +115,8 @@ class TbMenu extends TbBaseMenu {
 	 *
 	 * @return string the class name
 	 */
-	public function getDropdownCssClass()
-	{
+	public function getDropdownCssClass() {
+		
 		return 'dropdown';
 	}
 
@@ -127,8 +127,8 @@ class TbMenu extends TbBaseMenu {
 	 *
 	 * @return boolean the result
 	 */
-	public function isVertical()
-	{
+	public function isVertical() {
+		
 		return isset($this->type) && $this->type === self::TYPE_LIST;
 	}
 }
