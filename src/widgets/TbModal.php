@@ -15,8 +15,8 @@
  * @since 0.9.3
  * @package booster.widgets.modals
  */
-class TbModal extends CWidget
-{
+class TbModal extends CWidget {
+	
 	/**
 	 * @var boolean indicates whether to automatically open the modal when initialized. Defaults to 'false'.
 	 */
@@ -47,8 +47,8 @@ class TbModal extends CWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if (!isset($this->htmlOptions['id'])) {
 			$this->htmlOptions['id'] = $this->getId();
 		}
@@ -57,7 +57,7 @@ class TbModal extends CWidget
 			$this->options['show'] = false;
 		}
 
-		$classes = array('modal hide');
+		$classes = array('modal');
 
 		if ($this->fade === true) {
 			$classes[] = 'fade';
@@ -72,6 +72,7 @@ class TbModal extends CWidget
 			}
 		}
 		echo CHtml::openTag('div', $this->htmlOptions);
+		echo '<div class="modal-dialog"><div class="modal-content">';
 	}
 
 	/**
@@ -79,11 +80,11 @@ class TbModal extends CWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		$id = $this->htmlOptions['id'];
 
-		echo '</div>';
+		echo '</div></div></div>';
 
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
