@@ -69,7 +69,7 @@ return array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-editable/',
 		'css' => array('css/bootstrap-editable.css'),
 		'js' => array($this->minify ? 'js/bootstrap-editable.min.js' : 'js/bootstrap-editable.js'),
-		'depends' => array('jquery','bootstrap.js')
+		'depends' => array('jquery','bootstrap.js', 'datepicker')
 	),
 	'moment' => array(
 		'baseUrl' => $this->getAssetsUrl(),
