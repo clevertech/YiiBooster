@@ -167,16 +167,6 @@ class Booster extends CApplicationComponent {
 	public $tooltipSelector = '[data-toggle=tooltip]';
 
 	/**
-	 * @var array plugin initial options (name=>options).
-	 * Each array key-value pair represents the initial options for a single plugin class,
-	 * with the array key being the plugin name, and array value being the initial options array.
-	 * @since 0.9.8
-	 *
-	 * @deprecated 2.0.0 Along with `registerPackage` this option will be refactored out in 3.0.0 release.
-	 */
-	public $plugins = array();
-
-	/**
 	 * @var array list of script packages (name=>package spec).
 	 * This property keeps a list of named script packages, each of which can contain
 	 * a set of CSS and/or JavaScript script files, and their dependent package names.
@@ -324,8 +314,8 @@ class Booster extends CApplicationComponent {
 	/**
 	 * Register the compatibility layer for jQuery UI + Twitter Bootstrap 2.3 combo
 	 */
-	public function registerJQueryCss()
-	{
+	public function registerJQueryCss() {
+		
 		$this->registerPackage('jquery-css')->scriptMap['jquery-ui.css'] = $this->getAssetsUrl(
 		) . '/css/jquery-ui-bootstrap.css';
 	}
@@ -333,8 +323,8 @@ class Booster extends CApplicationComponent {
 	/**
 	 * If `enableJS` is not `false`, register our Javascript packages
 	 */
-	protected function registerJsPackagesIfEnabled()
-	{
+	protected function registerJsPackagesIfEnabled() {
+		
 		if (!$this->enableJS)
 			return;
 
@@ -361,7 +351,7 @@ class Booster extends CApplicationComponent {
 	 */
 	public function getVersion() {
 		
-		return '4.0.0-beta-1';
+		return '4.0.0-beta-2';
 	}
 
 	/**
@@ -437,22 +427,6 @@ class Booster extends CApplicationComponent {
 	 */
 	protected function createBootstrapCssPackage() {
 		
-		/* 
-		if ($this->enableCdn && $this->responsiveCss && $this->minify)
-		{// CDN hosts only responsive minified versions
-			$baseUrl = '//netdna.bootstrapcdn.com/bootstrap/3.1.1/';
-			$filename = "css/bootstrap.min.css";
-		}
-		else
-		{
-			$baseUrl = $this->getAssetsUrl() . '/bootstrap/';
-			$filename = "css/bootstrap";
-			if (!$this->responsiveCss)
-				$filename .= '.no-responsive';
-		}
-
-		$filename .= $this->minify  ? '.min.css' : '.css';
-		*/
 		return array('bootstrap.css' => array(
 			'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/bootstrap/3.1.1/' : $this->getAssetsUrl() . '/bootstrap/',
 			'css' => array( ($this->minify || $this->enableCdn) ? 'css/bootstrap.min.css' : 'css/bootstrap.css' ),
@@ -511,389 +485,12 @@ class Booster extends CApplicationComponent {
         $this->registerPackage('font-awesome');
 	}
 
-	//========================================================================
-	// Methods for registering plugins below (ALL DEPRECATED)
-
-	// Bootstrap plugins.
-	/** @deprecated 3.0.0 */
-	const PLUGIN_AFFIX = 'affix';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_ALERT = 'alert';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_BUTTON = 'button';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_CAROUSEL = 'carousel';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_COLLAPSE = 'collapse';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_DROPDOWN = 'dropdown';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_MODAL = 'modal';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_MODALMANAGER = 'modalmanager';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_POPOVER = 'popover';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_SCROLLSPY = 'scrollspy';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_TAB = 'tab';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_TOOLTIP = 'tooltip';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_TRANSITION = 'transition';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_TYPEAHEAD = 'typeahead';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_DATEPICKER = 'bdatepicker';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_REDACTOR = 'redactor';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_MARKDOWNEDITOR = 'markdowneditor';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_DATERANGEPICKER = 'daterangepicker';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_HTML5EDITOR = 'wysihtml5';
-	/** @deprecated 3.0.0 */
-	const PLUGIN_COLORPICKER = 'colorpicker';
-
-	/**
-	 * Registers the Bootstrap alert plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#alerts
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerAlert($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_ALERT, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap buttons plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#buttons
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerButton($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_BUTTON, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap carousel plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#carousel
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerCarousel($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_CAROUSEL, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap collapse plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#collapse
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerCollapse($selector = '.collapse', $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_COLLAPSE, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap dropdowns plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#dropdowns
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerDropdown($selector = '.dropdown-toggle[data-dropdown="dropdown"]', $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_DROPDOWN, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap modal plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#modal
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerModal($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_MODAL, $selector, $options);
-	}
-
-	/**
-	 * Registers the Modal manager plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see https://github.com/jschr/bootstrap-modal/
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerModalManager($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_MODALMANAGER, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap scrollspy plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#scrollspy
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerScrollSpy($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_SCROLLSPY, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap tabs plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#tabs
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerTabs($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_TAB, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap typeahead plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#typeahead
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerTypeahead($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_TYPEAHEAD, $selector, $options);
-	}
-
-	/**
-	 * Register the Bootstrap datepicker plugin.
-	 * IMPORTANT: if you register a selector via this method you wont be able to attach events to the plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://www.eyecon.ro/bootstrap-datepicker/
-	 * @deprecated 3.0.0
-	 *
-	 */
-	public function registerDatePicker($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_DATEPICKER, $selector, $options);
-	}
-
-	/**
-	 * Register the Bootstrap datetimepicker plugin.
-	 * IMPORTANT: if you register a selector via this method you wont be able to attach events to the plugin.
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 *
-	 * @see http://www.malot.fr/bootstrap-datetimepicker/
-	 * @deprecated 3.0.0
-	 *
-	 */
-	public function registerDateTimePicker($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_DATETIMEPICKER, $selector, $options);
-	}
-
-	/**
-	 * Registers the RedactorJS plugin.
-	 *
-	 * @param null $selector
-	 * @param array $options
-	 * @deprecated 3.0.0
-	 */
-	public function registerRedactor($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_REDACTOR, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap-whysihtml5 plugin.
-	 *
-	 * @param null $selector
-	 * @param array $options
-	 * @deprecated 3.0.0
-	 */
-	public function registerHtml5Editor($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_HTML5EDITOR, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap-colorpicker plugin.
-	 *
-	 * @param null $selector
-	 * @param array $options
-	 * @deprecated 3.0.0
-	 */
-	public function registerColorPicker($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_COLORPICKER, $selector, $options);
-	}
-
-	/**
-	 * Registers the affix plugin
-	 *
-	 * @param null $selector
-	 * @param array $options
-	 *
-	 * @see  http://twitter.github.com/bootstrap/javascript.html#affix
-	 * @deprecated 3.0.0
-	 */
-	public function registerAffix($selector = null, $options = array())
-	{
-		$this->registerPlugin(self::PLUGIN_AFFIX, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap daterange plugin
-	 *
-	 * @param string $selector the CSS selector
-	 * @param array $options the plugin options
-	 * @param string $callback the javascript callback function
-	 *
-	 * @see  http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/
-	 * @since 1.1.0
-	 * @deprecated 3.0.0
-	 */
-	public function registerDateRangePlugin($selector, $options = array(), $callback = null)
-	{
-		$this->cs->registerScript(
-			$this->getUniqueScriptId(),
-			'$("' . $selector . '").daterangepicker(' . CJavaScript::encode($options) . ($callback
-				? ', ' . CJavaScript::encode($callback) : '') . ');'
-		);
-	}
-
-	// Modules end (ALL DEPRECATED)
-	//============================================================================
-
-		/**
-	 * Registers the Bootstrap popover plugin.
-	 *
-	 * @param string $selector The selector to which to apply the tooltips Bootstrap component.
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#popover
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerPopover($selector = null, $options = array())
-	{
-		if (empty($selector))
-			$selector = $this->popoverSelector;
-
-		$this->registerPlugin(self::PLUGIN_POPOVER, $selector, $options);
-	}
-
-	/**
-	 * Registers the Bootstrap tooltip plugin.
-	 *
-	 * @param string $selector The selector to which to apply the popovers Bootstrap component.
-	 * Please note that it's not the selector which describes the elements which will receive popovers.
-	 * We are doing some optimization here: tooltip plugin is being initialized on body,
-	 * and it will delegate real tooltips to whatever selected by the selector passed in plugin options.
-	 * See the Bootstrap documentation about tooltip plugin option `selector`.
-	 * @param array $options the plugin options
-	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#tooltip
-	 * @since 0.9.8
-	 * @deprecated 3.0.0
-	 */
-	public function registerTooltip($selector = 'body', $options = array())
-	{
-		if (empty($options['selector']))
-			$options['selector'] = $this->tooltipSelector;
-
-		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options);
-	}
-
-	/**
-	 * Registers a Bootstrap plugin using the given selector and options.
-	 *
-	 * @param string $name the name of the plugin
-	 * @param string $selector the CSS selector
-	 * @param array $options the JavaScript options for the plugin.
-	 *
-	 * @throws InvalidArgumentException
-	 *
-	 * @since 0.9.8
-	 * @deprecated 3.0.0 It will be refactored out to separate class.
-	 */
-	public function registerPlugin($name, $selector = null, $options = array())
-	{
-		if (empty($name))
-			throw new InvalidArgumentException('You cannot register a plugin without providing its name!');
-
-		if (empty($selector))
-			$selector = $this->tryGetSelectorForPlugin($name);
-
-		if (empty($selector))
-			return;
-
-		if (empty($options))
-			$options = $this->tryGetOptionsForPlugin($name);
-
-		$options = empty($options)
-			? ''
-			: json_encode($options);
-
-		$this->cs->registerScript(
-			$this->getUniqueScriptId(),
-			"jQuery('{$selector}').{$name}({$options});"
-		);
-	}
-
 	/**
 	 * Generates a "somewhat" random id string.
 	 * @return string
 	 * @since 1.1.0
 	 */
-	public function getUniqueScriptId()
-	{
+	public function getUniqueScriptId() {
 		return uniqid(__CLASS__ . '#', true);
 	}
 
@@ -902,8 +499,8 @@ class Booster extends CApplicationComponent {
 	 *
 	 * @return mixed
 	 */
-	protected function tryGetSelectorForPlugin($name)
-	{
+	protected function tryGetSelectorForPlugin($name) {
+		
 		return $this->tryGetInfoForPlugin($name, 'selector');
 	}
 
@@ -911,23 +508,9 @@ class Booster extends CApplicationComponent {
 	 * @param $name
 	 * @return mixed
 	 */
-	protected function tryGetOptionsForPlugin($name)
-	{
+	protected function tryGetOptionsForPlugin($name) {
+		
 		return $this->tryGetInfoForPlugin($name, 'options');
-	}
-
-	/**
-	 * @param $name
-	 * @param $key
-	 *
-	 * @return mixed
-	 */
-	protected function tryGetInfoForPlugin($name, $key)
-	{
-		if (array_key_exists($name, $this->plugins))
-			if (array_key_exists($key, $this->plugins[$name]))
-				return $this->plugins[$name][$key];
-		return null;
 	}
 
     /**
