@@ -340,8 +340,6 @@ class Booster extends CApplicationComponent {
 		if ($this->enableNotifierJS)
 			$this->registerPackage('notify');
 
-		$this->registerPopover();
-		$this->registerTooltip();
 	}
 
 

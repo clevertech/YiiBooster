@@ -65,7 +65,7 @@ class TbDateRangePicker extends TbBaseInputWidget {
 	public function run() {
 		
 		if ($this->selector) {
-            Booster::getBooster()->registerDateRangePlugin($this->selector, $this->options, $this->callback);
+            $this->registerScript($this->selector, $this->options, $this->callback);
 		} else {
 			list($name, $id) = $this->resolveNameID();
 
@@ -81,9 +81,18 @@ class TbDateRangePicker extends TbBaseInputWidget {
 			}
 
 			$this->setLocaleSettings();
-            Booster::getBooster()->registerDateRangePlugin('#' . $id, $this->options, $this->callback);
+            $this->registerScript('#' . $id, $this->options, $this->callback);
 		}
 
+	}
+	
+	public function registerScript($selector, $options = array(), $callback = null) {
+		
+		Yii::app()->clientScript->registerScript(
+				uniqid(__CLASS__ . '#', true),
+				'$("' . $selector . '").daterangepicker(' . CJavaScript::encode($options) . ($callback
+						? ', ' . CJavaScript::encode($callback) : '') . ');'
+		);
 	}
 
 	/**
