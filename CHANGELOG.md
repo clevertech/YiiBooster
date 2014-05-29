@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+ - **(fix)** phpdoc, fix editable with datepicker "and picker language" conflicts - #835
  - **(fix)** grid/chart switcher after ajax fix - #781
  - **(enh)** latest Font Awesome 1.4.0 - #818
  - **(enh)** Add bootstrap2 skin to select2 from https://github.com/t0m/select2-bootstrap-css (kev360)
