@@ -61,15 +61,17 @@ table.table {
     display: none;
     position: absolute;
     right: 5px;
-    top: 7px;
+    top: 8px;
 }
 
 .grid-view table.items th a.asc .caret {
+	border-top: 8px solid;
+	border-bottom: none;
     display: block;
 }
 
 .grid-view table.items th a.desc .caret {
-    border-bottom: 8px solid #000000;
+    border-bottom: 8px solid;
     border-top: none;
     display: block;
 }

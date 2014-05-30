@@ -141,6 +141,10 @@ class Booster extends CApplicationComponent {
 	 * @since YiiBooster 1.0.6
 	 */
 	public $forceCopyAssets = false;
+	
+	public $enablePopover = true;
+	
+	public $enableTooltip = true;
 
 	/**
 	 * @var string Default popover target CSS selector.
@@ -339,7 +343,12 @@ class Booster extends CApplicationComponent {
 
 		if ($this->enableNotifierJS)
 			$this->registerPackage('notify');
-
+		
+		if($this->enablePopover)
+			$this->registerPopoverJs();
+		
+		if($this->enableTooltip)
+			$this->registerTooltipJs();
 	}
 
 
@@ -481,6 +490,14 @@ class Booster extends CApplicationComponent {
 	public function registerFontAwesomeCss() {
 		
         $this->registerPackage('font-awesome');
+	}
+	
+	public function registerPopoverJs() {
+		$this->cs->registerScript($this->getUniqueScriptId(), "jQuery('[data-toggle=popover]').popover();");
+	}
+	
+	public function registerTooltipJs() {
+		$this->cs->registerScript($this->getUniqueScriptId(), "jQuery('[data-toggle=tooltip]').tooltip();");
 	}
 
 	/**
