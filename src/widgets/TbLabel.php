@@ -6,7 +6,7 @@
  * @copyright  Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
-
+Yii::import('booster.widgets.TbWidget');
 /**
  *## Bootstrap label widget.
  *
@@ -14,21 +14,7 @@
  *
  * @package booster.widgets.decoration
  */
-class TbLabel extends CWidget {
-	// 'default', 'primary', 'success', 'info', 'warning', 'danger '
-	const TYPE_DEFAULT 	= 'default';
-	const TYPE_PRIMARY	= 'primary';
-	const TYPE_SUCCESS 	= 'success';
-	const TYPE_INFO 	= 'info';
-	const TYPE_WARNING 	= 'warning';
-	const TYPE_DANGER 	= 'danger';
-
-	/**
-	 * @var string the label type.
-	 *
-     * See `TYPE_*` constants for list of allowed types.
-	 */
-	public $type = self::TYPE_DEFAULT;
+class TbLabel extends TbWidget {
 
 	/**
 	 * @var string the label text.
@@ -54,18 +40,8 @@ class TbLabel extends CWidget {
 		
 		$classes = array('label');
 
-		$validTypes = array(
-			self::TYPE_DEFAULT,
-			self::TYPE_PRIMARY,
-			self::TYPE_SUCCESS,
-			self::TYPE_INFO,
-			self::TYPE_WARNING,
-			self::TYPE_DANGER,
-		);
-
-		if (isset($this->type) && in_array($this->type, $validTypes)) {
-			$classes[] = 'label-' . $this->type;
-		}
+		if($this->isValidContext())
+			$classes[] = 'label-' . $this->getContextClass();
 
 		if (!empty($classes)) {
 			$classes = implode(' ', $classes);

@@ -6,7 +6,7 @@
  * @copyright  Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
-
+Yii::import('booster.widgets.TbWidget');
 /**
  *## Bootstrap badge widget.
  *
@@ -14,27 +14,8 @@
  *
  * @package booster.widgets.decoration
  */
-class TbBadge extends CWidget
-{
-	const TYPE_SUCCESS = 'success';
-	const TYPE_INFO = 'info';
-	const TYPE_WARNING = 'warning';
-	const TYPE_DANGER = 'danger';
-
-	protected static $typeClasses = array (
-		self::TYPE_SUCCESS => 'success',
-		self::TYPE_INFO => 'info',
-		self::TYPE_WARNING => 'warning',
-		self::TYPE_DANGER => 'danger',
-	);
+class TbBadge extends TbWidget {
 	
-	/**
-	 * @var string the badge type.
-	 *
-	 * See `TYPE_*` constants for list of allowed types.
-	 */
-	public $type;
-
 	/**
 	 * @var string the badge text.
 	 */
@@ -59,16 +40,8 @@ class TbBadge extends CWidget
 		
 		$classes = array('badge');
 
-		$validTypes = array(
-			self::TYPE_SUCCESS,
-			self::TYPE_INFO,
-			self::TYPE_WARNING,
-			self::TYPE_DANGER,
-		);
-
-		if (isset($this->type) && in_array($this->type, $validTypes)) {
-			$classes[] = 'alert-' . self::$typeClasses[$this->type];
-		}
+		if ($this->isValidContext())
+			$classes[] = 'alert-' . $this->getContextClass();
 
 		if (!empty($classes)) {
 			$classes = implode(' ', $classes);

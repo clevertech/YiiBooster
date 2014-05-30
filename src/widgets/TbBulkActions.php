@@ -29,7 +29,7 @@ class TbBulkActions extends CComponent {
      * <pre>
      * 'actions' => array(
      *      array(
-     *          'type'=> 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+     *          'context'=> 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
      *          'size'=> 'large', // '', 'large', 'small', 'mini'
      *          'label'=>'...',     // text label of the button or dropdown label
      *          'click'=> // the js function that will be called

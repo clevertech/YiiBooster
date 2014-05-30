@@ -4,12 +4,13 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
+require_once(__DIR__ . '/../../../src/widgets/TbWidget.php');
 require_once(__DIR__ . '/../../../src/widgets/TbAlert.php');
 
 class TbAlertTest extends PHPUnit_Framework_TestCase {
 
-	private function makeWidget()
-	{
+	private function makeWidget() {
+		
 		return new TbAlert();
 	}
 
@@ -28,8 +29,8 @@ class TbAlertTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function onInitWhenAlertsStringMakeArray()
-	{
+	public function onInitWhenAlertsStringMakeArray() {
+		
 		$widget = $this->makeWidget();
 		$widget->alerts = 'some_alert_type';
 
@@ -41,18 +42,17 @@ class TbAlertTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function onInitWhenNoAlertsSetAllDefined()
-	{
+	public function onInitWhenNoAlertsSetAllDefined() {
 		$widget = $this->makeWidget();
 		$widget->init();
 
 		$this->assertSame(
 			array(
-				TbAlert::TYPE_SUCCESS,
-				TbAlert::TYPE_INFO,
-				TbAlert::TYPE_WARNING,
-				TbAlert::TYPE_ERROR,
-				TbAlert::TYPE_DANGER
+				TbAlert::CTX_SUCCESS,
+				TbAlert::CTX_INFO,
+				TbAlert::CTX_WARNING,
+				TbAlert::CTX_DANGER,
+				TbAlert::CTX_ERROR
 			),
 			$widget->alerts
 		);

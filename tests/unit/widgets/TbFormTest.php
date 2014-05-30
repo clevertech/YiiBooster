@@ -68,7 +68,7 @@ class TbFormTest extends PHPUnit_Framework_TestCase {
 			),
 			'buttons' => array(
 				'submit' => array(
-					'type' => 'primary',
+					'context' => 'primary',
 					'buttonType' => 'submit',
 					'label' => 'Submit',
 				),

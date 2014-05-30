@@ -34,15 +34,6 @@ class TbButton extends TbWidget {
 	const BUTTON_TOGGLE_RADIO = 'radio';
 	const BUTTON_TOGGLE_CHECKBOX = 'checkbox';
 
-	// Button types.
-	/* const TYPE_DEFAULT = 'default';
-	const TYPE_PRIMARY = 'primary';
-	const TYPE_SUCCESS = 'success';
-	const TYPE_INFO = 'info';
-	const TYPE_WARNING = 'warning';
-	const TYPE_DANGER = 'danger';
-	const TYPE_LINK = 'link'; */
-	
 	const CTX_LINK = 'link';
 	const CTX_LINK_CLASS = 'link';
 
@@ -64,12 +55,6 @@ class TbButton extends TbWidget {
 	 * Valid values are 'link', 'button', 'submit', 'submitLink', 'reset', 'ajaxLink', 'ajaxButton' and 'ajaxSubmit'.
 	 */
 	public $buttonType = self::BUTTON_BUTTON;
-
-	/**
-	 * @var string the button type.
-	 * Valid values are 'primary', 'info', 'success', 'warning', 'danger' and 'inverse'.
-	 */
-	public $context = self::CTX_DEFAULT;
 
 	/**
 	 * @var string the button size.

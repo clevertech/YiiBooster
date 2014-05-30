@@ -51,15 +51,21 @@ abstract class TbWidget extends CWidget {
 	 * 
 	 * @param string $context
 	 */
-	protected function isValidContext() {
-		return defined(get_called_class().'::CTX_'.strtoupper($this->context));
+	protected function isValidContext($cotext = false) {
+		if($cotext)
+			return defined(get_called_class().'::CTX_'.strtoupper($context));
+		else
+			return defined(get_called_class().'::CTX_'.strtoupper($this->context));
 	}
 	
 	/**
 	 * 
 	 * @param string $context
 	 */
-	protected function getContextClass() {
-		return constant(get_called_class().'::CTX_'.strtoupper($this->context).'_CLASS');
+	protected function getContextClass($context = false) {
+		if($context)
+			return constant(get_called_class().'::CTX_'.strtoupper($context).'_CLASS');
+		else
+			return constant(get_called_class().'::CTX_'.strtoupper($this->context).'_CLASS');
 	}
 }

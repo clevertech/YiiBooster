@@ -16,8 +16,7 @@ Yii::import('booster.widgets.TbButtonColumn');
  *
  * @package booster.widgets.grids.columns
  */
-class TbButtonGroupColumn extends TbButtonColumn
-{
+class TbButtonGroupColumn extends TbButtonColumn {
 
 	/**
 	 * @var string the button size ('mini','small','normal','large')
@@ -25,37 +24,37 @@ class TbButtonGroupColumn extends TbButtonColumn
 	public $buttonSize = 'mini';
 
 	/**
-	 * @var string the view button type ('info','primary','warning','danger','success' defaults to 'info').
+	 * @var string the view button context ('info','primary','warning','danger','success' defaults to 'info').
 	 */
-	public $viewButtonType = 'info';
+	public $viewButtonContext = 'info';
 
 	/**
-	 * @var string the update button type ('info','primary','warning','danger','success' defaults to 'warning').
+	 * @var string the update button context ('info','primary','warning','danger','success' defaults to 'warning').
 	 */
-	public $updateButtonType = 'warning';
+	public $updateButtonContext = 'warning';
 
 	/**
-	 * @var string the delete button type ('info','primary','warning','danger','success' defaults to 'danger')
+	 * @var string the delete button context ('info','primary','warning','danger','success' defaults to 'danger')
 	 */
-	public $deleteButtonType = 'danger';
+	public $deleteButtonContext = 'danger';
 
 	/**
 	 *### .initDefaultButtons()
 	 *
 	 * Initializes the default buttons (view, update and delete).
 	 */
-	protected function initDefaultButtons()
-	{
+	protected function initDefaultButtons() {
+		
 		parent::initDefaultButtons();
 
-		if ($this->viewButtonType !== false && !isset($this->buttons['view']['type'])) {
-			$this->buttons['view']['type'] = $this->viewButtonType;
+		if ($this->viewButtonContext !== false && !isset($this->buttons['view']['context'])) {
+			$this->buttons['view']['context'] = $this->viewButtonContext;
 		}
-		if ($this->updateButtonType !== false && !isset($this->buttons['update']['type'])) {
-			$this->buttons['update']['type'] = $this->updateButtonType;
+		if ($this->updateButtonContext !== false && !isset($this->buttons['update']['context'])) {
+			$this->buttons['update']['context'] = $this->updateButtonContext;
 		}
-		if ($this->deleteButtonType !== false && !isset($this->buttons['delete']['type'])) {
-			$this->buttons['delete']['type'] = $this->deleteButtonType;
+		if ($this->deleteButtonContext !== false && !isset($this->buttons['delete']['context'])) {
+			$this->buttons['delete']['context'] = $this->deleteButtonContext;
 		}
 	}
 
@@ -70,8 +69,8 @@ class TbButtonGroupColumn extends TbButtonColumn
 	 * @param integer $row the row number (zero-based)
 	 * @param mixed $data the data object associated with the row
 	 */
-	protected function renderButton($id, $button, $row, $data)
-	{
+	protected function renderButton($id, $button, $row, $data) {
+		
 		if (isset($button['visible']) && !$this->evaluateExpression(
 			$button['visible'],
 			array('row' => $row, 'data' => $data)
@@ -97,8 +96,8 @@ class TbButtonGroupColumn extends TbButtonColumn
 			$options['class'] = '';
 		}
 		$options['class'] .= ' btn btn-' . $this->buttonSize;
-		if (isset($button['type'])) {
-			$options['class'] .= ' btn-' . $button['type'];
+		if (isset($button['context'])) {
+			$options['class'] .= ' btn-' . $button['context'];
 		}
 
 		if (isset($button['icon'])) {

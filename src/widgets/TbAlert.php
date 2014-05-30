@@ -6,7 +6,7 @@
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
-
+Yii::import('booster.widgets.TbWidget');
 /**
  *## Bootstrap alert widget.
  *
@@ -16,23 +16,10 @@
  *
  * @package booster.widgets.decoration
  */
-class TbAlert extends CWidget {
+class TbAlert extends TbWidget {
 	
-	const TYPE_DEFAULT = 'default';
-	const TYPE_SUCCESS = 'success';
-	const TYPE_INFO = 'info';
-	const TYPE_WARNING = 'warning';
-	const TYPE_ERROR = 'error';
-	const TYPE_DANGER = 'danger'; // same as error
-
-	protected static $typeClasses = array (
-		self::TYPE_DEFAULT => '',
-		self::TYPE_SUCCESS => 'success',
-		self::TYPE_INFO => 'info',
-		self::TYPE_WARNING => 'warning',
-		self::TYPE_ERROR => 'danger',
-		self::TYPE_DANGER => 'danger',
-	);
+	const CTX_ERROR = 'error';
+	const CTX_ERROR_CLASS = 'danger';
 	
 	/**
 	 * @var array The configuration for individual types of alerts.
@@ -101,8 +88,8 @@ class TbAlert extends CWidget {
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
 		if (!isset($this->htmlOptions['id'])) {
 			$this->htmlOptions['id'] = $this->getId();
 		}
@@ -114,11 +101,11 @@ class TbAlert extends CWidget {
 		// Display all alert types by default.
 		if (!isset($this->alerts)) {
 			$this->alerts = array(
-				self::TYPE_SUCCESS,
-				self::TYPE_INFO,
-				self::TYPE_WARNING,
-				self::TYPE_ERROR,
-				self::TYPE_DANGER
+				self::CTX_SUCCESS,
+				self::CTX_INFO,
+				self::CTX_WARNING,
+				self::CTX_DANGER,
+				self::CTX_ERROR
 			);
 		}
 	}
@@ -181,7 +168,7 @@ class TbAlert extends CWidget {
 	 * @param $type
 	 * @param $alertText
 	 */
-	protected function renderSingleAlert($alert, $type, $alertText) {
+	protected function renderSingleAlert($alert, $context, $alertText) {
 		
 		$classes = array('alert in');
 
@@ -193,16 +180,8 @@ class TbAlert extends CWidget {
 			$classes[] = 'fade';
 		}
 
-		$validTypes = array(
-			self::TYPE_SUCCESS,
-			self::TYPE_INFO,
-			self::TYPE_WARNING,
-			self::TYPE_ERROR,
-			self::TYPE_DANGER
-		);
-
-		if (in_array($type, $validTypes)) {
-			$classes[] = 'alert-' . self::$typeClasses[$type];
+		if ($this->isValidContext($context)) {
+			$classes[] = 'alert-' . $this->getContextClass($context);
 		}
 
 		if (!isset($alert['htmlOptions'])) {
@@ -234,4 +213,18 @@ class TbAlert extends CWidget {
 		echo $alertText;
 		echo CHtml::closeTag('div');
 	}
+	
+	/**
+	 * only these are allowed for alerts
+	 */
+	protected function isValidContext($context = false) {
+		return in_array($context, [
+			self::CTX_SUCCESS,
+			self::CTX_INFO,
+			self::CTX_WARNING,
+			self::CTX_DANGER,
+			self::CTX_ERROR,
+		]);
+	}
+	
 }
