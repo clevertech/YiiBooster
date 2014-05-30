@@ -10,7 +10,10 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
 
-## YiiBooster version 4.0.0-beta-1
+## YiiBooster version 4.0.0
+- Bootstrap 3 production ready version - http://yiibooster.clevertech.biz/ - http://yiibooster.clevertech.biz/api/
+
+## YiiBooster version 4.0.0-beta-2
 - Finalize editables
 - Finalize datepicker
 - Finalize timepicker
