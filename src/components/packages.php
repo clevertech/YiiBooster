@@ -159,4 +159,10 @@ return array(
 		'css' => array('css/typeahead.css'),
 		'js' => array($this->minify ? 'js/typeahead.bundle.min.js' : 'js/typeahead.bundle.js'),
 	),
+	'bootstrap-tags' => array(
+		'depends' => array('jquery'),
+		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-tags',
+		'css' => array('css/bootstrap-tags.css'),
+		'js' => array($this->minify ? 'js/bootstrap-tags.min.js' : 'js/bootstrap-tags.js'),
+	),
 );

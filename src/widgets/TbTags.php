@@ -15,8 +15,8 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbTags extends CInputWidget
-{
+class TbTags extends CInputWidget {
+	
 	/**
 	 * @var TbActiveForm when created via TbActiveForm
 	 *
@@ -114,8 +114,10 @@ class TbTags extends CInputWidget
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
+		
+		parent::init();
+		
 		$this->options = CMap::mergeArray(
 			array(
 				'suggestions' => $this->suggestions,
@@ -135,8 +137,8 @@ class TbTags extends CInputWidget
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
+		
 		list($name, $id) = $this->resolveNameID();
 
 		$this->renderContent($id, $name);
@@ -153,8 +155,7 @@ class TbTags extends CInputWidget
 	 *
 	 * @return string with HTML tags
 	 */
-	public function renderContent($id, $name)
-	{
+	public function renderContent($id, $name) {
 
 		if ($this->hasModel()) {
 			if ($this->form) {
@@ -167,7 +168,15 @@ class TbTags extends CInputWidget
 			echo CHtml::hiddenField($name, $this->value);
 		}
 
-		echo "<div id='tags_{$id}' class='tag-list'><div class='tags'></div></div>";
+		$this->htmlOptions['id'] = 'tags_'.$id;
+		if(isset($this->htmlOptions['class']) && !empty($this->htmlOptions['class']))
+			$this->htmlOptions['class'] .= ' tag-list';
+		else
+			$this->htmlOptions['class'] = 'tag-list';
+		
+		echo CHtml::openTag('div', $this->htmlOptions);
+		echo "<div class='tags'></div>";
+		echo CHtml::closeTag('div');
 	}
 
 	/**
@@ -179,11 +188,10 @@ class TbTags extends CInputWidget
 	 *
 	 * @param string $id
 	 */
-	public function registerClientScript($id)
-	{
+	public function registerClientScript($id) {
+		
         $booster = Booster::getBooster();
-        $booster->registerAssetCss('bootstrap-tags.css');
-        $booster->registerAssetJs('bootstrap.tags.js');
+        $booster->registerPackage('bootstrap-tags');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
