@@ -27,7 +27,7 @@ foreach ($this->tableSchema->columns as $column) {
 <div class="form-actions">
 	<?php echo "<?php \$this->widget('booster.widgets.TbButton', array(
 			'buttonType'=>'submit',
-			'type'=>'primary',
+			'context'=>'primary',
 			'label'=>\$model->isNewRecord ? 'Create' : 'Save',
 		)); ?>\n"; ?>
 </div>

@@ -8,7 +8,7 @@
  * @author amrbedair
  * @since v.4.0.0
  */
-class TbWidget extends CWidget {
+abstract class TbWidget extends CWidget {
 
 	const CTX_DEFAULT = 'default';
 	const CTX_PRIMARY = 'primary';
@@ -17,14 +17,12 @@ class TbWidget extends CWidget {
 	const CTX_WARNING = 'warning';
 	const CTX_DANGER = 'danger';
 	
-	protected static $ctxCssClasses = [
-		self::CTX_DEFAULT => 'default',
-		self::CTX_PRIMARY => 'primary',
-		self::CTX_SUCCESS => 'success',
-		self::CTX_INFO => 'info',
-		self::CTX_WARNING => 'warning',
-		self::CTX_DANGER => 'danger',
-	];
+	const CTX_DEFAULT_CLASS = 'default';
+	const CTX_PRIMARY_CLASS = 'primary';
+	const CTX_SUCCESS_CLASS = 'success';
+	const CTX_INFO_CLASS = 'info';
+	const CTX_WARNING_CLASS = 'warning';
+	const CTX_DANGER_CLASS = 'danger';
 	
 	/**
 	 * easily make a widget more meaningful to a particular context by adding any of the contextual state classes
@@ -39,30 +37,29 @@ class TbWidget extends CWidget {
 	 * @param string $class
 	 */
 	protected static function addCssClass(&$htmlOptions, $class) {
-	
-		if (empty($class)) {
+		
+		if (empty($class))
 			return;
-		}
 	
-		if (isset($htmlOptions['class'])) {
+		if (isset($htmlOptions['class']))
 			$htmlOptions['class'] .= ' ' . $class;
-		} else {
+		else 
 			$htmlOptions['class'] = $class;
-		}
 	}
 
 	/**
 	 * 
-	 * @param unknown $context
+	 * @param string $context
 	 */
-	protected static function isValidContext($context) {
-		return in_array($context, array(
-				self::CTX_DEFAULT,
-				self::CTX_PRIMARY,
-				self::CTX_SUCCESS,
-				self::CTX_INFO,
-				self::CTX_WARNING,
-				self::CTX_DANGER
-		));
+	protected function isValidContext() {
+		return defined(get_called_class().'::CTX_'.strtoupper($this->context));
+	}
+	
+	/**
+	 * 
+	 * @param string $context
+	 */
+	protected function getContextClass() {
+		return constant(get_called_class().'::CTX_'.strtoupper($this->context).'_CLASS');
 	}
 }

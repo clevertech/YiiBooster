@@ -22,7 +22,7 @@
 	<div class="form-actions">
 		<?php echo "<?php \$this->widget('booster.widgets.TbButton', array(
 			'buttonType' => 'submit',
-			'type'=>'primary',
+			'context'=>'primary',
 			'label'=>'Search',
 		)); ?>\n"; ?>
 	</div>

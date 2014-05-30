@@ -90,8 +90,8 @@ class TbPanel extends TbWidget {
 		
 		$this->addCssClass($this->htmlOptions, 'panel');
 		
-		if(self::isValidContext($this->context))
-			self::addCssClass($this->htmlOptions, 'panel-'.self::$ctxCssClasses[$this->context]);
+		if($this->isValidContext())
+			self::addCssClass($this->htmlOptions, 'panel-'.$this->getContextClass());
 
 		if ($this->padContent)
 			self::addCssClass($this->contentHtmlOptions, 'panel-body');

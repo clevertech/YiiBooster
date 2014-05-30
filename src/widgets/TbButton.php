@@ -6,8 +6,11 @@
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @since 0.9.10
+ * 
+ * @author Amr Bedair <amr.bedair@gmail.com>
+ * @since v4.0.0 - upgraded to bootstrap 3.1.1
  */
-
+Yii::import('booster.widgets.TbWidget');
 /**
  * Bootstrap button widget.
  *
@@ -15,7 +18,7 @@
  *
  * @package booster.widgets.forms.buttons
  */
-class TbButton extends CWidget {
+class TbButton extends TbWidget {
 	
 	// Button callback types.
 	const BUTTON_LINK = 'link';
@@ -32,13 +35,16 @@ class TbButton extends CWidget {
 	const BUTTON_TOGGLE_CHECKBOX = 'checkbox';
 
 	// Button types.
-	const TYPE_DEFAULT = 'default';
+	/* const TYPE_DEFAULT = 'default';
 	const TYPE_PRIMARY = 'primary';
 	const TYPE_SUCCESS = 'success';
 	const TYPE_INFO = 'info';
 	const TYPE_WARNING = 'warning';
 	const TYPE_DANGER = 'danger';
-	const TYPE_LINK = 'link';
+	const TYPE_LINK = 'link'; */
+	
+	const CTX_LINK = 'link';
+	const CTX_LINK_CLASS = 'link';
 
 	// Button sizes.
 	const SIZE_LARGE = 'large';
@@ -63,7 +69,7 @@ class TbButton extends CWidget {
 	 * @var string the button type.
 	 * Valid values are 'primary', 'info', 'success', 'warning', 'danger' and 'inverse'.
 	 */
-	public $type = self::TYPE_DEFAULT;
+	public $context = self::CTX_DEFAULT;
 
 	/**
 	 * @var string the button size.
@@ -175,18 +181,8 @@ class TbButton extends CWidget {
 
 		$classes = array('btn');
 
-		$validTypes = array(
-			self::TYPE_DEFAULT,
-			self::TYPE_PRIMARY,
-			self::TYPE_SUCCESS,
-			self::TYPE_INFO,
-			self::TYPE_WARNING,
-			self::TYPE_DANGER,
-			self::TYPE_LINK,
-		);
-
-		if (isset($this->type) && in_array($this->type, $validTypes)) {
-			$classes[] = 'btn-' . $this->type;
+		if ($this->isValidContext()) {
+			$classes[] = 'btn-' . $this->getContextClass();
 		}
 
 		$validSizes = array(

@@ -6,6 +6,9 @@
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
  * @since 0.9.10
+ * 
+ * @author Amr Bedair <amr.bedair@gmail.com>
+ * @since v4.0.0 - upgraded to bootstrap 3.1.1
  */
 
 Yii::import('booster.widgets.TbButton');
@@ -33,7 +36,7 @@ class TbButtonGroup extends CWidget {
 	 * @var string the button type.
 	 * @see BootButton::type
 	 */
-	public $type = TbButton::TYPE_DEFAULT;
+	public $context = TbButton::CTX_DEFAULT;
 	
 	/**
 	 * @var boolean indicates whether to use justified button groups
@@ -137,25 +140,16 @@ class TbButtonGroup extends CWidget {
 			if (isset($this->toggle) && in_array($this->toggle, $validToggles)) {
 				$this->buttonType = $this->toggle;
 			}
-			/*
-				$this->controller->widget(
-				'booster.widgets.TbToggleButton',
-					array(
-						'type' => isset($button['type']) ? $button['type'] : $this->type,
-						'label' => isset($button['label']) ? $button['label'] : null,
-						'toggleType' => $this->toggle,
-						'icon' => isset($button['icon']) ? $button['icon'] : null,
-						'size' => $this->size, // all buttons in a group cannot vary in size
-					)
-				);
-				continue;
-			}*/
-
+			
+			$justifiedNotLink = $this->justified && $this->buttonType !== TbButton::BUTTON_LINK;
+			if($justifiedNotLink)
+				echo '<div class="btn-group">';
+			
 			$this->controller->widget(
 				'booster.widgets.TbButton',
 				array(
 					'buttonType' => isset($button['buttonType']) ? $button['buttonType'] : $this->buttonType,
-					'type' => isset($button['type']) ? $button['type'] : $this->type,
+					'context' => isset($button['context']) ? $button['context'] : $this->context,
 					'size' => $this->size, // all buttons in a group cannot vary in size
 					'icon' => isset($button['icon']) ? $button['icon'] : null,
 					'label' => isset($button['label']) ? $button['label'] : null,
@@ -171,49 +165,10 @@ class TbButtonGroup extends CWidget {
                     'tooltipOptions' => isset($button['tooltipOptions']) ? $button['tooltipOptions'] : array(),
 				)
 			);
+			
+			if($justifiedNotLink)
+				echo '</div>';
 		}
 		echo '</div>';
-	}
-	
-	protected function renderToggle() {
-		if($this->toggle === self::TOGGLE_RADIO) {
-			echo"
-			<label class='btn btn-{$button["type"]}'>
-			    <input type='radio' name='options' id='option1'> Option 1
-			</label>
-			";
-		} elseif ($this->toggle === self::TOGGLE_CHECKBOX) {
-			
-		} // else { /* not supported option */ }
-	}
-}
-
-class TbToggleButton extends CInputWidget {
-	
-	public $type;
-	
-	public $toggleType;
-	
-	public $label;
-	
-	public $icon;
-	
-	public function init() {
-		if (isset($this->icon)) { // no need for implode as newglyphicon only supports one icon
-			if (strpos($this->icon, 'icon') === false && strpos($this->icon, 'fa') === false) {
-				$this->icon = 'glyphicon glyphicon-' . $this->icon; // implode(' glyphicon-', explode(' ', $this->icon));
-				$this->label = '<span class="' . $this->icon . '"></span> ' . $this->label;
-			} else { // to support font awesome icons
-				$this->label = '<i class="' . $this->icon . '"></i> ' . $this->label;
-			}
-		}
-	}
-	
-	public function run() {
-		echo"
-		<label class='btn btn-{$this->type}'>
-			<input type='{$this->toggleType}' name='{$this->id}_options' id='option_{$this->id}'> {$this->label}
-		</label>
-		";
 	}
 }

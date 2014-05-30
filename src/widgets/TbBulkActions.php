@@ -328,7 +328,7 @@ class TbBulkActions extends CComponent {
 			'class' => 'booster.widgets.TbButton',
 			'id' => $action['id'], // we must ensure this
 			'buttonType' => isset($action['buttonType']) ? $action['buttonType'] : TbButton::BUTTON_LINK,
-			'type' => isset($action['type']) ? $action['type'] : '',
+			'context' => isset($action['context']) ? $action['context'] : '',
 			'size' => isset($action['size']) ? $action['size'] : TbButton::SIZE_SMALL,
 			'icon' => isset($action['icon']) ? $action['icon'] : null,
 			'label' => isset($action['label']) ? $action['label'] : null,
