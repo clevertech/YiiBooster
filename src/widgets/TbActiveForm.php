@@ -1212,7 +1212,10 @@ class TbActiveForm extends CActiveForm {
 		
 		echo CHtml::openTag('div', $groupOptions);
 
-		self::addCssClass($options['labelOptions'], 'col-sm-3 control-label');
+        self::addCssClass($options['labelOptions'], 'control-label');
+        if (!isset($options['labelOptions']['class']) || strpos($options['labelOptions']['class'], 'col-sm-') === false) {
+            self::addCssClass($options['labelOptions'], 'col-sm-3');
+        }
 		if (isset($options['label'])) {
 			if (!empty($options['label'])) {
 				echo CHtml::label($options['label'], CHtml::activeId($model, $attribute), $options['labelOptions']);
@@ -1228,7 +1231,9 @@ class TbActiveForm extends CActiveForm {
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
 		else 
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
-		$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
+        if (!isset($wrapperHtmlOptions['class']) || strpos($wrapperHtmlOptions['class'], 'col-sm-') === false) {
+            $this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
+        }
 		echo CHtml::openTag('div', $wrapperHtmlOptions);
 
 		if (!empty($options['prepend']) || !empty($options['append'])) {
