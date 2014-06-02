@@ -77,6 +77,7 @@ class TbEditableColumn extends TbDataColumn
 		$widget = $this->grid->controller->createWidget('TbEditableField', $options);
 		
 		
+		$widget->buildJsOptions();
 		$widget->registerAssets();
 		
 		if (!$this->_isScriptRendered) {
