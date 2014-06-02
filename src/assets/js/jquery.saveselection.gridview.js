@@ -9,18 +9,10 @@
   $.fn.yiiGridView.initBulkActions = function (id)
   {
     var grid = $('#'+id);
-    $(document).on("click", "#"+id+" input[type=checkbox]", function(){
-      if ($(this).val()) {
-        if ($(this).is(':checked')) {
-          if (checkedItems.indexOf($(this).val())<0) {
-            checkedItems.push($(this).val());
-          }
-        } else {
-          checkedItems.pop($(this).val());
-        }
-      }
-      if (checkedItems.length)
-      {
+    $(document).on("click change", "#"+id+" input[type=checkbox]", function() {
+
+      if ($("#"+id+' tbody input[type=checkbox]:checked').length) {
+
         $(".bulk-actions-btn", grid).removeClass("disabled");
         $("div.bulk-actions-blocker",grid).hide();
       }
@@ -39,7 +31,8 @@
   $.fn.yiiGridView.afterUpdateGrid = function (id)
   {
     var grid = $('#'+id);
-    if (checkedItems.length>0) {
+    if ($("#"+id+' tbody input[type=checkbox]:checked').length) {
+      
       $(".bulk-actions-btn", grid).removeClass("disabled");
       $("div.bulk-actions-blocker",grid).hide();
       $.each(checkedItems, function(index, item){
@@ -55,9 +48,9 @@
    * Returns array of checked items ids
    * @returns {Array}
    */
-  $.fn.yiiGridView.getCheckedItems = function ()
+  $.fn.yiiGridView.getCheckedItems = function (id)
   {
-    return checkedItems;
+    return $("#"+id+' tbody input[type=checkbox]:checked').map(function() { return $(this).val(); }).get();
   }
 
 

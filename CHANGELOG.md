@@ -9,6 +9,9 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+ - **(fix)** fix select all for grid bulk action - #843
+ - **(enh)** TbHtml upgrade to latest stable 1.3.0 
+ - **(fix)** typeahead added to the editable types so now you can set the type to "typeahead" - #824 
  - **(fix)** phpdoc, fix editable with datepicker "and picker language" conflicts - #835
  - **(fix)** grid/chart switcher after ajax fix - #781
  - **(enh)** latest Font Awesome 1.4.0 - #818

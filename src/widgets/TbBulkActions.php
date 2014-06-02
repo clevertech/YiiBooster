@@ -219,15 +219,15 @@ class TbBulkActions extends CComponent
      */
     public function registerClientScript()
     {
-
+    	$id = $this->grid->id;
         $js = '';
         if(!$this->selectableRows)
         {
-        $js .= "$.fn.yiiGridView.initBulkActions('{$this->grid->id}');";
-}
+        	$js .= "$.fn.yiiGridView.initBulkActions('{$this->grid->id}');";
+		}
         foreach ($this->events as $buttonId => $handler) {
             $js .= "\n$(document).on('click','#{$buttonId}', function(){
-            var checked = $.fn.yiiGridView.getCheckedItems();
+            var checked = $.fn.yiiGridView.getCheckedItems('$id');
             if (!checked.length)
             {
                 alert('".$this->noCheckedMessage."');
