@@ -297,7 +297,7 @@ class TbEditable extends CWidget
          */
         $this->setPrepareToAutoText(
             (!isset($this->options['autotext']) || $this->options['autotext'] !== 'never')
-            && in_array($this->type, array('select', 'checklist', 'date', 'dateui', 'combodate', 'select2'))
+            && in_array($this->type, array('select', 'checklist', 'date', 'dateui', 'combodate', 'select2', 'typeahead'))
         );
 
         /**
