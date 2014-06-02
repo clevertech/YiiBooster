@@ -27,7 +27,7 @@ class TbEditableField extends TbEditable
 	 */
 	public $attribute = null;
 
-	private $_prepareToAutotext = false;
+	// private $_prepareToAutotext = false; // #_prepareToAutoText use the inhereted one
 
 	/**
 	 *### .init()
@@ -115,7 +115,7 @@ class TbEditableField extends TbEditable
          * If text not defined, generate it from model attribute for types except lists ('select', 'checklist' etc)
          * For lists keep it empty to apply autotext
 		 */
-		if (!strlen($this->text) && !$this->_prepareToAutotext) {
+		if (!strlen($this->text) && !$this->_prepareToAutoText) {
 			$this->text = $originalText;
 		}
 	}
