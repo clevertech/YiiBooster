@@ -16,7 +16,7 @@
 		continue;
 	}
 	?>
-	<?php echo "<?php echo " . $this->generateActiveRow($this->modelClass, $column) . "; ?>\n"; ?>
+	<?php echo "<?php echo " . $this->generateActiveGroup($this->modelClass, $column) . "; ?>\n"; ?>
 
 <?php endforeach; ?>
 	<div class="form-actions">
