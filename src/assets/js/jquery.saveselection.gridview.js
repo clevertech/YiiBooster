@@ -14,11 +14,11 @@
    */
   $.fn.yiiGridView.initBulkActions = function (id) {
 	  
-    var grid = $('#'+id);
-    
     $(document).on("click change", "#"+id+" input[type=checkbox]", function() {
     	
-      if ($("#"+id+' tbody input[type=checkbox]:checked').length) {
+    	var grid = $('#'+id);
+    	
+    	if ($("#"+id+' tbody input[type=checkbox]:checked').length) {
     	  
         $(".bulk-actions-btn", grid).removeClass("disabled");
         $("div.bulk-actions-blocker", grid).hide();
@@ -36,9 +36,9 @@
    */
   $.fn.yiiGridView.afterUpdateGrid = function (id) {
     
-	var grid = $('#'+id);
-    
     if ($("#"+id+' tbody input[type=checkbox]:checked').length) {
+    	
+      var grid = $('#'+id);
     	
       $(".bulk-actions-btn", grid).removeClass("disabled");
       $("div.bulk-actions-blocker", grid).hide();
