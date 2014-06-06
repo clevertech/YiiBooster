@@ -9,16 +9,22 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
- - **(fix)** fix select all for grid bulk action - #843
- - **(enh)** TbHtml upgrade to latest stable 1.3.0 
- - **(fix)** typeahead added to the editable types so now you can set the type to "typeahead" - #824 
- - **(fix)** phpdoc, fix editable with datepicker "and picker language" conflicts - #835
- - **(fix)** grid/chart switcher after ajax fix - #781
- - **(enh)** latest Font Awesome 1.4.0 - #818
- - **(enh)** Add bootstrap2 skin to select2 from https://github.com/t0m/select2-bootstrap-css (kev360)
- - **(fix)** many Editable fixes
- - **(fix)** TbExtendedGridView - fix JavaScript undefined variable error, when using strict mode - #805, #805
- - **(fix)** yiiGroupGridView fix - #786
+-
+ 
+## YiiBooster version 3.1.0
+- **(enh)** update bootstrap-datepicker to the latest version - #823
+- **(fix)** fix Submenus in collapsed TbNavbar on touch screens - #811
+- **(fix)** fix bulk action now works on visible items only
+- **(fix)** fix select all for grid bulk action - #843
+- **(enh)** TbHtml upgrade to latest stable 1.3.0 
+- **(fix)** typeahead added to the editable types so now you can set the type to "typeahead" - #824 
+- **(fix)** phpdoc, fix editable with datepicker "and picker language" conflicts - #835
+- **(fix)** grid/chart switcher after ajax fix - #781
+- **(enh)** latest Font Awesome 1.4.0 - #818
+- **(enh)** Add bootstrap2 skin to select2 from https://github.com/t0m/select2-bootstrap-css (kev360)
+- **(fix)** many Editable fixes
+- **(fix)** TbExtendedGridView - fix JavaScript undefined variable error, when using strict mode - #805, #805
+- **(fix)** yiiGroupGridView fix - #786
  
 ## YiiBooster version 3.0.1
 - **(fix)** branch and tag fix - no code changes from 3.0.0
