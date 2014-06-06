@@ -10,6 +10,9 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha  
 
+## YiiBooster version 4.0.1
+- **(fix)** fix gii generated TbActiveForm code - #851
+
 ## YiiBooster version 4.0.0
 - Bootstrap 3 production ready version - http://yiibooster.clevertech.biz/ - http://yiibooster.clevertech.biz/api/
 
