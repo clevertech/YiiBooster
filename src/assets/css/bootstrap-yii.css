@@ -12,7 +12,17 @@
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     min-width: 250px;
 }
-
+.input-group .ct-form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group > .btn, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+	border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+.input-group .ct-form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+	border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+.input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child), .input-group .ct-form-control:not(:first-child):not(:last-child) {
+	border-radius: 0;
+}
 .clearfix {
     *zoom: 1;
 }
