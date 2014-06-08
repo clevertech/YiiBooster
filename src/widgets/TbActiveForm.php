@@ -1207,7 +1207,9 @@ class TbActiveForm extends CActiveForm {
 		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array(); // array('class' => 'form-group');
 		self::addCssClass($groupOptions, 'form-group');
 		
-		if ($model->hasErrors($attribute))
+	        $attrName = $attribute;
+	        CHtml::resolveName($model,$attrName);
+	        if ($model->hasErrors($attrName))
 			self::addCssClass($groupOptions, 'has-error');
 		
 		echo CHtml::openTag('div', $groupOptions);
@@ -1271,7 +1273,9 @@ class TbActiveForm extends CActiveForm {
 		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array();
 		self::addCssClass($groupOptions, 'form-group');
 		
-		if ($model->hasErrors($attribute))
+	        $attrName = $attribute;
+	        CHtml::resolveName($model,$attrName);
+	        if ($model->hasErrors($attrName))
 			self::addCssClass($groupOptions, 'has-error');
 		
 		echo CHtml::openTag('div', $groupOptions);
