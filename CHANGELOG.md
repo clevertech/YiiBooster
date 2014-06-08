@@ -12,6 +12,7 @@ Antonio Ramirez.
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851
+- **(fix)** TbActiveForm fix "[a]attr" format attribute name for  setting "has-error" class (apdemin)
 
 ## YiiBooster version 4.0.0
 - Bootstrap 3 production ready version - http://yiibooster.clevertech.biz/ - http://yiibooster.clevertech.biz/api/
