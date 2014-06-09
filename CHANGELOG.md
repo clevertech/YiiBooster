@@ -8,7 +8,13 @@ Thank you all
 
 Antonio Ramirez.
 
-## YiiBooster latest development alpha  
+## YiiBooster latest development alpha
+-
+  
+## YiiBooster version 4.1.0
+- **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
+- **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
+- **(enh)** 
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851
