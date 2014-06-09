@@ -10,7 +10,14 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha
 -
- 
+
+## YiiBooster version 3.1.1 
+- **(fix)** added TbHtml TbArray dependency  
+- **(fix)** fix font-awesome for TbHtml
+- **(fix)** fix _prepareToAutoText is undefined in TbEditableField
+- **(fix)** manually minified bootstrap-editable.js because of js error
+- **(fix)** TbBox header overflow css fix
+
 ## YiiBooster version 3.1.0
 - **(enh)** update bootstrap-datepicker to the latest version - #823
 - **(fix)** fix Submenus in collapsed TbNavbar on touch screens - #811

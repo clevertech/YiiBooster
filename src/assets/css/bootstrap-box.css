@@ -16,7 +16,7 @@
 
     /*line-height: 40px;*/
     min-height: 40px;
-    overflow:auto;
+    overflow: hidden;
 
     background: #E9E9E9;
     background: -moz-linear-gradient(top, #FAFAFA 0%, #E9E9E9 100%); /* FF3.6+ */

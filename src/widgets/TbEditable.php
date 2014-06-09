@@ -281,7 +281,7 @@ class TbEditable extends CWidget
     public $onHidden;
 
     /** @var bool */
-    private $_prepareToAutoText = false;
+    protected $_prepareToAutoText = false;
 
     public function init()
     {

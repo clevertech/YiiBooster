@@ -7,7 +7,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @package bootstrap.helpers
  */
-
+Yii::import('bootstrap.helpers.TbArray');
 /**
  * Bootstrap HTML helper.
  */
@@ -2723,7 +2723,7 @@ EOD;
     public static function icon($icon, $htmlOptions = array(), $tagName = 'i')
     {
         if (is_string($icon)) {
-            if (strpos($icon, 'icon') === false) {
+            if (strpos($icon, 'icon') === false && strpos($icon, 'fa') === false) {
                 $icon = 'icon-' . implode(' icon-', explode(' ', $icon));
             }
             self::addCssClass($icon, $htmlOptions);
