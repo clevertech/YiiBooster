@@ -1225,7 +1225,6 @@ class TbActiveForm extends CActiveForm {
 			echo $this->labelEx($model, $attribute, $options['labelOptions']);
 		}
 		
-		// TODO: is this good to be applied in vertical and inline?
 		if(isset($options['wrapperHtmlOptions']) && !empty($options['wrapperHtmlOptions']))
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
 		else 
@@ -1289,6 +1288,12 @@ class TbActiveForm extends CActiveForm {
 			echo $this->labelEx($model, $attribute, $options['labelOptions']);
 		}
 	
+		if(isset($options['wrapperHtmlOptions']) && !empty($options['wrapperHtmlOptions']))
+			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
+		else
+			$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
+		echo CHtml::openTag('div', $wrapperHtmlOptions);
+		
 		if (!empty($options['prepend']) || !empty($options['append'])) {
 			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
 		}
@@ -1312,7 +1317,7 @@ class TbActiveForm extends CActiveForm {
 			echo CHtml::tag($this->hintTag, $options['hintOptions'], $options['hint']);
 		}
 		
-		echo '</div>';
+		echo '</div></div>';
 	}
 
 	/**
@@ -1325,8 +1330,18 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function inlineGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-        echo '<div class="form-group">';
+        $groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array(); // array('class' => 'form-group');
+		self::addCssClass($groupOptions, 'form-group');
+		
+		echo CHtml::openTag('div', $groupOptions);
 
+		 // TODO: do we need a wrapper for inline groups?
+        if(isset($options['wrapperHtmlOptions']) && !empty($options['wrapperHtmlOptions']))
+        	$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
+        else
+        	$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
+        echo CHtml::openTag('div', $wrapperHtmlOptions);
+        
 		if (!empty($options['prepend']) || !empty($options['append']))
 			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
 
@@ -1343,7 +1358,7 @@ class TbActiveForm extends CActiveForm {
             echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
         }
 
-        echo "</div>\r\n"; 
+        echo "</div></div>\r\n"; 
 	}
 
 	/**
