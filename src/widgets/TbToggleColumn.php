@@ -248,7 +248,11 @@ function() {
             if (!isset($button['htmlOptions']['data-toggle'])) {
                 $button['htmlOptions']['data-toggle'] = 'tooltip';
             }
-			echo CHtml::link('<span class="glyphicon glyphicon-' . $button['icon'] . '"></span>', $button['url'], $button['htmlOptions']);
+            if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
+				echo CHtml::link('<span class="glyphicon glyphicon-' . $button['icon'] . '"></span>', $button['url'], $button['htmlOptions']);
+            } else {
+            	echo CHtml::link('<i class="' . $button['icon'] . '"></i>' , $button['url'], $button['htmlOptions']);
+            }
 		} else {
 			$button['label'] = $this->getButtonLabel($checked);
 			$button['class'] = 'booster.widgets.TbButton';
