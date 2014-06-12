@@ -1,6 +1,6 @@
 <?php
 /**
- *## TbPickerColumn class file
+ *## TbPopoverColumn class file
  *
  * @author: amr bedair <amr.bedair@gmail.com>
  * @copyright Copyright &copy; Clevertech 2014-
@@ -10,17 +10,12 @@
 Yii::import('booster.widgets.TbDataColumn');
 
 /**
- *## Class TbPickerColumn
+ *## Class TbPopoverColumn
  *
- * The TbPickerColumn works with TbJsonGridView and allows you to create a column that will display a picker element
+ * The TbPopoverColumn works with TbJsonGridView and allows you to create a column that will display a picker element
  * The picker is a special plugin that renders a dropdown on click, which contents can be dynamically updated.
  *
  * @see <http://getbootstrap.com/javascript/#popovers>
- * 
- * @todo
- * Known Issues:
- * - setting the content to a "js:finction(){ return 'Some Content!'; }" is not working
- * -
  * 
  * @package booster.widgets.grids.columns
  */
@@ -36,6 +31,11 @@ class TbPopoverColumn extends TbDataColumn {
 	 */
 	public $options = array();
 
+	public function init() {
+		
+		$this->registerClientScript();
+	}
+	
 	/**
 	 * Renders a data cell content, wrapping the value with the link that will activate the picker
 	 *
@@ -51,21 +51,23 @@ class TbPopoverColumn extends TbDataColumn {
 			$value = CHtml::value($data, $this->name);
 		}
 
-		$htmlOptions = array('data-toggle' => 'popover');
-		foreach ($this->options as $key => $val) {
-			if($this->isAValidOption($key)) {
-				if ((!$val instanceof CJavaScriptExpression) && strpos($val, 'js:') === 0)
-					$val = new CJavaScriptExpression($val);
-				$htmlOptions['data-'.$key] = $val;
-			}
-		}
+		$htmlOptions = array('class' => 'bootstrap-popover', 'data-trigger' => 'manual');
 		
 		echo CHtml::link($value, "#", $htmlOptions);
 	}
 	
-	protected function isAValidOption($option) {
-		return in_array($option, array(
-			'animation', 'html', 'placement', 'selector', 'trigger', 'title', 'content', 'delay', 'container'
-		));
+	protected function registerClientScript() {
+		
+		$gridId = $this->grid->id;
+		$options = CJavaScript::encode($this->options);
+		
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $this->id, "
+			$('#$gridId a.bootstrap-popover').popover($options);	
+			$('#$gridId a.bootstrap-popover').click(function() {
+				$('#$gridId a.bootstrap-popover').not(this).popover('hide');
+				$(this).popover('toggle');
+				return false;
+			});
+		", CClientScript::POS_READY);
 	}
 }
