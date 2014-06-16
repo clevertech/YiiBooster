@@ -218,13 +218,13 @@ class TbAlert extends TbWidget {
 	 * only these are allowed for alerts
 	 */
 	protected function isValidContext($context = false) {
-		return in_array($context, [
+		return in_array($context, array(
 			self::CTX_SUCCESS,
 			self::CTX_INFO,
 			self::CTX_WARNING,
 			self::CTX_DANGER,
 			self::CTX_ERROR,
-		]);
+		));
 	}
 	
 }
