@@ -13,7 +13,8 @@ Antonio Ramirez.
   
 ## YiiBooster version 4.1.0
 - **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
-- **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
+- **(fix)** TbActiveForm fix "[a]attr" format attribute #856
+- **(fix)** bootstrap-datepicker fix datepicker on modal z-index #873
 - **(enh)** 
 
 ## YiiBooster version 4.0.1
