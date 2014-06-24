@@ -103,8 +103,8 @@ class TbRelationalColumn extends TbDataColumn {
 		}
 
 		echo CHtml::openTag('td', $options);
-		echo CHtml::openTag('span', array('class' => $this->cssClass, 'data-rowid' => $this->getPrimaryKey($data)));
-		$this->renderDataCellContent($row, $data);
+		echo CHtml::openTag('span', array('class' => $this->cssClass.'_'.$this->id, 'data-rowid' => $this->getPrimaryKey($data), 'data-colid' => $this->id));
+ 		$this->renderDataCellContent($row, $data);
 		echo CHtml::closeTag('span');
 		echo CHtml::closeTag('td');
 	}
@@ -160,13 +160,15 @@ class TbRelationalColumn extends TbDataColumn {
 		$data = !empty($this->submitData) && is_array($this->submitData) ? $this->submitData : 'js:{}';
 		$data = CJavascript::encode($data);
 		list($parentId) = explode('_',$this->id);
+		$_id = $this->cssClass.'_'.$this->id;
 		$js = <<<EOD
-$(document).on('click','#{$parentId} .{$this->cssClass}', function(){
+$(document).on('click','#{$parentId} .{$_id}', function() {
 	var span = $span;
 	var that = $(this);
 	var status = that.data('status');
 	var rowid = that.data('rowid');
-	var tr = $('#relatedinfo'+rowid);
+	var colid = that.data('colid');
+	var tr = $('#relatedinfo'+rowid+colid);
 	var parent = that.parents('tr').eq(0);
 	var afterAjaxUpdate = {$afterAjaxUpdate};
 
@@ -175,6 +177,7 @@ $(document).on('click','#{$parentId} .{$this->cssClass}', function(){
 
 	if (tr.length && !tr.is(':visible') && {$cache})
 	{
+		$("tr[id^=relatedinfo"+rowid+"]").not(tr).hide(); // .slideUp();
 		tr.slideDown();
 		that.data('status','off');
 		return;
@@ -186,6 +189,7 @@ $(document).on('click','#{$parentId} .{$this->cssClass}', function(){
 	}
 	if (tr.length)
 	{
+		$("tr[id^=relatedinfo"+rowid+"]").not(tr).hide(); // .slideUp();
 		tr.find('td').html('{$loadingPic}');
 		if (!tr.is(':visible')){
 			tr.slideDown();
@@ -193,8 +197,9 @@ $(document).on('click','#{$parentId} .{$this->cssClass}', function(){
 	}
 	else
 	{
+		$("tr[id^=relatedinfo"+rowid+"]").hide(); // .slideUp();
 		var td = $('<td/>').html('{$loadingPic}').attr({'colspan':$span});
-		tr = $('<tr/>').prop({'id':'relatedinfo'+rowid}).append(td);
+		tr = $('<tr/>').prop({'id':'relatedinfo'+rowid+colid}).append(td);
 		/* we need to maintain zebra styles :) */
 		var fake = $('<tr class="hide"/>').append($('<td/>').attr({'colspan':$span}));
 		parent.after(tr);
