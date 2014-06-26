@@ -1,5 +1,5 @@
 <?php // Issue #574: multiselect inside form should send all selected elements
-echo CHtml::beginForm('/', 'post', ['id' => 'issue-574-checker-form']);
+echo CHtml::beginForm('/', 'post', array('id' => 'issue-574-checker-form'));
 $this->widget(
     'bootstrap.widgets.TbSelect2',
     array(

@@ -10,12 +10,13 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha
 -
-  
+
 ## YiiBooster version 4.1.0
-- **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
-- **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
-- **(fix)** allow multi relational column - #872  
-- **(enh)** 
+- **(fix)** Removed short array syntax (PHP 5.4+) #877 (BigDan256)
+- **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray
+- **(fix)** TbActiveForm fix "[a]attr" format attribute #856
+- **(fix)** allow multi relational column - #872
+- **(enh)**
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851
@@ -33,11 +34,11 @@ Antonio Ramirez.
 - Finalize buttons, and button groups
 - Finalize typeahead
 - more work done on grids, extended grids, bulk actions
-- upgrade font awesome 
+- upgrade font awesome
 
 ## YiiBooster version 4.0.0-beta-1
 - TbActiveForm working
-- more widgets working 
+- more widgets working
 - api doc
 - travis, and scrutinizer ci
 
@@ -45,34 +46,34 @@ Antonio Ramirez.
 - upgrade the bootstrap version to 3.1.1
 - upgrade and fix many widgets to work with bootstrap 3.1.1
 - many widgets still not ported
-- code structure is not final yet 
+- code structure is not final yet
 - working widgets (TbAlert, TbBadge, TbButton, TbJumbotron, TbLabel, TbProgressBar, TbEditableField, TbEditableColumn, TbEditableDetailView, TbHighChart, TbActiveForm, TbPager)
 - not all TbActiveForm controls are ported yet
 
 ## YiiBooster version 3.0.0
 - **(fix)** TbExtendedGridView - TbProgress inside cell css fix - #448
-- **(enh)** TbGridView - try to register TbEditableColumn scripts for empty providers - works only with CActiveDataProvider - #526 
+- **(enh)** TbGridView - try to register TbEditableColumn scripts for empty providers - works only with CActiveDataProvider - #526
 - **(fix)** TbDatePicker - noconflicts fix - #531
-- **(fix)** TbBox header css fix to overflow its contents - #559 
+- **(fix)** TbBox header css fix to overflow its contents - #559
 - **(fix)** TbEditableSaver moved to comonents instead of widgets
-- **(fix)** TbButtonColumn not displaying images - #604 
-- **(enh)** TbExtendedGridView - with chart categories bindings on xAxis - #608  
-- **(enh)** TbActiveForm - custom label support for radioButtonRow and checkBoxRow - #776  
+- **(fix)** TbButtonColumn not displaying images - #604
+- **(enh)** TbExtendedGridView - with chart categories bindings on xAxis - #608
+- **(enh)** TbActiveForm - custom label support for radioButtonRow and checkBoxRow - #776
 - **(enh)** TbToggleAction - now supports composite key - #668
 - **(enh)** TbExtendedGrid - supporting 'sortableRows' with composite key models - #669
 - **(enh)** TbTimePicker - update to the latest bootstrap-timepicker - #700
-- **(fix)** TbActiveForm - Prevent placeholder rendering as list item - #774 	
+- **(fix)** TbActiveForm - Prevent placeholder rendering as list item - #774
 - **(fix)** TbInput - fix bug using CHtml::resolveName() in getContainerCssClass() - #775
-- **(fix)** TbFormInputElement - fix passing attributes to widget - #773 
-- **(fix)** TbTimePicker error on client side validation - #716 
+- **(fix)** TbFormInputElement - fix passing attributes to widget - #773
+- **(fix)** TbTimePicker error on client side validation - #716
 - **(fix)** Fixed keyField for CArrayDataProvider in TbExtendedGridView - #738
 - **(fix)** TbRelationalColumn - adding submitData - #741
-- **(fix)** packages fix x-editable depends on bootstrap - #742 
-- **(enh)** TbEditableColumn now supports CArrayDataProvider as well as CActiveDataProvider - #745 
+- **(fix)** packages fix x-editable depends on bootstrap - #742
+- **(enh)** TbEditableColumn now supports CArrayDataProvider as well as CActiveDataProvider - #745
 - **(fix)** TbHtml FontAwesome is now working well- #746
-- **(enh)** TbEditable - adding support for the 'source' to be a function that takes the $model as an attribute and returns the proper array 
-- **(fix)** TbSelect2 - disabled fix - #752 
-- **(fix)** JSON Grid now sorts in both ways - #753 
+- **(enh)** TbEditable - adding support for the 'source' to be a function that takes the $model as an attribute and returns the proper array
+- **(fix)** TbSelect2 - disabled fix - #752
+- **(fix)** JSON Grid now sorts in both ways - #753
 - **(fix)** TbGroupGridView - fix rows id - #755
 - **(fix)** TbFileUpload - allow multi instance in the same page - #756
 - **(enh)** TbExtendedGridView - Grid/Chart switcher - fix of chart auto reflow

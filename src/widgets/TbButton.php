@@ -6,7 +6,7 @@
  * @copyright Copyright &copy; Christoffer Niska 2011-
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @since 0.9.10
- * 
+ *
  * @author Amr Bedair <amr.bedair@gmail.com>
  * @since v4.0.0 - upgraded to bootstrap 3.1.1
  */
@@ -19,7 +19,7 @@ Yii::import('booster.widgets.TbWidget');
  * @package booster.widgets.forms.buttons
  */
 class TbButton extends TbWidget {
-	
+
 	// Button callback types.
 	const BUTTON_LINK = 'link';
 	const BUTTON_BUTTON = 'button';
@@ -42,13 +42,13 @@ class TbButton extends TbWidget {
 	const SIZE_DEFAULT = 'default';
 	const SIZE_SMALL = 'small';
 	const SIZE_EXTRA_SMALL = 'extra_small';
-	
-	protected static $sizeClasses = [
+
+	protected static $sizeClasses = array(
 		self::SIZE_LARGE => 'btn-lg',
 		self::SIZE_DEFAULT => '',
 		self::SIZE_SMALL => 'btn-sm',
 		self::SIZE_EXTRA_SMALL => 'btn-xs',
-	];
+	);
 
 	/**
 	 * @var string the button callback types.
@@ -152,14 +152,14 @@ class TbButton extends TbWidget {
      * @since 2.1.0
      */
     public $tooltipOptions = array();
-    
+
 	/**
 	 *### .init()
 	 *
 	 * Initializes the widget.
 	 */
 	public function init() {
-		
+
 		if (false === $this->visible) {
 			return;
 		}
@@ -171,9 +171,9 @@ class TbButton extends TbWidget {
 		}
 
 		$validSizes = array(
-			self::SIZE_LARGE, 
+			self::SIZE_LARGE,
 			self::SIZE_DEFAULT,
-			self::SIZE_SMALL, 
+			self::SIZE_SMALL,
 			self::SIZE_EXTRA_SMALL
 		);
 
@@ -289,11 +289,11 @@ class TbButton extends TbWidget {
 		if (false === $this->visible) {
 			return;
 		}
-		
+
 		if ($this->hasDropdown()) {
-			
+
 			echo $this->createButton();
-		
+
 			$this->controller->widget(
 				'booster.widgets.TbDropdown',
 				array(
@@ -316,7 +316,7 @@ class TbButton extends TbWidget {
 	 * @return string the created button.
 	 */
 	protected function createButton() {
-		
+
 		switch ($this->buttonType) {
 			case self::BUTTON_LINK:
 				return CHtml::link($this->label, $this->url, $this->htmlOptions);
@@ -353,26 +353,26 @@ class TbButton extends TbWidget {
 			case self::BUTTON_INPUTSUBMIT:
 				$this->htmlOptions['type'] = 'submit';
 				return CHtml::button($this->label, $this->htmlOptions);
-				
+
 			case self::BUTTON_TOGGLE_RADIO:
 				return $this->createToggleButton('radio');
-				
+
 			case self::BUTTON_TOGGLE_CHECKBOX:
 				return $this->createToggleButton('checkbox');
-				
+
 			default:
 			case self::BUTTON_BUTTON:
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 		}
 	}
-	
+
 	protected function createToggleButton($toggleType) {
-		
+
 		$html = '';
 		$html .= CHtml::openTag('label', $this->htmlOptions);
 		$html .= "<input type='{$toggleType}' name='{$this->id}_options' id='option_{$this->id}'> {$this->label}";
 		$html .= CHtml::closeTag('label');
-		
+
 		return $html;
 	}
 
@@ -384,7 +384,7 @@ class TbButton extends TbWidget {
 	 * @return bool the result.
 	 */
 	protected function hasDropdown() {
-		
+
 		return isset($this->items) && !empty($this->items);
 	}
 }

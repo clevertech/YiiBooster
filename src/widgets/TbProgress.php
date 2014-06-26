@@ -16,7 +16,7 @@ Yii::import('booster.widgets.TbWidget');
  * @since 0.9.10
  */
 class TbProgress extends TbWidget {
-	
+
 	/**
 	 * @var boolean indicates whether the bar is striped.
 	 */
@@ -56,20 +56,20 @@ class TbProgress extends TbWidget {
 
 	protected $progressClasses = array('progress');
 	protected $progressBarClasses = array('progress-bar');
-	
+
 	/**
 	 *### .init()
 	 *
 	 * Initializes the widget.
 	 */
 	public function init() {
-		
+
 		if ($this->isValidContext())
 			$this->progressBarClasses[] = 'progress-bar-' . $this->getContextClass();
-		
+
 		if ($this->striped)
 			$this->progressClasses[] = 'progress-striped';
-		
+
 		if ($this->animated)
 			$this->progressClasses[] = 'active';
 
@@ -96,7 +96,7 @@ class TbProgress extends TbWidget {
 	 * Updated to use stacked progress bars
 	 */
 	public function run() {
-		
+
 		echo CHtml::openTag('div', $this->htmlOptions);
 		if (empty($this->stacked)) {
 			echo '<div class="'.implode(' ', $this->progressBarClasses).'" style="width: ' . $this->percent . '%;">' . $this->content . '</div>';
@@ -122,13 +122,13 @@ class TbProgress extends TbWidget {
 		}
 		echo CHtml::closeTag('div');
 	}
-	
+
 	protected function isValidContext($context = false) {
-		return in_array($this->context, [
-			self::CTX_SUCCESS, 
-			self::CTX_INFO, 
-			self::CTX_WARNING, 
+		return in_array($this->context, array(
+			self::CTX_SUCCESS,
+			self::CTX_INFO,
+			self::CTX_WARNING,
 			self::CTX_DANGER
-		]);
+		));
 	}
 }

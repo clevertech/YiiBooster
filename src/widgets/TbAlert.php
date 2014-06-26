@@ -17,10 +17,10 @@ Yii::import('booster.widgets.TbWidget');
  * @package booster.widgets.decoration
  */
 class TbAlert extends TbWidget {
-	
+
 	const CTX_ERROR = 'error';
 	const CTX_ERROR_CLASS = 'danger';
-	
+
 	/**
 	 * @var array The configuration for individual types of alerts.
 	 *
@@ -89,7 +89,7 @@ class TbAlert extends TbWidget {
 	 * Initializes the widget.
 	 */
 	public function init() {
-		
+
 		if (!isset($this->htmlOptions['id'])) {
 			$this->htmlOptions['id'] = $this->getId();
 		}
@@ -116,7 +116,7 @@ class TbAlert extends TbWidget {
 	 * Runs the widget.
 	 */
 	public function run() {
-		
+
 		$id = $this->htmlOptions['id'];
 
 		echo CHtml::openTag('div', $this->htmlOptions);
@@ -169,7 +169,7 @@ class TbAlert extends TbWidget {
 	 * @param $alertText
 	 */
 	protected function renderSingleAlert($alert, $context, $alertText) {
-		
+
 		$classes = array('alert in');
 
 		if (!isset($alert['fade'])) {
@@ -213,18 +213,18 @@ class TbAlert extends TbWidget {
 		echo $alertText;
 		echo CHtml::closeTag('div');
 	}
-	
+
 	/**
 	 * only these are allowed for alerts
 	 */
 	protected function isValidContext($context = false) {
-		return in_array($context, [
+		return in_array($context, array(
 			self::CTX_SUCCESS,
 			self::CTX_INFO,
 			self::CTX_WARNING,
 			self::CTX_DANGER,
 			self::CTX_ERROR,
-		]);
+		));
 	}
-	
+
 }

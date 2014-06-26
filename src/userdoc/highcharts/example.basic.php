@@ -4,9 +4,9 @@ $this->widget(
     array(
         'options' => array(
             'series' => array(
-                [
-                    'data' => [1, 2, 3, 4, 5, 1, 2, 1, 4, 3, 1, 5]
-                ]
+                array(
+                    'data' => array(1, 2, 3, 4, 5, 1, 2, 1, 4, 3, 1, 5)
+                )
             )
         )
     )
