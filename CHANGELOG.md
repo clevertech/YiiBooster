@@ -11,6 +11,11 @@ Antonio Ramirez.
 ## YiiBooster latest development alpha
 -
 
+## YiiBooster version 3.1.2
+- **(fix)** grid fix to allow multiple TbRelationalColumn 
+- **(fix)** TbBox fix to let content vertically centered
+- **(fix)** 
+
 ## YiiBooster version 3.1.1 
 - **(fix)** added TbHtml TbArray dependency  
 - **(fix)** fix font-awesome for TbHtml
