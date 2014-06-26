@@ -4,7 +4,7 @@
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('booster.widgets.TbGridView');
@@ -25,7 +25,7 @@ Yii::import('booster.widgets.TbGridView');
  * @package booster.widgets.grids
  */
 class TbExtendedGridView extends TbGridView {
-	
+
 	/**
 	 * @var bool $fixedHeader if set to true will keep the header fixed  position
 	 */
@@ -253,7 +253,7 @@ class TbExtendedGridView extends TbGridView {
 	public function renderKeys()
 	{
 		$data = $this->dataProvider->getData();
-		
+
 		if (!$this->sortableRows || (isset($data[0]) && !isset($data[0]->attributes[(string)$this->sortableAttribute]))) {
 			parent::renderKeys();
 		}
@@ -334,7 +334,7 @@ class TbExtendedGridView extends TbGridView {
 	 * Renders grid header
 	 */
 	public function renderTableHeader() {
-		
+
 		$this->renderChart();
 		parent::renderTableHeader();
 	}
@@ -374,7 +374,7 @@ class TbExtendedGridView extends TbGridView {
 	 *### .renderBulkActions()
 	 */
 	public function renderBulkActions() {
-		
+
         Booster::getBooster()->registerAssetJs('jquery.saveselection.gridview.js');
         $this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.afterUpdateGrid('".$this->id."');";
 		echo '<tr><td colspan="' . count($this->columns) . '">';
@@ -390,7 +390,7 @@ class TbExtendedGridView extends TbGridView {
 	 * @throws CException
 	 */
 	public function renderChart() {
-		
+
 		if (!$this->displayChart || $this->dataProvider->getItemCount() <= 0) {
 			return;
 		}
@@ -454,7 +454,7 @@ class TbExtendedGridView extends TbGridView {
 			}
 			return false;
 		});';
-		
+
 		$this->componentsAfterAjaxUpdate[] = '
 			if($("label.grid.'.$this->getId().'-grid-control").hasClass("active")) {
 				$("#' . $this->getId() . ' #' . $chartId . '").hide();
@@ -492,8 +492,8 @@ class TbExtendedGridView extends TbGridView {
 			++$cnt;
 		}
 
-		$xAxisData = [];
-		
+		$xAxisData = array();
+
 		$xAxisData[] = array('categories'=>array());
 		if(!empty($this->chartOptions['data']['xAxis'])){
 			$xAxis = $this->chartOptions['data']['xAxis'];
@@ -515,7 +515,7 @@ class TbExtendedGridView extends TbGridView {
 				}
 			}
 		}
-		
+
 		// ****************************************
 		// render chart
 		$options = CMap::mergeArray(
@@ -524,13 +524,13 @@ class TbExtendedGridView extends TbGridView {
 		);
 		$this->chartOptions['htmlOptions'] = isset($this->chartOptions['htmlOptions'])
 			? $this->chartOptions['htmlOptions'] : array();
-		
+
 		// sorry but use a class to provide styles, we need this
 		if(empty($this->chartOptions['htmlOptions']['style']))
 			$this->chartOptions['htmlOptions']['style'] = 'width: 100%; height: 100%;';
 		else
 			$this->chartOptions['htmlOptions']['style'] = $this->chartOptions['htmlOptions']['style'].'; width: 100%; height: 100%;';
-		
+
 		// build unique ID
 		// important!
 		echo '<div>';
@@ -549,7 +549,7 @@ class TbExtendedGridView extends TbGridView {
 			echo "<div id='{$chartId}' " . CHtml::renderAttributes(
 				$this->chartOptions['htmlOptions']
 			) . " data-config='{$jsOptions}'></div>";
-			
+
 			/* fix for chart dimensions changing after ajax */
 			$this->componentsAfterAjaxUpdate[] = "
 				$('#".$chartId."').width($('#".$this->id." table').width());
@@ -569,7 +569,7 @@ class TbExtendedGridView extends TbGridView {
 		echo '</div>';
 		// end chart display
 		// ****************************************
-		
+
 		// check if the chart should appear by default
 		if(isset($this->chartOptions['defaultView']) && $this->chartOptions['defaultView'] === true) {
 			$this->componentsReadyScripts[] = '
@@ -1215,7 +1215,7 @@ class TbPercentOfTypeGooglePieOperation extends TbPercentOfTypeOperation
 	 * @return mixed|void
 	 */
 	public function displaySummary() {
-		
+
 		$this->data[] = array('Label', 'Percent');
 
 		foreach ($this->types as $type) {

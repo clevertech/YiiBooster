@@ -4,9 +4,9 @@
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @since 0.9.10
- * 
+ *
  * @author Amr Bedair <amr.bedair@gmail.com>
  * @since v4.0.0 - upgraded to bootstrap 3.1.1
  */
@@ -21,7 +21,7 @@ Yii::import('booster.widgets.TbButton');
  * @package booster.widgets.forms.buttons
  */
 class TbButtonGroup extends CWidget {
-	
+
 	// Toggle options.
 	const TOGGLE_CHECKBOX = 'checkbox';
 	const TOGGLE_RADIO = 'radio';
@@ -37,7 +37,7 @@ class TbButtonGroup extends CWidget {
 	 * @see BootButton::type
 	 */
 	public $context = TbButton::CTX_DEFAULT;
-	
+
 	/**
 	 * @var boolean indicates whether to use justified button groups
 	 */
@@ -89,9 +89,9 @@ class TbButtonGroup extends CWidget {
 	 * Initializes the widget.
 	 */
 	public function init() {
-		
-		$classes = [];
-		
+
+		$classes = array();
+
 		if ($this->stacked === true) {
 			$classes[] = 'btn-group-vertical';
 		} else {
@@ -101,7 +101,7 @@ class TbButtonGroup extends CWidget {
 		if ($this->dropup === true) {
 			$classes[] = 'dropup';
 		}
-		
+
 		if ($this->justified === true) {
 			$classes[] = 'btn-group-justified';
 		}
@@ -128,23 +128,23 @@ class TbButtonGroup extends CWidget {
 	 * Runs the widget.
 	 */
 	public function run() {
-		
+
 		echo CHtml::openTag('div', $this->htmlOptions);
 
 		foreach ($this->buttons as $button) {
 			if (isset($button['visible']) && $button['visible'] === false) {
 				continue;
 			}
-			
+
 			$validToggles = array(self::TOGGLE_CHECKBOX, self::TOGGLE_RADIO);
 			if (isset($this->toggle) && in_array($this->toggle, $validToggles)) {
 				$this->buttonType = $this->toggle;
 			}
-			
+
 			$justifiedNotLink = $this->justified && $this->buttonType !== TbButton::BUTTON_LINK;
 			if($justifiedNotLink)
 				echo '<div class="btn-group">';
-			
+
 			$this->controller->widget(
 				'booster.widgets.TbButton',
 				array(
@@ -165,7 +165,7 @@ class TbButtonGroup extends CWidget {
                     'tooltipOptions' => isset($button['tooltipOptions']) ? $button['tooltipOptions'] : array(),
 				)
 			);
-			
+
 			if($justifiedNotLink)
 				echo '</div>';
 		}
