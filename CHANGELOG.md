@@ -15,6 +15,7 @@ Antonio Ramirez.
 - **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
 - **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
 - **(fix)** allow multi relational column - #872  
+- **(fix)** fix TbButton dropdown items -maybe removed in a future release-
 - **(enh)** 
 
 ## YiiBooster version 4.0.1
