@@ -12,14 +12,20 @@ Yii::import('booster.widgets.TbDataColumn');
 /**
  *## Class TbPopoverColumn
  *
- * The TbPopoverColumn works with TbJsonGridView and allows you to create a column that will display a picker element
- * The picker is a special plugin that renders a dropdown on click, which contents can be dynamically updated.
+ * The TbPopoverColumn works with TbExtendedGridView and allows you to create a column that will display a popover element
+ * The popover is a special plugin that renders a dropdown on click, which contents can be dynamically updated.
  *
  * @see <http://getbootstrap.com/javascript/#popovers>
  * 
  * @package booster.widgets.grids.columns
  */
 class TbPopoverColumn extends TbDataColumn {
+	
+	
+	/**
+	 * @var string $class the class name to use to display picker
+	 */
+	public $class = 'bootstrap-popover';
 	
 	/**
 	 * @var array $pickerOptions the javascript options for the picker bootstrap plugin. The picker bootstrap plugin
@@ -50,24 +56,33 @@ class TbPopoverColumn extends TbDataColumn {
 		} else if ($this->name !== null) {
 			$value = CHtml::value($data, $this->name);
 		}
-
-		$htmlOptions = array('class' => 'bootstrap-popover', 'data-trigger' => 'manual');
 		
-		echo CHtml::link($value, "#", $htmlOptions);
+		$class = preg_replace('/\s+/', '.', $this->class);
+		$value = !isset($value) ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value, $this->type);
+		$value = CHtml::link($value, '#', array('class' => $class, 'data-trigger' => 'manual'));
+		
+		echo $value;
 	}
 	
 	protected function registerClientScript() {
 		
 		$gridId = $this->grid->id;
 		$options = CJavaScript::encode($this->options);
-		
-		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $this->id, "
-			$('#$gridId a.bootstrap-popover').popover($options);	
-			$('#$gridId a.bootstrap-popover').click(function() {
-				$('#$gridId a.bootstrap-popover').not(this).popover('hide');
+		$class = $this->class;
+		$_script = "
+			$('#$gridId a.$class').popover($options);	
+			$(document).on('click', '#$gridId a.$class', function() {
+				$('#$gridId a.$class').not(this).popover('hide');
 				$(this).popover('toggle');
 				return false;
 			});
+		";
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $this->id, "
+			$_script;
 		", CClientScript::POS_READY);
+		
+		if(get_class($this->grid) === 'TbExtendedGridView') {
+			$this->grid->componentsAfterAjaxUpdate[] = "$_script";
+		}
 	}
 }
