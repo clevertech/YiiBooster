@@ -22,6 +22,8 @@ Yii::import('zii.widgets.jui.CJuiInputWidget');
  */
 class TbFileUpload extends CJuiInputWidget
 {
+	private static $_callbackFnPrefix = 'fileupload';
+	
 	/**
 	 * the url to the upload handler
 	 * @var string
@@ -56,6 +58,35 @@ class TbFileUpload extends CJuiInputWidget
 	 */
 	public $imageProcessing = true;
 
+	/**
+	 * Stores callback functions JS code, reffering do jQuery-File-Upload documentation
+	 * Use these values for array keys:
+	 * 	- add, 
+	 *  - submit, 
+	 *  - send, 
+	 *  - done, 
+	 *  - fail, 
+	 *  - always, 
+	 *  - progress, 
+	 *  - progressall, 
+	 *  - start, 
+	 *  - stop
+	 * 	- change, 
+	 *  - pase, 
+	 *  - drop, 
+	 *  - dragover, 
+	 *  - chunksend, 
+	 *  - chunkdone, 
+	 *  - chunkfail, 
+	 *  - chunkalways
+	 *  Another part of callback function name will be added from code.
+	 * 
+	 * See link below for more details:
+	 * @link https://github.com/blueimp/jQuery-File-Upload/wiki/Options#callback-options Callback options
+	 * @var string[] 
+	 */
+	public $callbacks = array( );
+        
 	/**
 	 * @var string name of the form view to be rendered
 	 */
@@ -184,7 +215,7 @@ class TbFileUpload extends CJuiInputWidget
         $booster->registerAssetJs('fileupload/jquery.fileupload-ui.js');
 
 		$options = CJavaScript::encode($this->options);
-		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').fileupload({$options});");
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').fileupload({$options}){$this->generateCallbackBindJSString()};");
 	}
 
 	/**
@@ -208,5 +239,17 @@ class TbFileUpload extends CJuiInputWidget
 			}
 		}
 		return isset($ret) ? $ret : null;
+	}
+	
+	private function generateCallbackBindJSString() {
+		if ( count($this->callbacks) > 0 ) {
+			$output = '';
+			foreach ( $this->callbacks as $callbackName => $fnCode ) {
+				$output .= '.bind("' . self::$_callbackFnPrefix
+					. $callbackName . '", ' . $fnCode . ')';
+                     }
+			return $output;
+		}
+		return '';
 	}
 }
