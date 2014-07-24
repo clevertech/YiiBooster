@@ -110,7 +110,7 @@ abstract class TbBaseMenu extends CMenu {
 
 					if (isset($item['items']) && !empty($item['items'])) {
 						$dropdownOptions = array(
-							'encodeLabel' => $this->encodeLabel,
+							'encodeLabel' => false,
 							'htmlOptions' => isset($item['submenuOptions']) ? $item['submenuOptions']
 								: $this->submenuHtmlOptions,
 							'items' => $item['items'],

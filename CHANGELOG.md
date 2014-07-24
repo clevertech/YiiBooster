@@ -19,6 +19,7 @@ Antonio Ramirez.
 - **(enh)** add callbacks support to TbFileUpload
 - **(fix)** fix wrong fint size of jQuery UI button type "link"
 - **(fix)** fix TbButton type link
+- **(fix)** fix TbMenu encodes drop down menu items twice - #887
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851
