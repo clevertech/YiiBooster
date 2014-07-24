@@ -16,7 +16,9 @@ Antonio Ramirez.
 - **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
 - **(fix)** allow multi relational column - #872  
 - **(fix)** fix TbButton dropdown items -maybe removed in a future release-
-- **(enh)** 
+- **(enh)** add callbacks support to TbFileUpload
+- **(fix)** fix wrong fint size of jQuery UI button type "link"
+- **(fix)** fix TbButton type link
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851

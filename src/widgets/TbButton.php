@@ -169,6 +169,10 @@ class TbButton extends TbWidget {
 		if ($this->isValidContext()) {
 			$classes[] = 'btn-' . $this->getContextClass();
 		}
+		
+		if($this->buttonType == self::BUTTON_LINK) {
+			$classes[] = 'btn-link';
+		}
 
 		$validSizes = array(
 			self::SIZE_LARGE, 
