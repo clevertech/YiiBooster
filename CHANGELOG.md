@@ -14,6 +14,7 @@ Antonio Ramirez.
 ## YiiBooster version 3.1.2
 - **(fix)** grid fix to allow multiple TbRelationalColumn 
 - **(fix)** TbBox fix to let content vertically centered
+- **(fix)** fix TbMenu encodes drop down menu items twice - #887
 - **(fix)** 
 
 ## YiiBooster version 3.1.1 
