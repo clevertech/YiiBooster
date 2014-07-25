@@ -142,7 +142,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		ob_start();
 		$form->init(); // init sets the errorMessageCssClass !
 		ob_clean();
-		$this->assertAttributeEquals('help-block error', 'errorMessageCssClass', $form);
+		$this->assertAttributeEquals('foo bar', 'errorMessageCssClass', $form);
 	}
 
 	public function testInitClientOptions() {
@@ -160,7 +160,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		ob_start();
 		$form->init();
 		ob_clean();
-		$this->assertEquals('div.form-group', $form->clientOptions['inputContainer']);
+		$this->assertEquals('foobar', $form->clientOptions['inputContainer']);
 
 		$form = $this->makeWidget();
 		$form->type = 'vertical';
