@@ -548,7 +548,7 @@ class TbEditable extends CWidget
             $widget = Yii::app()->widgetFactory->createWidget(
                 $this->getOwner(),
                 'booster.widgets.TbDateTimePicker',
-                array('options' => $this->options['datetimepicker'])
+                array('options' => isset($this->options['datetimepicker']) ? $this->options['datetimepicker'] : array())
             );
             $widget->registerLanguageScript();
         }
