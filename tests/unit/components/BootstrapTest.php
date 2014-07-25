@@ -28,7 +28,7 @@ class BoosterTest extends PHPUnit_Framework_TestCase {
 
 	public function BootstrapCssFilenames() {
 		
-		$cdn_url = '//netdna.bootstrapcdn.com/bootstrap/3.1.1';
+		$cdn_url = '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0';
 		$local_url = 'assets'; // make sure it's equal to `assetsUrl` defined in relevant test!
 		return array(
 			// $cdn, $responsive, $fontawesome, $mincss, $expected_filename
@@ -49,7 +49,7 @@ class BoosterTest extends PHPUnit_Framework_TestCase {
 			// array(false, true, true, true, "{$local_url}/bootstrap/css/bootstrap.no-icons.min.css"),
 			// array(false, true, true, false, "{$local_url}/bootstrap/css/bootstrap.no-icons.css"),
 			array(true, true, false, true, "{$cdn_url}/css/bootstrap.min.css"),
-			array(true, true, false, false, "{$cdn_url}/css/bootstrap.min.css"),
+			array(true, true, false, false, "{$cdn_url}/css/bootstrap.css"),
 			array(false, true, false, true, "{$local_url}/bootstrap/css/bootstrap.min.css"),
 			array(false, true, false, false, "{$local_url}/bootstrap/css/bootstrap.css"),
 
