@@ -12,6 +12,7 @@ Antonio Ramirez.
 -
   
 ## YiiBooster version 4.1.0
+- **(enh)** upgarde to Bootstrap 3.2.0 - #882
 - **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
 - **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
 - **(fix)** allow multi relational column - #872  
@@ -21,6 +22,7 @@ Antonio Ramirez.
 - **(fix)** fix TbButton type link
 - **(fix)** fix TbMenu encodes drop down menu items twice - #887
 - **(fix)** fix TbActiveForm allow to overwrite clientOptions[errorCssClass, successCssClass, inputContainer], and errorMessageCssClass - #891
+- **(fix)** fix TbEditable validating datetimepicker options existence in case of type datetime
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851

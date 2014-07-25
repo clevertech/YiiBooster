@@ -23,7 +23,7 @@
  * @author Amr Bedair <amr.bedair@gmail.com>
  * @version 3.0.1
  * 
- * Bootstrap 3.1.1
+ * Bootstrap 3.x.x
  * @author Amr Bedair <amr.bedair@gmail.com>
  * @version 4.0.0
  * 
@@ -435,8 +435,8 @@ class Booster extends CApplicationComponent {
 	protected function createBootstrapCssPackage() {
 		
 		return array('bootstrap.css' => array(
-			'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/bootstrap/3.1.1/' : $this->getAssetsUrl() . '/bootstrap/',
-			'css' => array( ($this->minify || $this->enableCdn) ? 'css/bootstrap.min.css' : 'css/bootstrap.css' ),
+			'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/' : $this->getAssetsUrl() . '/bootstrap/',
+			'css' => array($this->minify? 'css/bootstrap.min.css' : 'css/bootstrap.css'),
 		));
 	}
 
