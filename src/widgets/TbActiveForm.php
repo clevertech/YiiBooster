@@ -143,11 +143,19 @@ class TbActiveForm extends CActiveForm {
 		
 		self::addCssClass($this->htmlOptions, 'form' . self::$typeClasses[$this->type]);
 		
-		$this->errorMessageCssClass = 'help-block error';
+		if (!isset($this->errorMessageCssClass)) {
+			$this->errorMessageCssClass = 'help-block error';
+		}
 
-		$this->clientOptions['errorCssClass'] = 'has-error';
-		$this->clientOptions['successCssClass'] = 'has-success';
-		$this->clientOptions['inputContainer'] = 'div.form-group';
+		if(!isset($this->clientOptions['errorCssClass'])){
+			$this->clientOptions['errorCssClass'] = 'has-error';
+		}
+		if(!isset($this->clientOptions['successCssClass'])){
+			$this->clientOptions['successCssClass'] = 'has-success';
+		}
+		if(!isset($this->clientOptions['inputContainer'])){
+			$this->clientOptions['inputContainer'] = 'div.form-group';
+		}
 
 		parent::init();
 	}

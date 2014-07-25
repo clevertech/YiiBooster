@@ -20,6 +20,7 @@ Antonio Ramirez.
 - **(fix)** fix wrong fint size of jQuery UI button type "link"
 - **(fix)** fix TbButton type link
 - **(fix)** fix TbMenu encodes drop down menu items twice - #887
+- **(fix)** fix TbActiveForm allow to overwrite clientOptions[errorCssClass, successCssClass, inputContainer], and errorMessageCssClass - #891
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851
