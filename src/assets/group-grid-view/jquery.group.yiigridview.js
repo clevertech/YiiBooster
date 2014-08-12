@@ -37,7 +37,7 @@
 
 	methods = {
 		/**
-		 * yiiGridView set function.
+		 * yiiGroupGridView set function.
 		 * @param options map settings for the grid view. Available options are as follows:
 		 * - ajaxUpdate: array, IDs of the containers whose content may be updated by ajax response
 		 * - ajaxVar: string, the name of the request variable indicating the ID of the element triggering the AJAX request
@@ -98,7 +98,7 @@
 							delete params[settings.ajaxVar];
 							window.History.pushState(null, document.title, decodeURIComponent($.param.querystring(url[0], params)));
 						} else {
-							$('#' + id).yiiGridView('update', {url: $(this).attr('href')});
+							$('#' + id).yiiGroupGridView('update', {url: $(this).attr('href')});
 						}
 						return false;
 					});
@@ -124,13 +124,13 @@
 					}
 					if (settings.enableHistory && settings.ajaxUpdate !== false && window.History.enabled) {
 						// Ajaxify this link
-						var url = $('#' + id).yiiGridView('getUrl'),
+						var url = $('#' + id).yiiGroupGridView('getUrl'),
 							params = $.deparam.querystring($.param.querystring(url, data));
 
 						delete params[settings.ajaxVar];
 						window.History.pushState(null, document.title, decodeURIComponent($.param.querystring(url.substr(0, url.indexOf('?')), params)));
 					} else {
-						$('#' + id).yiiGridView('update', {data: data});
+						$('#' + id).yiiGroupGridView('update', {data: data});
 					}
 					return false;
 				});
@@ -138,7 +138,7 @@
 				if (settings.enableHistory && settings.ajaxUpdate !== false && window.History.enabled) {
 					$(window).bind('statechange', function() { // Note: We are using statechange instead of popstate
 						var State = window.History.getState(); // Note: We are using History.getState() instead of event.state
-						$('#' + id).yiiGridView('update', {url: State.url});
+						$('#' + id).yiiGroupGridView('update', {url: State.url});
 					});
 				}
 
@@ -253,7 +253,7 @@
 
 				options = $.extend({
 					type: settings.ajaxType,
-					url: $grid.yiiGridView('getUrl'),
+					url: $grid.yiiGroupGridView('getUrl'),
 					success: function (data) {
 						var $data = $('<div>' + data + '</div>');
 						$.each(settings.ajaxUpdate, function (i, el) {
@@ -398,7 +398,7 @@
 		} else if (typeof method === 'object' || !method) {
 			return methods.init.apply(this, arguments);
 		} else {
-			$.error('Method ' + method + ' does not exist on jQuery.yiiGridView');
+			$.error('Method ' + method + ' does not exist on jQuery.yiiGroupGridView');
 			return false;
 		}
 	};
