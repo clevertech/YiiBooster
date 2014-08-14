@@ -25,6 +25,8 @@ Antonio Ramirez.
 - **(fix)** fix TbActiveForm allow to overwrite clientOptions[errorCssClass, successCssClass, inputContainer], and errorMessageCssClass - #891
 - **(fix)** fix TbEditable validating datetimepicker options existence in case of type datetime
 - **(fix)** fix datepicker z-index problem - #873
+- **(fix)** fix markdownEditorGroup Preview Button does not function correctly - #900 
+- **(enh)** upgraded to bootstrap markdown 2.5.0
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851

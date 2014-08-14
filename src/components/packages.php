@@ -145,7 +145,7 @@ return array(
 		'depends' => array('bootstrap.js'),
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-markdown',
 		'css' => array('css/bootstrap-markdown.min.css'),
-		'js' => array('js/bootstrap-markdown.js'),
+		'js' => array('js/bootstrap-markdown.js', 'js/to-markdown.js', 'js/markdown.js'),
 	),
 	'switch' => array(
 		'depends' => array('bootstrap.js'),

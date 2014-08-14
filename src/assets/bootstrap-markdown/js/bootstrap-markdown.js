@@ -1,5 +1,5 @@
 /* ===================================================
- * bootstrap-markdown.js v2.3.1
+ * bootstrap-markdown.js v2.5.0
  * http://github.com/toopay/bootstrap-markdown
  * ===================================================
  * Copyright 2013 Taufan Aditya
@@ -30,7 +30,7 @@
     this.$ns          = 'bootstrap-markdown'
     this.$element     = $(element)
     this.$editable    = {el:null, type:null,attrKeys:[], attrValues:[], content:null}
-    this.$options     = $.extend(true, {}, $.fn.markdown.defaults, options)
+    this.$options     = $.extend(true, {}, $.fn.markdown.defaults, options, this.$element.data(), this.$element.data('options'))
     this.$oldContent  = null
     this.$isPreview   = false
     this.$editor      = null
@@ -87,7 +87,9 @@
                 buttonIcon = button.icon instanceof Object ? button.icon[this.$options.iconlibrary] : button.icon,
                 btnText = button.btnText ? button.btnText : '',
                 btnClass = button.btnClass ? button.btnClass : 'btn',
-                tabIndex = button.tabIndex ? button.tabIndex : '-1'
+                tabIndex = button.tabIndex ? button.tabIndex : '-1',
+                hotkey = typeof button.hotkey !== 'undefined' ? button.hotkey : '',
+                hotkeyCaption = typeof jQuery.hotkeys !== 'undefined' && hotkey !== '' ? ' ('+hotkey+')' : ''
 
             if (button.toggle == true) {
               buttonToggle = ' data-toggle="button"'
@@ -97,19 +99,22 @@
             btnGroupContainer.append('<button type="button" class="'
                                     +btnClass
                                     +' btn-default btn-sm" title="'
-                                    +button.title
+                                    +this.__localize(button.title)
+                                    +hotkeyCaption
                                     +'" tabindex="'
                                     +tabIndex
                                     +'" data-provider="'
                                     +ns
                                     +'" data-handler="'
                                     +buttonHandler
+                                    +'" data-hotkey="'
+                                    +hotkey
                                     +'"'
                                     +buttonToggle
                                     +'><span class="'
                                     +buttonIcon
                                     +'"></span> '
-                                    +btnText
+                                    +this.__localize(btnText)
                                     +'</button>')
 
             // Register handler and callback
@@ -131,12 +136,15 @@
           rowsVal = hasRows ? this.$textarea.attr('rows') : maxRows
 
       this.$textarea.attr('rows',rowsVal)
-      this.$textarea.css('resize','none')
+      if (this.$options.resize) {
+        this.$textarea.css('resize',this.$options.resize)
+      }
 
       this.$textarea
         .on('focus',    $.proxy(this.focus, this))
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this))
+        .on('change',   $.proxy(this.change, this))
 
       if (this.eventSupported('keydown')) {
         this.$textarea.on('keydown', $.proxy(this.keydown, this))
@@ -159,6 +167,9 @@
 
       callbackHandler(this)
 
+      // Trigger onChange for each button handle
+      this.change(this);
+
       // Unless it was the save handler,
       // focusin the textarea
       if (handlerName.indexOf('cmdSave') < 0) {
@@ -166,6 +177,19 @@
       }
 
       e.preventDefault()
+    }
+
+  , __localize: function(string) {
+      var messages = $.fn.markdown.messages,
+          language = this.$options.language
+      if (
+        typeof messages !== 'undefined' &&
+        typeof messages[language] !== 'undefined' &&
+        typeof messages[language][string] !== 'undefined'
+      ) {
+        return messages[language][string];
+      }
+      return string;
     }
 
   , showEditor: function() {
@@ -193,14 +217,27 @@
                             'class': 'md-header btn-toolbar'
                             })
 
-        // Build the main buttons
-        if (options.buttons.length > 0) {
-          editorHeader = this.__buildButtons(options.buttons, editorHeader)
+        // Merge the main & additional button groups together
+        var allBtnGroups = []
+        if (options.buttons.length > 0) allBtnGroups = allBtnGroups.concat(options.buttons[0])
+        if (options.additionalButtons.length > 0) allBtnGroups = allBtnGroups.concat(options.additionalButtons[0])
+
+        // Reduce and/or reorder the button groups
+        if (options.reorderButtonGroups.length > 0) {
+          allBtnGroups = allBtnGroups
+              .filter(function(btnGroup) {
+                return options.reorderButtonGroups.indexOf(btnGroup.name) > -1
+              })
+              .sort(function(a, b) {
+                if (options.reorderButtonGroups.indexOf(a.name) < options.reorderButtonGroups.indexOf(b.name)) return -1
+                if (options.reorderButtonGroups.indexOf(a.name) > options.reorderButtonGroups.indexOf(b.name)) return 1
+                return 0
+              })
         }
 
-        // Build the additional buttons
-        if (options.additionalButtons.length > 0) {
-          editorHeader = this.__buildButtons(options.additionalButtons, editorHeader)
+        // Build the buttons
+        if (allBtnGroups.length > 0) {
+          editorHeader = this.__buildButtons([allBtnGroups], editorHeader)
         }
 
         editor.append(editorHeader)
@@ -237,12 +274,15 @@
           container.replaceWith(editor)
         }
 
-        // Create the footer if savable
-        if (options.savable) {
-          var editorFooter = $('<div/>', {
+        var editorFooter = $('<div/>', {
                            'class': 'md-footer'
                          }),
-              saveHandler = 'cmdSave'
+            createFooter = false,
+            footer = ''
+        // Create the footer if savable
+        if (options.savable) {
+          createFooter = true;
+          var saveHandler = 'cmdSave'
 
           // Register handler and callback
           handler.push(saveHandler)
@@ -252,21 +292,43 @@
                               +ns
                               +'" data-handler="'
                               +saveHandler
-                              +'"><i class="icon icon-white icon-ok"></i> Save</button>')
+                              +'"><i class="icon icon-white icon-ok"></i> '
+                              +this.__localize('Save')
+                              +'</button>')
 
-          editor.append(editorFooter)
+          
         }
 
-        // Set width/height
-        $.each(['height','width'],function(k,attr){
-          if (options[attr] != 'inherit') {
-            if (jQuery.isNumeric(options[attr])) {
-              editor.css(attr,options[attr]+'px')
-            } else {
-              editor.addClass(options[attr])
-            }
+        footer = typeof options.footer === 'function' ? options.footer(this) : options.footer
+
+        if ($.trim(footer) !== '') {
+          createFooter = true;
+          editorFooter.append(footer);
+        }
+
+        if (createFooter) editor.append(editorFooter)
+
+        // Set width
+        if (options.width && options.width !== 'inherit') {
+          if (jQuery.isNumeric(options.width)) {
+            editor.css('display', 'table')
+            textarea.css('width', options.width + 'px')
+          } else {
+            editor.addClass(options.width)
           }
-        })
+        }
+
+        // Set height
+        if (options.height && options.height !== 'inherit') {
+          if (jQuery.isNumeric(options.height)) {
+            var height = options.height
+            if (editorHeader) height = Math.max(0, height - editorHeader.outerHeight())
+            if (editorFooter) height = Math.max(0, height - editorFooter.outerHeight())
+            textarea.css('height', height + 'px')
+          } else {
+            editor.addClass(options.height)
+          }
+        }
 
         // Reference
         this.$editor     = editor
@@ -280,6 +342,23 @@
         this.$editor.attr('id',(new Date).getTime())
         this.$editor.on('click', '[data-provider="bootstrap-markdown"]', $.proxy(this.__handle, this))
 
+        if (this.$element.is(':disabled') || this.$element.is('[readonly]')) {
+          this.disableButtons('all');
+        }
+
+        if (this.eventSupported('keydown') && typeof jQuery.hotkeys === 'object') {
+          editorHeader.find('[data-provider="bootstrap-markdown"]').each(function() {
+            var $button = $(this),
+              hotkey = $button.attr('data-hotkey')
+            if (hotkey.toLowerCase() !== '') {
+              textarea.bind('keydown', hotkey, function() {
+                $button.trigger('click')
+                return false;
+              })
+            }
+          })
+        }
+
       } else {
         this.$editor.show()
       }
@@ -289,15 +368,46 @@
         this.$editor.addClass('active')
       }
 
+      if (options.initialstate === 'preview') {
+        this.showPreview();
+      }
+
+      // hide hidden buttons from options
+      this.hideButtons(options.hiddenButtons)
+
+      // disable disabled buttons from options
+      this.disableButtons(options.disabledButtons)
+
       // Trigger the onShow hook
       options.onShow(this)
 
       return this
     }
 
+  , parseContent: function() {
+      var content,
+        callbackContent = this.$options.onPreview(this) // Try to get the content from callback
+      
+      if (typeof callbackContent == 'string') {
+        // Set the content based by callback content
+        content = callbackContent
+      } else {
+        // Set the content
+        var val = this.$textarea.val();
+        if(typeof markdown == 'object') {
+          content = markdown.toHTML(val);
+        }else if(typeof marked == 'function') {
+          content = marked(val);
+        } else {
+          content = val;
+        }
+      }
+
+      return content;
+    }
+
   , showPreview: function() {
       var options = this.$options,
-          callbackContent = options.onPreview(this), // Try to get the content from callback
           container = this.$textarea,
           afterContainer = container.next(),
           replacementContainer = $('<div/>',{'class':'md-preview','data-provider':'markdown-preview'}),
@@ -308,20 +418,7 @@
       // Disable all buttons
       this.disableButtons('all').enableButtons('cmdPreview')
 
-      if (typeof callbackContent == 'string') {
-        // Set the content based by callback content
-        content = callbackContent
-      } else {
-        // Set the content
-        var val = container.val();
-        if(typeof markdown == 'object') {
-          content = markdown.toHTML(val);
-        }else if(typeof marked == 'function') {
-          content = marked(val);
-        } else {
-          content = val;
-        }
-      }
+      content = this.parseContent()
 
       // Build preview element
       replacementContainer.html(content)
@@ -333,6 +430,12 @@
         // Otherwise, just append it after textarea
         container.parent().append(replacementContainer)
       }
+
+      // Set the preview element dimensions
+      replacementContainer.css({
+        width: container.outerWidth() + 'px',
+        height: container.outerHeight() + 'px'
+      })
 
       // Hide the last-active textarea
       container.hide()
@@ -494,24 +597,70 @@
       return
     }
 
-  , enableButtons: function(name) {
-      var alter = function (el) {
-        el.removeAttr('disabled')
+  , __parseButtonNameParam: function(nameParam) {
+      var buttons = []
+
+      if (typeof nameParam == 'string') {
+        buttons.push(nameParam)
+      } else {
+        buttons = nameParam
       }
 
-      this.__alterButtons(name,alter)
+      return buttons
+    }
 
-      return this
+  , enableButtons: function(name) {
+      var buttons = this.__parseButtonNameParam(name),
+        that = this
+
+      $.each(buttons, function(i, v) {
+        that.__alterButtons(buttons[i], function (el) {
+          el.removeAttr('disabled')
+        });
+      })
+
+      return this;
     }
 
   , disableButtons: function(name) {
-      var alter = function (el) {
-        el.attr('disabled','disabled')
-      }
+      var buttons = this.__parseButtonNameParam(name),
+        that = this
 
-      this.__alterButtons(name,alter)
+      $.each(buttons, function(i, v) {
+        that.__alterButtons(buttons[i], function (el) {
+          el.attr('disabled','disabled')
+        });
+      })
 
-      return this
+      return this;
+    }
+
+  , hideButtons: function(name) {
+      var buttons = this.__parseButtonNameParam(name),
+        that = this
+
+      $.each(buttons, function(i, v) {
+        that.__alterButtons(buttons[i], function (el) {
+          el.addClass('hidden');
+        });
+      })
+
+      return this;
+
+    }
+
+  , showButtons: function(name) {
+      var buttons = this.__parseButtonNameParam(name),
+        that = this
+
+      $.each(buttons, function(i, v) {
+        that.__alterButtons(buttons[i], function (el) {
+          el.removeClass('hidden');
+        });
+      })
+
+      return this;
+
     }
 
   , eventSupported: function(eventName) {
@@ -521,16 +670,6 @@
         isSupported = typeof this.$element[eventName] === 'function'
       }
       return isSupported
-    }
-
-  , keydown: function (e) {
-      this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27])
-      this.keyup(e)
-    }
-
-  , keypress: function (e) {
-      if (this.suppressKeyPressRepeat) return
-      this.keyup(e)
     }
 
   , keyup: function (e) {
@@ -585,7 +724,14 @@
         e.stopPropagation()
         e.preventDefault()
       }
-  }
+
+      this.$options.onChange(this)
+    }
+
+  , change: function(e) {
+      this.$options.onChange(this);
+      return this;
+    }
 
   , focus: function (e) {
       var options = this.$options,
@@ -610,7 +756,7 @@
         }
       })
 
-    // Trigger the onFocus hook
+      // Trigger the onFocus hook
       options.onFocus(this);
 
       return this
@@ -671,6 +817,8 @@
     })
   }
 
+  $.fn.markdown.messages = {}
+
   $.fn.markdown.defaults = {
     /* Editor Properties */
     autofocus: false,
@@ -678,7 +826,10 @@
     savable:false,
     width: 'inherit',
     height: 'inherit',
+    resize: 'none',
     iconlibrary: 'glyph',
+    language: 'en',
+    initialstate: 'editor',
 
     /* Buttons Properties */
     buttons: [
@@ -686,15 +837,16 @@
         name: 'groupFont',
         data: [{
           name: 'cmdBold',
+          hotkey: 'Ctrl+B',
           title: 'Bold',
-          icon: { glyph: 'glyphicon glyphicon-bold', fa: 'fa fa-bold' },
+          icon: { glyph: 'glyphicon glyphicon-bold', fa: 'fa fa-bold', 'fa-3': 'icon-bold' },
           callback: function(e){
             // Give/remove ** surround the selection
             var chunk, cursor, selected = e.getSelection(), content = e.getContent()
 
             if (selected.length == 0) {
               // Give extra word
-              chunk = 'strong text'
+              chunk = e.__localize('strong text')
             } else {
               chunk = selected.text
             }
@@ -716,14 +868,15 @@
         },{
           name: 'cmdItalic',
           title: 'Italic',
-          icon: { glyph: 'glyphicon glyphicon-italic', fa: 'fa fa-italic' },
+          hotkey: 'Ctrl+I',
+          icon: { glyph: 'glyphicon glyphicon-italic', fa: 'fa fa-italic', 'fa-3': 'icon-italic' },
           callback: function(e){
             // Give/remove * surround the selection
             var chunk, cursor, selected = e.getSelection(), content = e.getContent()
 
             if (selected.length == 0) {
               // Give extra word
-              chunk = 'emphasized text'
+              chunk = e.__localize('emphasized text')
             } else {
               chunk = selected.text
             }
@@ -745,14 +898,15 @@
         },{
           name: 'cmdHeading',
           title: 'Heading',
-          icon: { glyph: 'glyphicon glyphicon-header', fa: 'fa fa-font' },
+          hotkey: 'Ctrl+H',
+          icon: { glyph: 'glyphicon glyphicon-header', fa: 'fa fa-font', 'fa-3': 'icon-font' },
           callback: function(e){
             // Append/remove ### surround the selection
             var chunk, cursor, selected = e.getSelection(), content = e.getContent(), pointer, prevChar
 
             if (selected.length == 0) {
               // Give extra word
-              chunk = 'heading text'
+              chunk = e.__localize('heading text')
             } else {
               chunk = selected.text + '\n';
             }
@@ -781,19 +935,20 @@
         data: [{
           name: 'cmdUrl',
           title: 'URL/Link',
-          icon: { glyph: 'glyphicon glyphicon-globe', fa: 'fa fa-globe' },
+          hotkey: 'Ctrl+L',
+          icon: { glyph: 'glyphicon glyphicon-link', fa: 'fa fa-link', 'fa-3': 'icon-link' },
           callback: function(e){
             // Give [] surround the selection and prepend the link
             var chunk, cursor, selected = e.getSelection(), content = e.getContent(), link
 
             if (selected.length == 0) {
               // Give extra word
-              chunk = 'enter link description here'
+              chunk = e.__localize('enter link description here')
             } else {
               chunk = selected.text
             }
 
-            link = prompt('Insert Hyperlink','http://')
+            link = prompt(e.__localize('Insert Hyperlink'),'http://')
 
             if (link != null && link != '' && link != 'http://') {
               // transform selection and set the cursor into chunked text
@@ -807,27 +962,28 @@
         },{
           name: 'cmdImage',
           title: 'Image',
-          icon: { glyph: 'glyphicon glyphicon-picture', fa: 'fa fa-picture-o' },
+          hotkey: 'Ctrl+G',
+          icon: { glyph: 'glyphicon glyphicon-picture', fa: 'fa fa-picture-o', 'fa-3': 'icon-picture' },
           callback: function(e){
             // Give ![] surround the selection and prepend the image link
             var chunk, cursor, selected = e.getSelection(), content = e.getContent(), link
 
             if (selected.length == 0) {
               // Give extra word
-              chunk = 'enter image description here'
+              chunk = e.__localize('enter image description here')
             } else {
               chunk = selected.text
             }
 
-            link = prompt('Insert Image Hyperlink','http://')
+            link = prompt(e.__localize('Insert Image Hyperlink'),'http://')
 
             if (link != null) {
               // transform selection and set the cursor into chunked text
-              e.replaceSelection('!['+chunk+']('+link+' "enter image title here")')
+              e.replaceSelection('!['+chunk+']('+link+' "'+e.__localize('enter image title here')+'")')
               cursor = selected.start+2
 
               // Set the next tab
-              e.setNextTab('enter image title here')
+              e.setNextTab(e.__localize('enter image title here'))
 
               // Set the cursor
               e.setSelection(cursor,cursor+chunk.length)
@@ -838,8 +994,9 @@
         name: 'groupMisc',
         data: [{
           name: 'cmdList',
-          title: 'List',
-          icon: { glyph: 'glyphicon glyphicon-list', fa: 'fa fa-list' },
+          hotkey: 'Ctrl+U',
+          title: 'Unordered List',
+          icon: { glyph: 'glyphicon glyphicon-list', fa: 'fa fa-list', 'fa-3': 'icon-list-ul' },
           callback: function(e){
             // Prepend/Give - surround the selection
             var chunk, cursor, selected = e.getSelection(), content = e.getContent()
@@ -847,12 +1004,12 @@
             // transform selection and set the cursor into chunked text
             if (selected.length == 0) {
               // Give extra word
-              chunk = 'list text here'
+              chunk = e.__localize('list text here')
 
               e.replaceSelection('- '+chunk)
-
               // Set the cursor
               cursor = selected.start+2
+              
             } else {
               if (selected.text.indexOf('\n') < 0) {
                 chunk = selected.text
@@ -878,7 +1035,130 @@
               }
             }
 
+            // Set the cursor
+            e.setSelection(cursor,cursor+chunk.length)
+          }
+        },
+        {
+          name: 'cmdListO',
+          hotkey: 'Ctrl+O',
+          title: 'Ordered List',
+          icon: { glyph: 'glyphicon glyphicon-th-list', fa: 'fa fa-list-ol', 'fa-3': 'icon-list-ol' },
+          callback: function(e) {
 
+            // Prepend/Give - surround the selection
+            var chunk, cursor, selected = e.getSelection(), content = e.getContent()
+
+            // transform selection and set the cursor into chunked text
+            if (selected.length == 0) {
+              // Give extra word
+              chunk = e.__localize('list text here')
+              e.replaceSelection('1. '+chunk)
+              // Set the cursor
+              cursor = selected.start+3
+              
+            } else {
+              if (selected.text.indexOf('\n') < 0) {
+                chunk = selected.text
+
+                e.replaceSelection('1. '+chunk)
+
+                // Set the cursor
+                cursor = selected.start+3
+              } else {
+                var list = []
+
+                list = selected.text.split('\n')
+                chunk = list[0]
+
+                $.each(list,function(k,v) {
+                  list[k] = '1. '+v
+                })
+
+                e.replaceSelection('\n\n'+list.join('\n'))
+
+                // Set the cursor
+                cursor = selected.start+5
+              }
+            }
+
+            // Set the cursor
+            e.setSelection(cursor,cursor+chunk.length)
+          }
+        },
+        {
+          name: 'cmdCode',
+          hotkey: 'Ctrl+K',
+          title: 'Code',
+          icon: { glyph: 'glyphicon glyphicon-asterisk', fa: 'fa fa-code', 'fa-3': 'icon-code' },
+          callback: function(e) {
+
+            // Give/remove ** surround the selection
+            var chunk, cursor, selected = e.getSelection(), content = e.getContent()
+
+            if (selected.length == 0) {
+              // Give extra word
+              chunk = e.__localize('code text here')
+            } else {
+              chunk = selected.text
+            }
+
+            // transform selection and set the cursor into chunked text
+            if (content.substr(selected.start-1,1) == '`'
+                && content.substr(selected.end,1) == '`' ) {
+              e.setSelection(selected.start-1,selected.end+1)
+              e.replaceSelection(chunk)
+              cursor = selected.start-1
+            } else {
+              e.replaceSelection('`'+chunk+'`')
+              cursor = selected.start+1
+            }
+
+            // Set the cursor
+            e.setSelection(cursor,cursor+chunk.length)
+          }
+        },
+        {
+          name: 'cmdQuote',
+          hotkey: 'Ctrl+Q',
+          title: 'Quote',
+          icon: { glyph: 'glyphicon glyphicon-comment', fa: 'fa fa-quote-left', 'fa-3': 'icon-quote-left' },
+          callback: function(e) {
+            // Prepend/Give - surround the selection
+            var chunk, cursor, selected = e.getSelection(), content = e.getContent()
+
+            // transform selection and set the cursor into chunked text
+            if (selected.length == 0) {
+              // Give extra word
+              chunk = e.__localize('quote here')
+              e.replaceSelection('> '+chunk)
+              // Set the cursor
+              cursor = selected.start+2
+              
+            } else {
+              if (selected.text.indexOf('\n') < 0) {
+                chunk = selected.text
+
+                e.replaceSelection('> '+chunk)
+
+                // Set the cursor
+                cursor = selected.start+2
+              } else {
+                var list = []
+
+                list = selected.text.split('\n')
+                chunk = list[0]
+
+                $.each(list,function(k,v) {
+                  list[k] = '> '+v
+                })
+
+                e.replaceSelection('\n\n'+list.join('\n'))
+
+                // Set the cursor
+                cursor = selected.start+4
+              }
+            }
 
             // Set the cursor
             e.setSelection(cursor,cursor+chunk.length)
@@ -889,10 +1169,11 @@
         data: [{
           name: 'cmdPreview',
           toggle: true,
+          hotkey: 'Ctrl+P',
           title: 'Preview',
           btnText: 'Preview',
           btnClass: 'btn btn-primary btn-sm',
-          icon: { glyph: 'glyphicon glyphicon-search', fa: 'fa fa-search' },
+          icon: { glyph: 'glyphicon glyphicon-search', fa: 'fa fa-search', 'fa-3': 'icon-search' },
           callback: function(e){
             // Check the preview mode and toggle based on this flag
             var isPreview = e.$isPreview,content
@@ -908,6 +1189,10 @@
       }]
     ],
     additionalButtons:[], // Place to hook more buttons by code
+    reorderButtonGroups:[],
+    hiddenButtons:[], // Default hidden buttons
+    disabledButtons:[], // Default disabled buttons
+    footer: '',
 
     /* Events hook */
     onShow: function (e) {},
@@ -915,6 +1200,7 @@
     onSave: function (e) {},
     onBlur: function (e) {},
     onFocus: function (e) {},
+    onChange: function(e) {}
   }
 
   $.fn.markdown.Constructor = Markdown
@@ -938,7 +1224,7 @@
       return
     }
 
-    $this.markdown($this.data())
+    $this.markdown()
   }
 
   var analyzeMarkdown = function(e) {
