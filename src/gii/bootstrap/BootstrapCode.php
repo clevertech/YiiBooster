@@ -37,10 +37,12 @@ class BootstrapCode extends CrudCode {
 				}
 			} else {
 				if (strpos ( $column->dbType, 'enum(' ) !== false) {
-					$temp = $column->dbType;
-					$temp = str_replace ( 'enum', 'array', $temp );
-					// FIXME: What. The. Seriously, parse the enum declaration from MySQL as an array definition in PHP?!
-					eval ( '$options = ' . $temp . ';' );
+					$matches = '';
+					preg_match('/^enum\((.*)\)$/', $column->dbType, $matches);
+					$options = [];
+					foreach( explode(',', $matches[1]) as $value ) {
+						$options[] = trim( $value, "'" );
+					}
 					$dropdown_options = "array(";
 					foreach ( $options as $option ) {
 						$dropdown_options .= "\"$option\"=>\"$option\",";
