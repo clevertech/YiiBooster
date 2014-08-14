@@ -41,7 +41,7 @@ class TbBadge extends TbWidget {
 		$classes = array('badge');
 
 		if ($this->isValidContext())
-			$classes[] = 'alert-' . $this->getContextClass();
+			$classes[] = 'badge-' . $this->getContextClass();
 
 		if (!empty($classes)) {
 			$classes = implode(' ', $classes);
