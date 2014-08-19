@@ -95,6 +95,16 @@ class Booster extends CApplicationComponent {
 	 * @since 0.9.12
 	 */
 	public $yiiCss = true;
+    
+    /*
+     *  $customTheme will look it there is a custom theme (boolean)
+     *  $customThemeName will have the name of the file placed in theme folder in root (string) [Default: NULL]
+     *  Added by: Salik Sadruddin Merani
+     *  DragoTech Innovations PK
+     *  www.dragotech-innovation.com
+    */
+    public $customTheme = false;
+    public $customThemeName = null;
 
 	/**
 	 * @var boolean Whether to register the JQuery-specific CSS missing from Bootstrap.
@@ -298,13 +308,23 @@ class Booster extends CApplicationComponent {
 		if ($this->responsiveCss)
 			$this->registerMetadataForResponsive();
 
-		if ($this->yiiCss !== false)
+		if ($this->yiiCss !== false){
 			$this->registerYiiCss();
+		}elseif($this->customTheme !== false && !is_null($this->customThemeName)){
+            $this->registerCustomTheme();
+        }
 
 		if ($this->jqueryCss !== false)
 			$this->registerJQueryCss();
 	}
-
+    
+    /*
+     *  Register Themes
+     */
+    public function registerCustomTheme(){
+        Yii::app()->clientScript->registerCssFile( Yii::app()->baseUrl.'/themes/'.$this->customThemeName );
+    }
+    
 	/**
 	 * Register our overrides for jQuery UI + Twitter Bootstrap 2.3 combo
 	 *
