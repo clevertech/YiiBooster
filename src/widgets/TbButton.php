@@ -43,12 +43,12 @@ class TbButton extends TbWidget {
 	const SIZE_SMALL = 'small';
 	const SIZE_EXTRA_SMALL = 'extra_small';
 	
-	protected static $sizeClasses = [
+	protected static $sizeClasses = array(
 		self::SIZE_LARGE => 'btn-lg',
 		self::SIZE_DEFAULT => '',
 		self::SIZE_SMALL => 'btn-sm',
 		self::SIZE_EXTRA_SMALL => 'btn-xs',
-	];
+	);
 
 	/**
 	 * @var string the button callback types.
