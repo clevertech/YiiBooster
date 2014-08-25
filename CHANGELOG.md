@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** fix TbGroupGridView support for rowHtmlOptionsExpression #920
 -
   
 ## YiiBooster version 4.1.0
