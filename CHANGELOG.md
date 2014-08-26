@@ -27,6 +27,7 @@ Antonio Ramirez.
 - **(fix)** fix datepicker z-index problem - #873
 - **(fix)** fix markdownEditorGroup Preview Button does not function correctly - #900 
 - **(enh)** upgraded to bootstrap markdown 2.5.0
+- **(enh)** upgraded to bootstrap-daterangepicker-1.3.12
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851
