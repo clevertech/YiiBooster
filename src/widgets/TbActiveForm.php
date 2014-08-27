@@ -1237,7 +1237,8 @@ class TbActiveForm extends CActiveForm {
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
 		else 
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
-		$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
+		if (!isset($wrapperHtmlOptions['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $wrapperHtmlOptions['class']))
+			$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
 		echo CHtml::openTag('div', $wrapperHtmlOptions);
 
 		if (!empty($options['prepend']) || !empty($options['append'])) {
