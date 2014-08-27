@@ -51,8 +51,8 @@ abstract class TbWidget extends CWidget {
 	 * 
 	 * @param string $context
 	 */
-	protected function isValidContext($cotext = false) {
-		if($cotext)
+	protected function isValidContext($context = false) {
+		if($context)
 			return defined(get_called_class().'::CTX_'.strtoupper($context));
 		else
 			return defined(get_called_class().'::CTX_'.strtoupper($this->context));
