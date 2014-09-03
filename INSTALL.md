@@ -5,16 +5,16 @@
 Write the following to your application config:
 
     'components' => array(
-        'bootstrap' => array(
-            'class' => 'aliased.path.to.booster.directory.and.inside.it.Bootstrap.class'
+        'booster' => array(
+            'class' => 'path.alias.to.booster.components.Booster.class'
         )
     ),
 
 Of course it has to be inside your existing `components` section, do not create second one.
 
-Name of component _must_ be `bootstrap`, please bear with it for now.
+Name of component _must_ be `booster`, please bear with it for now.
 
-See the `components/Bootstrap.php` file for configuration properties of Bootstrap component.
+See the `components/Booster.php` file for configuration properties of the component.
 
 ## 2. Setting up initialization
 
