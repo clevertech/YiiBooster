@@ -17,7 +17,7 @@ Yii::import('zii.widgets.grid.CDataColumn');
  *
  * @package widgets
  */
-class TbEditableColumn extends CDataColumn
+class TbEditableColumn extends TbDataColumn
 {
     /**
     * @var array editable config options.
