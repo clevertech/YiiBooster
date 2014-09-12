@@ -103,9 +103,9 @@ class TbDateTimePicker extends TbBaseInputWidget {
 			if (@file_exists(Yii::getPathOfAlias('booster.assets.bootstrap-datetimepicker') . '/js/' . $file)) {
 				if ($booster->enableCdn) {
 					// Not in CDN yet
-                    $booster->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
+                    $booster->registerAssetJs('../bootstrap-datetimepicker' . '/js/' . $file);
 				} else {
-                    $booster->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
+                    $booster->registerAssetJs('../bootstrap-datetimepicker' . '/js/' . $file);
 				}
 			}
 		}
