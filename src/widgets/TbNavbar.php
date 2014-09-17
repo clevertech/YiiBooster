@@ -163,6 +163,10 @@ class TbNavbar extends CWidget {
 			if (is_string($item)) {
 				echo $item;
 			} else {
+				if (!isset($item['type'])) {
+					$item['type'] = 'navbar';
+				}
+				
 				if (isset($item['class'])) {
 					$className = $item['class'];
 					unset($item['class']);
