@@ -1032,7 +1032,7 @@ class TbActiveForm extends CActiveForm {
 	 * @see CActiveForm::textField
 	 * @see customFieldGroup
 	 */
-	public function captchaGroup($model, $attribute, $htmlOptions = array(), $options = array()) {
+	public function captchaGroup($model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];

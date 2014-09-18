@@ -33,7 +33,8 @@ return array(
 	),
 	'notify' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/notify/',
-		'js' => array($this->minify ? 'notify.min.js' : 'notify.js')
+		'js' => array($this->minify ? 'notify.min.js' : 'notify.js'),
+		'depends' => array('jquery'),
 	),
     'bootstrap-noconflict' => array(
         'baseUrl' => $this->getAssetsUrl(),
