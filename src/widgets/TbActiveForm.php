@@ -691,14 +691,17 @@ class TbActiveForm extends CActiveForm {
 		// if(!isset($options['widgetOptions']['data']))
 			// throw new CException('$options["widgetOptions"]["data"] must exist');
 		
-		if (!isset($widgetOptions['labelOptions']['class']))
-			$widgetOptions['labelOptions']['class'] = 'checkbox';
+		// if (!isset($widgetOptions['labelOptions']['class']))
+			// $widgetOptions['labelOptions']['class'] = 'checkbox';
 		
-		if(isset($options['inline']) && $options['inline'])
+		if(isset($options['inline']) && $options['inline']) {
 			$widgetOptions['labelOptions']['class'] = 'checkbox-inline';
+			if (!isset($widgetOptions['template']))
+				$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+		}
 
 		if (!isset($widgetOptions['template']))
-			$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+			$widgetOptions['template'] = '<div class="checkbox">{beginLabel}{input}{labelTitle}{endLabel}</div>';
 
 		if (!isset($widgetOptions['separator']))
 			$widgetOptions['separator'] = "\n";
@@ -735,15 +738,19 @@ class TbActiveForm extends CActiveForm {
 		// if(!isset($options['widgetOptions']['data']))
 			// throw new CException('$options["widgetOptions"]["data"] must exist');
 		
-		if (!isset($widgetOptions['labelOptions']['class']))
-			$widgetOptions['labelOptions']['class'] = 'radio';
+		// if (!isset($widgetOptions['labelOptions']['class']))
+			// $widgetOptions['labelOptions']['class'] = 'radio';
 		
-		if(isset($options['inline']) && $options['inline'])
-			$widgetOptions['labelOptions']['class'] = 'checkbox-inline';
-		
-		if (!isset($widgetOptions['template']))
-			$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+		if(isset($options['inline']) && $options['inline']) {
+			$widgetOptions['labelOptions']['class'] = 'radio-inline';
+			if (!isset($widgetOptions['template']))
+				$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
+		}
 
+		if (!isset($widgetOptions['template']))
+			$widgetOptions['template'] = '<div class="radio">{beginLabel}{input}{labelTitle}{endLabel}</div>';
+
+            
 		if (!isset($widgetOptions['separator']))
 			$widgetOptions['separator'] = "\n";
 		
