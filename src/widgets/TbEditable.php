@@ -521,7 +521,7 @@ class TbEditable extends CWidget
         //wrap in anonymous function for live update
         if($this->liveTarget) {
             $script2 = "\n$('body').on('ajaxUpdate.editable',function(e){ if(e.target.id == '".$this->liveTarget."') yiiEditable2(); });";
-            $script = "(function yiiEditable() {function yiiEditable2() {\n\t$script\n} $script2 }\n());";
+            $script = "(function yiiEditable() {function yiiEditable2() {\n\t$script\n} $script2 yiiEditable2(); }\n());";
         }
         
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '-' . $selector, $script);
