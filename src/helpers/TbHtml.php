@@ -2854,7 +2854,8 @@ EOD;
                 if (!empty($items)) {
                     $output .= self::buttonDropdown($buttonLabel, $items, $buttonOptions);
                 } else {
-                    $output .= self::linkButton($buttonLabel, $buttonOptions);
+					$type = TbArray::popValue('type', $buttonOptions, self::BUTTON_TYPE_LINKBUTTON);
+					$output .= self::btn($type, $buttonLabel, $buttonOptions);
                 }
             }
             $output .= '</div>';

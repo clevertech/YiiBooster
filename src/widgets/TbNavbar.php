@@ -77,6 +77,11 @@ class TbNavbar extends CWidget {
 	 * @var array the HTML attributes for the widget container.
 	 */
 	public $htmlOptions = array();
+	
+	/**
+	 * @var array the widget options for the collapsed toggle button.
+	 */
+	public $toggleButtonWidgetOptions = array();
 
 	/**
 	 *### .init()
@@ -123,6 +128,22 @@ class TbNavbar extends CWidget {
 				$this->htmlOptions['class'] = $classes;
 			}
 		}
+		
+		if ($this->collapse) {
+			if (!isset($this->toggleButtonWidgetOptions['label'])) {
+				$this->toggleButtonWidgetOptions['label'] = '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>';
+			}
+			if (!isset($this->toggleButtonWidgetOptions['encodeLabel'])) {
+				$this->toggleButtonWidgetOptions['encodeLabel'] = false;
+			}
+			if (!isset($this->toggleButtonWidgetOptions['htmlOptions'])) {
+				$this->toggleButtonWidgetOptions['htmlOptions'] = array(
+					'class' => 'navbar-toggle',
+					'data-toggle' => 'collapse',
+					'data-target' => '#'.self::CONTAINER_PREFIX.$this->id,
+				);
+			}
+		}
 	}
 
 	/**
@@ -137,15 +158,7 @@ class TbNavbar extends CWidget {
 		
 		echo '<div class="navbar-header">';
 		if($this->collapse) {
-			$this->controller->widget('booster.widgets.TbButton', array(
-				'label' => '<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>',
-				'encodeLabel' => false,
-				'htmlOptions' => array(
-					'class' => 'navbar-toggle',
-					'data-toggle' => 'collapse',
-					'data-target' => '#'.self::CONTAINER_PREFIX.$this->id,
-				)
-			));
+			$this->controller->widget('booster.widgets.TbButton', $this->toggleButtonWidgetOptions);
 		}
 		
 		if ($this->brand !== false) {
