@@ -21,7 +21,7 @@
 
 Yii::import('booster.widgets.TbBaseInputWidget');
 
-class TbTypeahead2 extends TbBaseInputWidget {
+class TbTypeahead extends TbBaseInputWidget {
 	
 	/**
 	 * @var array the options for the twitter typeahead widget
