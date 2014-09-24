@@ -55,7 +55,6 @@ class TbBreadcrumbs extends CBreadcrumbs {
 		}
 
 		end($this->links);
-		$lastLink = key($this->links);
 
 		foreach ($this->links as $label => $url) {
 			if (is_string($label) || is_array($url)) {
