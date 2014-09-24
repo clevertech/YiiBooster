@@ -181,14 +181,15 @@ class TbEditableSaver extends CComponent
 	 */
 	public function checkErrors()
 	{
-		if ($this->model->hasErrors()) {
-			$msg = array();
-			foreach ($this->model->getErrors() as $attribute => $errors) {
-				// TODO: make use of $attribute elements
-				$msg = array_merge($msg, $errors);
-			}
-			$this->error($msg[0]);
+		if (!$this->model->hasErrors())
+			return;
+
+		$msg = array();
+		foreach ($this->model->getErrors() as $attribute => $errors) {
+			// TODO: make use of $attribute elements
+			$msg = array_merge($msg, $errors);
 		}
+		$this->error($msg[0]);
 	}
 
 	/**
