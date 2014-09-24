@@ -1074,7 +1074,6 @@ class TbActiveForm extends CActiveForm {
 	 * @return string The generated widget group.
 	 */
 	protected function widgetGroupInternal($className, &$model, &$attribute, &$options) {
-		// if(empty($options['widgetOptions']['mask'])) exit;
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 		$widgetOptions['model'] = $model;
@@ -1165,7 +1164,7 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function horizontalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array(); // array('class' => 'form-group');
+		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array();
 		self::addCssClass($groupOptions, 'form-group');
 		
 		$_attribute = $attribute;
