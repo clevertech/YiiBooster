@@ -367,7 +367,6 @@ class TbButton extends TbWidget {
 				return $this->createToggleButton('checkbox');
 				
 			default:
-			case self::BUTTON_BUTTON:
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 		}
 	}
