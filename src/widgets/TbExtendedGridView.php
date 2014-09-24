@@ -658,22 +658,22 @@ class TbExtendedGridView extends TbGridView {
 	 */
 	public function renderExtendedSummaryContent()
 	{
-		if (($count = $this->dataProvider->getItemCount()) <= 0) {
+		if ($this->dataProvider->getItemCount() <= 0)
 			return;
-		}
 
-		if (!empty($this->extendedSummaryTypes)) {
-			echo '<div id="' . $this->id . '-extended-summary" style="display:none">';
-			if (isset($this->extendedSummary['title'])) {
-				echo '<h3>' . $this->extendedSummary['title'] . '</h3>';
-			}
-			foreach ($this->extendedSummaryTypes as $summaryType) {
-				/** @var $summaryType TbOperation */
-				$summaryType->run();
-				echo '<br/>';
-			}
-			echo '</div>';
+		if (empty($this->extendedSummaryTypes))
+			return;
+
+		echo '<div id="' . $this->id . '-extended-summary" style="display:none">';
+		if (isset($this->extendedSummary['title'])) {
+			echo '<h3>' . $this->extendedSummary['title'] . '</h3>';
 		}
+		foreach ($this->extendedSummaryTypes as $summaryType) {
+			/** @var $summaryType TbOperation */
+			$summaryType->run();
+			echo '<br/>';
+		}
+		echo '</div>';
 	}
 
 	/**
