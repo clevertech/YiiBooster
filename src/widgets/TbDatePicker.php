@@ -97,9 +97,6 @@ class TbDatePicker extends TbBaseInputWidget {
         Booster::getBooster()->registerPackage('datepicker');
 	}
 
-	/**
-	 * FIXME: this method delves too deeply into the internals of Bootstrap component
-	 */
 	public function registerLanguageScript() {
 		
 		$booster = Booster::getBooster();
