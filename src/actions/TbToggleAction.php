@@ -66,20 +66,19 @@ class TbToggleAction extends CAction
 		$pk = Yii::app()->request->getParam('pk');
 		$attribute = Yii::app()->request->getParam('attribute');
 		
-		if (Yii::app()->getRequest()->isPostRequest) {
-			$model = $this->loadModel($pk);
-			$model->$attribute = ($model->$attribute == $this->noValue) ? $this->yesValue : $this->noValue;
-			$success = $model->save(false, array($attribute));
+		if (!Yii::app()->getRequest()->isPostRequest)
+			throw new CHttpException(400);
 
-			if (Yii::app()->getRequest()->isAjaxRequest) {
-				echo $success ? $this->ajaxResponseOnSuccess : $this->ajaxResponseOnFailed;
-				return;
-			}
-			if ($this->redirectRoute !== null) {
-				$this->getController()->redirect($this->redirectRoute);
-			}
-		} else {
-			throw new CHttpException(400, Yii::t('zii', 'Invalid request'));
+		$model = $this->loadModel($pk);
+		$model->$attribute = ($model->$attribute == $this->noValue) ? $this->yesValue : $this->noValue;
+		$success = $model->save(false, array($attribute));
+
+		if (Yii::app()->getRequest()->isAjaxRequest) {
+			echo $success ? $this->ajaxResponseOnSuccess : $this->ajaxResponseOnFailed;
+			return;
+		}
+		if ($this->redirectRoute !== null) {
+			$this->getController()->redirect($this->redirectRoute);
 		}
 	}
 
