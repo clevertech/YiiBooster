@@ -21,7 +21,7 @@
 
 Yii::import('booster.widgets.TbBaseInputWidget');
 
-class TbTypeahead extends TbBaseInputWidget {
+class TbTypeahead2 extends TbBaseInputWidget {
 	
 	/**
 	 * @var array the options for the twitter typeahead widget
@@ -39,14 +39,6 @@ class TbTypeahead extends TbBaseInputWidget {
 	 * Initializes the widget.
 	 */
 	public function init() {
-		
-		if(!isset($this->datasets['source']))
-			$this->datasets['source'] = array();
-		
-		// @todo: which one is more correct? 
-		// if(!isset($this->datasets['source']) || empty($this->datasets['source']))
-			// throw new CException('you must provide datasets["source"] option');
-		
 		if(empty($this->options))
 			$this->options['minLength'] = 1;
 		$this->registerClientScript();
@@ -63,7 +55,6 @@ class TbTypeahead extends TbBaseInputWidget {
 	 * Runs the widget.
 	 */
 	public function run() {
-		// print_r($this->htmlOptions); //typeahead
 		list($name, $id) = $this->resolveNameID();
 
 		if (isset($this->htmlOptions['id'])) {
@@ -82,38 +73,55 @@ class TbTypeahead extends TbBaseInputWidget {
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
 
-		$this->datasets['source'] = 'js:substringMatcher(_'.$this->id.'_source_list)';
+		if (isset($this->datasets['source']))
+			$this->datasets = array($this->datasets);
+
+		$datasets_js = array();
+		foreach ($this->datasets as $i => $dataset) {
+			if (!isset($dataset['source'])) {
+				throw new CException('The source for a Typeahead dataset was not set');
+			}
+			if (isset($dataset['source']['name'])) {
+				$name = preg_replace('/[^\da-z]/i', '_', $dataset['source']['name']);
+				$bloodhound_id = $this->id .'_bloodhound_'. $name;
+				$dataset['source'] = 'js:'. $bloodhound_id .'.ttAdapter()';
+			} else {
+				$dataset['source'] = 'js:substringMatcher(_'. $this->id .'_source_list_'. $i .')';
+			}
+			$this->datasets[$i] = $dataset;
+			$datasets_js[] = CJavaScript::encode($dataset);
+		}
 		
 		$options = CJavaScript::encode($this->options);
-		$datasets = CJavaScript::encode($this->datasets);
+		$datasets = implode(', ', $datasets_js);
 		
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').typeahead({$options}, {$datasets});");
 		
 	}
 
 	/**
-	 * 
-	 * @param unknown $id
+	 *
 	 */
 	function registerClientScript() {
 	
 		$booster = Booster::getBooster();
 		$booster->registerPackage('typeahead');
-		
-		if(empty($this->datasets) || !isset($this->datasets['source']) || !is_array($this->datasets['source']))
-			return;
-		
+
+		$datasets = $this->datasets;
+		if (isset($this->datasets['source']))
+			$datasets = array($this->datasets);
+
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#substringMatcher', '
 			var substringMatcher = function(strs) {
 				return function findMatches(q, cb) {
 					var matches, substringRegex;
-					 
+
 					// an array that will be populated with substring matches
 					matches = [];
-					 
+
 					// regex used to determine if a string contains the substring `q`
 					substrRegex = new RegExp(q, "i");
-					 
+
 					// iterate through the pool of strings and for any string that
 					// contains the substring `q`, add it to the `matches` array
 					$.each(strs, function(i, str) {
@@ -123,15 +131,30 @@ class TbTypeahead extends TbBaseInputWidget {
 							matches.push({ value: str });
 						}
 					});
-					 
+
 					cb(matches);
 				};
 			};
 		', CClientScript::POS_HEAD);
-		
-		$source_list = !empty($this->options) ? CJavaScript::encode($this->datasets['source']) : '';
-		Yii::app()->clientScript->registerScript(__CLASS__ . '#source_list#'.$this->id, '
-			var _'.$this->id.'_source_list = '.$source_list.';
-		', CClientScript::POS_HEAD);
+
+		if (isset($this->datasets['source']))
+			$this->datasets = array($this->datasets);
+
+		foreach ($datasets as $i => $dataset) {
+			if (isset($dataset['source']['name'])) {
+				$name = preg_replace('/[^\da-z]/i', '_', $dataset['source']['name']);
+				$bloodhound_id = $this->id .'_bloodhound_'. $name;
+				$bloodhound_config = CJavaScript::encode($dataset['source']);
+				Yii::app()->clientScript->registerScript(__CLASS__ .'_'. $bloodhound_id, "
+					var $bloodhound_id = new Bloodhound($bloodhound_config);
+					$bloodhound_id.initialize();
+				", CClientScript::POS_HEAD);
+			} else {
+				$source_list = CJavaScript::encode($dataset['source']);
+				Yii::app()->clientScript->registerScript(__CLASS__ .'#source_list#'. $i, '
+					var _'.$this->id.'_source_list_'. $i .' = '.$source_list.';
+				', CClientScript::POS_HEAD);
+			}
+		}
 	}
 }
