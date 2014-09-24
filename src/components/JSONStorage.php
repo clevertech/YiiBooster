@@ -372,9 +372,9 @@ class JSONStorage extends CComponent
 	private function flush()
 	{
 		// check if writeback is needed
-		if ($this->dirty == false) {
+		if ($this->dirty == false)
 			return true;
-		}
+
 		// prepare to writeback to file
 		$data = $this->data;
 		$registry = $this->encode($this->data[self::REGISTRY]);
@@ -382,20 +382,17 @@ class JSONStorage extends CComponent
 		$data[self::META]["hash"] = md5($registry);
 
 		// overwrite existing data
-		if (file_put_contents($this->getFile(), $this->encode($data))) {
-			return true;
-		} else {
-			throw new Exception(strtr(
-				'Unable to write back to {FILE}. Data will be lost!',
-				array('{FILE}' => $this->getFile())
-			));
-		}
+		$written = file_put_contents($this->getFile(), $this->encode($data));
+		if ($written === false)
+			throw new Exception(strtr( 'Unable to write back to {FILE}. Data will be lost!', array('{FILE}' => $this->getFile()) ));
+
+		return true;
 	}
 
 	/**
 	 * JSON encodes the data
 	 *
-	 * @param string $data
+	 * @param mixed $data
 	 *
 	 * @return string
 	 */
