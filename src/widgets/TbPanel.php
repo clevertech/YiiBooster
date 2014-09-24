@@ -108,7 +108,6 @@ class TbPanel extends TbWidget {
 
 		echo CHtml::openTag('div', $this->htmlOptions);
 
-		// $this->registerClientScript();
 		$this->renderHeader();
 		$this->renderContentBegin();
 	}
@@ -184,7 +183,7 @@ class TbPanel extends TbWidget {
 		echo '</div>';
 	}
 
-	/*
+	/**
 	 *### .renderContentBegin()
 	 *
 	 * Renders the opening of the content element and the optional content
@@ -197,7 +196,7 @@ class TbPanel extends TbWidget {
 		}
 	}
 
-	/*
+	/**
 	 *### .renderContentEnd()
 	 *
 	 * Closes the content element
@@ -212,8 +211,8 @@ class TbPanel extends TbWidget {
 	 *
 	 * Registers required script files (CSS in this case)
 	 */
-	public function registerClientScript() {
-		
-		// Booster::getBooster()->registerAssetCss('bootstrap-panel.css');
+	public function registerClientScript()
+	{
+		// do nothing
 	}
 }

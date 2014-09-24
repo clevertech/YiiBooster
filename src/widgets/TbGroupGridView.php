@@ -142,7 +142,6 @@ class TbGroupGridView extends TbGridView
 		$cs->registerCoreScript('bbq');
 		if($this->enableHistory)
 			$cs->registerCoreScript('history');
-		// $cs->registerScriptFile($this->baseScriptUrl.'/jquery.yiigridview.js',CClientScript::POS_END);
 		$cs->registerPackage('group-grid-view');
 		$cs->registerScript(__CLASS__.'#'.$id,"jQuery('#$id').yiiGroupGridView($options);");
 	}

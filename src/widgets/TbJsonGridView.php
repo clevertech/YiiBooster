@@ -266,11 +266,7 @@ class TbJsonGridView extends TbGridView
 		);
 		foreach ($this->columns as $column) {
 			/** @var CGridColumn $column */
-			// TODO: what is this?
-			// if (property_exists($column, 'json')) {
-				// $column->json = $this->json;
-				$tbody['headers'][] = $column->renderHeaderCell();
-			// }
+			$tbody['headers'][] = $column->renderHeaderCell();
 		}
 
 		if ($rows > 0) {

@@ -184,7 +184,6 @@ class TbInputVertical extends TbInput
 		echo ($hidden) ? $hidden . PHP_EOL : '';
 		echo '<label class="radio" for="' . $this->getAttributeId($attribute) . '">';
 		echo $radioButton . PHP_EOL;
-		//echo $this->form->radioButton($this->model, $this->attribute, $this->htmlOptions) . PHP_EOL;
 		echo $this->model->getAttributeLabel($attribute);
 		echo $this->getError() . $this->getHint();
 		echo '</label>';

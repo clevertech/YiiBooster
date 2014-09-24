@@ -90,8 +90,6 @@ class TbTabView extends TbTabs
 
 				$item['url'] = '#' . $item['id'];
 
-				//if (!isset($item['content'])) removed
-				//	$item['content'] = '';
 
 				//--------------- new ---------------
 				if (!isset($item['content'])) {
