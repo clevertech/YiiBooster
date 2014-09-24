@@ -136,7 +136,8 @@ class TbInputInline extends TbInputVertical
             unset($this->htmlOptions['events']);
         }
 
-        echo $this->setPlaceholder();
+        $this->setPlaceholder();
+
         echo $this->getPrepend();
         $this->widget(
             'booster.widgets.TbDateTimePicker',
