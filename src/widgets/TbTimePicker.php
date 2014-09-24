@@ -74,7 +74,7 @@ class TbTimePicker extends TbBaseInputWidget {
 	 */
 	public function run() {
 		
-		list($name, $id) = $this->resolveNameID();
+		list($name) = $this->resolveNameID();
 
 		// TODO: what is this?
 		// Add a class of no-user-select to widget
