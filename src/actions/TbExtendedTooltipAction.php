@@ -63,14 +63,13 @@ class TbExtendedTooltipAction extends CAction
 	protected function getDbConnection()
 	{
 		if ($this->_db === null) {
-			$this->_db = Yii::app()->getComponent('db');
-			if (!$this->_db instanceof CDbConnection) {
-				throw new CException(Yii::t(
-					'zii',
-					'The "db" application component must be configured to be a CDbConnection object.'
-				));
-			}
+			$db = Yii::app()->getComponent('db');
+			if (!$db instanceof CDbConnection)
+				throw new CException(Yii::t( 'zii', 'The "db" application component must be configured to be a CDbConnection object.' ));
+
+			$this->_db = $db;
 		}
+
 		return $this->_db;
 	}
 }
