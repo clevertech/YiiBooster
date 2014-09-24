@@ -226,11 +226,11 @@ class TbExtendedGridView extends TbGridView {
 			$this->bulk = Yii::createComponent($this->bulkActions, $this);
 			$this->bulk->init();
 		}
-		// if(isset($this->bulkActions['selectableEqualsChecked']) && $this->bulkActions['selectableEqualsChecked'] === true) {
-			$this->selectionChanged = 'js:function(id) {
-				$("#"+id+" input[type=checkbox]").change();
-			}';
-		// }
+
+		$this->selectionChanged = 'js:function(id) {
+			$("#"+id+" input[type=checkbox]").change();
+		}';
+
 		parent::init();
 	}
 
