@@ -721,19 +721,21 @@ class TbEditable extends CWidget
             'select2'
          ));
     }
-    
-    /**
-    * Returns php-array as valid x-editable source in format: 
-    * [{value: 1, text: 'text1'}, {...}]
-    * 
-    * See https://github.com/vitalets/x-editable-yii/issues/37
-    * 
-    * @param mixed $models
-    * @param mixed $valueField
-    * @param mixed $textField
-    * @param mixed $groupField
-    * @param mixed $groupTextField
-    */
+
+	/**
+	 * Returns php-array as valid x-editable source in format:
+	 * [{value: 1, text: 'text1'}, {...}]
+	 *
+	 * See https://github.com/vitalets/x-editable-yii/issues/37
+	 *
+	 * @param mixed $models
+	 * @param mixed $valueField
+	 * @param mixed $textField
+	 * @param mixed $groupField
+	 * @param mixed $groupTextField
+	 *
+	 * @return array
+	 */
     public static function source($models, $valueField='', $textField='', $groupField='', $groupTextField='')
     {
         $listData=array();

@@ -165,8 +165,10 @@ class TbAlert extends TbWidget {
 
 	/**
 	 * @param $alert
-	 * @param $type
+	 * @param $context
 	 * @param $alertText
+	 *
+	 * @internal param $type
 	 */
 	protected function renderSingleAlert($alert, $context, $alertText) {
 		
@@ -213,9 +215,13 @@ class TbAlert extends TbWidget {
 		echo $alertText;
 		echo CHtml::closeTag('div');
 	}
-	
+
 	/**
 	 * only these are allowed for alerts
+	 *
+	 * @param bool $context
+	 *
+	 * @return bool
 	 */
 	protected function isValidContext($context = false) {
 		return in_array($context, [

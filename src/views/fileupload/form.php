@@ -4,6 +4,7 @@
  *
  * @var TbFileUpload $this
  * @var array $htmlOptions
+ * @var string $name
  */
 ?>
 <?php echo CHtml::beginForm($this->url, 'post', $this->htmlOptions); ?>

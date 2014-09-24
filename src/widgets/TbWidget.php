@@ -48,8 +48,10 @@ abstract class TbWidget extends CWidget {
 	}
 
 	/**
-	 * 
-	 * @param string $context
+	 *
+	 * @param bool|string $context
+	 *
+	 * @return bool
 	 */
 	protected function isValidContext($context = false) {
 		if($context)
@@ -57,10 +59,12 @@ abstract class TbWidget extends CWidget {
 		else
 			return defined(get_called_class().'::CTX_'.strtoupper($this->context));
 	}
-	
+
 	/**
-	 * 
-	 * @param string $context
+	 *
+	 * @param bool|string $context
+	 *
+	 * @return mixed
 	 */
 	protected function getContextClass($context = false) {
 		if($context)

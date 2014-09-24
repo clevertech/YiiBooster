@@ -87,10 +87,6 @@ class TbTypeahead extends TbBaseInputWidget {
 		
 	}
 
-	/**
-	 * 
-	 * @param unknown $id
-	 */
 	function registerClientScript() {
 	
 		$booster = Booster::getBooster();

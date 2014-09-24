@@ -54,7 +54,7 @@ class TbSortableAction extends CAction
 	}
 
 	/**
-	 * @param $model
+	 * @param CActiveRecord $model
 	 * @param $sortableAttribute
 	 * @param $sortOrderData
 	 *

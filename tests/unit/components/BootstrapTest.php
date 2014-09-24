@@ -64,6 +64,12 @@ class BoosterTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 * @dataProvider BootstrapCssFilenames
+	 *
+	 * @param $cdn
+	 * @param $responsive
+	 * @param $fontawesome
+	 * @param $mincss
+	 * @param $expected_filename
 	 */
 	public function UsesBootstrapCssDependingOnSwitches($cdn, $responsive, $fontawesome, $mincss, $expected_filename) {
 		

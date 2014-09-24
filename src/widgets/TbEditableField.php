@@ -27,7 +27,7 @@ class TbEditableField extends TbEditable
     public $attribute = null;
    
     /**
-    * @var instance of model that is created always:
+    * @var mixed instance of model that is created always:
     * E.g. if related model does not exist, it will be `newed` to be able to get Attribute label, etc
     * for live update. 
     */

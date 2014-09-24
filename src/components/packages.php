@@ -7,7 +7,7 @@
  *
  * @author Ruslan Fadeev <fadeevr@gmail.com>
  *
- * @var Bootstrap $this
+ * @var Booster $this
  */
 return array(
 	'font-awesome' => array(

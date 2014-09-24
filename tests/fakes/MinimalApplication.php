@@ -4,7 +4,7 @@
  * Stub to support characterization tests.
  * It's instantiated in bootstrap script for phpunit.
  *
- * @property Bootstrap bootstrap
+ * @property Booster bootstrap
  */
 class MinimalApplication extends CWebApplication {
 

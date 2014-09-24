@@ -247,6 +247,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider  dataProviderStandardGroups
+	 *
+	 * @param $outerMethod
+	 * @param $innerMethod
 	 */
 	public function testStandardGroups($outerMethod, $innerMethod)
 	{
@@ -287,6 +290,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @dataProvider dataProviderWidgetGroups
+	 *
+	 * @param $outerMethod
+	 * @param $className
 	 */
 	public function testWidgetGroups($outerMethod, $className) {
 		

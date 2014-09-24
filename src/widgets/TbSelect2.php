@@ -123,6 +123,10 @@ class TbSelect2 extends CInputWidget {
 	 *
 	 * Registers required client script for bootstrap select2. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
+	 *
+	 * @param $id
+	 *
+	 * @throws CException
 	 */
 	public function registerClientScript($id) {
 		
