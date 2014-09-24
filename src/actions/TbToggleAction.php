@@ -59,9 +59,6 @@ class TbToggleAction extends CAction
 	/**
 	 * Widgets run function
 	 *
-	 * @param integer $id
-	 * @param string $attribute
-	 *
 	 * @throws CHttpException
 	 */
 	public function run() {
@@ -76,13 +73,13 @@ class TbToggleAction extends CAction
 
 			if (Yii::app()->getRequest()->isAjaxRequest) {
 				echo $success ? $this->ajaxResponseOnSuccess : $this->ajaxResponseOnFailed;
-				exit(0);
+				return;
 			}
 			if ($this->redirectRoute !== null) {
 				$this->getController()->redirect($this->redirectRoute);
 			}
 		} else {
-			throw new CHttpException(Yii::t('zii', 'Invalid request'));
+			throw new CHttpException(400, Yii::t('zii', 'Invalid request'));
 		}
 	}
 
