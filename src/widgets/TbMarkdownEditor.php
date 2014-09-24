@@ -22,7 +22,7 @@ class TbMarkdownEditor extends CInputWidget {
 	
 	/**
 	 * @see <http://toopay.github.io/bootstrap-markdown/>
-	 * @var Editor's Options
+	 * @var array Editor's Options
 	 */
 	public $options = array();
 	
@@ -60,10 +60,8 @@ class TbMarkdownEditor extends CInputWidget {
 
 	/**
 	 * Register required script files
-	 *
-	 * @param integer $id
 	 */
-	public function registerClientScript($id) {
+	public function registerClientScript() {
 		
         $booster = Booster::getBooster();
         $booster->registerPackage('markdown');
