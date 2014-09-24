@@ -509,27 +509,8 @@ class Booster extends CApplicationComponent {
 		return uniqid(__CLASS__ . '#', true);
 	}
 
-	/**
-	 * @param $name
-	 *
-	 * @return mixed
-	 */
-	protected function tryGetSelectorForPlugin($name) {
-		
-		return $this->tryGetInfoForPlugin($name, 'selector');
-	}
-
-	/**
-	 * @param $name
-	 * @return mixed
-	 */
-	protected function tryGetOptionsForPlugin($name) {
-		
-		return $this->tryGetInfoForPlugin($name, 'options');
-	}
-
     /**
-     * @param Bootstrap $value
+     * @param Booster $value
      * @since 2.1.0
      */
     public static function setBooster($value) {
@@ -540,7 +521,7 @@ class Booster extends CApplicationComponent {
     }
 
     /**
-     * @return Bootstrap
+     * @return Booster
      * @since 2.1.0
      */
     public static function getBooster() {
