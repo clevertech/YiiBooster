@@ -103,13 +103,11 @@ class TbExtendedFilter extends CWidget {
 	 * Checks whether there has been send the command to remove a filter from the registry and redirects to
 	 * specified route
 	 */
-	protected function checkRequestRemovalFilter() {
-		
-		if ($key = Yii::app()->getRequest()->getParam($this->removeFilterVar)) {
-			if ($this->jsonStorage->removeData($key, $this->registry)) {
+	protected function checkRequestRemovalFilter()
+	{
+		if ($key = Yii::app()->getRequest()->getParam($this->removeFilterVar))
+			if ($this->jsonStorage->removeData($key, $this->registry))
 				Yii::app()->getController()->redirect($this->redirectRoute);
-			}
-		}
 	}
 
 	/**
@@ -148,7 +146,7 @@ class TbExtendedFilter extends CWidget {
 	 */
 	public function run() {
 
-		$registryKey = $this->generateRegistryItemKey($this->filteredBy);
+		$registryKey = $this->generateRegistryItemKey();
 
 		if (!count($this->filteredBy) && !$this->jsonStorage->getLength($this->registry)) {
 			return;
