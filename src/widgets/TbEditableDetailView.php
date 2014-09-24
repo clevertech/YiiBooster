@@ -105,10 +105,15 @@ class TbEditableDetailView extends CDetailView
      *
      * These properties can also be set for the {@link TbEditableDetailView} as default values.
      */
-    private function getEditableProperties() {
-        if(!isset($this->_editableProperties)) {
+    private function getEditableProperties()
+    {
+        if(!isset($this->_editableProperties))
+        {
             $reflection = new ReflectionClass('TbEditableField');
-            $this->_editableProperties = array_map(function($d){return $d->getName();},$reflection->getProperties());
+            $this->_editableProperties = array_map(
+	            function(ReflectionProperty $d) { return $d->getName(); },
+	            $reflection->getProperties()
+            );
         }
         return $this->_editableProperties;
     }
