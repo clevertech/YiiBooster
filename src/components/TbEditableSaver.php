@@ -187,8 +187,6 @@ class TbEditableSaver extends CComponent
 				// TODO: make use of $attribute elements
 				$msg = array_merge($msg, $errors);
 			}
-			// TODO: show several messages. should be checked in x-editable js
-			//$this->error(join("\n", $msg));
 			$this->error($msg[0]);
 		}
 	}
