@@ -132,4 +132,4 @@ class TbUiLayout extends CWidget
 
         return $layoutsOptions;
     }
-} 
+}
