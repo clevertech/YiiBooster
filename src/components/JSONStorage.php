@@ -189,23 +189,22 @@ class JSONStorage extends CComponent
 	 */
 	public function load()
 	{
-		// load data
-		if (file_exists($this->getFile())) {
-			$json = file_get_contents($this->getFile());
-			if (strlen($json) == 0) {
-				return;
-			}
+		$filename = $this->getFile();
+		if (!file_exists($filename))
+			return;
 
-			$this->data = $this->decode($json);
+		$json = file_get_contents($filename);
+		if (strlen($json) == 0)
+			return;
 
-			if ($this->data === null) {
-				throw new Exception('Error while trying to decode ' . $this->getFile() . '.');
-			}
+		$data = $this->decode($json);
+		if ($data === null)
+			throw new Exception('Error while trying to decode ' . $filename . '.');
 
-			if (!$this->verify()) {
-				throw new Exception($this->getFile() . ' failed checksum validation.');
-			}
-		}
+		$this->data = $data;
+
+		if (!$this->verify())
+			throw new Exception($filename . ' failed checksum validation.');
 	}
 
 	/**
