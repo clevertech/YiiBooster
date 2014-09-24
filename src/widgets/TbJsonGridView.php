@@ -140,25 +140,24 @@ class TbJsonGridView extends TbGridView
 	 */
 	public function renderItems()
 	{
-		if ($this->json) {
+		if ($this->json)
+		{
+			$renderedTableBody = $this->getRenderedTableBody();
 			echo function_exists('json_encode')
-				? json_encode($this->renderTableBody())
-				: CJSON::encode(
-					$this->renderTableBody()
-				);
-
-		} elseif ($this->dataProvider->getItemCount() > 0 || $this->showTableOnEmpty) {
+				? json_encode($renderedTableBody)
+				: CJSON::encode($renderedTableBody);
+		}
+		elseif ($this->dataProvider->getItemCount() > 0 || $this->showTableOnEmpty)
+		{
 			echo "<table class=\"{$this->itemsCssClass}\">\n";
 			$this->renderTableHeader();
-			ob_start();
+			$this->renderTableFooter(); // TFOOT must appear before TBODY according to the standard.
 			$this->renderTableBody();
-			$body = ob_get_clean();
-			$this->renderTableFooter();
-			echo $body; // TFOOT must appear before TBODY according to the standard.
 			echo "</table>";
 			$this->renderTemplates();
-
-		} else {
+		}
+		else
+		{
 			$this->renderEmptyText();
 		}
 	}
@@ -438,5 +437,16 @@ class TbJsonGridView extends TbGridView
 		$cs->registerPackage('json-grid-view');
 
 		$cs->registerScript(__CLASS__ . '#' . $id, "jQuery('#$id').yiiJsonGridView($options);");
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getRenderedTableBody()
+	{
+		ob_start();
+		$this->renderTableBody();
+		$body = ob_get_clean();
+		return $body;
 	}
 }
