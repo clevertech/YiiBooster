@@ -9,7 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
--
+- **(fix)** change yiiGridView function calls to yiiGroupGridView in jquery.group.yiigridview.js #910
   
 ## YiiBooster version 4.1.0
 - **(enh)** upgarde to Bootstrap 3.2.0 - #882
