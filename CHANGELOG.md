@@ -9,7 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
--
+- **(fix)** fix editable events from being reregistered by yiiEditable() #954
   
 ## YiiBooster version 4.1.0
 - **(enh)** upgarde to Bootstrap 3.2.0 - #882
