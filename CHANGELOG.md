@@ -9,7 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
--
+- **(fix)** fix TbActiveForm/checkboxListGroup, radioButtonListGroup to work with Bootstrap 3.2.0 #935
   
 ## YiiBooster version 4.1.0
 - **(enh)** upgarde to Bootstrap 3.2.0 - #882
