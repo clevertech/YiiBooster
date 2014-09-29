@@ -1,0 +1,34 @@
+source: [../src/]
+
+exclude:
+    - **/assets/**
+    - **/views/**
+    - **/templates/**
+
+title: YiiBooster API
+
+accessLevels: [public, protected]
+
+# No HTML allowed
+allowedHtml: []
+
+# Generate docs for PHP built-in classes and methods
+php: Yes
+
+internal: No
+
+deprecated: Yes
+
+todo: Yes
+
+# Generate link to download ZIP archive with docs.
+download: Yes
+
+# Erase existing destination contents first
+wipeout: Yes
+
+progressbar: Yes
+
+colors: Yes
+
+debug: Yes

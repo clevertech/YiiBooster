@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<ruleset name="Boilerplate standard">
+
+    <description>
+        This is the config for PHP Code Sniffer.
+
+        Here you can look at all available sniffs,
+        sure you'll be able to figure out how classes and their parameters
+        correspond to this config:
+        http://pear.php.net/package/PHP_CodeSniffer/docs/latest/li_PHP_CodeSniffer.html
+
+        YiiBoilerplate initially expects you to follow it's own coding standard,
+        which differs from any common standards like PEAR, Zend or PSR.
+        It's because we are using something like Yii coding standard
+        but without some of it's insanity like mandatory braces (even in one-liner ifs)
+        and mandatory leading underscores in private members.
+
+        Of course, you can adapt this ruleset to anything you like.
+    </description>
+
+    <exclude-pattern>./vendor/*</exclude-pattern>
+    <exclude-pattern>*/lib/*</exclude-pattern>
+    <exclude-pattern>*/extensions/*</exclude-pattern>
+    <exclude-pattern>*/runtime/*</exclude-pattern>
+    <exclude-pattern>*/assets/*</exclude-pattern>
+
+    <!-- Have to exclude migrations template because it has invalid PHP -->
+    <exclude-pattern>*/migrations/template/*</exclude-pattern>
+
+    <rule ref="PEAR.Classes.ClassDeclaration" />
+    <rule ref="Generic.Classes.DuplicateClassName" />
+
+    <rule ref="Generic.CodeAnalysis.EmptyStatement" />
+
+    <rule ref="Generic.Formatting.DisallowMultipleStatements" />
+
+    <rule ref="Generic.Commenting.Fixme" />
+    <rule ref="Generic.Commenting.Todo" />
+
+    <rule ref="Generic.WhiteSpace.ScopeIndent"/>
+
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman" />
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace" />
+
+    <rule ref="PEAR.Functions.ValidDefaultValue" />
+    <rule ref="Squiz.Functions.GlobalFunction" />
+    <rule ref="Generic.Functions.CallTimePassByReference" />
+
+    <rule ref="Generic.NamingConventions.ConstructorName"/>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
+    <!-- Commented out code is bad -->
+    <rule ref="Squiz.PHP.CommentedOutCode">
+        <properties>
+           <property name="maxPercentage" value="80" />
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Metrics.NestingLevel">
+        <properties>
+            <property name="nestingLevel" value="3"/>
+            <property name="absoluteNestingLevel" value="5"/>
+        </properties>
+    </rule>
+
+    <!-- Use Unix newlines -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+</ruleset>

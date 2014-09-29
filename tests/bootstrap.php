@@ -4,31 +4,33 @@
  * It should be called once before each test, and instantiates our minimal CApplication object.
  */
 
+define('ROOT_DIR', realpath(__DIR__ . '/../'));
+
 // Included the Yii
-define('YII_PATH', realpath(__DIR__ . '/../vendor/yiisoft/yii/framework'));
+define('YII_PATH', ROOT_DIR . '/vendor/yiisoft/yii/framework');
 
 // disable Yii error handling logic
 defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER', false);
 defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', false);
 
 // Set up the shorthands for test app paths
-define('APP_ROOT', realpath(__DIR__ . '/runtime'));
-define('APP_RUNTIME', APP_ROOT . '/runtime');
+define('APP_ROOT', ROOT_DIR . '/tests/runtime');
+define('APP_RUNTIME', APP_ROOT . '/runtime'); // yes, second "runtime" directory inside
 define('APP_ASSETS', APP_ROOT . '/assets');
 
 is_dir(APP_RUNTIME) or mkdir(APP_RUNTIME);
 is_dir(APP_ASSETS) or mkdir(APP_ASSETS);
 
 // composer autoloader
-require_once(__DIR__ . '/../vendor/autoload.php');
+require_once(ROOT_DIR . '/vendor/autoload.php');
 
 require_once(YII_PATH . '/YiiBase.php');
-require_once(__DIR__ . '/fakes/Yii.php');
+require_once(ROOT_DIR . '/tests/fakes/Yii.php');
 
 YiiBase::$enableIncludePath = false;
 
 // Instantiated the test app
-require_once(__DIR__ . '/fakes/MinimalApplication.php');
+require_once(ROOT_DIR . '/tests/fakes/MinimalApplication.php');
 
 Yii::createApplication(
 	'MinimalApplication',
@@ -36,8 +38,8 @@ Yii::createApplication(
 		'basePath' => APP_ROOT,
 		'runtimePath' => APP_RUNTIME,
 		'aliases' => [
-			'fakes' => realpath(__DIR__ . '/fakes'),
-			'bootstrap' => realpath(__DIR__ . '/../src'),
+			'fakes' => ROOT_DIR . '/tests/fakes',
+			'bootstrap' => ROOT_DIR . '/src',
 		],
 		'components' => array(
 			'assetManager' => array(

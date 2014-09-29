@@ -4,12 +4,16 @@
          description="Widget toolkit for the Yii web framework">
 
     <!-- Changeable properties for this project are placed into the build.properties -->
-    <property file="build.properties"/>
+    <property file="./build/build.properties"/>
 
     <!-- Main fileset containing files to be packaged for end-users. -->
     <fileset id="sources" dir="${path.src}">
         <include name="**"/>
     </fileset>
+
+    <target name="all" depends="clean,check,doc,dist" />
+    <target name="check" depends="phploc, phpcpd, test, phpmd, phpcs, pdepend, codebrowser" />
+    <target name="doc" depends="apigen,annotated" />
 
     <!-- Make an archive ready for distribution to end-users. -->
     <target name="dist" depends="prepare-dist">
@@ -35,41 +39,62 @@
         <mkdir dir="${path.dist}"/>
     </target>
 
-    <!-- Make an API-level documentation -->
-    <target name="api" depends="prepare-docs-api">
-        <echo msg="Making an API-level documentation."/>
-        <phpdoc2 title="${phing.project.name}"
-                 destdir="${path.docs}/api">
-
-            <fileset dir="${path.src}">
-                <include name="**/*.php"/>
-
-                <exclude name="**/views/**"/>
-
-                <!-- CKEditor currently has some PHP files in it's assets -->
-                <exclude name="**/assets/**"/>
-
-                <!-- gii subfolder has some templates -->
-                <exclude name="**/templates/**"/>
-
-                <!-- we don't need to make API docs for TbHtml.php -->
-                <exclude name="helpers"/>
-            </fileset>
-
-        </phpdoc2>
+    <target name="prepare-reports-dir">
+        <if>
+            <not>
+                <available file="reports" type="dir" />
+            </not>
+            <then>
+                <echo msg="It seems we don't have `reports` directory, creating one..." />
+                <mkdir dir="reports" />
+            </then>
+        </if>
     </target>
 
-    <!-- Prepare folders for documentation -->
-    <target name="prepare-docs-api">
-        <echo msg="Recreating destination folder for API documentation at ${path.docs}/api"/>
-        <delete dir="${path.docs}/api" includeemptydirs="true" failonerror="true" quiet="true"/>
-        <mkdir dir="${path.docs}/api"/>
+    <target name="phploc" depends="prepare-reports-dir">
+        <exec executable="${path.composer.vendor}/bin/phploc" dir="." passthru="true">
+            <arg value="--verbose" />
+            <arg value="--progress" />
+
+            <arg value="--exclude" />
+            <arg value="assets" />
+
+            <arg value="--log-xml" />
+            <arg value="${path.reports}/phploc.xml" />
+
+            <!-- This "line" instead of "value" is extremely important, it allows us to specify several tokens as an argument -->
+            <arg line="${path.src} ${path.tests}" />
+        </exec>
+    </target>
+
+    <target name="prepare-docs-dir">
+        <if>
+            <not>
+                <available file="doc" type="dir" />
+            </not>
+            <then>
+                <echo msg="It seems we don't have `doc` directory, creating one..." />
+                <mkdir dir="doc" />
+            </then>
+        </if>
+    </target>
+
+    <!-- Make an API-level documentation -->
+    <target name="apigen" depends="prepare-docs-dir">
+        <exec executable="${path.composer.vendor}/bin/apigen" dir="." passthru="true">
+            <arg value="--config" />
+            <arg value="${path.build}/apigen.neon" />
+            <arg value="--destination" />
+            <arg line="${path.docs}/api" />
+            <arg value="--report" />
+            <arg line="${path.reports}/apigen.checkstyle.xml" />
+        </exec>
     </target>
 
     <!-- Make an annotated source code documentation (using Pinnocchio) -->
-    <target name="annotated" depends="prepare-docs-annotated,install-composer-libraries">
+    <target name="annotated" depends="prepare-docs-dir">
         <echo msg="Running Pinnocchio over our source code base..."/>
-        <exec command="${path.composer.vendor}/ncuesta/pinocchio/bin/pinocchio --source=${path.src}/widgets --output=${path.docs}/annotated"
+        <exec command="${path.composer.vendor}/bin/pinocchio --source=${path.src}/widgets --output=${path.docs}/annotated"
               passthru="true"
               returnProperty="annotated.return"/>
         <if>
@@ -86,15 +111,8 @@
         </if>
     </target>
 
-    <!-- Prepare folders for annotated source code documentation -->
-    <target name="prepare-docs-annotated">
-        <echo msg="Recreating destination folder for annotated source code documentation at ${path.docs}/annotated"/>
-        <delete dir="${path.docs}/annotated" includeemptydirs="true" failonerror="true" quiet="true"/>
-        <mkdir dir="${path.docs}/annotated"/>
-    </target>
-
     <!-- Run all tests -->
-    <target name="test" depends="install-composer-libraries">
+    <target name="test" depends="prepare-reports-dir">
         <echo msg="Running all existing tests..."/>
         <!-- NO we will NOT use built-in "phpunit" task because it's pretty shitty compared to phpunit.xml -->
         <exec executable="${path.composer.vendor}/bin/phpunit" passthru="true">
@@ -107,63 +125,73 @@
             <arg value="--coverage-html"/>
             <arg path="${path.reports}/coverage"/>
             <arg value="--coverage-clover"/>
-            <arg path="${path.reports}/clover-coverage.xml"/>
+            <arg path="${path.reports}/clover.xml"/>
             <arg value="--testdox-text"/>
             <arg path="${path.reports}/testdox.txt"/>
-            <arg value="--log-junit"/>
-            <arg path="${path.reports}/junit-log.xml"/>
-
-            <arg value="--testsuite"/>
-            <!-- available only in PHPUnit 3.7.0+ -->
-            <arg value="Unit tests"/>
         </exec>
     </target>
 
-    <!-- Counting lines of code using PHPLoc. Intended to be used manually in console mode. -->
-    <target name="loc" depends="install-composer-libraries">
-        <echo msg="Checking the Lines of Code statistics..." />
-        <exec executable="${path.composer.vendor}/bin/phploc" passthru="true">
-            <arg value="--progress"/>
-            <arg path="${path.src}"/>
-        </exec>
-    </target>
-
-    <!-- Counting lumps of copypasted code using PHPCPD. Intended to be used manually in console mode. -->
-    <target name="cpd" depends="install-composer-libraries">
-        <echo msg="Searching for copypasted lines..." />
-        <exec executable="${path.composer.vendor}/bin/phpcpd" passthru="true">
-            <arg value="--progress"/>
-            <arg path="${path.src}"/>
+    <!-- We deliberately do not exclude anything to get duplication not necessarily in class definitions -->
+    <target name="phpcpd" depends="prepare-reports-dir">
+        <exec executable="${path.composer.vendor}/bin/phpcpd" dir="." passthru="true">
+            <arg value="--log-pmd" />
+            <arg value="${path.reports}/phpcpd.xml" />
+            <arg value="--min-lines" />
+            <arg value="4" />
+            <arg value="--fuzzy" />
+            <arg value="--progress" />
+            <arg line="${path.src}" />
         </exec>
     </target>
 
     <!-- Checking the coding style within project with CodeSniffer. Intended to be used manually in console mode. -->
-    <target name="cs" depends="install-composer-libraries,hack-yii-coding-standard">
+    <target name="phpcs" depends="prepare-reports-dir">
         <echo msg="Checking the code style..." />
         <exec executable="${path.composer.vendor}/bin/phpcs" passthru="true">
             <arg value="-p"/>
-            <arg value="--standard=${path.composer.vendor}/ardem/Yii/ruleset.xml"/>
+            <arg value="--extensions=php" />
+            <arg value="--standard=${path.build}/ruleset.xml" />
+            <arg value="--tab-width=4" />
             <arg value="--ignore=assets"/>
+            <arg value="--report-checkstyle=${path.reports}/checkstyle.xml" />
             <arg path="${path.src}"/>
         </exec>
     </target>
 
-    <target name="hack-yii-coding-standard">
-        <if>
-            <available file="${path.composer.vendor}/ardem/yii-coding-standard"/>
-            <then>
-                <echo msg="Because of https://github.com/Ardem/yii-coding-standard/issues/8 we need to hack the Yii coding standard." />
-                <move file="${path.composer.vendor}/ardem/yii-coding-standard"
-                  tofile="${path.composer.vendor}/ardem/Yii" />
-            </then>
-            <else>
-                <echo msg="It seems the coding standard is named accordingly"/>
-            </else>
-        </if>
+    <target name="phpmd" depends="prepare-reports-dir">
+        <exec executable="${path.composer.vendor}/bin/phpmd" dir="." passthru="true">
+            <arg value="--reportfile" />
+            <arg value="${path.reports}/phpmd.xml" />
+
+            <arg value="--exclude" />
+            <arg value="${path.src}/assets" />
+
+            <arg value="${path.src}" />
+            <arg value="xml" />
+            <arg value="${path.build}/phpmd.xml" />
+        </exec>
+    </target>
+
+    <target name="pdepend" depends="prepare-reports-dir">
+        <exec executable="${path.composer.vendor}/bin/pdepend" dir="." passthru="true">
+
+            <arg value="--ignore=assets" />
+
+            <!-- Note that this option is for INPUT file, not GENERATED one! -->
+            <arg value="--coverage-report=${path.reports}/clover.xml" />
+
+            <arg value="--summary-xml=${path.reports}/pdepend.xml" />
+
+            <arg value="--jdepend-chart=${path.reports}/jdepend.svg" />
+
+            <arg value="--overview-pyramid=${path.reports}/overview.svg" />
+
+            <arg value="${path.src}" />
+        </exec>
     </target>
 
     <!-- Generating the highlighted sources with the marks from Code Sniffer and Mess Detector (and code coverage, too) -->
-    <target name="cb" depends="install-composer-libraries,prepare-codebrowser">
+    <target name="codebrowser" depends="prepare-reports-dir">
         <echo msg="Generating the browsable codebase..." />
         <exec executable="${path.composer.vendor}/bin/phpcb" passthru="true">
             <arg value="--log"/>
@@ -175,13 +203,6 @@
         </exec>
     </target>
 
-    <!-- Prepare the destination folder for Codebrowser report. -->
-    <target name="prepare-codebrowser">
-        <echo msg="Recreating a directory for codebrowser at  ${path.reports}/codebrowser/"/>
-        <delete dir="${path.reports}/codebrowser/" includeemptydirs="true" failonerror="true" quiet="true"/>
-        <mkdir dir="${path.reports}/codebrowser/"/>
-    </target>
-
     <!-- Prepare the destination folder for distribution archive. -->
     <target name="prepare-dist">
         <echo msg="Recreating a distribution directory at ${path.dist}"/>
@@ -189,5 +210,11 @@
         <mkdir dir="${path.dist}"/>
     </target>
 
-    <import file="${project.basedir}/installation.xml" />
+    <target name="clean">
+        <echo msg="Purging all runtime directories"/>
+        <delete dir="${path.dist}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <delete dir="${path.reports}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <delete dir="${path.docs}" includeemptydirs="true" failonerror="false" quiet="false"/>
+        <echo msg="Now your codebase should be completely clean."/>
+    </target>
 </project>
