@@ -207,29 +207,16 @@ class TbExtendedGridView extends TbGridView {
 	 */
 	public function init(){
 
-		if (preg_match(
-			'/extendedsummary/i',
-			$this->template
-		) && !empty($this->extendedSummary) && isset($this->extendedSummary['columns'])
-		) {
-			$this->template .= "\n{extendedSummaryContent}";
-			$this->displayExtendedSummary = true;
-		}
-		if (!empty($this->chartOptions) && @$this->chartOptions['data'] && $this->dataProvider->getItemCount()) {
-			$this->displayChart = true;
-		}
-		if ($this->bulkActions !== array() && isset($this->bulkActions['actionButtons'])) {
-			if (!isset($this->bulkActions['class'])) {
-				$this->bulkActions['class'] = 'booster.widgets.TbBulkActions';
-			}
+		if ($this->shouldEnableExtendedSummary())
+			$this->prepareDisplayingExtendedSummary();
 
-			$this->bulk = Yii::createComponent($this->bulkActions, $this);
-			$this->bulk->init();
-		}
+		if ($this->shouldEnableChart() && $this->hasData())
+			$this->enableChart();
 
-		$this->selectionChanged = 'js:function(id) {
-			$("#"+id+" input[type=checkbox]").change();
-		}';
+		if ($this->shouldEnableBulkActions())
+			$this->enableBulkActions();
+
+		$this->fillSelectionChangedProperty();
 
 		parent::init();
 	}
@@ -868,6 +855,74 @@ class TbExtendedGridView extends TbGridView {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function shouldEnableExtendedSummary()
+	{
+		return preg_match(
+			'/extendedsummary/i',
+			$this->template
+		) && !empty($this->extendedSummary) && isset($this->extendedSummary['columns']);
+	}
+
+	private function prepareDisplayingExtendedSummary()
+	{
+		$this->template .= "\n{extendedSummaryContent}";
+		$this->displayExtendedSummary = true;
+	}
+
+	private function shouldEnableChart()
+	{
+		return !empty($this->chartOptions) && (bool)@$this->chartOptions['data'];
+	}
+
+	/**
+	 * @return int
+	 */
+	private function hasData()
+	{
+		return $this->dataProvider->getItemCount();
+	}
+
+	private function enableChart()
+	{
+		$this->displayChart = true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function shouldEnableBulkActions()
+	{
+		return $this->bulkActions !== array() && isset($this->bulkActions['actionButtons']);
+	}
+
+	private function enableBulkActions()
+	{
+		if (!isset($this->bulkActions['class'])) {
+			$this->bulkActions['class'] = 'booster.widgets.TbBulkActions';
+		}
+
+		$this->bulk = Yii::createComponent($this->bulkActions, $this);
+		$this->bulk->init();
+	}
+
+	private function fillSelectionChangedProperty()
+	{
+		$this->selectionChanged = $this->makeDefaultSelectionChangedJavascript();
+	}
+
+	/**
+	 * @return string
+	 */
+	private function makeDefaultSelectionChangedJavascript()
+	{
+		return 'js:function(id) {
+			$("#"+id+" input[type=checkbox]").change();
+		}';
 	}
 
 }
