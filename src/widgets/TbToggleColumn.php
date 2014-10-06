@@ -143,13 +143,7 @@ class TbToggleColumn extends TbDataColumn {
 	 */
 	public function init()
 	{
-		if ($this->name === null) {
-			throw new CException(Yii::t(
-				'zii',
-				'"{attribute}" attribute cannot be empty.',
-				array('{attribute}' => "name")
-			));
-		}
+		$this->assertNameNotNull();
 
 		$this->initButton();
 		$this->registerClientScript();
@@ -160,15 +154,14 @@ class TbToggleColumn extends TbDataColumn {
 	 */
 	protected function initButton()
 	{
-		if ($this->checkedButtonLabel === null) {
+		if ($this->checkedButtonLabel === null)
 			$this->checkedButtonLabel = Yii::t('zii', 'Uncheck');
-		}
-		if ($this->uncheckedButtonLabel === null) {
+
+		if ($this->uncheckedButtonLabel === null)
 			$this->uncheckedButtonLabel = Yii::t('zii', 'Check');
-		}
-		if ($this->emptyButtonLabel === null) {
+
+		if ($this->emptyButtonLabel === null)
 			$this->emptyButtonLabel = Yii::t('zii', 'Not set');
-		}
 
 		$this->button = array(
 			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("pk"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
@@ -230,40 +223,121 @@ function() {
 	 * @param integer $row the row number (zero-based)
 	 * @param mixed $data the data associated with the row
 	 */
-	protected function renderDataCellContent($row, $data) {
-		
-		$checked = ($this->value === null)
-			? CHtml::value($data, $this->name)
-			: $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
+	protected function renderDataCellContent($row, $data)
+	{
+		$checked = $this->getCheckedState($row, $data);
+		$label = $this->makeButtonLabel($checked);
+		$icon = $this->makeButtonIcon($checked);
+		$url = $this->makeButtonUrl($row, $data);
 
-		$button = $this->button;
-		$button['icon'] = $checked === null ? $this->emptyIcon : ($checked ? $this->checkedIcon : $this->uncheckedIcon);
-		$button['url'] = isset($button['url']) ? $this->evaluateExpression(
-			$button['url'],
-			array('data' => $data, 'row' => $row)
-		) : '#';
-
-		if (!$this->displayText) {
-			$button['htmlOptions']['title'] = $this->getButtonLabel($checked);
-            if (!isset($button['htmlOptions']['data-toggle'])) {
-                $button['htmlOptions']['data-toggle'] = 'tooltip';
-            }
-            if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
-				echo CHtml::link('<span class="glyphicon glyphicon-' . $button['icon'] . '"></span>', $button['url'], $button['htmlOptions']);
-            } else {
-            	echo CHtml::link('<i class="' . $button['icon'] . '"></i>' , $button['url'], $button['htmlOptions']);
-            }
-		} else {
-			$button['label'] = $this->getButtonLabel($checked);
-			$button['class'] = 'booster.widgets.TbButton';
-			$widget = Yii::createComponent($button);
-			$widget->init();
-			$widget->run();
-		}
+		if ($this->displayText)
+			$this->renderButton($label, $icon, $url);
+		else
+			$this->renderLink($label, $icon, $url);
 	}
 
-	private function getButtonLabel($value) {
-		
+	private function makeButtonLabel($value)
+	{
 		return $value === null ? $this->emptyButtonLabel : ($value ? $this->checkedButtonLabel : $this->uncheckedButtonLabel);
+	}
+
+	private function assertNameNotNull()
+	{
+		if ($this->name !== null)
+			return;
+
+		$msg = Yii::t(
+			'zii',
+			'"{attribute}" attribute cannot be empty.',
+			array('{attribute}' => "name")
+		);
+		throw new CException($msg);
+	}
+
+	/**
+	 * @param $checked
+	 *
+	 * @return string
+	 */
+	protected function makeButtonIcon($checked)
+	{
+		return $checked === null ? $this->emptyIcon : ($checked ? $this->checkedIcon : $this->uncheckedIcon);
+	}
+
+	/**
+	 * @param string $iconClass
+	 *
+	 * @return bool
+	 */
+	protected function isNotGlyphiconsIcon($iconClass)
+	{
+		return strpos($iconClass, 'icon') === false and strpos($iconClass, 'fa') === false;
+	}
+
+	/**
+	 * @param $label
+	 * @param $icon
+	 * @param $url
+	 */
+	protected function renderLink($label, $icon, $url)
+	{
+		$htmlOptions = $this->button['htmlOptions'];
+
+		$htmlOptions['title'] = $label;
+		if (!isset($htmlOptions['data-toggle']))
+			$htmlOptions['data-toggle'] = 'tooltip';
+
+		$iconHtmlTemplate = $this->isNotGlyphiconsIcon($icon)
+			? '<span class="glyphicon glyphicon-%s"></span>'
+			: '<i class="%s"></i>';
+
+		$iconHtml = sprintf($iconHtmlTemplate, $icon);
+
+		echo CHtml::link($iconHtml, $url, $htmlOptions);
+	}
+
+	/**
+	 * @param $label
+	 * @param $icon
+	 * @param $url
+	 *
+	 * @throws CException
+	 */
+	protected function renderButton($label, $icon, $url)
+	{
+		$button = $this->button;
+		$button['icon'] = $icon;
+		$button['url'] = $url;
+		$button['label'] = $label;
+		$button['class'] = 'booster.widgets.TbButton';
+		$widget = Yii::createComponent($button);
+		$widget->init();
+		$widget->run();
+	}
+
+	/**
+	 * @param $row
+	 * @param $data
+	 *
+	 * @return mixed|string
+	 */
+	protected function makeButtonUrl($row, $data)
+	{
+		return isset($this->button['url'])
+			? $this->evaluateExpression($this->button['url'], array('data' => $data, 'row' => $row))
+			: '#';
+	}
+
+	/**
+	 * @param $row
+	 * @param $data
+	 *
+	 * @return mixed
+	 */
+	protected function getCheckedState($row, $data)
+	{
+		return ($this->value === null)
+			? CHtml::value($data, $this->name)
+			: $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
 	}
 }
