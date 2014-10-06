@@ -62,7 +62,7 @@ class TbRedactorJS extends CInputWidget
 				echo CHtml::textArea($this->name, $this->value, $this->htmlOptions);
 			}
 		}
-		$this->registerClientScript($this->id);
+		$this->registerClientScript();
 	}
 
 	/**
