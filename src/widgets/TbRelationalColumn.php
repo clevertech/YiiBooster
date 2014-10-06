@@ -37,7 +37,7 @@ class TbRelationalColumn extends TbDataColumn {
 	public $cacheData = true;
 
 	/**
-	 * @var string a javascript function that will be invoked if an AJAX call occurs.
+	 * @var string|CJavaScriptExpression a javascript function that will be invoked if an AJAX call occurs.
 	 *
 	 * The function signature is <code>function(tr, rowid, data)</code>
 	 * <ul>
