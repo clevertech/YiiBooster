@@ -589,6 +589,8 @@ class TbExtendedGridView extends TbGridView {
 	 * with our own method.
 	 *
 	 * @param integer $row the row number (zero-based).
+	 *
+	 * @deprecated This method will be removed after Yii 1.1.17 release.
 	 */
 	public function renderTableRow($row)
 	{
@@ -781,28 +783,22 @@ class TbExtendedGridView extends TbGridView {
 	/**
 	 *### .parseColumnValue()
 	 *
-	 * @param CDataColumn $column
-	 * @param integer $row the current row number
-	 *
-	 * @return string
+	 * @param CGridColumn $column
+	 * @param string $value Value of the $column rendered by $column->renderDataCell($row).
 	 */
-	protected function parseColumnValue($column, $row)
+	protected function processColumnValue($column, $value)
 	{
-		ob_start();
-		$column->renderDataCell($row);
-		$value = ob_get_clean();
+		if (!($column instanceof CDataColumn))
+			return;
 
-		if ($column instanceof CDataColumn && array_key_exists($column->name, $this->extendedSummary['columns'])) {
-			// lets get the configuration
-			$config = $this->extendedSummary['columns'][$column->name];
-			// add the required column object in
-			$config['column'] = $column;
-			// build the summary operation object
-			$op = $this->getSummaryOperationInstance($column->name, $config);
-			// process the value
-			$op->processValue($value);
-		}
-		return $value;
+		if (!array_key_exists($column->name, $this->extendedSummary['columns']))
+			return;
+
+		$config = $this->extendedSummary['columns'][$column->name];
+		$config['column'] = $column;
+
+		$this->getSummaryOperationInstance($column->name, $config)
+			->processValue($value);
 	}
 
 	/**
@@ -929,15 +925,41 @@ class TbExtendedGridView extends TbGridView {
 	}
 
 	/**
-	 * @param $column
-	 * @param $row
+	 * This method will become `renderDataCell` after Yii 1.1.17 will be released
+	 * @see https://github.com/yiisoft/yii/pull/3571
+	 *
+	 * @param CGridColumn $column
+	 * @param integer $row
 	 */
 	private function renderDataCellProcessingSummariesIfNeeded($column, $row)
 	{
-		echo $this->displayExtendedSummary && !empty($this->extendedSummary['columns']) ? $this->parseColumnValue(
-			$column,
-			$row
-		) : $column->renderDataCell($row);
+		$value = $this->getRenderedDataCellValue($column, $row);
+
+		if ($this->isExtendedSummaryEnabled())
+			$this->processColumnValue($column, $value);
+
+		echo $value;
+	}
+
+	/**
+	 * @param CGridColumn $column
+	 * @param integer $row
+	 *
+	 * @return string
+	 */
+	private function getRenderedDataCellValue($column, $row)
+	{
+		ob_start();
+		$column->renderDataCell($row);
+		return ob_get_clean();
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function isExtendedSummaryEnabled()
+	{
+		return $this->displayExtendedSummary && !empty($this->extendedSummary['columns']);
 	}
 
 }
