@@ -79,11 +79,11 @@ class TbProgress extends TbWidget {
 			$this->percent = 100;
 
 		if (!empty($this->progressClasses)) {
-			$this->progressClasses = implode(' ', $this->progressClasses);
+			$classes = implode(' ', $this->progressClasses);
 			if (isset($this->htmlOptions['class'])) {
-				$this->htmlOptions['class'] .= ' ' . $this->progressClasses;
+				$this->htmlOptions['class'] .= ' ' . $classes;
 			} else {
-				$this->htmlOptions['class'] = $this->progressClasses;
+				$this->htmlOptions['class'] = $classes;
 			}
 		}
 	}
