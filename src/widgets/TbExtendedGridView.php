@@ -492,7 +492,7 @@ class TbExtendedGridView extends TbGridView {
 			++$cnt;
 		}
 
-		$xAxisData = [];
+		$xAxisData = array();
 		
 		$xAxisData[] = array('categories'=>array());
 		if(!empty($this->chartOptions['data']['xAxis'])){

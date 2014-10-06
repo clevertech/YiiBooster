@@ -90,7 +90,7 @@ class TbButtonGroup extends CWidget {
 	 */
 	public function init() {
 		
-		$classes = [];
+		$classes = array();
 		
 		if ($this->stacked === true) {
 			$classes[] = 'btn-group-vertical';

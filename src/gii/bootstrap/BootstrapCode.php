@@ -39,7 +39,7 @@ class BootstrapCode extends CrudCode {
 				if (strpos ( $column->dbType, 'enum(' ) !== false) {
 					$matches = '';
 					preg_match('/^enum\((.*)\)$/', $column->dbType, $matches);
-					$options = [];
+					$options = array();
 					foreach( explode(',', $matches[1]) as $value ) {
 						$options[] = trim( $value, "'" );
 					}

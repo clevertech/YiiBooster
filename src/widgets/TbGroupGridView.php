@@ -349,7 +349,7 @@ class TbGroupGridView extends TbGridView
 	 */
 	private function getRowValues($columns, $data, $rowIndex)
 	{
-		$result = [];
+		$result = array();
 		foreach ($columns as $column) {
 			if ($column instanceOf TbDataColumn) {
 				$result[$column->name] = $this->getDataCellContent($column, $data, $rowIndex);
