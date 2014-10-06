@@ -13,6 +13,9 @@ class TbBreadcrumbsTest extends PHPUnit_Framework_TestCase
 		return new TbBreadcrumbs();
 	}
 
+	/**
+	 * @param TbBreadcrumbs $widget
+	 */
 	private function runWidget($widget)
 	{
 		ob_start();

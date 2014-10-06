@@ -106,7 +106,7 @@ class TbJsonCheckBoxColumn extends CCheckBoxColumn
 	 * @param int $row
 	 * @param mixed $data
 	 *
-	 * @return array|void
+	 * @return string|null
 	 */
 	protected function renderDataCellContent($row, $data)
 	{

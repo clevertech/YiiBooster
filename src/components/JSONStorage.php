@@ -226,7 +226,7 @@ class JSONStorage extends CComponent
 	 *
 	 * @param string $key the name of the key that will hold the data
 	 * @param array $data the data to save
-	 * @param null $registry the name of the registry
+	 * @param string $registry the name of the registry
 	 *
 	 * @return bool
 	 */
@@ -247,7 +247,7 @@ class JSONStorage extends CComponent
 	 * Retrieves a data value from the registry
 	 *
 	 * @param string $key the name of the key that holds the data
-	 * @param null $registry the registry name
+	 * @param string $registry the registry name
 	 *
 	 * @return mixed the data in the key value, null otherwise
 	 */

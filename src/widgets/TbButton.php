@@ -371,6 +371,9 @@ class TbButton extends TbWidget {
 		}
 	}
 	
+	/**
+	 * @param string $toggleType
+	 */
 	protected function createToggleButton($toggleType) {
 		
 		$html = '';

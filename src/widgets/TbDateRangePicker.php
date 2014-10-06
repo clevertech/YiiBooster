@@ -86,6 +86,10 @@ class TbDateRangePicker extends TbBaseInputWidget {
 
 	}
 	
+	/**
+	 * @param string $selector
+	 * @param string $callback
+	 */
 	public function registerScript($selector, $options = array(), $callback = null) {
 		
 		Yii::app()->clientScript->registerScript(

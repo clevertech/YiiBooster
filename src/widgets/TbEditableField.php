@@ -181,8 +181,8 @@ class TbEditableField extends TbEditable
 	 * - real model: containing attribute. Can be null
 	 * - attribute: it will be without dots for activerecords
 	 *
-	 * @param mixed $model
-	 * @param mixed $attribute
+	 * @param CActiveRecord $model
+	 * @param string $attribute
 	 *
 	 * @throws CException
 	 * @return array

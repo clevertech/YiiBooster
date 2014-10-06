@@ -792,7 +792,7 @@ class TbEditable extends CWidget
     /**
     * injects ajaxUpdate event into widget
     *
-    * @param mixed $widget
+    * @param TbGridView $widget
     */
     public static function attachAjaxUpdateEvent($widget)
     {

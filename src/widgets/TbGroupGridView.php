@@ -342,7 +342,7 @@ class TbGroupGridView extends TbGridView
 	 *
 	 * @param string[]|TbDataColumn[] $columns
 	 * @param CActiveRecord $data
-	 * @param mixed $rowIndex
+	 * @param integer $rowIndex
 	 *
 	 * @throws CException
 	 * @return mixed
@@ -369,7 +369,7 @@ class TbGroupGridView extends TbGridView
 	/**
 	 * renders extra row
 	 *
-	 * @param mixed $beforeRow
+	 * @param integer $beforeRow
 	 * @param mixed $change
 	 * @param array $columnsInExtra
 	 */

@@ -74,7 +74,7 @@ class TbArray
 
     /**
      * Removes a set of items from the given array.
-     * @param array $keys the keys to remove.
+     * @param string[] $keys the keys to remove.
      * @param array $array the array to remove from.
      */
     public static function removeValues(array $keys, array &$array)
@@ -84,7 +84,7 @@ class TbArray
 
     /**
      * Copies the given values from one array to another.
-     * @param array $keys the keys to copy.
+     * @param string[] $keys the keys to copy.
      * @param array $from the array to copy from.
      * @param array $to the array to copy to.
      * @param boolean $force whether to allow overriding of existing values.

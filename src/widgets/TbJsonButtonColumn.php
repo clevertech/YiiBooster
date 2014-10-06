@@ -68,6 +68,9 @@ class TbJsonButtonColumn extends TbButtonColumn
 		parent::renderDataCell($row);
 	}
 
+    /**
+     * @param integer $row
+     */
     protected function renderDataCellContent($row, $data)
     {
         ob_start();

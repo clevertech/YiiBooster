@@ -465,7 +465,6 @@ class TbHtml extends CHtml // required in order to access the protected methods 
 
     /**
      * Generates an emphasized text.
-     * @param string $style the text style.
      * @param string $text the text to emphasize.
      * @param array $htmlOptions additional HTML attributes.
      * @param string $tag the HTML tag.
@@ -501,7 +500,6 @@ class TbHtml extends CHtml // required in order to access the protected methods 
      * Generates a muted span.
      * @param string $text the text.
      * @param array $htmlOptions additional HTML attributes.
-     * @param string $tag the HTML tag.
      * @return string the generated span.
      */
     public static function mutedSpan($text, $htmlOptions = array())
@@ -540,7 +538,6 @@ class TbHtml extends CHtml // required in order to access the protected methods 
 
     /**
      * Generates an address block.
-     * @param string $quote the address text.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated block.
      */
@@ -879,7 +876,7 @@ class TbHtml extends CHtml // required in order to access the protected methods 
     /**
      * Generates a list box.
      * @param string $name the input name.
-     * @param mixed $select the selected value(s).
+     * @param string $select the selected value(s).
      * @param array $data data for generating the list options (value=>display).
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated list box
@@ -938,7 +935,7 @@ class TbHtml extends CHtml // required in order to access the protected methods 
     /**
      * Generates an inline radio button list.
      * @param string $name name of the radio button list.
-     * @param mixed $select selection of the radio buttons.
+     * @param string $select selection of the radio buttons.
      * @param array $data $data value-label pairs used to generate the radio button list.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated list.
@@ -1030,7 +1027,7 @@ EOD;
     /**
      * Generates an inline check box list.
      * @param string $name name of the check box list.
-     * @param mixed $select selection of the check boxes.
+     * @param string $select selection of the check boxes.
      * @param array $data $data value-label pairs used to generate the check box list.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated list.
@@ -1300,7 +1297,6 @@ EOD;
 
     /**
      * Generates a control group with an uneditable field.
-     * @param string $select the input value.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated control group.
      * @see self::controlGroup
@@ -1313,7 +1309,6 @@ EOD;
     /**
      * Generates a control group with a search field.
      * @param string $name the input name.
-     * @param string $select the input value.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated control group.
      * @see self::controlGroup
@@ -1920,8 +1915,6 @@ EOD;
 
     /**
      * Generates a control group with a check box for a model attribute.
-     * @param string $name the input name.
-     * @param string $checked whether the check box is checked.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated control group.
      * @see self::activeControlGroup
@@ -1947,8 +1940,6 @@ EOD;
 
     /**
      * Generates a control group with a list box for a model attribute.
-     * @param string $name the input name.
-     * @param string $select the selected value.
      * @param array $data data for generating the list options (value=>display).
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated control group.
@@ -1979,8 +1970,6 @@ EOD;
 
     /**
      * Generates a control group with an inline radio button list for a model attribute.
-     * @param string $name the input name.
-     * @param string $select the selected value.
      * @param array $data data for generating the list options (value=>display).
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated control group.
@@ -2417,7 +2406,6 @@ EOD;
 
     /**
      * Generates an image submit button.
-     * @param string $src the image URL
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated button.
      */
@@ -2781,9 +2769,9 @@ EOD;
 
     /**
      * Generates a dropdown toggle element.
-     * @param string $tag the HTML tag.
      * @param string $label the element text.
      * @param array $htmlOptions additional HTML attributes.
+     * @param string $type
      * @return string the generated element.
      */
     protected static function dropdownToggle($type, $label, $htmlOptions)
@@ -3175,7 +3163,6 @@ EOD;
 
     /**
      * Generates a tabbable pills menu.
-     * @param array $tabs the tab configurations.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated menu.
      */
@@ -3942,7 +3929,7 @@ EOD;
     /**
      * Generates a close link.
      * @param string $label the link label text.
-     * @param mixed $url the link url.
+     * @param string $url the link url.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated link.
      */
@@ -4220,7 +4207,7 @@ EOD;
     /**
      * Generates a previous link for the carousel.
      * @param string $label the link label text.
-     * @param mixed $url the link url.
+     * @param string $url the link url.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated link.
      */
@@ -4234,7 +4221,7 @@ EOD;
     /**
      * Generates a next link for the carousel.
      * @param string $label the link label text.
-     * @param mixed $url the link url.
+     * @param string $url the link url.
      * @param array $htmlOptions additional HTML attributes.
      * @return string the generated link.
      */

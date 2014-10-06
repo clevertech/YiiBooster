@@ -844,7 +844,7 @@ class TbExtendedGridView extends TbGridView {
 	 *
 	 * @param string $name
 	 *
-	 * @return CDataColumn|null
+	 * @return TbDataColumn|null
 	 */
 	protected function getColumnByName($name)
 	{
