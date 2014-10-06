@@ -54,7 +54,7 @@ class TbFileUpload extends CJuiInputWidget
 	public $previewImages = true;
 
 	/**
-	 * Whether or not to add the image processing pluing
+	 * Whether or not to add the image processing plugin
 	 */
 	public $imageProcessing = true;
 
