@@ -580,6 +580,14 @@ class TbExtendedGridView extends TbGridView {
 	 *
 	 * Renders a table body row.
 	 *
+	 * This method is a copy-paste from CGridView.renderTableRow(),
+	 * because we cannot override *just* the `renderDataCell` routine (it's polymorphic)
+	 * and Yii doesn't have a seam in place for us to do this.
+	 * @see https://github.com/yiisoft/yii/pull/3571
+	 *
+	 * Only meaningful change in here is the replacement of the `$column->renderDataCell($row)`
+	 * with our own method.
+	 *
 	 * @param integer $row the row number (zero-based).
 	 */
 	public function renderTableRow($row)
@@ -612,13 +620,8 @@ class TbExtendedGridView extends TbGridView {
 		}
 
 		echo CHtml::openTag('tr', $htmlOptions);
-		foreach ($this->columns as $column) {
-			echo $this->displayExtendedSummary && !empty($this->extendedSummary['columns']) ? $this->parseColumnValue(
-				$column,
-				$row
-			) : $column->renderDataCell($row);
-		}
-
+		foreach ($this->columns as $column)
+			$this->renderDataCellProcessingSummariesIfNeeded($column, $row);
 		echo CHtml::closeTag('tr');
 	}
 
@@ -923,6 +926,18 @@ class TbExtendedGridView extends TbGridView {
 		return 'js:function(id) {
 			$("#"+id+" input[type=checkbox]").change();
 		}';
+	}
+
+	/**
+	 * @param $column
+	 * @param $row
+	 */
+	private function renderDataCellProcessingSummariesIfNeeded($column, $row)
+	{
+		echo $this->displayExtendedSummary && !empty($this->extendedSummary['columns']) ? $this->parseColumnValue(
+			$column,
+			$row
+		) : $column->renderDataCell($row);
 	}
 
 }
