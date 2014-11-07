@@ -19,9 +19,9 @@ Yii::import('booster.widgets.TbButtonColumn');
 class TbButtonGroupColumn extends TbButtonColumn {
 
 	/**
-	 * @var string the button size ('mini','small','normal','large')
+	 * @var string the button size ('xs','sm','md','lg')
 	 */
-	public $buttonSize = 'mini';
+	public $buttonSize = 'xs';
 
 	/**
 	 * @var string the view button context ('info','primary','warning','danger','success' defaults to 'info').
@@ -87,6 +87,10 @@ class TbButtonGroupColumn extends TbButtonColumn {
 		if (!isset($options['title'])) {
 			$options['title'] = $label;
 		}
+		
+		if (!isset($options['buttonType'])) {
+			$options['buttonType'] = 'link';
+		}
 
 		if (!isset($options['data-toggle'])) {
 			$options['data-toggle'] = 'tooltip';
@@ -105,7 +109,7 @@ class TbButtonGroupColumn extends TbButtonColumn {
 				$button['icon'] = 'icon-' . implode(' icon-', explode(' ', $button['icon']));
 			}
 
-			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $url, $options);
+			echo CHtml::link('<span class="' . $button['icon'] . '"></span>', $url, $options);
 		} else if (isset($button['imageUrl']) && is_string($button['imageUrl'])) {
 			echo CHtml::link(CHtml::image($button['imageUrl'], $label), $url, $options);
 		} else {

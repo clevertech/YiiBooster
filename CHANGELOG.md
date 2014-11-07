@@ -10,6 +10,8 @@ Antonio Ramirez.
 
 ## YiiBooster latest development alpha
 - **(enh)** upgrade to select2 3.5.1 and select2-bootstrap-css 1.4.1
+- **(fix)** fix TbButtonGroupColumn doesn't conform to bootstrap 3+ - #977 
+- **(fix)** fix Userdoc for select2 still references 'bootstrap.widgets'
   
 ## YiiBooster version 4.1.0
 - **(enh)** upgarde to Bootstrap 3.2.0 - #882

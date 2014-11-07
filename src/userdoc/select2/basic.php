@@ -1,6 +1,6 @@
 <?php // Basic usage of Select2 widget
 $this->widget(
-    'bootstrap.widgets.TbSelect2',
+    'booster.widgets.TbSelect2',
     array(
         'asDropDownList' => false,
         'name' => 'clevertech',
