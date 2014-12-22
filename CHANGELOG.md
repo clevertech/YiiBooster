@@ -18,6 +18,7 @@ Antonio Ramirez.
 - **(enh)** upgarde to bootstrap-switch 3.0.2 - #867
 - **(enh)** add callbacks support to TbFileUpload
 - **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
+- **(enh)** update bootstrap-datepicker to the latest 1.3.1 (fixes #987, #873)
 - **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
 - **(fix)** allow multi relational column - #872  
 - **(fix)** fix TbButton dropdown items -maybe removed in a future release-
