@@ -839,6 +839,26 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
+	 * Generates a chosen group for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbChosen} widget and {@link customFieldGroup}.
+	 * Please check {@link TbChosen} documentation for detailed information about $widgetOptions.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $options Group attributes.
+	 * @return string The generated chosen group.
+	 * @see TbChosen
+	 * @see customFieldGroup
+	 */
+	public function chosenGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbChosen', $model, $attribute, $options);
+	}
+        
+	/**
 	 * Generates a redactor editor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldGroup}.
@@ -1174,7 +1194,9 @@ class TbActiveForm extends CActiveForm {
 		
 		echo CHtml::openTag('div', $groupOptions);
 
-		self::addCssClass($options['labelOptions'], 'col-sm-3 control-label');
+		if (!isset($options['labelOptions']['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $options['labelOptions']['class']))
+			$this->addCssClass($options['labelOptions'], 'col-sm-3');
+		self::addCssClass($options['labelOptions'], 'control-label');
 		if (isset($options['label'])) {
 			if (!empty($options['label'])) {
 				echo CHtml::label($options['label'], CHtml::activeId($model, $attribute), $options['labelOptions']);
@@ -1189,7 +1211,8 @@ class TbActiveForm extends CActiveForm {
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
 		else 
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
-		$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
+		if (!isset($wrapperHtmlOptions['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $wrapperHtmlOptions['class']))
+			$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
 		echo CHtml::openTag('div', $wrapperHtmlOptions);
 
 		if (!empty($options['prepend']) || !empty($options['append'])) {

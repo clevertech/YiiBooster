@@ -453,6 +453,7 @@ class TbEditable extends CWidget
             'viewseparator', 
             'showbuttons',
             'send',
+            'disabled',
                ) as $option) {
             if ($this->$option !== null) {
                 $options[$option] = $this->$option;
