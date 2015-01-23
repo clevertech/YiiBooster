@@ -145,8 +145,6 @@ class TbEditableColumn extends TbDataColumn
             return;
         } */
                 
-        echo '<td><div class="filter-container">';
-        $this->renderFilterCellContent();
-        echo '</div></td>';
+        parent::renderFilterCell();
     }       
 }
