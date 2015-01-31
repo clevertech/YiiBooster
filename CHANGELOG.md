@@ -16,6 +16,7 @@ Antonio Ramirez.
 - **(enh)** Added support to TbActiveForm to use TbChosen widget (YaroslavMolchan)
 - **(fix)** fix editable events from being reregistered by yiiEditable() #954
 - **(fix)** fix TbGroupGridView support for rowHtmlOptionsExpression #920
+- **(fix)** fix methods TbHtml::activeRadioButtonList and TbHtml::activeCheckBoxList for the case $htmlOptions = ['uncheckValue' => null] #917 (IStranger/G.Azamat)
   
 ## YiiBooster version 4.1.0
 - **(enh)** upgarde to Bootstrap 3.2.0 - #882
