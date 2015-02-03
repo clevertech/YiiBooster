@@ -71,11 +71,16 @@ class TbSwitch extends CInputWidget {
 
         $booster = Booster::getBooster();
         $booster->registerPackage('switch');
+		/*
+		 * Hacked by Babak
+		 * Original code: $config = CJavaScript::encode($this->options);
+		 * This is a hack to help transfer the onText and offText
+		 * So put them in the htmlOptions 
+		 */
+		$config = CJavaScript::encode(count($this->options)?$this->options:$this->htmlOptions);
 
-		$config = CJavaScript::encode($this->options);
-		
 		ob_start();
-		echo "$('#$id').bootstrapSwitch({$config})";
+		echo "$('input#$id').bootstrapSwitch({$config})";
 		foreach ($this->events as $event => $handler) {
 			$event = $event.'.bootstrapSwitch';
 			if (!$handler instanceof CJavaScriptExpression && strpos($handler, 'js:') === 0)
