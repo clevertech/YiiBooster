@@ -9,10 +9,10 @@
  *## Class TbToggleButton
  * @see <http://www.bootstrap-switch.org/>
  * @package booster.widgets.forms.buttons
- * 
+ *
  */
 class TbSwitch extends CInputWidget {
-	
+
 	/**
 	 * @var TbActiveForm when created via TbActiveForm, this attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
@@ -34,7 +34,7 @@ class TbSwitch extends CInputWidget {
 	 * </pre>
 	 */
 	public $events = array();
-	
+
 	/**
 	 * js widget options
 	 * @see <http://www.bootstrap-switch.org/> options part
@@ -46,7 +46,7 @@ class TbSwitch extends CInputWidget {
 	 * Widget's run function
 	 */
 	public function run() {
-		
+
 		list($name, $id) = $this->resolveNameID();
 
 		if ($this->hasModel()) {
@@ -71,13 +71,7 @@ class TbSwitch extends CInputWidget {
 
         $booster = Booster::getBooster();
         $booster->registerPackage('switch');
-		/*
-		 * Hacked by Babak
-		 * Original code: $config = CJavaScript::encode($this->options);
-		 * This is a hack to help transfer the onText and offText
-		 * So put them in the htmlOptions 
-		 */
-		$config = CJavaScript::encode(count($this->options)?$this->options:$this->htmlOptions);
+		$config = CJavaScript::encode($this->options);
 
 		ob_start();
 		echo "$('input#$id').bootstrapSwitch({$config})";
