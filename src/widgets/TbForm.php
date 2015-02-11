@@ -5,9 +5,9 @@
  */
 
 /**
- * TbForm is adaptation of CFrom class for fast form building with bootstrap.
- * Its public interface does not differs from original CFrom class.
- * Please refer to {@link CFrom} for further information.
+ * TbForm is adaptation of CForm class for fast form building with bootstrap.
+ * Its public interface does not differs from original CForm class.
+ * Please refer to {@link CForm} for further information.
  *
  * @see CForm
  */
