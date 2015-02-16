@@ -11,7 +11,7 @@
  */
 return array(
 	'font-awesome' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/4.1.0/' : $this->getAssetsUrl().'/font-awesome/',
+		'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/' : $this->getAssetsUrl().'/font-awesome/',
 		'css' => array(($this->minify || $this->enableCdn) ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'bootstrap.js' => array(
