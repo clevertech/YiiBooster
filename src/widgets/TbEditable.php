@@ -503,7 +503,12 @@ class TbEditable extends CWidget
             $selector = '#'.$this->liveTarget.' '.$selector;
         }
         $script = "$('".$selector."')";
-
+        
+		//check if script is already registered
+		if(Yii::app()->getClientScript()->isScriptRegistered(__CLASS__ . '-' . $selector)) {
+			return true;
+		}
+		
         //attach events
         foreach(array('init', 'shown', 'save', 'hidden') as $event) {
             $eventName = 'on'.ucfirst($event);
