@@ -24,6 +24,15 @@ class TbEditableColumn extends TbDataColumn
     * @see TbEditableField config
     */
     public $editable = array();
+    
+    protected function fetchKeys($dataProvider) {
+    	$keys = array();
+    	$data = $dataProvider->getData();
+    	if(isset($data) && !empty($data))
+    	foreach($data[0] as $i=>$data)
+    		$keys[]=$i;
+    	return $keys;
+    }
 
     public function init()
     {
@@ -37,7 +46,7 @@ class TbEditableColumn extends TbDataColumn
         if ($this->grid->dataProvider instanceof CActiveDataProvider)
         	$dummy = new $this->grid->dataProvider->modelClass();
 		else if ($this->grid->dataProvider instanceof CArrayDataProvider) {
-			$keys = $this->grid->dataProvider->fetchKeys();
+			$keys = $this->fetchKeys($this->grid->dataProvider);
 			$dummy = [];
 			foreach ($keys as $key) {
 				$dummy[$key] = $key; // anyvalue;
