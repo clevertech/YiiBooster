@@ -51,17 +51,17 @@ class TbEditableColumn extends TbDataColumn
 	        	$dummy = new $this->grid->dataProvider->modelClass();
 			else if ($this->grid->dataProvider instanceof CArrayDataProvider) {
 				$keys = $this->fetchKeys($this->grid->dataProvider);
-				$dummy = [];
+				$dummy = array();
 				foreach ($keys as $key) {
 					$dummy[$key] = $key; // anyvalue;
 				}
 			} else {
 				$dummy = null;			
 			}
-			$this->grid->dataProvider->data = [$dummy];
-			$this->editable['htmlOptions'] = ['style' => 'display: none;'];
+			$this->grid->dataProvider->data = array($dummy);
+			$this->editable['htmlOptions'] = array('style' => 'display: none;');
 	        $this->renderDataCellContent(0, $dummy); // this is the target line
-	        $this->grid->dataProvider->data = [];
+	        $this->grid->dataProvider->data = array();
         }
         //need to attach ajaxUpdate handler to refresh editables on pagination and sort
         TbEditable::attachAjaxUpdateEvent($this->grid);
