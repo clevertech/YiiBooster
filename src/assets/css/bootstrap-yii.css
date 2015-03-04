@@ -566,3 +566,7 @@ Kure2012.
     opacity: 1;
     font-size: 1em;
 }
+
+label.radio {
+	padding-left: 20px;
+}
