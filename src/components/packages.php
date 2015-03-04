@@ -30,6 +30,7 @@ return array(
 	'bootbox' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootbox/',
 		'js' => array($this->minify ? 'bootbox.min.js' : 'bootbox.js'),
+		'depends' => array('bootstrap.js'),
 	),
 	'notify' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/notify/',
