@@ -146,7 +146,6 @@ class TbActiveForm extends CActiveForm {
 		if (!isset($this->errorMessageCssClass)) {
 			$this->errorMessageCssClass = 'help-block error';
 		}
-
 		if(!isset($this->clientOptions['errorCssClass'])){
 			$this->clientOptions['errorCssClass'] = 'has-error';
 		}
@@ -1189,9 +1188,9 @@ class TbActiveForm extends CActiveForm {
 		
 		$_attribute = $attribute;
 		CHtml::resolveName($model, $_attribute);
-		if ($model->hasErrors($_attribute))
-			self::addCssClass($groupOptions, 'has-error');
-		
+		if ($model->hasErrors($_attribute) && $this->clientOptions['errorCssClass'])
+			self::addCssClass($groupOptions, $this->clientOptions['errorCssClass']);
+
 		echo CHtml::openTag('div', $groupOptions);
 
 		if (!isset($options['labelOptions']['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $options['labelOptions']['class']))
@@ -1257,9 +1256,9 @@ class TbActiveForm extends CActiveForm {
 		
 		$_attribute = $attribute;
 		CHtml::resolveName($model, $_attribute);
-		if ($model->hasErrors($_attribute))
-			self::addCssClass($groupOptions, 'has-error');
-		
+		if ($model->hasErrors($_attribute) && $this->clientOptions['errorCssClass'])
+			self::addCssClass($groupOptions, $this->clientOptions['errorCssClass']);
+
 		echo CHtml::openTag('div', $groupOptions);
 		
 		self::addCssClass($options['labelOptions'], 'control-label');
