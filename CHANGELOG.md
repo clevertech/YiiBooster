@@ -9,6 +9,7 @@ Thank you all
 Antonio Ramirez.
 
 ## YiiBooster latest development alpha
+- **(fix)** fix TbEditableField params prop check is an array and js callback implementation #1016 (Oxyaction)
 - **(enh)** upgrade to select2 3.5.1 and select2-bootstrap-css 1.4.1
 - **(enh)** upgrade to font-awesome 4.3.0
 - **(fix)** fix TbButtonGroupColumn doesn't conform to bootstrap 3+ - #977 
