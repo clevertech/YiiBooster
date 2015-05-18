@@ -152,9 +152,23 @@ class TbEditableField extends TbEditable
         }
         
         //scenario
-        if($pkModel && !isset($this->params['scenario'])) {
-            $this->params['scenario'] = $pkModel->getScenario(); 
-        }        
+        if ($pkModel) {
+            if ((is_array($this->params) && !isset($this->params['scenario'])) || $this->params === null) {
+                $this->params['scenario'] = $pkModel->getScenario();
+            } elseif (strlen($this->params)) {
+                $orig = $this->params;
+                if (strpos($orig, 'js:') === 0) {
+                    $orig = substr($orig, 3);
+                }
+                $orig = "params = ($orig).call(this, params);\n";
+                $this->params = "js: function(params) {
+                    params.scenario = '" . $pkModel->getScenario() . "';
+                    $orig
+                    return params;
+                }";
+            }
+
+        }
     }
 
     public function getSelector()
