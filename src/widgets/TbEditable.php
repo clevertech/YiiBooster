@@ -431,8 +431,19 @@ class TbEditable extends CWidget
         if (Yii::app()->request->enableCsrfValidation) {
             $csrfTokenName = Yii::app()->request->csrfTokenName;
             $csrfToken = Yii::app()->request->csrfToken;
-            if(!isset($this->params[$csrfTokenName])) {
+            if((is_array($this->params) && !isset($this->params[$csrfTokenName])) || $this->params === null) {
                 $this->params[$csrfTokenName] = $csrfToken;
+            } elseif (strlen($this->params)) {
+                $orig = $this->params;
+                if (strpos($orig, 'js:') === 0) {
+                    $orig = substr($orig, 3);
+                }
+                $orig = "params = ($orig).call(this, params);\n";
+                $this->params = "js: function(params) {
+                    params['" . $csrfTokenName . "'] = '" . $csrfToken . "';
+                    $orig
+                    return params;
+                }";
             }
         }        
 
