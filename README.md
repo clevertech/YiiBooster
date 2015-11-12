@@ -66,11 +66,21 @@ Check out [YiiBooster documentation website][booster-docs].
 Long story short: make pull requests from separate branches dedicated for individual features to `master`.
 Please see the [wiki page about how to contribute to YiiBooster](https://github.com/clevertech/YiiBooster/wiki/How-to-contribute-to-this-repository) for details.
 
+## Requirements
+
+YiiBooster as a project requires (and supports) PHP 5.3 and Yii 1.1.15. 
+
+We know that PHP 5.3 is deprecated for several years already and Yii has version 2 released a year ago.
+A major overwrite is planned, but as for YiiBooster as it is, the dependencies versions stand as they are.
+
+For development we specify explicitly that you'll need [PHPUnit 4.8, because it's the last version to support PHP 5.3](https://github.com/sebastianbergmann/phpunit/wiki/Release-Announcement-for-PHPUnit-4.8.0).
+
 ## Bug tracker
 If you find any bugs, please create an issue at [issue tracker for project Github repository][booster-issues].
 
 ## License
 This work as a whole is licensed under a BSD license. Full text is included in the `LICENSE` file in the root of codebase.
+
 
 > Well-built beautifully designed web applications.
 >
