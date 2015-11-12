@@ -85,10 +85,13 @@ class TbDateRangePicker extends TbBaseInputWidget {
 		}
 
 	}
-	
+
 	/**
 	 * @param string $selector
+	 * @param array $options
 	 * @param string $callback
+	 *
+	 * @throws CException
 	 */
 	public function registerScript($selector, $options = array(), $callback = null) {
 		

@@ -370,9 +370,11 @@ class TbButton extends TbWidget {
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 		}
 	}
-	
+
 	/**
 	 * @param string $toggleType
+	 *
+	 * @return string
 	 */
 	protected function createToggleButton($toggleType) {
 		

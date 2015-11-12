@@ -22,6 +22,8 @@ class TbJsonButtonColumn extends TbButtonColumn
 {
 	/**
 	 * Renders|returns the header cell.
+	 *
+	 * @return array
 	 */
 	public function renderHeaderCell()
 	{
@@ -34,6 +36,7 @@ class TbJsonButtonColumn extends TbButtonColumn
 			return array('id' => $this->id, 'content' => $content);
 		}
 		parent::renderHeaderCell();
+		return array();
 	}
 
 	/**
@@ -68,9 +71,13 @@ class TbJsonButtonColumn extends TbButtonColumn
 		parent::renderDataCell($row);
 	}
 
-    /**
-     * @param integer $row
-     */
+	/**
+	 * @param integer $row
+	 *
+	 * @param mixed $data
+	 *
+	 * @return string|void
+	 */
     protected function renderDataCellContent($row, $data)
     {
         ob_start();

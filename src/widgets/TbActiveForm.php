@@ -847,7 +847,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated chosen group.
 	 * @see TbChosen

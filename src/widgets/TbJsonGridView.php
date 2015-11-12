@@ -264,7 +264,6 @@ class TbJsonGridView extends TbGridView
 			'summary' => array()
 		);
 		foreach ($this->columns as $column) {
-			/** @var CGridColumn $column */
 			$tbody['headers'][] = $column->renderHeaderCell();
 		}
 

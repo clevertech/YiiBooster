@@ -45,7 +45,7 @@ class TbMarkdownEditor extends CInputWidget {
 
 		$this->htmlOptions['id'] = $id;
 		
-		$this->registerClientScript($id);
+		$this->registerClientScript();
 
 		if (!array_key_exists('style', $this->htmlOptions)) {
 			$this->htmlOptions['style'] = "width:{$this->width};height:{$this->height};";

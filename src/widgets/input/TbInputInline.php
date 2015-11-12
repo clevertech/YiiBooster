@@ -103,7 +103,7 @@ class TbInputInline extends TbInputVertical
             unset($this->htmlOptions['events']);
         }
 
-        echo $this->setPlaceholder();
+        $this->setPlaceholder();
         echo $this->getPrepend();
         $this->widget(
             'booster.widgets.TbDatePicker',
@@ -170,7 +170,7 @@ class TbInputInline extends TbInputVertical
 			unset($options['callback']);
 		}
 
-        echo $this->setPlaceholder();
+        $this->setPlaceholder();
 		echo $this->getPrepend();
 		$this->widget(
 			'booster.widgets.TbDateRangePicker',

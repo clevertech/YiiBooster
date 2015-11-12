@@ -256,7 +256,8 @@ class Booster extends CApplicationComponent {
 	 *
 	 */
 	protected function appendUserSuppliedPackagesToOurs() {
-		
+
+		/** @noinspection PhpIncludeInspection */
 		$bootstrapPackages = require(Yii::getPathOfAlias('booster.components') . '/packages.php');
 		$bootstrapPackages += $this->createBootstrapCssPackage();
 		$bootstrapPackages += $this->createSelect2Package();
