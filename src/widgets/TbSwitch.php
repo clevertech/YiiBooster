@@ -9,10 +9,10 @@
  *## Class TbToggleButton
  * @see <http://www.bootstrap-switch.org/>
  * @package booster.widgets.forms.buttons
- * 
+ *
  */
 class TbSwitch extends CInputWidget {
-	
+
 	/**
 	 * @var TbActiveForm when created via TbActiveForm, this attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
@@ -34,7 +34,7 @@ class TbSwitch extends CInputWidget {
 	 * </pre>
 	 */
 	public $events = array();
-	
+
 	/**
 	 * js widget options
 	 * @see <http://www.bootstrap-switch.org/> options part
@@ -46,7 +46,7 @@ class TbSwitch extends CInputWidget {
 	 * Widget's run function
 	 */
 	public function run() {
-		
+
 		list($name, $id) = $this->resolveNameID();
 
 		if ($this->hasModel()) {
@@ -71,11 +71,10 @@ class TbSwitch extends CInputWidget {
 
         $booster = Booster::getBooster();
         $booster->registerPackage('switch');
-
 		$config = CJavaScript::encode($this->options);
-		
+
 		ob_start();
-		echo "$('#$id').bootstrapSwitch({$config})";
+		echo "$('input#$id').bootstrapSwitch({$config})";
 		foreach ($this->events as $event => $handler) {
 			$event = $event.'.bootstrapSwitch';
 			if (!$handler instanceof CJavaScriptExpression && strpos($handler, 'js:') === 0)

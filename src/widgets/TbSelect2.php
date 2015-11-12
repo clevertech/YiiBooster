@@ -1,6 +1,7 @@
 <?php
+
 /**
- *##  TbSelect2 class file.
+ * ##  TbSelect2 class file.
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
@@ -8,20 +9,21 @@
  */
 
 /**
- *## Select2 wrapper widget
+ * ## Select2 wrapper widget
  *
  * @see http://ivaynberg.github.io/select2/
  *
  * @package booster.widgets.forms.inputs
  */
 class TbSelect2 extends CInputWidget {
-	
+
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
 	 * This attribute is set to the form that renders the widget
 	 * @see TbActionForm->inputRow
 	 */
 	public $form;
+
 	/**
 	 * @var array @param data for generating the list options (value=>display)
 	 */
@@ -47,25 +49,24 @@ class TbSelect2 extends CInputWidget {
 	 */
 	public $options;
 
-    /**
-     * @var bool
-     * @since 2.1.0
-     */
-    public $readonly = false;
-
-    /**
-     * @var bool
-     * @since 2.1.0
-     */
-    public $disabled = false;
+	/**
+	 * @var bool
+	 * @since 2.1.0
+	 */
+	public $readonly = false;
 
 	/**
-	 *### .init()
+	 * @var bool
+	 * @since 2.1.0
+	 */
+	public $disabled = false;
+
+	/**
+	 * ### .init()
 	 *
 	 * Initializes the widget.
 	 */
-	public function init()
-	{
+	public function init() {
 		$this->normalizeData();
 
 		$this->normalizeOptions();
@@ -74,44 +75,36 @@ class TbSelect2 extends CInputWidget {
 
 		$this->setDefaultWidthIfEmpty();
 
-        // disabled & readonly
-        if (!empty($this->htmlOptions['readonly'])) {
-            $this->readonly = true;
-        }
-        if (!empty($this->htmlOptions['disabled'])) {
-            $this->disabled = true;
-        }
+		// disabled & readonly
+		if (!empty($this->htmlOptions['readonly'])) {
+			$this->readonly = true;
+		}
+		if (!empty($this->htmlOptions['disabled'])) {
+			$this->disabled = true;
+		}
 	}
 
 	/**
-	 *### .run()
+	 * ### .run()
 	 *
 	 * Runs the widget.
 	 */
-	public function run()
-	{
+	public function run() {
 		list($name, $id) = $this->resolveNameID();
 
 		if ($this->hasModel()) {
 			if ($this->form) {
-				echo $this->asDropDownList
-					?
-					$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions)
-					:
+				echo $this->asDropDownList ?
+					$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
 					$this->form->hiddenField($this->model, $this->attribute, $this->htmlOptions);
 			} else {
-				echo $this->asDropDownList
-					?
-					CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions)
-					:
+				echo $this->asDropDownList ?
+					CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
 					CHtml::activeHiddenField($this->model, $this->attribute, $this->htmlOptions);
 			}
-
 		} else {
-			echo $this->asDropDownList
-				?
-				CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions)
-				:
+			echo $this->asDropDownList ?
+				CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions) :
 				CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 		}
 
@@ -119,7 +112,7 @@ class TbSelect2 extends CInputWidget {
 	}
 
 	/**
-	 *### .registerClientScript()
+	 * ### .registerClientScript()
 	 *
 	 * Registers required client script for bootstrap select2. It is not used through bootstrap->registerPlugin
 	 * in order to attach events if any
@@ -129,32 +122,30 @@ class TbSelect2 extends CInputWidget {
 	 * @throws CException
 	 */
 	public function registerClientScript($id) {
-		
-        Booster::getBooster()->registerPackage('select2');
+
+		Booster::getBooster()->registerPackage('select2');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
-		if(! empty($this->val)) {
-			if(is_array($this->val)) {
+		if (!empty($this->val)) {
+			if (is_array($this->val)) {
 				$data = CJSON::encode($this->val);
 			} else {
 				$data = $this->val;
 			}
 
 			$defValue = ".select2('val', $data)";
-		}
-		else
+		} else
 			$defValue = '';
 
-        if ($this->readonly) {
-            $defValue .= ".select2('readonly', true)";
-        }
-        elseif ($this->disabled) {
-            $defValue .= ".select2('enable', false)";
-        }
+		if ($this->readonly) {
+			$defValue .= ".select2('readonly', true)";
+		} elseif ($this->disabled) {
+			$defValue .= ".select2('enable', false)";
+		}
 
 		ob_start();
-		echo "jQuery('#{$id}').select2({$options})";
+		echo "jQuery('select#{$id}').select2({$options})";
 		foreach ($this->events as $event => $handler) {
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 		}
@@ -163,21 +154,18 @@ class TbSelect2 extends CInputWidget {
 		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
 	}
 
-	private function setDefaultWidthIfEmpty()
-	{
+	private function setDefaultWidthIfEmpty() {
 		if (empty($this->options['width'])) {
 			$this->options['width'] = 'resolve';
 		}
 	}
 
-	private function normalizeData()
-	{
+	private function normalizeData() {
 		if (!$this->data)
 			$this->data = array();
 	}
 
-	private function addEmptyItemIfPlaceholderDefined()
-	{
+	private function addEmptyItemIfPlaceholderDefined() {
 		if (!empty($this->htmlOptions['placeholder']))
 			$this->options['placeholder'] = $this->htmlOptions['placeholder'];
 
@@ -185,15 +173,14 @@ class TbSelect2 extends CInputWidget {
 			$this->prependDataWithEmptyItem();
 	}
 
-	private function normalizeOptions()
-	{
+	private function normalizeOptions() {
 		if (empty($this->options)) {
 			$this->options = array();
 		}
 	}
 
-	private function prependDataWithEmptyItem()
-	{
+	private function prependDataWithEmptyItem() {
 		$this->data = array('' => '') + $this->data;
 	}
+
 }
