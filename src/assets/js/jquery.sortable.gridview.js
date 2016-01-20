@@ -30,8 +30,10 @@
 
         var grid = $('#'+id) ;
         $("tbody", grid).sortable({
+            cancel: '.not-sortable',
             helper: fixHelperDimensions,
             update: function(e,ui){
+
                 // update keys
                 var pos = $(ui.item).prevAll().length;
                 if(originalPos !== null && originalPos != pos)
