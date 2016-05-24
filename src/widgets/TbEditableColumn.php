@@ -112,7 +112,7 @@ class TbEditableColumn extends TbDataColumn
         }
         
         //apply may be a string expression, see https://github.com/vitalets/x-editable-yii/issues/33
-        if (isset($options['apply']) && is_string($options['apply'])) {
+        if (isset($options['apply']) && (is_string($options['apply']) || is_callable($options['apply']))) {
             $options['apply'] = $this->evaluateExpression($options['apply'], array('data'=>$data, 'row'=>$row));
         }
 
