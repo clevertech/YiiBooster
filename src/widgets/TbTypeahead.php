@@ -36,6 +36,15 @@ class TbTypeahead extends TbBaseInputWidget {
 	public $datasets = array();
 
 	/**
+	 * @var array The following events get triggered on the input element during the life-cycle of a typeahead.
+	 * @see <https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md#custom-events>
+	 */
+	public $events = array();
+
+	/** @var mixed */
+	public $bloodhound = null;
+
+	/**
 	 * Initializes the widget.
 	 */
 	public function init() {
@@ -78,21 +87,55 @@ class TbTypeahead extends TbBaseInputWidget {
 			echo CHtml::textField($name, $this->value, $this->htmlOptions);
 		}
 
-		$this->datasets['source'] = 'js:substringMatcher(_'.$this->id.'_source_list)';
+		if (isset($this->bloodhound) && isset($this->bloodhound['url'])) {
+			$bloodhound = [
+				'remote' => [
+					'url' => $this->bloodhound['url']
+				]
+			];
+
+			$bloodhound['remote']['prepare'] = !isset($this->bloodhound['prepare'])
+				? 'js:function (query, settings) { settings.data = {q: query}; return settings; }'
+				: $this->bloodhound['prepare'];
+
+			$bloodhound['identify'] = !isset($this->bloodhound['identify'])
+				? 'js:function(obj) { return obj.id; }'
+				: $this->bloodhound['identify'];
+
+			$bloodhound['datumTokenizer'] = !isset($this->bloodhound['datumTokenizer'])
+				? 'js:Bloodhound.tokenizers.whitespace'
+				: $this->bloodhound['datumTokenizer'];
+
+			$bloodhound['queryTokenizer'] = !isset($this->bloodhound['queryTokenizer'])
+				? 'js:Bloodhound.tokenizers.whitespace'
+				: $this->bloodhound['queryTokenizer'];
+
+			$this->datasets['source'] = "js:new Bloodhound(" . CJavaScript::encode($bloodhound) . ")";
+
+		} else if (is_array($this->datasets['source']))
+			$this->datasets['source'] = 'js:substringMatcher(_' . $this->id . '_source_list)';
 		
 		$options = CJavaScript::encode($this->options);
 		$datasets = CJavaScript::encode($this->datasets);
-		
-		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').typeahead({$options}, {$datasets});");
-		
+
+		$script = "jQuery('#{$id}').typeahead({$options}, {$datasets})";
+
+		if (is_array($this->events)) {
+			foreach ($this->events as $name => $event) {
+				$script .= ".on('{$name}', " . $event . ")";
+			}
+		}
+
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, $script . ';');
 	}
 
+	/**
+	 */
 	function registerClientScript() {
-	
 		$booster = Booster::getBooster();
 		$booster->registerPackage('typeahead');
-		
-		if(empty($this->datasets) || !isset($this->datasets['source']) || !is_array($this->datasets['source']))
+
+		if (empty($this->datasets) || !isset($this->datasets['source']) || !is_array($this->datasets['source']))
 			return;
 		
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#substringMatcher', '

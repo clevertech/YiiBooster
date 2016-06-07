@@ -12,6 +12,7 @@
     outline: medium none;
     padding: 8px 12px;
     width: 396px; */
+    width: 100%;
 }
 .typeahead {
     background-color: #FFFFFF;
@@ -19,13 +20,13 @@
 .typeahead:focus {
     /* border: 2px solid #0097CF; */
 }
-.tt-query {
+.tt-input {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
 .tt-hint {
     color: #999999;
 }
-.tt-dropdown-menu {
+.tt-menu {
   width: inherit;
   margin-top: 12px;
   padding: 8px 0;
