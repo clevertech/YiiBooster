@@ -141,8 +141,8 @@ abstract class TbBaseMenu extends CMenu {
 	protected function renderMenuItem($item) {
 		
 		if($this->linkLabelWrapper !== null) {
-            		$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
-        	}
+			$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
+		}
 		if (isset($item['icon'])) {
 			if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
 				$item['icon'] = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $item['icon']));

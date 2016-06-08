@@ -43,14 +43,14 @@ class TbModal extends CWidget {
 	public $htmlOptions = array();
 	
  	/**
-     	 * @var array the HTML attributes for the modal-dialog div.
-         */
-        public $modalDialogOptions = array();
+ 	 * @var array the HTML attributes for the modal-dialog div.
+   */
+  public $modalDialogOptions = array();
 
-        /**
-         * @var array the HTML attributes for the modal-content div.
-         */
-        public $modalContentOptions = array();
+  /**
+   * @var array the HTML attributes for the modal-content div.
+   */
+  public $modalContentOptions = array();
 
 	/**
 	 *### .init()
@@ -82,21 +82,21 @@ class TbModal extends CWidget {
 			}
 		}
 		
-        	if (isset($this->modalDialogOptions['class'])) {
-            		$this->modalDialogOptions['class'] .= ' modal-dialog';
-        	} else {
-            		$this->modalDialogOptions['class'] = 'modal-dialog';
-        	}
+  	if (isset($this->modalDialogOptions['class'])) {
+      		$this->modalDialogOptions['class'] .= ' modal-dialog';
+  	} else {
+      		$this->modalDialogOptions['class'] = 'modal-dialog';
+  	}
 
-        	if (isset($this->modalContentOptions['class'])) {
-            		$this->modalContentOptions['class'] .= ' modal-content';
-        	} else {
-            		$this->modalContentOptions['class'] = 'modal-content';
-        	}
+  	if (isset($this->modalContentOptions['class'])) {
+      		$this->modalContentOptions['class'] .= ' modal-content';
+  	} else {
+      		$this->modalContentOptions['class'] = 'modal-content';
+  	}
 
-        	echo CHtml::openTag('div', $this->htmlOptions); //modal
-        	echo CHtml::openTag('div', $this->modalDialogOptions); //modal-dialog
-        	echo CHtml::openTag('div', $this->modalContentOptions); //modal-content
+  	echo CHtml::openTag('div', $this->htmlOptions); //modal
+  	echo CHtml::openTag('div', $this->modalDialogOptions); //modal-dialog
+  	echo CHtml::openTag('div', $this->modalContentOptions); //modal-content
 	}
 
 	/**
@@ -109,8 +109,8 @@ class TbModal extends CWidget {
 		$id = $this->htmlOptions['id'];
 
 		echo CHtml::closeTag('div'); //modal-content
-        	echo CHtml::closeTag('div'); //modal-dialog
-        	echo CHtml::closeTag('div'); //modal
+  	echo CHtml::closeTag('div'); //modal-dialog
+  	echo CHtml::closeTag('div'); //modal
 
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();

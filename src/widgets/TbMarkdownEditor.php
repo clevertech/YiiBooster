@@ -63,11 +63,11 @@ class TbMarkdownEditor extends CInputWidget {
 	 */
 	public function registerClientScript() {
 		
-        $booster = Booster::getBooster();
-        $booster->registerPackage('markdown');
+		$booster = Booster::getBooster();
+		$booster->registerPackage('markdown');
         
-        $id = $this->htmlOptions['id'];
-        $options = CJSON::encode($this->options);
+		$id = $this->htmlOptions['id'];
+		$options = CJSON::encode($this->options);
         
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "
 			$('#$id').markdown({$options})

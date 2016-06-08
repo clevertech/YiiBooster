@@ -72,8 +72,8 @@ class TbHtml5Editor extends CInputWidget {
 	 */
 	public function registerClientScript($id) {
 		
-        $booster = Booster::getBooster();
-        $booster->registerPackage('wysihtml5');
+		$booster = Booster::getBooster();
+		$booster->registerPackage('wysihtml5');
 
 		if (isset($this->editorOptions['locale'])) {
             $booster->registerAssetJs(

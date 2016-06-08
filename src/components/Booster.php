@@ -462,18 +462,18 @@ class Booster extends CApplicationComponent {
 	 */
 	protected function createSelect2Package() {
 		
-		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
+		$jsFiles = array($this->minify ? 'js/select2.min.js' : 'js/select2.js');
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
-			$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2). '.js';
+			$locale = 'js/i18n/'. substr(Yii::app()->language, 0, 2). '.js';
 			if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 				$jsFiles[] = $locale;
 			} else {
-				$locale = 'select2_locale_'. Yii::app()->language . '.js';
+				$locale = 'js/i18n/'. Yii::app()->language . '.js';
 				if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 					$jsFiles[] = $locale;
 				}else{
-					$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
+					$locale = 'js/i18n/'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
 					if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 						$jsFiles[] = $locale;
 					}
@@ -484,7 +484,10 @@ class Booster extends CApplicationComponent {
 		return array('select2' => array(
 			'baseUrl' => $this->getAssetsUrl() . '/select2/',
 			'js' => $jsFiles,
-			'css' => array('select2.css', 'select2-bootstrap.css'),
+			'css' => array(
+				($this->minify ? 'css/select2.min.css' : 'css/select2.css'),
+				($this->minify ? 'css/select2-bootstrap.min.css' : 'css/select2-bootstrap.css'),
+			),
 			'depends' => array('jquery'),
 		));
 	}
@@ -523,6 +526,25 @@ class Booster extends CApplicationComponent {
 	 */
 	public function getUniqueScriptId() {
 		return uniqid(__CLASS__ . '#', true);
+	}
+
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
+	protected function tryGetSelectorForPlugin($name) {
+		
+		return $this->tryGetInfoForPlugin($name, 'selector');
+	}
+
+	/**
+	 * @param $name
+	 * @return mixed
+	 */
+	protected function tryGetOptionsForPlugin($name) {
+		
+		return $this->tryGetInfoForPlugin($name, 'options');
 	}
 
     /**

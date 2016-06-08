@@ -223,7 +223,7 @@ class TbFileUpload extends CJuiInputWidget
 	 *
 	 * @param CModel $model
 	 * @param string $attribute
-	 * @param string $property
+	 * @param string|null $property
 	 *
 	 * @return string property's value or null
 	 */
