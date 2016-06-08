@@ -23,6 +23,12 @@
 .input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child), .input-group .ct-form-control:not(:first-child):not(:last-child) {
 	border-radius: 0;
 }
+.ct-form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
 .clearfix {
     *zoom: 1;
 }
@@ -569,4 +575,20 @@ Kure2012.
 
 label.radio {
 	padding-left: 20px;
+}
+
+.grid-view ul.pagination,
+.grid-view .pagination-detail {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.grid-view ul.pagination {
+    font-size: 0;
+}
+
+.grid-view .pagination-info {
+    line-height: 32px;
+    margin-right: 5px;
+    margin-left: 10px;
 }

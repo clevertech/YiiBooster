@@ -48,10 +48,7 @@ class TbTypeahead extends TbBaseInputWidget {
 	 * Initializes the widget.
 	 */
 	public function init() {
-		
-		if(!isset($this->datasets['source']))
-			$this->datasets['source'] = array();
-		
+
 		if(empty($this->options))
 			$this->options['minLength'] = 1;
 		$this->registerClientScript();
@@ -110,6 +107,10 @@ class TbTypeahead extends TbBaseInputWidget {
 				? 'js:Bloodhound.tokenizers.whitespace'
 				: $this->bloodhound['queryTokenizer'];
 
+			$bloodhound['dupDetector'] = !isset($this->bloodhound['dupDetector'])
+				? 'js:function(a, b) { return a.id === b.id; }'
+				: $this->bloodhound['dupDetector'];
+
 			$this->datasets['source'] = "js:new Bloodhound(" . CJavaScript::encode($bloodhound) . ")";
 
 		} else if (is_array($this->datasets['source']))
@@ -135,9 +136,12 @@ class TbTypeahead extends TbBaseInputWidget {
 		$booster = Booster::getBooster();
 		$booster->registerPackage('typeahead');
 
+		if (!empty($this->bloodhound))
+			return;
+
 		if (empty($this->datasets) || !isset($this->datasets['source']) || !is_array($this->datasets['source']))
 			return;
-		
+
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#substringMatcher', '
 			var substringMatcher = function(strs) {
 				return function findMatches(q, cb) {

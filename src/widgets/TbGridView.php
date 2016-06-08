@@ -34,7 +34,7 @@ class TbGridView extends CGridView
 	/**
 	 * @var string the CSS class name for the pager container. Defaults to 'pagination'.
 	 */
-	public $pagerCssClass = 'no-class';
+	public $pagerCssClass = 'pull-right';
 
 	/**
 	 * @var array the configuration for the pager.
@@ -57,6 +57,22 @@ class TbGridView extends CGridView
 	 * @var array of additional parameters to pass to values
 	 */
 	public $extraParams = array();
+
+	/**
+	 * @var string the CSS class name for the summary text container. Defaults to 'summary'.
+	 */
+	public $summaryCssClass = 'pagination-info';
+
+	/**
+	 * @var string the HTML tag name for the container of the {@link summaryText} property.
+	 * @since 1.1.16
+	 */
+	public $summaryTagName = 'span';
+
+	/**
+	 * @var string the template to be used to control the layout of various sections in the view.
+	 */
+	public $template = "{items}\n<span class=\"pagination-detail pull-left\">{summary}</span>{pager}";
 
 	/**
 	 *### .init()
@@ -229,5 +245,40 @@ class TbGridView extends CGridView
 	}
 EOD;
 		Yii::app()->clientScript->registerCss(__CLASS__ . '#' . $this->id, $css);
+	}
+
+	/**
+	 * Renders the pager.
+	 */
+	public function renderPager()
+	{
+		if(!$this->enablePagination)
+			return;
+
+		$pager=array();
+		$class='booster.widgets.TbPager';
+		if(is_string($this->pager))
+			$class=$this->pager;
+		elseif(is_array($this->pager))
+		{
+			$pager=$this->pager;
+			if(isset($pager['class']))
+			{
+				$class=$pager['class'];
+				unset($pager['class']);
+			}
+		}
+		$pager['pages']=$this->dataProvider->getPagination();
+
+		if (!empty($this->pagerCssClass)) {
+			$pager['containerHtmlOptions'] = array('class' => $this->pagerCssClass);
+		}
+
+		if($pager['pages']->getPageCount()>1)
+		{
+			$this->widget($class,$pager);
+		}
+		else
+			$this->widget($class,$pager);
 	}
 }
