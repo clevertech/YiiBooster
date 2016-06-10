@@ -5,6 +5,8 @@
  * @author: antonio ramirez <antonio@clevertech.biz>
  */
 
+Yii::import('booster.helpers.TbHtml');
+
 /**
  *## TbToggleColumn widget
  *

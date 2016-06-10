@@ -8,6 +8,7 @@
  */
 
 Yii::import('zii.widgets.grid.CButtonColumn');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  *## Bootstrap button column widget.

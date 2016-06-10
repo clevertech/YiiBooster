@@ -8,6 +8,7 @@
  */
 
 Yii::import('booster.widgets.TbWidget');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  * TbPanel widget.

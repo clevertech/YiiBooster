@@ -11,6 +11,7 @@
  * @since v4.0.0 - upgraded to bootstrap 3.1.1
  */
 Yii::import('booster.widgets.TbWidget');
+Yii::import('booster.helpers.TbHtml');
 /**
  * Bootstrap button widget.
  *

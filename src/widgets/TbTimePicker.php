@@ -14,6 +14,7 @@
  */
 
 Yii::import('booster.widgets.TbBaseInputWidget');
+Yii::import('booster.helpers.TbHtml');
 
 class TbTimePicker extends TbBaseInputWidget {
 	

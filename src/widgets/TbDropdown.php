@@ -9,6 +9,7 @@
  */
 
 Yii::import('booster.widgets.TbBaseMenu');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  *## Bootstrap dropdown menu.

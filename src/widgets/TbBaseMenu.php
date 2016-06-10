@@ -8,6 +8,7 @@
  */
 
 Yii::import('zii.widgets.CMenu');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  *## Base class for menu in Booster
