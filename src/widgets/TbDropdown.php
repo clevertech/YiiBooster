@@ -13,7 +13,7 @@ Yii::import('booster.widgets.TbBaseMenu');
 /**
  *## Bootstrap dropdown menu.
  *
- * @see http://twitter.github.com/bootstrap/javascript.html#dropdowns
+ * @see <http://getbootstrap.com/components/#dropdowns>
  *
  * @package booster.widgets.navigation
  */

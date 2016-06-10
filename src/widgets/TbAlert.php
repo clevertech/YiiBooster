@@ -12,7 +12,7 @@ Yii::import('booster.widgets.TbWidget');
  *
  * Alert widget displays the messages set via CWebUser.setFlash() using the Twitter Bootstrap Alert widget.
  *
- * @see http://twitter.github.com/bootstrap/javascript.html#alerts
+ * @see <http://getbootstrap.com/javascript/#alerts>
  *
  * @package booster.widgets.decoration
  */

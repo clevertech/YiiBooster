@@ -15,7 +15,7 @@
 /**
  *## Bootstrap carousel widget.
  *
- * @see <http://twitter.github.com/bootstrap/javascript.html#carousel>
+ * @see <http://getbootstrap.com/javascript/#carousel>
  *
  * @package booster.widgets.grouping
  */

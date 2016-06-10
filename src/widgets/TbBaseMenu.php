@@ -99,13 +99,18 @@ abstract class TbBaseMenu extends CMenu {
 
 					echo CHtml::openTag('li', $options) . "\n";
 
-					$menu = $this->renderMenuItem($item);
+					if (isset($item['class'])) {
+						$this->controller->widget($item['class']);
 
-					if (isset($this->itemTemplate) || isset($item['template'])) {
-						$template = isset($item['template']) ? $item['template'] : $this->itemTemplate;
-						echo strtr($template, array('{menu}' => $menu));
 					} else {
-						echo $menu;
+						$menu = $this->renderMenuItem($item);
+
+						if (isset($this->itemTemplate) || isset($item['template'])) {
+							$template = isset($item['template']) ? $item['template'] : $this->itemTemplate;
+							echo strtr($template, array('{menu}' => $menu));
+						} else {
+							echo $menu;
+						}
 					}
 
 					if (isset($item['items']) && !empty($item['items'])) {

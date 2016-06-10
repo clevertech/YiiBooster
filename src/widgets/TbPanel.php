@@ -28,7 +28,7 @@ class TbPanel extends TbWidget {
 	/**
 	 * @var string
 	 * The class icon to display in the header title of the panel.
-	 * @see <http://twitter.github.com/bootstrap/base-css.html#icon>
+	 * @see <http://getbootstrap.com/components/#glyphicons>
 	 */
 	public $headerIcon;
 
@@ -141,7 +141,7 @@ class TbPanel extends TbWidget {
 					else
 						$this->title = '<i class="' . $this->headerIcon . '"></i> ' . $this->title;
 				}
-				
+
 				$this->renderButtons();
 				echo $this->title;
 			}

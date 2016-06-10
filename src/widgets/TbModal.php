@@ -10,7 +10,7 @@
 /**
  *## Bootstrap modal widget.
  *
- * @see <http://twitter.github.com/bootstrap/javascript.html#modals>
+ * @see <http://getbootstrap.com/javascript/#modals>
  *
  * @since 0.9.3
  * @package booster.widgets.modals

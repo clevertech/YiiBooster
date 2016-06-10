@@ -275,7 +275,8 @@ class Booster extends CApplicationComponent {
 	protected function addOurPackagesToYii() {
 		
 		foreach ($this->packages as $name => $definition) {
-			$this->cs->addPackage($name, $definition);
+			if (!array_key_exists($name, $this->cs->packages))
+				$this->cs->addPackage($name, $definition);
 		}
         $this->cs->scriptMap['jquery-ui.min.js'] = $this->getAssetsUrl() . '/js/jquery-ui-no-conflict.min.js';
 	}
@@ -455,7 +456,7 @@ class Booster extends CApplicationComponent {
 			'depends' => array('jquery'),
 		));
 	}
-        
+
 	/**
 	 * Make select2 package definition
 	 * @return array

@@ -12,7 +12,7 @@ Yii::import('booster.widgets.TbListView');
 /**
  *## Bootstrap thumbnails widget.
  *
- * @see http://twitter.github.com/bootstrap/components.html#thumbnails
+ * @see <http://getbootstrap.com/components/#thumbnails>
  *
  * @package booster.widgets.grouping
  */

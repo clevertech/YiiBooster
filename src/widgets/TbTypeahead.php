@@ -41,7 +41,10 @@ class TbTypeahead extends TbBaseInputWidget {
 	 */
 	public $events = array();
 
-	/** @var mixed */
+	/**
+	 * @var mixed
+	 * @see <https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md>
+	 */
 	public $bloodhound = null;
 
 	/**
@@ -117,9 +120,9 @@ class TbTypeahead extends TbBaseInputWidget {
 			$this->datasets['source'] = 'js:substringMatcher(_' . $this->id . '_source_list)';
 		
 		$options = CJavaScript::encode($this->options);
-		$datasets = CJavaScript::encode($this->datasets);
+		$dataSets = CJavaScript::encode($this->datasets);
 
-		$script = "jQuery('#{$id}').typeahead({$options}, {$datasets})";
+		$script = "jQuery('#{$id}').typeahead({$options}, {$dataSets})";
 
 		if (is_array($this->events)) {
 			foreach ($this->events as $name => $event) {

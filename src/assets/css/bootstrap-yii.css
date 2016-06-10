@@ -68,55 +68,44 @@ table.table {
     padding-top: 20px;
 }
 
-.grid-view table.items th a {
+.grid-view table th a {
     display: block;
     position: relative;
 }
 
-.grid-view table.items th a .caret {
+.grid-view table th a .caret,
+.grid-view table th a.asc .caret,
+.grid-view table th a.desc .caret {
     display: none;
-    position: absolute;
-    right: 5px;
-    top: 8px;
 }
 
-.grid-view table.items th a.asc .caret {
-	border-top: 8px solid;
-	border-bottom: none;
-    display: block;
-}
-
-.grid-view table.items th a.desc .caret {
-    border-bottom: 8px solid;
-    border-top: none;
-    display: block;
-}
-
-.grid-view table.items th:hover a.sort-link:after {
-	font-family: 'Glyphicons Halflings';
-	font-style: normal;
-    font-weight: normal;
+.grid-view table th a.sort-link:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
     line-height: 1;
-    content: "\e094";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: -4px;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    vertical-align: text-top;
-    /* background-image: url("../bootstrap/img/glyphicons-halflings.png"); */
-    background-position: -312px -96px;
-    background-repeat: no-repeat;
+    -webkit-font-smoothing: antialiased;
+    content: "\e155";
+    color: #F0F0F1;
+}
+.grid-view table th a.sort-link.asc:after,
+.grid-view table th a.sort-link.desc:after {
+    color: #428bca;
+}
+.grid-view table th:hover a.sort-link:after,
+.grid-view table th:hover a.sort-link.asc:after,
+.grid-view table th:hover a.sort-link.desc:after {
+    color: #3D9AE4;
 }
 
-.grid-view table.items th:hover a.asc:after {
-    /* background-position: -289px -96px; */
-    content: "\e093";
+.grid-view table th a.desc:after {
+    content: "\e156";
 }
 
-.grid-view table.items tr.selected td {
+.grid-view table tr.selected td {
     background: #eeeeee;
 }
 
@@ -131,7 +120,7 @@ table.table {
 
 .grid-view .button-column {
     text-align: center;
-    width: 67px;
+    width: 65px;
 }
 
 .grid-view .checkbox-column {
@@ -567,16 +556,6 @@ Kure2012.
   *border-left-color: #ffffff;
 }
 
-/* Gii */
-.form.gii .tooltip {
-    opacity: 1;
-    font-size: 1em;
-}
-
-label.radio {
-	padding-left: 20px;
-}
-
 .grid-view ul.pagination,
 .grid-view .pagination-detail {
     margin-top: 10px;
@@ -591,4 +570,10 @@ label.radio {
     line-height: 32px;
     margin-right: 5px;
     margin-left: 10px;
+}
+
+/* Gii */
+.form.gii .tooltip {
+    opacity: 1;
+    font-size: 1em;
 }

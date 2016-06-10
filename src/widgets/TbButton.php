@@ -168,9 +168,7 @@ class TbButton extends TbWidget {
 
 		if ($this->isValidContext()) {
 			$classes[] = 'btn-' . $this->getContextClass();
-		}
-		
-		if($this->buttonType == self::BUTTON_LINK) {
+		} else if($this->buttonType == self::BUTTON_LINK) {
 			$classes[] = 'btn-link';
 		}
 
@@ -294,9 +292,8 @@ class TbButton extends TbWidget {
 			return;
 		}
 		
-		// TODO: I think we have to drop this -allowing button to has items- it is the same as TbButtonGroup with bugs!
 		if ($this->hasDropdown()) {
-			echo '<div class="btn-group">';
+			
 			echo $this->createButton();
 		
 			$this->controller->widget(
@@ -308,7 +305,6 @@ class TbButton extends TbWidget {
 					'id' => isset($this->dropdownOptions['id']) ? $this->dropdownOptions['id'] : null,
 				)
 			);
-			echo '</div>';
 		} else {
 			echo $this->createButton();
 		}

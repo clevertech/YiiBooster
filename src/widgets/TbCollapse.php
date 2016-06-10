@@ -11,7 +11,7 @@
 
 /**
  *## Bootstrap collapse widget.
- * @see <http://twitter.github.com/bootstrap/javascript.html#collapse>
+ * @see <http://getbootstrap.com/javascript/#collapse>
  *
  * @package booster.widgets.grouping
  * @todo is this really a widget!?

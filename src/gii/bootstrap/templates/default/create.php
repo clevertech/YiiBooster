@@ -4,18 +4,20 @@
  * - $this: the BootCrudCode object
  */
 ?>
-<?php
-echo "<?php\n";
+<?php echo "<?php\n"; ?>
+/* @var $this <?php echo $this->getControllerClass(); ?> */
+/* @var $model <?php echo $this->getModelClass(); ?> */
+
 $label = $this->pluralize($this->class2name($this->modelClass));
-echo "\$this->breadcrumbs=array(
-	'$label'=>array('index'),
+echo "\$this->breadcrumbs = array(
+	'$label' => array('index'),
 	'Create',
 );\n";
 ?>
 
 $this->menu=array(
-array('label'=>'List <?php echo $this->modelClass; ?>','url'=>array('index')),
-array('label'=>'Manage <?php echo $this->modelClass; ?>','url'=>array('admin')),
+	array('label' => 'List <?php echo $this->modelClass; ?>','url' => array('index')),
+	array('label' => 'Manage <?php echo $this->modelClass; ?>','url' => array('admin')),
 );
 ?>
 

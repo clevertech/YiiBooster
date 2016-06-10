@@ -12,7 +12,7 @@ Yii::import('booster.widgets.TbMenu');
 /**
  *## Bootstrap Javascript tabs widget.
  *
- * @see <http://twitter.github.com/bootstrap/javascript.html#tabs>
+ * @see <http://getbootstrap.com/javascript/#tabs>
  *
  * @package booster.widgets.grouping
  */

@@ -10,7 +10,7 @@
 /**
  *## Bootstrap scrollspy widget.
  *
- * @see <http://twitter.github.com/bootstrap/javascript.html#scrollspy>
+ * @see <http://getbootstrap.com/javascript/#scrollspy>
  *
  * @since 1.0.0
  * @package booster.widgets.supplementary

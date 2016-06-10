@@ -1,4 +1,4 @@
-*[class^="tbrelational-column"] {
+.tbrelational-column {
     text-decoration: none;
     border-bottom: dashed 1px #08C;
     cursor: pointer;
