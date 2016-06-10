@@ -88,11 +88,7 @@ class TbButtonColumn extends CButtonColumn {
 		}
 
 		if (isset($button['icon']) && $button['icon']) {
-			if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
-				$button['icon'] = 'glyphicon glyphicon-' . implode('glyphicon-', explode(' ', $button['icon']));
-			}
-
-			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $url, $options);
+			echo CHtml::link(TbHtml::icon($button['icon']), $url, $options);
 		} else if (isset($button['imageUrl']) && is_string($button['imageUrl'])) {
 			echo CHtml::link(CHtml::image($button['imageUrl'], $label), $url, $options);
 		} else {

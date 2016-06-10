@@ -149,12 +149,7 @@ abstract class TbBaseMenu extends CMenu {
 			$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
 		}
 		if (isset($item['icon'])) {
-			if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
-				$item['icon'] = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $item['icon']));
-				$item['label'] = "<span class='" . $item['icon'] . "'></span>\r\n" . $item['label'];
-			} else {
-				$item['label'] = "<i class='" . $item['icon'] . "'></i>\r\n" . $item['label'];
-			}
+			$item['label'] = TbHtml::icon($item['icon']) . "\r\n" . $item['label'];
 		}
 
 		if (!isset($item['linkOptions'])) {

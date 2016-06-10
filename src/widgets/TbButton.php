@@ -237,13 +237,8 @@ class TbButton extends TbWidget {
 			}
 		}
 
-		if (isset($this->icon)) { // no need for implode as newglyphicon only supports one icon
-			if (strpos($this->icon, 'icon') === false && strpos($this->icon, 'fa') === false) {
-				$this->icon = 'glyphicon glyphicon-' . $this->icon;
-				$this->label = '<span class="' . $this->icon . '"></span> ' . $this->label;
-			} else { // to support font awesome icons
-				$this->label = '<i class="' . $this->icon . '"></i> ' . $this->label;
-			}
+		if (isset($this->icon)) {
+			$item['label'] = TbHtml::icon($this->icon) . "\r\n" . $this->label;
 		}
 
 		if (!isset($this->htmlOptions['id'])) {

@@ -136,10 +136,7 @@ class TbPanel extends TbWidget {
 				$this->title = '<h3 class="panel-title" style="display: inline;">' . $this->title . '</h3>';
 
 				if ($this->headerIcon) {
-					if (strpos($this->headerIcon, 'icon') === false && strpos($this->headerIcon, 'fa') === false)
-						$this->title = '<span class="glyphicon glyphicon-' . $this->headerIcon . '"></span> ' . $this->title;
-					else
-						$this->title = '<i class="' . $this->headerIcon . '"></i> ' . $this->title;
+					$this->title = TbHtml::icon($this->headerIcon) . "\r\n" . $this->title;
 				}
 
 				$this->renderButtons();

@@ -53,11 +53,7 @@ class TbGroupButtonColumn extends CButtonColumn
 		}
 
 		if (isset($button['icon'])) {
-			if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
-				$button['icon'] = 'icon-' . implode(' icon-', explode(' ', $button['icon']));
-			}
-
-			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $url, $options);
+			echo CHtml::link(TbHtml::icon($button['icon']), $url, $options);
 		} else {
 			echo CHtml::link($label, $url, $options);
 		}
