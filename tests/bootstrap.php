@@ -39,7 +39,7 @@ Yii::createApplication(
 		'runtimePath' => APP_RUNTIME,
 		'aliases' => [
 			'fakes' => ROOT_DIR . '/tests/fakes',
-			'bootstrap' => ROOT_DIR . '/src',
+			'booster' => ROOT_DIR . '/src',
 		],
 		'components' => array(
 			'assetManager' => array(
