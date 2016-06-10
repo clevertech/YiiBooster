@@ -10,7 +10,7 @@
         stopOnFailure="false"
         stopOnIncomplete="false"
         stopOnSkipped="false"
-        strict="false"
+        stopOnRisky="false"
         verbose="false">
 
     <testsuites>
