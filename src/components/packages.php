@@ -11,11 +11,11 @@
  */
 return array(
 	'font-awesome' => array(
-		'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/' : $this->getAssetsUrl().'/font-awesome/',
+		'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/' : $this->getAssetsUrl().'/font-awesome/',
 		'css' => array(($this->minify || $this->enableCdn) ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'bootstrap.js' => array(
-		'baseUrl' => $this->enableCdn ? 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
+		'baseUrl' => $this->enableCdn ? 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/' : $this->getAssetsUrl() . '/bootstrap/',
 		'js' => array($this->minify ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
 		'depends' => array('jquery'),
 	),
