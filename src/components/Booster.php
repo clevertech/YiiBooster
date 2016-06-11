@@ -261,7 +261,6 @@ class Booster extends CApplicationComponent {
 		$bootstrapPackages = require(Yii::getPathOfAlias('booster.components') . '/packages.php');
 		$bootstrapPackages += $this->createBootstrapCssPackage();
 		$bootstrapPackages += $this->createSelect2Package();
-		$bootstrapPackages += $this->createChosenPackage();
 
 		$this->packages = CMap::mergeArray(
 			$bootstrapPackages,
@@ -440,20 +439,6 @@ class Booster extends CApplicationComponent {
 		return array('bootstrap.css' => array(
 			'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/' : $this->getAssetsUrl() . '/bootstrap/',
 			'css' => array($this->minify ? 'css/bootstrap.min.css' : 'css/bootstrap.css'),
-		));
-	}
-
-	/**
-	 * Make chosen package definition
-	 * @return array
-	 */
-	protected function createChosenPackage() {
-		
-		return array('chosen' => array(
-			'baseUrl' => $this->getAssetsUrl() . '/chosen/',
-			'js' => array('chosen.jquery.min.js'),
-			'css' => array('chosen.min.css'),
-			'depends' => array('jquery'),
 		));
 	}
 

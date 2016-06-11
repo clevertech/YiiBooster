@@ -838,25 +838,6 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
-	 * Generates a chosen group for a model attribute.
-	 *
-	 * This method is a wrapper for {@link TbChosen} widget and {@link customFieldGroup}.
-	 * Please check {@link TbChosen} documentation for detailed information about $widgetOptions.
-	 * About $options argument parameters see {@link TbActiveForm} documentation.
-	 *
-	 * @param CModel $model The data model.
-	 * @param string $attribute The attribute.
-	 * @param array $options Group attributes.
-	 * @return string The generated chosen group.
-	 * @see TbChosen
-	 * @see customFieldGroup
-	 */
-	public function chosenGroup($model, $attribute, $options = array()) {
-		
-		return $this->widgetGroupInternal('booster.widgets.TbChosen', $model, $attribute, $options);
-	}
-        
-	/**
 	 * Generates a redactor editor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldGroup}.
