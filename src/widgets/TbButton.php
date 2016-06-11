@@ -239,7 +239,7 @@ class TbButton extends TbWidget {
 		}
 
 		if (isset($this->icon)) {
-			$item['label'] = TbHtml::icon($this->icon) . "\r\n" . $this->label;
+			$this->label = TbHtml::icon($this->icon) . "\r\n" . $this->label;
 		}
 
 		if (!isset($this->htmlOptions['id'])) {
