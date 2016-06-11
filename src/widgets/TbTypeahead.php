@@ -114,31 +114,29 @@ class TbTypeahead extends TbBaseInputWidget {
 	}
 
 	public function registerSubstringMatcher() {
-		Yii::app()->clientScript->registerScript(__CLASS__ . '#substringMatcher', '
-			var substringMatcher = function(strs) {
-				return function findMatches(q, cb) {
-					var matches, substringRegex;
+		Yii::app()->clientScript->registerScript(__CLASS__ . '#substringMatcher', 'var substringMatcher = function(strs) {
+			return function findMatches(q, cb) {
+				var matches, substringRegex;
 
-					// an array that will be populated with substring matches
-					matches = [];
+				// an array that will be populated with substring matches
+				matches = [];
 
-					// regex used to determine if a string contains the substring `q`
-					substrRegex = new RegExp(q, "i");
+				// regex used to determine if a string contains the substring `q`
+				substrRegex = new RegExp(q, "i");
 
-					// iterate through the pool of strings and for any string that
-					// contains the substring `q`, add it to the `matches` array
-					$.each(strs, function(i, str) {
-						if (substrRegex.test(str)) {
-							// the typeahead jQuery plugin expects suggestions to a
-							// JavaScript object, refer to typeahead docs for more info
-							matches.push({ value: str });
-						}
-					});
+				// iterate through the pool of strings and for any string that
+				// contains the substring `q`, add it to the `matches` array
+				$.each(strs, function(i, str) {
+					if (substrRegex.test(str)) {
+						// the typeahead jQuery plugin expects suggestions to a
+						// JavaScript object, refer to typeahead docs for more info
+						matches.push({ value: str });
+					}
+				});
 
-					cb(matches);
-				};
+				cb(matches);
 			};
-		', CClientScript::POS_HEAD);
+		};');
 	}
 
 	/**
@@ -162,12 +160,12 @@ class TbTypeahead extends TbBaseInputWidget {
 				Yii::app()->clientScript->registerScript(__CLASS__ .'_'. $bloodhound_id, "
 					var $bloodhound_id = new Bloodhound($bloodhound_config);
 					$bloodhound_id.initialize();
-				", CClientScript::POS_HEAD);
+				");
 			} else {
 				$source_list = CJavaScript::encode($dataset['source']);
 				Yii::app()->clientScript->registerScript(__CLASS__ .'#source_list#'. $i, '
 					var _'.$this->id.'_source_list_'. $i .' = '.$source_list.';
-				', CClientScript::POS_HEAD);
+				');
 			}
 		}
 	}
