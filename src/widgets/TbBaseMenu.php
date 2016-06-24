@@ -157,6 +157,10 @@ abstract class TbBaseMenu extends CMenu {
 			$item['linkOptions'] = array();
 		}
 
+		if (isset($item['id'])) {
+			$item['linkOptions']['data-target'] = '#' . $item['id'];
+		}
+
 		if (isset($item['items']) && !empty($item['items'])) {
 			if (empty($item['url'])) {
 				$item['url'] = '#';

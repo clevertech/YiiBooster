@@ -15,8 +15,8 @@ class TbHtml extends CHtml // required in order to access the protected methods 
     public static function icon($icon, $htmlOptions = array(), $tagName = 'i')
     {
         if (is_string($icon)) {
-            if (strpos($icon, 'icon') === false && strpos($icon, 'fa') === false) {
-                $icon = 'glyphicon glyphicon-' . implode('glyphicon-', explode(' ', $icon));
+            if (strpos($icon, 'icon-') === false && strpos($icon, 'glyphicon') === false && strpos($icon, 'fa') === false) {
+                $icon = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $icon));
             }
             self::addCssClass($icon, $htmlOptions);
             return parent::openTag($tagName, $htmlOptions) . parent::closeTag($tagName); // tag won't work in this case

@@ -462,11 +462,11 @@ class TbExtendedGridView extends TbGridView {
 		$cnt = 0;
 		foreach ($configSeries as $set) {
 			$seriesData[$cnt] = array(
-                            'name' => isset($set['name']) ? $set['name'] : null, 
-                            'data' => array(),
-                            'type'=>isset($set['type']) ? $set['type'] : null,
-                        );
-                        
+				'name' => isset($set['name']) ? $set['name'] : null,
+				'data' => array(),
+				'type' => isset($set['type']) ? $set['type'] : null,
+			);
+
 			for ($row = 0; $row < $count; ++$row) {
 				$column = $this->getColumnByName($set['attribute']);
 				if (!is_null($column) && $column->value !== null) {

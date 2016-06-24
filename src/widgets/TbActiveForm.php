@@ -82,6 +82,10 @@ class TbActiveForm extends CActiveForm {
 		self::TYPE_HORIZONTAL => '-horizontal',
 	);
 	/**
+	 * @var bool
+	 */
+	public $useClass = true;
+	/**
 	 * The form type. Allowed types are in `TYPE_*` constants.
 	 * @var string
 	 */
@@ -140,8 +144,9 @@ class TbActiveForm extends CActiveForm {
 	 * This renders the form open tag.
 	 */
 	public function init() {
-		
-		self::addCssClass($this->htmlOptions, 'form' . self::$typeClasses[$this->type]);
+		if ($this->useClass) {
+			self::addCssClass($this->htmlOptions, 'form' . self::$typeClasses[$this->type]);
+		}
 		
 		if (!isset($this->errorMessageCssClass)) {
 			$this->errorMessageCssClass = 'help-block error';
@@ -199,7 +204,7 @@ class TbActiveForm extends CActiveForm {
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 
-		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		TbHtml::addCssClass('form-control', $widgetOptions['htmlOptions']);
 
 		$fieldData = array(array($this, 'urlField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
@@ -225,7 +230,7 @@ class TbActiveForm extends CActiveForm {
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 
-		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		TbHtml::addCssClass('form-control', $widgetOptions['htmlOptions']);
 
 		$fieldData = array(array($this, 'emailField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
@@ -251,7 +256,7 @@ class TbActiveForm extends CActiveForm {
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 
-		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		TbHtml::addCssClass('form-control', $widgetOptions['htmlOptions']);
 
 		$fieldData = array(array($this, 'numberField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
@@ -277,7 +282,7 @@ class TbActiveForm extends CActiveForm {
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 
-		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
+		TbHtml::addCssClass('form-control', $widgetOptions['htmlOptions']);
 		
 		$fieldData = array(array($this, 'rangeField'), array($model, $attribute, $widgetOptions['htmlOptions']));
 
