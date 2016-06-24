@@ -514,12 +514,12 @@ class TbEditable extends CWidget
             $selector = '#'.$this->liveTarget.' '.$selector;
         }
         $script = "$('".$selector."')";
-        
-		//check if script is already registered
-		if(Yii::app()->getClientScript()->isScriptRegistered(__CLASS__ . '-' . $selector)) {
-			return true;
-		}
-		
+
+        //check if script is already registered
+        if(Yii::app()->getClientScript()->isScriptRegistered(__CLASS__ . '-' . $selector)) {
+            return true;
+		    }
+
         //attach events
         foreach(array('init', 'shown', 'save', 'hidden') as $event) {
             $eventName = 'on'.ucfirst($event);
@@ -535,8 +535,9 @@ class TbEditable extends CWidget
 
         //wrap in anonymous function for live update
         if($this->liveTarget) {
-            $script2 = "\n$('body').on('ajaxUpdate.editable',function(e){ if(e.target.id == '".$this->liveTarget."') yiiEditable2(); });";
-            $script = "(function yiiEditable() {function yiiEditable2() {\n\t$script\n} $script2 yiiEditable2(); }\n());";
+            $script .= "\n $('body').unbind('ajaxUpdate.editable'); \n"; // DO NOT REMOVE: fix memory leak....
+            $script .= "\n $('body').on('ajaxUpdate.editable', function(e){ if(e.target.id == '".$this->liveTarget."') yiiEditable(); });";
+            $script = "(function yiiEditable() {\n ".$script."\n}());";
         }
         
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '-' . $selector, $script);
@@ -716,15 +717,15 @@ class TbEditable extends CWidget
         return $this->name.'_'.$pk;
     }
 
-	/**
-	 * Returns is autotext should be applied to widget:
-	 * e.g. for 'select' to display text for id
-	 *
-	 * @param mixed $options
-	 * @param mixed $type
-	 *
-	 * @return bool
-	 */
+    /**
+     * Returns is autotext should be applied to widget:
+     * e.g. for 'select' to display text for id
+     *
+     * @param mixed $options
+     * @param mixed $type
+ 	   *
+	   * @return bool
+     */
     public static function isAutotext($options, $type) 
     {
          return (!isset($options['autotext']) || $options['autotext'] !== 'never') 
@@ -739,20 +740,20 @@ class TbEditable extends CWidget
          ));
     }
 
-	/**
-	 * Returns php-array as valid x-editable source in format:
-	 * [{value: 1, text: 'text1'}, {...}]
-	 *
-	 * See https://github.com/vitalets/x-editable-yii/issues/37
-	 *
-	 * @param mixed $models
-	 * @param mixed $valueField
-	 * @param mixed $textField
-	 * @param mixed $groupField
-	 * @param mixed $groupTextField
-	 *
-	 * @return array
-	 */
+    /**
+     * Returns php-array as valid x-editable source in format:
+     * [{value: 1, text: 'text1'}, {...}]
+     *
+     * See https://github.com/vitalets/x-editable-yii/issues/37
+     *
+     * @param mixed $models
+     * @param mixed $valueField
+     * @param mixed $textField
+     * @param mixed $groupField
+     * @param mixed $groupTextField
+     *
+     * @return array
+     */
     public static function source($models, $valueField='', $textField='', $groupField='', $groupTextField='')
     {
         $listData=array();

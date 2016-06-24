@@ -10,7 +10,7 @@ Yii::import('booster.widgets.TbWidget');
 /**
  *## Bootstrap progress bar widget.
  *
- * @see <http://twitter.github.com/bootstrap/components.html#progress>
+ * @see <http://getbootstrap.com/components/#progress>
  *
  * @package booster.widgets.decoration
  * @since 0.9.10

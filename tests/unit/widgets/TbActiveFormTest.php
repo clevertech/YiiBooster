@@ -416,6 +416,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$attribute = 'login';
 		$model->addError($attribute, 'simple error text');
 		$form = $this->makeWidget();
+		$form->init();
 		$method = new ReflectionMethod($form, 'horizontalGroup');
 		$method->setAccessible(true);
 
@@ -459,6 +460,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$attribute = 'login';
 		$model->addError($attribute, 'simple error text');
 		$form = $this->makeWidget();
+		$form->init();
 		$method = new ReflectionMethod($form, 'verticalGroup');
 		$method->setAccessible(true);
 

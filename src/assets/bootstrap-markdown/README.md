@@ -7,12 +7,12 @@ Markdown editing meet Bootstrap.
 | Bootstrap Markdown v2.x | **only** compatible with Bootstrap 3.x |
 | Bootstrap Markdown v1.x | **only** compatible with Bootstrap 2.x |
 
-Demo and documentation on [http://toopay.github.com/bootstrap-markdown/](http://toopay.github.com/bootstrap-markdown/)
+Demo and documentation on [http://toopay.github.io/bootstrap-markdown/](http://toopay.github.io/bootstrap-markdown/)
 
 ### LICENSE
 
-> Copyright 2013 Taufan Aditya
-> 
+> Copyright 2013-2016 Taufan Aditya
+>
 > Licensed under the Apache License, Version 2.0 (the "License");
 > you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at

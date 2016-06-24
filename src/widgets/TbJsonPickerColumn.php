@@ -28,7 +28,7 @@ class TbJsonPickerColumn extends TbJsonDataColumn
 	 *
 	 * Note that picker has also a 'width' just in case we display AJAX'ed content.
 	 *
-	 * @see http://twitter.github.com/bootstrap/javascript.html#tooltips
+	 * @see <http://getbootstrap.com/javascript/#tooltips>
 	 */
 	public $pickerOptions = array();
 

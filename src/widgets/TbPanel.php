@@ -8,6 +8,7 @@
  */
 
 Yii::import('booster.widgets.TbWidget');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  * TbPanel widget.
@@ -28,7 +29,7 @@ class TbPanel extends TbWidget {
 	/**
 	 * @var string
 	 * The class icon to display in the header title of the panel.
-	 * @see <http://twitter.github.com/bootstrap/base-css.html#icon>
+	 * @see <http://getbootstrap.com/components/#glyphicons>
 	 */
 	public $headerIcon;
 
@@ -133,15 +134,12 @@ class TbPanel extends TbWidget {
 		if ($this->title !== false) {
 			echo CHtml::openTag('div', $this->headerHtmlOptions);
 			if ($this->title) {
-				$this->title = '<h3 class="panel-title" style="display: inline;">' . $this->title . '</h3>';
+				$this->title = '<h3 class="panel-title">' . $this->title . '</h3>';
 
 				if ($this->headerIcon) {
-					if (strpos($this->headerIcon, 'icon') === false && strpos($this->headerIcon, 'fa') === false)
-						$this->title = '<span class="glyphicon glyphicon-' . $this->headerIcon . '"></span> ' . $this->title;
-					else
-						$this->title = '<i class="' . $this->headerIcon . '"></i> ' . $this->title;
+					$this->title = TbHtml::icon($this->headerIcon) . "\r\n" . $this->title;
 				}
-				
+
 				$this->renderButtons();
 				echo $this->title;
 			}

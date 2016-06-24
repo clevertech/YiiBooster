@@ -39,13 +39,13 @@ Yii::createApplication(
 		'runtimePath' => APP_RUNTIME,
 		'aliases' => [
 			'fakes' => ROOT_DIR . '/tests/fakes',
-			'bootstrap' => ROOT_DIR . '/src',
+			'booster' => ROOT_DIR . '/src',
 		],
 		'components' => array(
 			'assetManager' => array(
 				'basePath' => APP_ASSETS // do not forget to clean this folder sometimes
 			),
-			'bootstrap' => array(
+			'booster' => array(
 				'class' => 'booster.components.Booster'
 			),
 		)

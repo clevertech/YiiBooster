@@ -104,7 +104,7 @@ class TbRelationalColumn extends TbDataColumn {
 
 		echo CHtml::openTag('td', $options);
 		echo CHtml::openTag('span', array('class' => $this->cssClass.'_'.$this->id, 'data-rowid' => $this->getPrimaryKey($data), 'data-colid' => $this->id));
- 		$this->renderDataCellContent($row, $data);
+ 		$this->getDataCellContent($row);
 		echo CHtml::closeTag('span');
 		echo CHtml::closeTag('td');
 	}
@@ -158,7 +158,7 @@ class TbRelationalColumn extends TbDataColumn {
 		$loadingPic = CHtml::image(Booster::getBooster()->getAssetsUrl() . '/img/loading.gif');
 		$cache = $this->cacheData ? 'true' : 'false';
 		$data = !empty($this->submitData) && is_array($this->submitData) ? $this->submitData : 'js:{}';
-		$data = CJavascript::encode($data);
+		$data = CJavaScript::encode($data);
 		list($parentId) = explode('_',$this->id);
 		$_id = $this->cssClass.'_'.$this->id;
 		$js = <<<EOD

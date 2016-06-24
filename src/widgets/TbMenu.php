@@ -12,7 +12,7 @@ Yii::import('booster.widgets.TbBaseMenu');
 /**
  * Bootstrap menu.
  *
- * @see <http://twitter.github.com/bootstrap/components.html#navs>
+ * @see <http://getbootstrap.com/components/#nav>
  *
  * @package booster.widgets.navigation
  */

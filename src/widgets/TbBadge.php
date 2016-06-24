@@ -10,7 +10,7 @@ Yii::import('booster.widgets.TbWidget');
 /**
  *## Bootstrap badge widget.
  *
- * @see <http://twitter.github.com/bootstrap/components.html#badges>
+ * @see <http://getbootstrap.com/components/#badges>
  *
  * @package booster.widgets.decoration
  */

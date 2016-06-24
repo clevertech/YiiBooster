@@ -261,7 +261,6 @@ class Booster extends CApplicationComponent {
 		$bootstrapPackages = require(Yii::getPathOfAlias('booster.components') . '/packages.php');
 		$bootstrapPackages += $this->createBootstrapCssPackage();
 		$bootstrapPackages += $this->createSelect2Package();
-		$bootstrapPackages += $this->createChosenPackage();
 
 		$this->packages = CMap::mergeArray(
 			$bootstrapPackages,
@@ -275,7 +274,8 @@ class Booster extends CApplicationComponent {
 	protected function addOurPackagesToYii() {
 		
 		foreach ($this->packages as $name => $definition) {
-			$this->cs->addPackage($name, $definition);
+			if (!array_key_exists($name, $this->cs->packages))
+				$this->cs->addPackage($name, $definition);
 		}
         $this->cs->scriptMap['jquery-ui.min.js'] = $this->getAssetsUrl() . '/js/jquery-ui-no-conflict.min.js';
 	}
@@ -437,43 +437,29 @@ class Booster extends CApplicationComponent {
 	protected function createBootstrapCssPackage() {
 		
 		return array('bootstrap.css' => array(
-			'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/' : $this->getAssetsUrl() . '/bootstrap/',
+			'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/' : $this->getAssetsUrl() . '/bootstrap/',
 			'css' => array($this->minify ? 'css/bootstrap.min.css' : 'css/bootstrap.css'),
 		));
 	}
 
-	/**
-	 * Make chosen package definition
-	 * @return array
-	 */
-	protected function createChosenPackage() {
-		
-		return array('chosen' => array(
-			'baseUrl' => $this->getAssetsUrl() . '/chosen/',
-			'js' => array('chosen.jquery.min.js'),
-			'css' => array('chosen.min.css'),
-			'depends' => array('jquery'),
-		));
-	}
-        
 	/**
 	 * Make select2 package definition
 	 * @return array
 	 */
 	protected function createSelect2Package() {
 		
-		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
+		$jsFiles = array($this->minify ? 'js/select2.min.js' : 'js/select2.js');
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
-			$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2). '.js';
+			$locale = 'js/i18n/'. substr(Yii::app()->language, 0, 2). '.js';
 			if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 				$jsFiles[] = $locale;
 			} else {
-				$locale = 'select2_locale_'. Yii::app()->language . '.js';
+				$locale = 'js/i18n/'. Yii::app()->language . '.js';
 				if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 					$jsFiles[] = $locale;
 				}else{
-					$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
+					$locale = 'js/i18n/'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
 					if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 						$jsFiles[] = $locale;
 					}
@@ -484,7 +470,10 @@ class Booster extends CApplicationComponent {
 		return array('select2' => array(
 			'baseUrl' => $this->getAssetsUrl() . '/select2/',
 			'js' => $jsFiles,
-			'css' => array('select2.css', 'select2-bootstrap.css'),
+			'css' => array(
+				($this->minify ? 'css/select2.min.css' : 'css/select2.css'),
+				($this->minify ? 'css/select2-bootstrap.min.css' : 'css/select2-bootstrap.css'),
+			),
 			'depends' => array('jquery'),
 		));
 	}
@@ -523,6 +512,25 @@ class Booster extends CApplicationComponent {
 	 */
 	public function getUniqueScriptId() {
 		return uniqid(__CLASS__ . '#', true);
+	}
+
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
+	protected function tryGetSelectorForPlugin($name) {
+		
+		return $this->tryGetInfoForPlugin($name, 'selector');
+	}
+
+	/**
+	 * @param $name
+	 * @return mixed
+	 */
+	protected function tryGetOptionsForPlugin($name) {
+		
+		return $this->tryGetInfoForPlugin($name, 'options');
 	}
 
     /**

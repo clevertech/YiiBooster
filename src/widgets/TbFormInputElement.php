@@ -155,7 +155,7 @@ class TbFormInputElement extends CFormElement {
 	protected function generateGroupOptions() {
 		
 		$options = array();
-		$fields = array('widgetOptions, label', 'labelOptions', 'errorOptions', 'hint', 'hintOptions', 'prepend', 'prependOptions',
+		$fields = array('widgetOptions', 'label', 'labelOptions', 'errorOptions', 'hint', 'hintOptions', 'prepend', 'prependOptions',
 			'append', 'appendOptions', 'enableAjaxValidation', 'enableClientValidation');
 
 		foreach ($fields as $prop) {

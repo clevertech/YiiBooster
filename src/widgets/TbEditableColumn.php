@@ -24,14 +24,15 @@ class TbEditableColumn extends TbDataColumn
     * @see TbEditableField config
     */
     public $editable = array();
-    
-    protected function fetchKeys($dataProvider) {
-    	$keys = array();
-    	$data = $dataProvider->getData();
-    	if(isset($data) && !empty($data))
-    	foreach($data[0] as $i=>$data)
-    		$keys[]=$i;
-    	return $keys;
+
+    protected function fetchKeys($dataProvider)
+    {
+        $keys = array();
+        $data = $dataProvider->getData();
+        if(isset($data) && !empty($data))
+            foreach($data[0] as $i=>$data)
+                $keys[]=$i;
+        return $keys;
     }
 
     public function init()
@@ -41,27 +42,29 @@ class TbEditableColumn extends TbDataColumn
         }
 
         parent::init();
-		
+
         /**
          * add a dummy object to the data provider and call render function to allow register 
          * required scripts if grid was initially empty...
          */
-        if(empty($this->grid->dataProvider->data)) {
-	        if ($this->grid->dataProvider instanceof CActiveDataProvider)
-	        	$dummy = new $this->grid->dataProvider->modelClass();
-			else if ($this->grid->dataProvider instanceof CArrayDataProvider) {
-				$keys = $this->fetchKeys($this->grid->dataProvider);
-				$dummy = array();
-				foreach ($keys as $key) {
-					$dummy[$key] = $key; // anyvalue;
-				}
-			} else {
-				$dummy = null;			
-			}
-			$this->grid->dataProvider->data = array($dummy);
-			$this->editable['htmlOptions'] = array('style' => 'display: none;');
-	        $this->renderDataCellContent(0, $dummy); // this is the target line
-	        $this->grid->dataProvider->data = array();
+        if(empty($this->grid->dataProvider->data))
+        {
+            if ($this->grid->dataProvider instanceof CActiveDataProvider)
+                $dummy = new $this->grid->dataProvider->modelClass();
+            else if ($this->grid->dataProvider instanceof CArrayDataProvider)
+            {
+                $keys = $this->fetchKeys($this->grid->dataProvider);
+                $dummy = array();
+                foreach ($keys as $key) {
+                    $dummy[$key] = $key; // anyvalue;
+                }
+            } else {
+                $dummy = null;			
+            }
+            $this->grid->dataProvider->data = array($dummy);
+            $this->editable['htmlOptions'] = array('style' => 'display: none;');
+            $this->renderDataCellContent(0, $dummy); // this is the target line
+            $this->grid->dataProvider->data = array();
         }
         //need to attach ajaxUpdate handler to refresh editables on pagination and sort
         TbEditable::attachAjaxUpdateEvent($this->grid);
@@ -112,7 +115,7 @@ class TbEditableColumn extends TbDataColumn
         }
         
         //apply may be a string expression, see https://github.com/vitalets/x-editable-yii/issues/33
-        if (isset($options['apply']) && is_string($options['apply'])) {
+        if (isset($options['apply']) && (is_string($options['apply']) || is_callable($options['apply']))) {
             $options['apply'] = $this->evaluateExpression($options['apply'], array('data'=>$data, 'row'=>$row));
         }
 
@@ -169,12 +172,6 @@ class TbEditableColumn extends TbDataColumn
     */    
     public function renderFilterCell()
     {
-        /* TODO
-        if(yii::app()->editable->form != 'bootstrap') {
-            parent::renderFilterCell();
-            return;
-        } */
-                
         parent::renderFilterCell();
     }       
 }

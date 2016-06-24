@@ -20,6 +20,10 @@ class BootstrapCode extends CrudCode {
 		
 		if ($column->type === 'boolean') {
 			return "\$form->checkBoxGroup(\$model,'{$column->name}')";
+		} else if (stripos($column->dbType, 'tinyint(1)') !== false) {
+			return "\$form->checkboxGroup(\$model,'{$column->name}')";
+		} else if (stripos($column->dbType, 'double') !== false || stripos($column->dbType, 'int') !== false || stripos($column->dbType, 'float') !== false) {
+			return "\$form->numberFieldGroup(\$model,'{$column->name}')";
 		} else if (stripos($column->dbType, 'text') !== false) {
 			return "\$form->textAreaGroup(\$model,'{$column->name}', array('widgetOptions'=>array('htmlOptions'=>array('rows'=>6, 'cols'=>50))))";
 		} else {

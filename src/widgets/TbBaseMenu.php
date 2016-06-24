@@ -8,6 +8,7 @@
  */
 
 Yii::import('zii.widgets.CMenu');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  *## Base class for menu in Booster
@@ -99,13 +100,18 @@ abstract class TbBaseMenu extends CMenu {
 
 					echo CHtml::openTag('li', $options) . "\n";
 
-					$menu = $this->renderMenuItem($item);
+					if (isset($item['class'])) {
+						$this->controller->widget($item['class']);
 
-					if (isset($this->itemTemplate) || isset($item['template'])) {
-						$template = isset($item['template']) ? $item['template'] : $this->itemTemplate;
-						echo strtr($template, array('{menu}' => $menu));
 					} else {
-						echo $menu;
+						$menu = $this->renderMenuItem($item);
+
+						if (isset($this->itemTemplate) || isset($item['template'])) {
+							$template = isset($item['template']) ? $item['template'] : $this->itemTemplate;
+							echo strtr($template, array('{menu}' => $menu));
+						} else {
+							echo $menu;
+						}
 					}
 
 					if (isset($item['items']) && !empty($item['items'])) {
@@ -141,19 +147,18 @@ abstract class TbBaseMenu extends CMenu {
 	protected function renderMenuItem($item) {
 		
 		if($this->linkLabelWrapper !== null) {
-            		$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
-        	}
+			$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
+		}
 		if (isset($item['icon'])) {
-			if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
-				$item['icon'] = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $item['icon']));
-				$item['label'] = "<span class='" . $item['icon'] . "'></span>\r\n" . $item['label'];
-			} else {
-				$item['label'] = "<i class='" . $item['icon'] . "'></i>\r\n" . $item['label'];
-			}
+			$item['label'] = TbHtml::icon($item['icon']) . "\r\n" . $item['label'];
 		}
 
 		if (!isset($item['linkOptions'])) {
 			$item['linkOptions'] = array();
+		}
+
+		if (isset($item['id'])) {
+			$item['linkOptions']['data-target'] = '#' . $item['id'];
 		}
 
 		if (isset($item['items']) && !empty($item['items'])) {

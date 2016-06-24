@@ -10,7 +10,7 @@
 /**
  *## A simple implementation for date range picker for Twitter Bootstrap
  *
- * @see <http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/>
+ * @see <http://www.daterangepicker.com>
  *
  * @package booster.widgets.forms.inputs
  */

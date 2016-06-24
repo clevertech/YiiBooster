@@ -16,7 +16,7 @@ Yii::import('booster.widgets.TbButton');
 /**
  *## Bootstrap button group widget.
  *
- * @see <http://twitter.github.com/bootstrap/components.html#buttonGroups>
+ * @see <http://getbootstrap.com/components/#btn-groups>
  *
  * @package booster.widgets.forms.buttons
  */

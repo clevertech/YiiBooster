@@ -8,11 +8,12 @@
  */
 
 Yii::import('booster.widgets.TbMenu');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  *## Bootstrap Javascript tabs widget.
  *
- * @see <http://twitter.github.com/bootstrap/javascript.html#tabs>
+ * @see <http://getbootstrap.com/javascript/#tabs>
  *
  * @package booster.widgets.grouping
  */
@@ -114,11 +115,7 @@ class TbTabs extends CWidget {
 			}
 		}
 
-		if (isset($this->tabContentHtmlOptions['class'])) {
-			$this->tabContentHtmlOptions['class'] .= ' tab-content';
-		} else {
-			$this->tabContentHtmlOptions['class'] = 'tab-content';
-		}
+		TbHtml::addCssClass('tab-content', $this->tabContentHtmlOptions);
 	}
 
 	/**
@@ -133,17 +130,14 @@ class TbTabs extends CWidget {
 		$items = $this->normalizeTabs($this->tabs, $content);
 
 		ob_start();
-		$this->controller->widget(
-			'booster.widgets.TbMenu',
-			array(
-				'stacked' => $this->stacked,
-				'justified' => $this->justified,
-				'type' => $this->type,
-				'encodeLabel' => $this->encodeLabel,
-				'htmlOptions' => $this->tabMenuHtmlOptions,
-				'items' => $items,
-			)
-		);
+		$this->controller->widget('booster.widgets.TbMenu', array(
+			'stacked' => $this->stacked,
+			'justified' => $this->justified,
+			'type' => $this->type,
+			'encodeLabel' => $this->encodeLabel,
+			'htmlOptions' => $this->tabMenuHtmlOptions,
+			'items' => $items,
+		));
 		$tabs = ob_get_clean();
 
 		ob_start();

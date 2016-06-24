@@ -82,6 +82,9 @@ class TbSelect2 extends CInputWidget {
 		if (!empty($this->htmlOptions['disabled'])) {
 			$this->disabled = true;
 		}
+
+		if (!isset($this->options['theme']))
+			$this->options['theme'] = 'bootstrap';
 	}
 
 	/**
@@ -134,14 +137,15 @@ class TbSelect2 extends CInputWidget {
 				$data = $this->val;
 			}
 
-			$defValue = ".select2('val', $data)";
-		} else
+			$defValue = ".val('val', $data)";
+		}
+		else
 			$defValue = '';
 
 		if ($this->readonly) {
-			$defValue .= ".select2('readonly', true)";
+			$defValue .= ".prop('readonly', true)";
 		} elseif ($this->disabled) {
-			$defValue .= ".select2('enable', false)";
+			$defValue .= ".prop('disabled', true)";
 		}
 
 		ob_start();
@@ -156,7 +160,7 @@ class TbSelect2 extends CInputWidget {
 
 	private function setDefaultWidthIfEmpty() {
 		if (empty($this->options['width'])) {
-			$this->options['width'] = 'resolve';
+			$this->options['width'] = '100%';
 		}
 	}
 

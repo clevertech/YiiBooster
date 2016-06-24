@@ -11,7 +11,7 @@
 /**
  *## Class TbMarkdownEditorJS
  *
- * @see <http://toopay.github.io/bootstrap-markdown/>
+ * @see <http://www.codingdrama.com/bootstrap-markdown/>
  *
  * @package booster.widgets.forms.inputs.wysiwyg
  * 
@@ -21,7 +21,7 @@
 class TbMarkdownEditor extends CInputWidget {
 	
 	/**
-	 * @see <http://toopay.github.io/bootstrap-markdown/>
+	 * @see <http://www.codingdrama.com/bootstrap-markdown/>
 	 * @var array Editor's Options
 	 */
 	public $options = array();
@@ -63,11 +63,11 @@ class TbMarkdownEditor extends CInputWidget {
 	 */
 	public function registerClientScript() {
 		
-        $booster = Booster::getBooster();
-        $booster->registerPackage('markdown');
+		$booster = Booster::getBooster();
+		$booster->registerPackage('markdown');
         
-        $id = $this->htmlOptions['id'];
-        $options = CJSON::encode($this->options);
+		$id = $this->htmlOptions['id'];
+		$options = CJSON::encode($this->options);
         
 		Yii::app()->clientScript->registerScript(__CLASS__ . '#' . $id, "
 			$('#$id').markdown({$options})

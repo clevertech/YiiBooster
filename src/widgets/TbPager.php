@@ -10,7 +10,7 @@
 /**
  *## Bootstrap pager.
  *
- * @see <http://twitter.github.com/bootstrap/components.html#pagination>
+ * @see <http://getbootstrap.com/components/#pagination>
  *
  * @package booster.widgets.supplementary
  */

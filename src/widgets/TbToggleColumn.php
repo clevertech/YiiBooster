@@ -5,6 +5,8 @@
  * @author: antonio ramirez <antonio@clevertech.biz>
  */
 
+Yii::import('booster.helpers.TbHtml');
+
 /**
  *## TbToggleColumn widget
  *
@@ -265,16 +267,6 @@ function() {
 	}
 
 	/**
-	 * @param string $iconClass
-	 *
-	 * @return bool
-	 */
-	protected function isNotGlyphiconsIcon($iconClass)
-	{
-		return strpos($iconClass, 'icon') === false and strpos($iconClass, 'fa') === false;
-	}
-
-	/**
 	 * @param $label
 	 * @param $icon
 	 * @param $url
@@ -287,13 +279,7 @@ function() {
 		if (!isset($htmlOptions['data-toggle']))
 			$htmlOptions['data-toggle'] = 'tooltip';
 
-		$iconHtmlTemplate = $this->isNotGlyphiconsIcon($icon)
-			? '<span class="glyphicon glyphicon-%s"></span>'
-			: '<i class="%s"></i>';
-
-		$iconHtml = sprintf($iconHtmlTemplate, $icon);
-
-		echo CHtml::link($iconHtml, $url, $htmlOptions);
+		echo CHtml::link(TbHtml::icon($icon), $url, $htmlOptions);
 	}
 
 	/**

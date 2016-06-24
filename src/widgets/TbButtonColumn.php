@@ -9,6 +9,7 @@
  */
 
 Yii::import('zii.widgets.grid.CButtonColumn');
+Yii::import('booster.helpers.TbHtml');
 
 /**
  *## Bootstrap button column widget.
@@ -40,7 +41,6 @@ class TbButtonColumn extends CButtonColumn {
 	 * Initializes the default buttons (view, update and delete).
 	 */
 	protected function initDefaultButtons() {
-		
 		parent::initDefaultButtons();
 
 		if ($this->viewButtonIcon !== false && !isset($this->buttons['view']['icon'])) {
@@ -51,7 +51,49 @@ class TbButtonColumn extends CButtonColumn {
 		}
 		if ($this->deleteButtonIcon !== false && !isset($this->buttons['delete']['icon'])) {
 			$this->buttons['delete']['icon'] = $this->deleteButtonIcon;
+            $this->buttons['delete']['options']['data-ajax-request'] = true;
+            $this->buttons['delete']['click'] = null;
+            if (is_string($this->deleteConfirmation))
+                $this->buttons['delete']['options']['data-confirm'] = $this->deleteConfirmation;
 		}
+
+        foreach ($this->buttons as $type => $value) {
+            if ($value['refresh'] === true) {
+                $this->buttons[$type]['options']['data-ajax-request'] = true;
+            }
+        }
+
+        if (Yii::app()->request->enableCsrfValidation) {
+            $csrfTokenName = Yii::app()->request->csrfTokenName;
+            $csrfToken = Yii::app()->request->csrfToken;
+            $csrf = "\n\t\tdata:{ '$csrfTokenName':'$csrfToken' },";
+        } else
+            $csrf = '';
+
+        $script = <<<EOD
+jQuery(document).on('click', '#{$this->grid->id} a[data-ajax-request="1"]', function(e) {
+    if (jQuery(this).data('confirm')) {
+        if (!confirm(jQuery(this).data('confirm'))) { e.preventDefault(); e.stopPropagation(); return false; }
+    }
+    var grid = jQuery(this).closest(".grid-view"); 
+    grid.yiiGridView('update', {
+        type: 'POST',
+        url: jQuery(this).attr('href'),$csrf
+        success: function(data) {
+            var response = jQuery.parseJSON(data);
+            if (jQuery.isPlainObject(response) && jQuery.type(response.noty) == "string") {
+                noty({type: 'success', text: response.noty});
+            }
+            grid.yiiGridView('update');
+        }
+    });
+    return false;
+});
+EOD;
+
+        Yii::app()->clientScript->registerScript(__CLASS__ . '#ajaxrequest#' . $this->id, $script);
+
+
 	}
 
 	/**
@@ -88,11 +130,7 @@ class TbButtonColumn extends CButtonColumn {
 		}
 
 		if (isset($button['icon']) && $button['icon']) {
-			if (strpos($button['icon'], 'icon') === false && strpos($button['icon'], 'fa') === false) {
-				$button['icon'] = 'glyphicon glyphicon-' . implode('glyphicon-', explode(' ', $button['icon']));
-			}
-
-			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $url, $options);
+			echo CHtml::link(TbHtml::icon($button['icon']), $url, $options);
 		} else if (isset($button['imageUrl']) && is_string($button['imageUrl'])) {
 			echo CHtml::link(CHtml::image($button['imageUrl'], $label), $url, $options);
 		} else {

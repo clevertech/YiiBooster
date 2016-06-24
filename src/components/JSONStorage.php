@@ -226,7 +226,7 @@ class JSONStorage extends CComponent
 	 *
 	 * @param string $key the name of the key that will hold the data
 	 * @param array $data the data to save
-	 * @param string $registry the name of the registry
+	 * @param string|null $registry the name of the registry
 	 *
 	 * @return bool
 	 */
@@ -247,7 +247,7 @@ class JSONStorage extends CComponent
 	 * Retrieves a data value from the registry
 	 *
 	 * @param string $key the name of the key that holds the data
-	 * @param string $registry the registry name
+	 * @param string|null $registry the registry name
 	 *
 	 * @return mixed the data in the key value, null otherwise
 	 */
@@ -268,7 +268,7 @@ class JSONStorage extends CComponent
 	 * Removes data from a key in the registry
 	 *
 	 * @param string $key the key name that holds the data to remove
-	 * @param string $registry the registry name
+	 * @param string|null $registry the registry name
 	 *
 	 * @return bool true if successful, false otherwise
 	 */
@@ -291,7 +291,7 @@ class JSONStorage extends CComponent
 	/**
 	 * Retrieves the number of keys in registry
 	 *
-	 * @param string $registry the registry name
+	 * @param string|null $registry the registry name
 	 *
 	 * @return int the data length
 	 */

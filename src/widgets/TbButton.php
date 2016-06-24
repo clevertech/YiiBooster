@@ -11,6 +11,7 @@
  * @since v4.0.0 - upgraded to bootstrap 3.1.1
  */
 Yii::import('booster.widgets.TbWidget');
+Yii::import('booster.helpers.TbHtml');
 /**
  * Bootstrap button widget.
  *
@@ -168,9 +169,7 @@ class TbButton extends TbWidget {
 
 		if ($this->isValidContext()) {
 			$classes[] = 'btn-' . $this->getContextClass();
-		}
-		
-		if($this->buttonType == self::BUTTON_LINK) {
+		} else if($this->buttonType == self::BUTTON_LINK) {
 			$classes[] = 'btn-link';
 		}
 
@@ -239,13 +238,8 @@ class TbButton extends TbWidget {
 			}
 		}
 
-		if (isset($this->icon)) { // no need for implode as newglyphicon only supports one icon
-			if (strpos($this->icon, 'icon') === false && strpos($this->icon, 'fa') === false) {
-				$this->icon = 'glyphicon glyphicon-' . $this->icon;
-				$this->label = '<span class="' . $this->icon . '"></span> ' . $this->label;
-			} else { // to support font awesome icons
-				$this->label = '<i class="' . $this->icon . '"></i> ' . $this->label;
-			}
+		if (isset($this->icon)) {
+			$this->label = TbHtml::icon($this->icon) . "\r\n" . $this->label;
 		}
 
 		if (!isset($this->htmlOptions['id'])) {
@@ -294,9 +288,8 @@ class TbButton extends TbWidget {
 			return;
 		}
 		
-		// TODO: I think we have to drop this -allowing button to has items- it is the same as TbButtonGroup with bugs!
 		if ($this->hasDropdown()) {
-			echo '<div class="btn-group">';
+			
 			echo $this->createButton();
 		
 			$this->controller->widget(
@@ -308,7 +301,6 @@ class TbButton extends TbWidget {
 					'id' => isset($this->dropdownOptions['id']) ? $this->dropdownOptions['id'] : null,
 				)
 			);
-			echo '</div>';
 		} else {
 			echo $this->createButton();
 		}

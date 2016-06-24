@@ -14,6 +14,7 @@
  */
 
 Yii::import('booster.widgets.TbBaseInputWidget');
+Yii::import('booster.helpers.TbHtml');
 
 class TbTimePicker extends TbBaseInputWidget {
 	
@@ -158,8 +159,8 @@ class TbTimePicker extends TbBaseInputWidget {
 		return $valueset;
 	}
 
-	private function echoAppend() {
-		
-		echo CHtml::tag('span', array('class' => 'input-group-addon'), CHtml::tag('i', array('class' => 'glyphicon glyphicon-time'), ''));
+	private function echoAppend()
+	{
+		echo CHtml::tag('span', array('class' => 'input-group-addon'), TbHtml::icon('time'));
 	}
 }

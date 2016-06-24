@@ -4,6 +4,11 @@
  * - $this: the BootCrudCode object
  */
 ?>
+<?php echo "<?php\n"; ?>
+/* @var $this <?php echo $this->getControllerClass(); ?> */
+/* @var $data <?php echo $this->getModelClass(); ?> */
+?>
+
 <div class="view">
 
 	<?php

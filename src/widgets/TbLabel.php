@@ -10,7 +10,7 @@ Yii::import('booster.widgets.TbWidget');
 /**
  *## Bootstrap label widget.
  *
- * @see <http://twitter.github.com/bootstrap/components.html#labels>
+ * @see <http://getbootstrap.com/components/#labels>
  *
  * @package booster.widgets.decoration
  */
