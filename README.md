@@ -7,20 +7,10 @@ YiiBooster
 [![Code Coverage](https://scrutinizer-ci.com/g/clevertech/YiiBooster/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/clevertech/YiiBooster/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/efb55e52-aaf3-4692-abf7-729e8aa0eb1a/mini.png)](https://insight.sensiolabs.com/projects/efb55e52-aaf3-4692-abf7-729e8aa0eb1a)
 
-[![Latest Stable Version](https://poser.pugx.org/clevertech/yii-booster/v/stable.png)](https://github.com/clevertech/YiiBooster/tree/3.0.1) [![Total Downloads](https://poser.pugx.org/clevertech/yii-booster/downloads.png)](https://packagist.org/packages/clevertech/yii-booster) [![Latest Unstable Version](https://poser.pugx.org/clevertech/yii-booster/v/unstable.png)](https://github.com/clevertech/YiiBooster/tree/master) [![License](https://poser.pugx.org/clevertech/yii-booster/license.png)](https://github.com/clevertech/YiiBooster/blob/master/LICENSE)
-
----
-
-**This is the master branch, containing work in progress on the next release. 
-Do not think that it's a production ready version which you can safely clone into your project.
-If you want the latest point release, check out the `4.0.1` release**
-
----
-
-**4.x.x is based on twitter Bootstrap 3.1.1 or later. 
-If you want to use Bootstrap 2.3.2, please check out the latest `3.x.x` release**
-
----
+[![Latest Stable Version](https://poser.pugx.org/clevertech/yii-booster/v/stable.png)](https://github.com/clevertech/YiiBooster/releases/tag/v4.0.1) 
+[![Latest Unstable Version](https://poser.pugx.org/clevertech/yii-booster/v/unstable.png)](https://github.com/clevertech/YiiBooster/tree/master) 
+[![Total Downloads](https://poser.pugx.org/clevertech/yii-booster/downloads.png)](https://packagist.org/packages/clevertech/yii-booster) 
+[![License](https://poser.pugx.org/clevertech/yii-booster/license.png)](https://github.com/clevertech/YiiBooster/blob/master/LICENSE)
 
 YiiBooster is a widget toolkit for [Yii web framework](http://www.yiiframework.com).
 Its main purpose is to ease building UI in Yii-based web applications utilizing the beauty of [Twitter Bootstrap][twitter-bootstrap]
@@ -30,6 +20,10 @@ Twitter Bootstrap wrapping is based over the excellent job of [Christoffer Niska
 We at [Clevertech](http://clevertech.biz) included his library into our own Yii project startup library, [YiiBoilerplate](http://github.com/clevertech/yiiboilerplate),
 and started improving it in order to satisfy some of our customers' project requirements.
 YiiBooster is an end result of this effort.
+
+We tried very hard in past to accommodate to radical changes between successive versions of Twitter Bootstrap,
+but starting from November 2016 we will just follow the latest stable version published by Twitter.
+This means that when you upgrade YiiBooster, you upgrade Twitter Bootstrap as well. 
 
 ## Widgets at a glance
 Overall, the following is included in YiiBooster:
