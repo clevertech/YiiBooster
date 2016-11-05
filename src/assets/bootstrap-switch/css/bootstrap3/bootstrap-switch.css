@@ -202,5 +202,6 @@
 }
 .bootstrap-switch input[type='radio'].form-control,
 .bootstrap-switch input[type='checkbox'].form-control {
-  height: auto;
+  margin: 0;
+  max-height: 100%;
 }
