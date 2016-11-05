@@ -162,14 +162,12 @@ class TbCarousel extends CWidget {
 				$classes[] = 'active';
 			}
 
-			if (!empty($classes)) {
-				$classes = implode(' ', $classes);
-				if (isset($item['itemOptions']['class'])) {
-					$item['itemOptions']['class'] .= ' ' . $classes;
-				} else {
-					$item['itemOptions']['class'] = $classes;
-				}
-			}
+            $classes = implode(' ', $classes);
+            if (isset($item['itemOptions']['class'])) {
+                $item['itemOptions']['class'] .= ' ' . $classes;
+            } else {
+                $item['itemOptions']['class'] = $classes;
+            }
 
 			echo CHtml::openTag('div', $item['itemOptions']);
 
