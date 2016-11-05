@@ -33,7 +33,7 @@
     },
     "require": {
         "php":">=5.3",
-        "yiisoft/yii": "1.1.15"
+        "yiisoft/yii": ">=1.1.15"
     },
     "require-dev": {
         "ext-xdebug": "*",
