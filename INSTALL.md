@@ -14,7 +14,7 @@ Of course it has to be inside your existing `components` section, do not create 
 
 Name of component _must_ be `booster`, please bear with it for now.
 
-See the `components/Booster.php` file for configuration properties of the component.
+See the `components/Booster.php` file for configuration properties of Bootstrap component.
 
 ## 2. Setting up initialization
 
