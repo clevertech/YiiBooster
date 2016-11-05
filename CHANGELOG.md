@@ -19,6 +19,7 @@ Antonio Ramirez.
 - **(fix)** fix TbGroupGridView support for rowHtmlOptionsExpression #920
 - **(enh)** TbEditable check if we have registered js already (useful in combination with TbEditableColumn and large datasets)
 - **(fix)** change yiiGridView function calls to yiiGroupGridView in jquery.group.yiigridview.js #910
+- **(fix)** fix methods TbHtml::activeRadioButtonList and TbHtml::activeCheckBoxList for the case $htmlOptions = ['uncheckValue' => null] #917 (IStranger/G.Azamat)
   
 ## YiiBooster version 4.1.0
 - **(enh)** upgarde to Bootstrap 3.2.0 - #882
