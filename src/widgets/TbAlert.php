@@ -99,7 +99,7 @@ class TbAlert extends TbWidget {
 		}
 
 		// Display all alert types by default.
-		if (!isset($this->alerts)) {
+		if (!isset($this->alerts) || empty($this->alerts)) {
 			$this->alerts = array(
 				self::CTX_SUCCESS,
 				self::CTX_INFO,
