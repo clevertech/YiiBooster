@@ -1187,7 +1187,7 @@ class TbActiveForm extends CActiveForm {
 		
 		$_attribute = $attribute;
 		CHtml::resolveName($model, $_attribute);
-		if ($model->hasErrors($_attribute) && $this->clientOptions['errorCssClass'])
+		if ($model->hasErrors($_attribute) && isset($this->clientOptions['errorCssClass']))
 			self::addCssClass($groupOptions, $this->clientOptions['errorCssClass']);
 
 		echo CHtml::openTag('div', $groupOptions);
@@ -1255,7 +1255,7 @@ class TbActiveForm extends CActiveForm {
 		
 		$_attribute = $attribute;
 		CHtml::resolveName($model, $_attribute);
-		if ($model->hasErrors($_attribute) && $this->clientOptions['errorCssClass'])
+		if ($model->hasErrors($_attribute) && isset($this->clientOptions['errorCssClass']))
 			self::addCssClass($groupOptions, $this->clientOptions['errorCssClass']);
 
 		echo CHtml::openTag('div', $groupOptions);
