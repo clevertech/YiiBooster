@@ -10,6 +10,7 @@ Antonio Ramirez.
 
 
 ## YiiBooster version 1.1.0
+- **(enh)** Introduce widgetOptions attribute for Select2 widget (soee)
 - **(enh)** Added Italian translation for `TbHtml5Editor` #544 (realtebo)
 - **(enh)** Rearranged build script to accommodate Composer installed libraries better. (hijarian)
 - **(enh)** Added composer file #566 (gureedo)
