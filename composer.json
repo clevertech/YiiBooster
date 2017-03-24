@@ -47,7 +47,7 @@
         "phpmd/phpmd": "2.3.2",
         "squizlabs/php_codesniffer": "2.3.4",
 
-        "apigen/apigen": "2.8.1",
+        "apigen/apigen": "^4",
         "mayflower/php-codebrowser": "1.1.1",
 
         "ncuesta/pinocchio": "dev-master"
