@@ -102,9 +102,9 @@ class TbEditableSaver extends CComponent
 	public function update()
 	{
 		//get params from request
-		$this->primaryKey = yii::app()->request->getParam('pk');
-		$this->attribute = yii::app()->request->getParam('name');
-		$this->value = yii::app()->request->getParam('value');
+		$this->primaryKey = Yii::app()->request->getParam('pk');
+		$this->attribute = Yii::app()->request->getParam('name');
+		$this->value = Yii::app()->request->getParam('value');
 
 		//checking params
 		if (empty($this->attribute)) {
