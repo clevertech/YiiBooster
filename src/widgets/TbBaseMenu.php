@@ -110,7 +110,7 @@ abstract class TbBaseMenu extends CMenu {
 
 					if (isset($item['items']) && !empty($item['items'])) {
 						$dropdownOptions = array(
-							'encodeLabel' => false,
+							'encodeLabel' => $this->encodeLabel,
 							'htmlOptions' => isset($item['submenuOptions']) ? $item['submenuOptions']
 								: $this->submenuHtmlOptions,
 							'items' => $item['items'],
@@ -139,17 +139,17 @@ abstract class TbBaseMenu extends CMenu {
 	 * @return string the rendered item
 	 */
 	protected function renderMenuItem($item) {
-		
+
 		if($this->linkLabelWrapper !== null) {
-            		$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
-        	}
+			$item['label'] = CHtml::tag($this->linkLabelWrapper, $this->linkLabelWrapperHtmlOptions, $item['label']);
+		}
 		if (isset($item['icon'])) {
-			if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
+			if (strpos($item['icon'], 'icon-') === 0) {
+				$item['icon'] = 'glyphicon glyph' . implode(' glyph', explode(' ', $item['icon']));
+			} else if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
 				$item['icon'] = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $item['icon']));
-				$item['label'] = "<span class='" . $item['icon'] . "'></span>\r\n" . $item['label'];
-			} else {
-				$item['label'] = "<i class='" . $item['icon'] . "'></i>\r\n" . $item['label'];
 			}
+			$item['label'] = "<i class='" . $item['icon'] . "'></i>\r\n" . $item['label'];
 		}
 
 		if (!isset($item['linkOptions'])) {
@@ -205,7 +205,7 @@ abstract class TbBaseMenu extends CMenu {
 					$item['header'] = true;
 					$classes[] = 'nav-header';
 				}
-
+				
 				if (!empty($classes)) {
 					$classes = implode($classes, ' ');
 					if (isset($item['itemOptions']['class'])) {
