@@ -47,11 +47,12 @@ class TbDropdown extends TbBaseMenu {
 	protected function renderMenuItem($item) {
 		
 		if (isset($item['icon'])) {
-			if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
-				$item['icon'] = 'icon-' . implode(' icon-', explode(' ', $item['icon']));
+			if (strpos($item['icon'], 'icon-') === 0) {
+				$item['icon'] = 'glyphicon glyph' . implode(' glyph', explode(' ', $item['icon']));
+			} else if (strpos($item['icon'], 'icon') === false && strpos($item['icon'], 'fa') === false) {
+				$item['icon'] = 'glyphicon glyphicon-' . implode(' glyphicon-', explode(' ', $item['icon']));
 			}
-
-			$item['label'] = '<i class="' . $item['icon'] . '"></i> ' . $item['label'];
+			$item['label'] = "<i class='" . $item['icon'] . "'></i>\r\n" . $item['label'];
 		}
 
 		if (!isset($item['linkOptions'])) {
