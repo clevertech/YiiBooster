@@ -40,6 +40,7 @@ Antonio Ramirez.
 - **(fix)** yiiGroupGridView fix - #786
  
 ## YiiBooster version 3.0.1
+- **(fix)** TbExtendedGridView - fix JavaScript undefined variable error, when using strict mode - #805
 - **(fix)** branch and tag fix - no code changes from 3.0.0
 
 ## YiiBooster version 3.0.0
