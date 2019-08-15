@@ -1,6 +1,6 @@
 YiiBooster 
 ==========
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/clevertech/YiiBooster?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/clevertech/YiiBooster.svg)](https://gitter.im/clevertech/YiiBooster?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Travis CI](https://travis-ci.org/clevertech/YiiBooster.svg?branch=master)](https://travis-ci.org/clevertech/YiiBooster)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/clevertech/YiiBooster/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/clevertech/YiiBooster/?branch=master)
