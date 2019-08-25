@@ -145,7 +145,7 @@ class TbSelect2 extends CInputWidget {
 		}
 
 		ob_start();
-		echo "jQuery('select#{$id}').select2({$options})";
+		echo "jQuery('#{$id}').select2({$options})";
 		foreach ($this->events as $event => $handler) {
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 		}
